@@ -1,3 +1,4 @@
++   [Linux 快速学习手册](README.md)
 +   [第一章：这本书是为谁准备的](lrn-linux-qk_00.md)
 +   [第二章：一点历史](lrn-linux-qk_01.md)
 +   [第三章：Linux 文件系统](lrn-linux-qk_02.md)
