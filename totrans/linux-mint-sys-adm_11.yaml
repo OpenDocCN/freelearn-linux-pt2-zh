@@ -1,147 +1,209 @@
 - en: Chapter 11. Troubleshooting
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第11章：故障排除
 - en: '*Sooner or later system administrators will face problems that affect computers.
     Sometimes these problems will be related to hardware, and other times to software.
     It''s very important to know which tools we can use to identify problems and try
     to solve them. In this chapter, we''ll learn basic commands and tools that can
     help us determine what is happening with the network, hardware, kernel, processes,
     and filesystems.*'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '*系统管理员迟早会面临影响计算机的问题。有时这些问题与硬件有关，有时与软件有关。了解我们可以使用哪些工具来识别问题并尝试解决它们非常重要。在本章中，我们将学习可以帮助我们确定网络、硬件、内核、进程和文件系统发生了什么的基本命令和工具。*'
 - en: 'In this chapter we shall learn the following topics:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将学习以下主题：
 - en: Hardware
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 硬件
 - en: Checking log files
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 检查日志文件
 - en: Kernel
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 内核
 - en: Networking
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 网络
 - en: Processes and filesystems
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 进程和文件系统
 - en: Hardware
+  id: totrans-8
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 硬件
 - en: Many times users detect small problems related to hardware and system administrators
     can solve them quickly. However, it can happen that the detected problem will
     be difficult to solve or hard to detect. Also, many devices or resources can trigger
     more than one problem.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 很多时候用户会发现与硬件相关的小问题，系统管理员可以迅速解决。然而，可能会出现难以解决或难以检测的问题。此外，许多设备或资源可能会引发不止一个问题。
 - en: Memory and CPU are very important hardware components for our computer. We need
     to take care of them because a high load can block the operating system therefore,
     our computer will be out of order. Also, PCI and USB devices can stop working
     properly, so we should check them when we detect hardware problems.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 内存和CPU是我们计算机非常重要的硬件组件。我们需要照顾它们，因为高负载可能会阻塞操作系统，因此我们的计算机会停止工作。此外，PCI和USB设备可能会停止正常工作，因此当我们检测到硬件问题时应该检查它们。
 - en: Time for action – checking memory, CPU, USB, and PCI devices
+  id: totrans-11
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 操作时间 - 检查内存、CPU、USB和PCI设备
 - en: In Linux Mint, we can find tools and commands that can help us to find out what
     is happening with our hardware. Let's discover some commands to check the memory,
     CPU, and USB, PCI devices.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 在Linux Mint中，我们可以找到可以帮助我们了解硬件发生了什么的工具和命令。让我们发现一些检查内存、CPU、USB和PCI设备的命令。
 - en: 'Our first goal will be to get information about all USB devices installed on
     our computer. Open MATE Terminal as usual, and type the following command:'
+  id: totrans-13
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们的首要目标将是获取有关我们计算机上安装的所有USB设备的信息。像往常一样打开MATE终端，并输入以下命令：
 - en: '[PRE0]'
+  id: totrans-14
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Now, it''s the turn for PCI devices, so we''re going to execute the next command:'
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在轮到PCI设备了，因此我们将执行下一个命令：
 - en: '[PRE1]'
+  id: totrans-16
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: The output of the previous command will show you something similar to the following
     screenshot:![Time for action – checking memory, CPU, USB, and PCI devices](img/9601_11_01.jpg)
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 前一个命令的输出将向您显示类似于以下屏幕截图的内容：![操作时间 - 检查内存、CPU、USB和PCI设备](img/9601_11_01.jpg)
 - en: 'A complete and detailed list of all our hardware can be obtained by executing
     the following command:'
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 通过执行以下命令，可以获得我们硬件的完整详细列表：
 - en: '[PRE2]'
+  id: totrans-19
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'In order to get information about memory, we''ll execute the following command:'
+  id: totrans-20
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为了获取内存信息，我们将执行以下命令：
 - en: '[PRE3]'
+  id: totrans-21
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'As the output, we''ll get some lines like the following:'
+  id: totrans-22
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 作为输出，我们将得到类似于以下内容的几行：
 - en: '[PRE4]'
+  id: totrans-23
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Regarding our CPU, we can launch the following command to get information about
     processors installed on our machine:'
+  id: totrans-24
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 关于我们的CPU，我们可以执行以下命令以获取有关我们机器上安装的处理器的信息：
 - en: '[PRE5]'
+  id: totrans-25
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*What just happened?*'
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚刚发生了什么？*'
 - en: In order to get a complete list with a lot of information about our PCI and
     USB devices, we can execute the `lspci` and `lusb` commands respectively. These
     commands help us to know if devices are recognized by our computer or not. Keep
     in mind that some devices cannot be detected by the operating system, in that
     case we need to solve the problem.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了获取有关我们PCI和USB设备的完整列表和大量信息，我们可以分别执行`lspci`和`lusb`命令。这些命令帮助我们了解设备是否被我们的计算机识别。请记住，有些设备可能无法被操作系统检测到，在这种情况下我们需要解决问题。
 - en: On the other hand, `/proc/cpu` is a file that contains information about the
     CPU installed on a computer. The `cat` command has been used for displaying content
     of the mentioned file. Regarding the `/proc/cpu` file, we find the `/proc/meminfo`
     file, which contains data about memory used in our computer. Some information
     offered by the mentioned file includes total memory size and how much memory is
     available.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一方面，`/proc/cpu`是一个包含计算机上安装的CPU信息的文件。`cat`命令已被用于显示所提及文件的内容。关于`/proc/cpu`文件，我们发现`/proc/meminfo`文件，其中包含我们计算机上使用的内存数据。所提及文件提供的一些信息包括总内存大小以及可用内存量。
 - en: The `lshw` command means "list hardware" and it shows us an exhaustive list
     of all hardware installed on a computer. Don't forget to execute the `lshw` command
     as the root user.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '`lshw`命令意味着“列出硬件”，它向我们展示了计算机上安装的所有硬件的详细列表。不要忘记以root用户身份执行`lshw`命令。'
 - en: Checking log files
+  id: totrans-30
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 检查日志文件
 - en: Linux Mint uses a set of files for logging different activities happening in
     the operating system. This kind of information includes data about how resources,
     such as files or network are used. All of these files reside inside the `/var/log/`
@@ -152,140 +214,196 @@
     and `dpkg.log`. Usually, specific applications such as MySQL and Apache, use its
     own log files inside the `/var/log/` directory. It's a good practice to check
     the mentioned log directory to find out what's happening in our computer.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux Mint使用一组文件来记录操作系统中发生的不同活动。这类信息包括有关资源（如文件或网络）如何使用的数据。所有这些文件都位于`/var/log/`目录中。只有root用户可以更改这些文件，但其他用户可以阅读。最重要的日志文件之一是`/var/log/syslog`，这是一个通用日志，不同的应用程序在其中写入有关其活动的数据。除了这个通用日志文件，我们还可以找到许多其他文件，如`Xorg.0.log`、`dmesg`、`kern.log`和`dpkg.log`。通常，特定应用程序如MySQL和Apache，会在`/var/log/`目录中使用自己的日志文件。检查提到的日志目录以了解计算机上发生的情况是一个好习惯。
 - en: Time for action – listing the last five lines of the syslog file
+  id: totrans-32
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 列出syslog文件的最后五行
 - en: We're going to check the last five lines of our `syslog` file using the `tail`
     command.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将使用`tail`命令检查我们的`syslog`文件的最后五行。
 - en: Open the MATE Terminal as usual.
+  id: totrans-34
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 像往常一样打开MATE终端。
 - en: 'Execute following command:'
+  id: totrans-35
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 执行以下命令：
 - en: '[PRE6]'
+  id: totrans-36
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: As the output, you'll get some lines informing you about the last actions saved
     in `syslog` file.
+  id: totrans-37
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 作为输出，你将得到一些行，告诉你关于保存在`syslog`文件中的最后操作的信息。
 - en: '*What just happened?*'
+  id: totrans-38
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚刚发生了什么？*'
 - en: We used a command called `tail` to read the last lines of our `syslog` file.
     This command reads a file in reverse order and can receive a number as an argument.
     This number is used to display a specific number of lines of the file. Obviously,
     you can read the `syslog` file using your favorite editor, but it's easier to
     use `tail` as the output of this command is sent directly to your terminal.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们使用了一个名为`tail`的命令来读取我们`syslog`文件的最后几行。这个命令以相反的顺序读取文件，并且可以接收一个数字作为参数。这个数字用于显示文件的特定行数。显然，你可以使用你喜欢的编辑器来阅读`syslog`文件，但使用`tail`更容易，因为这个命令的输出直接发送到你的终端。
 - en: Kernel
+  id: totrans-40
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 内核
 - en: The Linux kernel is the most important component of our Linux Mint operating
     system so we need to take care of it, and we should check if it's working properly.
     Linux kernel uses **modules** , which are components that implement and extend
     the functionality of the kernel, and that can be loaded or unloaded into the kernel
     upon demand without rebooting.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux内核是我们Linux Mint操作系统的最重要组件，因此我们需要照顾它，并检查它是否正常工作。Linux内核使用**模块**，这些是实现和扩展内核功能的组件，可以在不重启的情况下按需加载或卸载到内核中。
 - en: The use of modules has a lot of advantages; one of them is that we can save
     memory by loading only the required modules. Another clear advantage is the option
     of loading modules on the fly without rebooting your computer. It saves a lot
     of time, and we don't need to stop the service. Due to the importance of modules,
     system administrators should check the kernel and module status. We can do that,
     thanks to commands that we'll learn to use later.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 模块的使用有很多优点；其中之一是我们可以通过只加载所需的模块来节省内存。另一个明显的优点是可以在不重启计算机的情况下动态加载模块。这节省了大量时间，而且我们不需要停止服务。由于模块的重要性，系统管理员应该检查内核和模块状态。我们可以做到这一点，多亏了我们将要学习的命令。
 - en: Time for action – using lsmod, modprobe, and dmesg commands
+  id: totrans-43
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 使用lsmod、modprobe和dmesg命令
 - en: System administrators can use some commands to get information about the kernel,
     some of them are `lsmod`, `modprobe`, and `dmesg`. Let's discover how to use these
     commands.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 系统管理员可以使用一些命令来获取有关内核的信息，其中一些命令是`lsmod`、`modprobe`和`dmesg`。让我们探索如何使用这些命令。
 - en: Launch the MATE Terminal application.
+  id: totrans-45
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 启动MATE终端应用程序。
 - en: 'Execute the following command:'
+  id: totrans-46
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 执行以下命令：
 - en: '[PRE7]'
+  id: totrans-47
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: The output of the previous command will display information about your loaded
     kernel modules.
+  id: totrans-48
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 前一个命令的输出将显示有关已加载内核模块的信息。
 - en: 'We''re going to execute the following command to get a list of all modules
     that can be loaded in the kernel:'
+  id: totrans-49
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们将执行以下命令以获取内核中可以加载的所有模块的列表：
 - en: '[PRE8]'
+  id: totrans-50
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Then it''s time to execute the `dmesg` command, which will launch a lot of
     messages, so we''ll use it less to control output. Type the next command in your
     terminal:'
+  id: totrans-51
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 然后是执行`dmesg`命令的时候了，这将启动大量消息，因此我们将使用它来控制输出。在终端中输入以下命令：
 - en: '[PRE9]'
+  id: totrans-52
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '*What just happened?*'
+  id: totrans-53
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚刚发生了什么？*'
 - en: In order to know the status of each module loaded by the Linux kernel, we can
     execute the `lsmod` command. From the technical point of view, this command only
     formats the content of the `/proc/modules` file.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了了解Linux内核加载的每个模块的状态，我们可以执行`lsmod`命令。从技术角度来看，这个命令只是格式化了`/proc/modules`文件的内容。
 - en: System administrators need to know how to load and unload modules in the Linux
     kernel. The `modprobe` command allows us to perform these actions. It receives
     as parameter the name of the module that will be loaded or unloaded. Passing the
     `-l` argument, we can find out which modules are available to load.
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 系统管理员需要知道如何在Linux内核中加载和卸载模块。`modprobe`命令允许我们执行这些操作。它接收作为参数的模块名称，该模块将被加载或卸载。通过传递`-l`参数，我们可以找出哪些模块可供加载。
 - en: Finally, the `dmesg` command is very useful to get information related to kernel
     operations. For example, if we plug a USB device to our computer, the kernel will
     create a log message that can be read using the `dmesg` command. Thanks to the
     `more` command, you can read lines easier. Sure, you've realized that we used
     a pipe to send the output of `dmesg` to the input of `more`.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，`dmesg`命令对于获取与内核操作相关的信息非常有用。例如，如果我们将USB设备插入计算机，内核将创建一个日志消息，可以使用`dmesg`命令读取。通过使用`more`命令，您可以更轻松地阅读行。当然，您已经意识到我们使用了管道将`dmesg`的输出发送到`more`的输入。
 - en: Networking
+  id: totrans-57
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 网络
 - en: Nowadays, network is one of the most valuable resource used by computers. It's
     hard to imagine a company without the Internet or local network connection. Sometimes
     system administrators need to deal with problems related to networks, so it's
     very interesting to know which tools can be used to detect and solve common problems.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 如今，网络是计算机使用的最有价值的资源之一。很难想象一个没有互联网或局域网连接的公司。有时系统管理员需要处理与网络相关的问题，因此了解可以使用哪些工具来检测和解决常见问题非常有趣。
 - en: For sure, you've heard about `ping`, a command to send information to computers
     and devices such as printers with the goal of getting a response and also making
     sure they're working properly. This command is very useful to check network connections,
@@ -295,43 +413,61 @@
     `route` allows us to change that table. It's not possible to establish a connection
     outside our route table, so it's important to check it out when connections are
     failing.
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，您一定听说过`ping`，这是一个向计算机和设备（如打印机）发送信息以获取响应并确保它们正常工作的命令。这个命令对于检查网络连接非常有用，如果`ping`没有得到响应，则无法建立连接，并且设备或计算机在网络通信方面存在故障。与`ping`相关，我们找到了`route`，这是一个显示我们计算机IP路由表的命令。此外，`route`允许我们更改该表。无法在我们路由表之外建立连接，因此当连接失败时检查它很重要。
 - en: Another useful command to get information about our network interfaces is `ifconfig`.
     For example, using `ifconfig` we can find out which IP is using each network interface
     of our server. Also, `ifconfig` allows us to configure network interfaces through
     the command line.
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一个获取有关我们网络接口信息的实用命令是`ifconfig`。例如，使用`ifconfig`我们可以找出我们的服务器每个网络接口使用的IP。此外，`ifconfig`允许我们通过命令行配置网络接口。
 - en: Linux Mint also includes `netstat`, a command that offers information about
     network connections, routing tables, interface statistics, masquerade connections,
     and multicast memberships. We'll learn more about the `netstat` command later.
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux Mint还包括`netstat`，这是一个提供有关网络连接、路由表、接口统计、伪装连接和多播成员信息的命令。我们将在后面了解更多关于`netstat`命令的信息。
 - en: Time for action – checking who is listening on what port
+  id: totrans-62
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 检查谁在监听哪个端口
 - en: We're going to discover how to use the `netstat` command to find out what applications
     are listening on what ports.
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将学习如何使用`netstat`命令来找出哪些应用程序正在监听哪些端口。
 - en: Open MATE Terminal as usual.
+  id: totrans-64
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 像往常一样打开MATE终端。
 - en: 'Type and execute the following command:'
+  id: totrans-65
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 输入并执行以下命令：
 - en: '[PRE10]'
+  id: totrans-66
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '*What just happened?*'
+  id: totrans-67
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚刚发生了什么？*'
 - en: Despite executing `netstat` only to find out what programs are listening on
     what ports, this command can be used to get more information about our network
     connections and usage. If you execute `netstat` without any argument, you'll get
@@ -339,36 +475,50 @@
     be used for checking and monitoring all network activity on your computer. You
     can get more information about the `netstat` command through the `man` and `info`
     commands.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管执行 `netstat` 只是为了找出哪些程序正在监听哪些端口，但这个命令也可以用来获取有关网络连接和使用的更多信息。如果你不带任何参数执行 `netstat`，你将获得关于计算机上所有打开的套接字的信息。基本上，`netstat`
+    可以用来检查和监控计算机上的所有网络活动。你可以通过 `man` 和 `info` 命令获取更多关于 `netstat` 命令的信息。
 - en: Processes and filesystems
+  id: totrans-69
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 进程和文件系统
 - en: Processes and filesystems cause many computer problems. Remember that processes
     are created by programs that reside in filesystems, so both of them are closely
     related. If something goes wrong with a computer, it's a good idea to take a look
     at which processes are running and how is the status of filesystems associated
     to these processes.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 进程和文件系统会导致许多计算机问题。请记住，进程是由驻留在文件系统中的程序创建的，因此它们之间有着密切的联系。如果计算机出现问题，查看正在运行的进程以及与这些进程相关的文件系统的状态是一个好主意。
 - en: The `fuser` command is very useful, because it offers a list that shows what
     files are used for what process. Basically, we only need to execute this command
     by passing the name of a specific process as argument.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: '`fuser` 命令非常有用，因为它提供了一个列表，显示了哪些文件被用于哪些进程。基本上，我们只需要通过传递特定进程的名称作为参数来执行这个命令。'
 - en: Linux Mint and other GNU/Linux distributions include `strace` , a tool that
     can be employed to discover what system calls and libraries are used by a specific
     process. You can type `strace` followed by a command or application that you want
     to trace.
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux Mint 和其他 GNU/Linux 发行版包含 `strace`，这是一个可以用来发现特定进程使用的系统调用和库的工具。你可以输入 `strace`
+    后跟你想要跟踪的命令或应用程序。
 - en: Usually, system administrators work with `top` , a command offering complete
     information about running processes, including data about CPU and memory consumption.
     Another useful tool to deal with processes is `ps`. We'll learn how to find a
     specific process using that command.
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，系统管理员使用 `top` 命令，该命令提供有关运行进程的完整信息，包括有关 CPU 和内存消耗的数据。另一个处理进程的有用工具是 `ps`。我们将学习如何使用该命令查找特定进程。
 - en: When system administrators need to take a quick look at the filesystem attached
     to a specific computer, they work with the `df` command, which provides information
     about the filesystem disk space usage. By passing the `-h` argument, we'll get
@@ -376,136 +526,197 @@
     where each filesystem is mounted. Many problems happen when filesystems are without
     space or aren't mounted, so it's a good idea to use `df` to detect these kinds
     of issues.
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 当系统管理员需要快速查看特定计算机上附着的文件系统时，他们使用 `df` 命令，该命令提供有关文件系统磁盘空间使用情况的信息。通过传递 `-h` 参数，我们将获得一个列表，其中包括大小、可用和已用空间、使用百分比以及每个文件系统挂载的位置。许多问题发生在文件系统没有空间或未挂载时，因此使用
+    `df` 来检测这类问题是一个好主意。
 - en: Time for action – finding a specific process
+  id: totrans-75
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 查找特定进程
 - en: You're going to learn how to use the `ps` command to find information about
     a specific process running on your computer. In our case, we'll look for the SSH
     server daemon process.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 你将学习如何使用 `ps` 命令来查找计算机上运行的特定进程的信息。在我们的例子中，我们将查找 SSH 服务器守护进程进程。
 - en: Launch the MATE Terminal.
+  id: totrans-77
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 启动 MATE 终端。
 - en: 'Type the following command in your shell:'
+  id: totrans-78
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在你的 shell 中输入以下命令：
 - en: '[PRE11]'
+  id: totrans-79
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'As a result of the last executed command, we''ll get the following response:'
+  id: totrans-80
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 执行上一条命令后，我们将得到以下响应：
 - en: '[PRE12]'
+  id: totrans-81
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '*What just happened?*'
+  id: totrans-82
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: As you've observed, we used the `ps` and `fgrep` commands together through a
     pipe connector. The `frep` command looks for a specific pattern, in our case `sshd`
     works as that pattern. The `ef` parameters indicate that we're looking at all
     running processes, using the output formatted according to the default values
     of the `ps` command. Using pipes we can redirect the output of the `ps` command
     to `fgrep`.
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如你所观察到的，我们通过管道连接符将 `ps` 和 `fgrep` 命令一起使用。`fgrep` 命令寻找特定的模式，在我们的例子中，`sshd` 作为那个模式。`ef`
+    参数表示我们正在查看所有运行的进程，使用 `ps` 命令的默认值格式化输出。使用管道，我们可以将 `ps` 命令的输出重定向到 `fgrep`。
 - en: 'For sure you might be wondering why we got two lines if we only have just a
     single `sshd` process running. The answer is easy to explain: `sshd` string is
     another name for the piped command `fgrep`, so its output is also shown.'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可能会好奇，如果我们只有一个`sshd`进程在运行，为什么会有两行输出。答案很容易解释：`sshd`字符串是管道命令`fgrep`的另一个名称，因此它的输出也会显示出来。
 - en: Each output line of `ps` offers us information about the process owner, path
     to the running process, PID (process ID), terminal associated, and time when it
     started. Keep in mind, that we got a question mark for the `sshd` process because
     it's a daemon not associated with any terminal.
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: '`ps`的每一行输出为我们提供了关于进程所有者、运行进程的路径、PID（进程ID）、关联的终端以及启动时间的信息。请记住，我们为`sshd`进程得到一个问号，因为它是一个不与任何终端关联的守护进程。'
 - en: If you need to kill a process or get more information about it, you can use
     the System Monitor tool included in Linux Mint. More information about this tool
     can be found in [Chapter 10](ch10.html "Chapter 10. Monitoring Your System"),
     *Monitoring*.
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你需要终止一个进程或获取更多关于它的信息，你可以使用Linux Mint内置的系统监视器工具。关于这个工具的更多信息可以在[第10章](ch10.html
+    "第10章. 监控你的系统")，*监控*中找到。
 - en: Summary
+  id: totrans-87
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 总结
 - en: In this chapter, you've learned which tools and commands can help system administrators
     to detect and solve common problems related to hardware, network, kernel, filesystems,
     and processes. Despite each problem being unique, tools described in this chapter
     are very useful to check if different resources and devices are working properly.
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，你已经学习了哪些工具和命令可以帮助系统管理员检测和解决与硬件、网络、内核、文件系统和进程相关的常见问题。尽管每个问题都是独特的，但本章中描述的工具对于检查不同的资源和设备是否正常工作非常有用。
 - en: 'Specifically, we covered:'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 具体来说，我们涵盖了：
 - en: Checking hardware components such as memory, CPU, USB, and PCI devices
+  id: totrans-90
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 检查硬件组件，如内存、CPU、USB和PCI设备
 - en: Checking log files
+  id: totrans-91
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 检查日志文件
 - en: Learning about how to list loaded modules in the kernel
+  id: totrans-92
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 学习如何列出内核中加载的模块
 - en: Useful tools to check network connection and finding out what processes are
     listening on what ports
+  id: totrans-93
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 检查网络连接和找出哪些进程在哪些端口上监听的有用工具
 - en: Dealing with running processes
+  id: totrans-94
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 处理运行中的进程
 - en: 'If you need to look for help to specific problems, the following resources
     can be very useful:'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你需要寻找特定问题的帮助，以下资源可能非常有用：
 - en: Wiki with complete information for system administrators available at [http://sysadmin.wikia.com/wiki/Main_Page](http://sysadmin.wikia.com/wiki/Main_Page).
+  id: totrans-96
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 系统管理员完整信息的维基可在[http://sysadmin.wikia.com/wiki/Main_Page](http://sysadmin.wikia.com/wiki/Main_Page)找到。
 - en: 'The Linux Documentation project offers a good collection of how to documents
     and guides available at:'
+  id: totrans-97
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Linux文档项目提供了一系列好的操作指南和手册，可在以下网址找到：
 - en: '[http://tldp.org/docs.html#howto](http://tldp.org/docs.html#howto)'
+  id: totrans-98
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[http://tldp.org/docs.html#howto](http://tldp.org/docs.html#howto)'
 - en: '[http://tldp.org/guides.html](http://tldp.org/guides.html)'
+  id: totrans-99
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[http://tldp.org/guides.html](http://tldp.org/guides.html)'
 - en: The official Linux Mint documentation available at [http://www.linuxmint.com/documentation.php](http://www.linuxmint.com/documentation.php)
+  id: totrans-100
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Linux Mint的官方文档可在[http://www.linuxmint.com/documentation.php](http://www.linuxmint.com/documentation.php)找到。
 - en: The official Linux kernel documentation available at [http://kernel.org/doc/](http://kernel.org/doc/)
+  id: totrans-101
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Linux内核的官方文档可在[http://kernel.org/doc/](http://kernel.org/doc/)找到。
 - en: At this point, you've learned basic things about system administration in Linux
     Mint. Throughout this book we explained how to deal with user accounts, how to
     install and configure software, basic things about networking and security, how
     to create and restore backups, and the last chapter was dedicated to system monitoring.
     Finally, we complete our way learning about tools and commands that can help us
     to face common and daily issues.
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 至此，你已经学习了Linux Mint系统管理的基础知识。在本书中，我们解释了如何处理用户账户，如何安装和配置软件，网络和安全的基础知识，如何创建和恢复备份，以及最后一章专门介绍了系统监控。最后，我们完成了学习工具和命令的过程，这些可以帮助我们面对日常的常见问题。

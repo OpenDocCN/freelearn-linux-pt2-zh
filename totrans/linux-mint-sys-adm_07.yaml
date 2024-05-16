@@ -1,190 +1,271 @@
 - en: Chapter 7. Networking
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第7章。网络
 - en: '*Nowadays, computers work together through network-sharing resources such as
     files, folders, and printers. In fact, the Internet is a huge network where computers
     are working to exchange data. In this chapter, you''ll learn how to carry out
     some basic system administrator tasks related to networking.*'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '*如今，计算机通过网络共享资源（如文件、文件夹和打印机）协同工作。实际上，互联网是一个巨大的网络，其中计算机正在工作以交换数据。在本章中，您将学习如何执行一些与网络相关的基本系统管理员任务。*'
 - en: 'In this chapter, we will learn about the following topics:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将学习以下主题：
 - en: Configuring wired and wireless networks
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 配置有线和无线网络
 - en: Accessing Window's shared folders
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 访问Windows的共享文件夹
 - en: Connecting to servers through the FTP protocol
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 通过FTP协议连接到服务器
 - en: Configuring a wired network
+  id: totrans-6
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 配置有线网络
 - en: Although wireless networks are very extended, a lot of companies and universities
     still use a wired computer network. We're going to learn how to configure our
     computer to access a local network, and also access the Internet. Keep in mind
     that before accessing the Internet from a local network, you need to access the
     network itself.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管无线网络非常普及，但许多公司和大学仍然使用有线计算机网络。我们将学习如何配置我们的计算机以访问本地网络，以及访问互联网。请记住，在从本地网络访问互联网之前，您需要访问网络本身。
 - en: Time for action – configuring your connection
+  id: totrans-8
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 配置您的连接
 - en: 'Let''s say we want to connect our computer to a local network using a static
     IP of `192.168.1.45`. We know that the DNS server is using `8.8.8.8` as an IP
     address. Also, our gateway can be reached at `192.168.1.125`. Perform the following
     steps to configure your connection:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们想要使用静态IP `192.168.1.45` 将我们的计算机连接到本地网络。我们知道DNS服务器使用 `8.8.8.8` 作为IP地址。此外，我们的网关可以在
+    `192.168.1.125` 处到达。执行以下步骤来配置您的连接：
 - en: Launch the **Control Center** tool from the main menu.
+  id: totrans-10
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从主菜单启动**控制中心**工具。
 - en: Click on the **Network** button inside the **Internet and Network** group.
+  id: totrans-11
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在**互联网和网络**组内点击**网络**按钮。
 - en: Now you have access to a window called **Network Settings**.
+  id: totrans-12
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在您可以访问一个名为**网络设置**的窗口。
 - en: Click on the **Click to make changes** button.
+  id: totrans-13
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**点击进行更改**按钮。
 - en: Before continuing to the next step, you should be authenticated. So, you need
     to enter your password and click on the **Authenticate** button when you're ready.
     The first tab, called **Connections**, has an option named **Wired** **connection**;
     click on it, as shown in the following screenshot:![Time for action – configuring
     your connection](img/9601_07_01.jpg)
+  id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在继续下一步之前，您应该已经通过身份验证。因此，您需要输入密码并在准备好后点击**认证**按钮。第一个选项卡，称为**连接**，有一个名为**有线连接**的选项；点击它，如下面的截图所示：![行动时间
+    – 配置您的连接](img/9601_07_01.jpg)
 - en: Click on the **Properties** button of the **Network Settings** window.
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在**网络设置**窗口中点击**属性**按钮。
 - en: Select **Static IP address** from the **Configuration** drop-down menu and enter
     **192.168.1.45** on the **IP address** input box. After that, the input box loses
     focus and the **Subnet mask** input box will be filled automatically. Enter **192.168.1.125**
     in the **Gateway address** input box. All these settings are shown in the following
     screenshot:![Time for action – configuring your connection](img/9601_07_02.jpg)
+  id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从**配置**下拉菜单中选择**静态IP地址**，并在**IP地址**输入框中输入**192.168.1.45**。之后，输入框失去焦点，**子网掩码**输入框将自动填充。在**网关地址**输入框中输入**192.168.1.125**。所有这些设置如下面的截图所示：![行动时间
+    – 配置您的连接](img/9601_07_02.jpg)
 - en: Click on the **OK** button when you're done.
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成后点击**确定**按钮。
 - en: Click on the **DNS** tab, and click on the **Add** button. Now, you can enter
     `8.8.8.8` in the first input box. Click on the **Close** button when you're ready;
     your network is now configured.
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**DNS**选项卡，然后点击**添加**按钮。现在，您可以在第一个输入框中输入 `8.8.8.8`。准备好后点击**关闭**按钮；您的网络现在已配置。
 - en: '*What just happened?*'
+  id: totrans-19
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚刚发生了什么？*'
 - en: We have learned how to connect to a local network through a simple GUI application
     included in Linux Mint. Although some system administrators prefer to use the
     command-line interface, it's pretty easy and intuitive to use this graphical interface.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经学会了如何通过Linux Mint中包含的一个简单的GUI应用程序连接到本地网络。尽管一些系统管理员更喜欢使用命令行界面，但使用这个图形界面既简单又直观。
 - en: In our example, we configured our network card, assigning it a static IP address
     and setting a gateway and a specific server as **Domain Name Server** (**DNS**).
     The functionality of this kind of server is very important, because it resolves
     domain names into IP address.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们的示例中，我们配置了网络卡，为其分配了一个静态IP地址，并设置了一个网关和一个特定的服务器作为**域名服务器**（**DNS**）。这种服务器功能非常重要，因为它将域名解析为IP地址。
 - en: Although the **Network Settings** application automatically configures the subnet
     mask, you can also add your own data. Note that the subnet mask is calculated
     based on the IP address that you have entered.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管**网络设置**应用程序会自动配置子网掩码，您也可以添加自己的数据。请注意，子网掩码是根据您输入的IP地址计算得出的。
 - en: Some networks use automatic configuration based on **Dynamic Host Configuration
     Protocol** (**DHCP**) instead of using static IP addresses. In that case, you
     can configure your network access by selecting **Automatic configuration (DHCP)
     for Configuration** from the drop-down menu.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 有些网络使用基于**动态主机配置协议**（**DHCP**）的自动配置，而不是使用静态IP地址。在这种情况下，您可以通过从下拉菜单中选择**自动配置（DHCP）**来配置网络访问。
 - en: Have a go hero – changing the hostname
+  id: totrans-24
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 尝试一下英雄 – 更改主机名
 - en: If you want, it's possible to change your hostname. You need to use the same
     application that you used for configuring your network. Simply access the **General**
     tab and enter your new hostname in the **Host name** input box.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您愿意，可以更改您的主机名。您需要使用配置网络时使用的同一应用程序。只需访问**常规**选项卡，并在**主机名**输入框中输入您的新主机名。
 - en: Configuring the wireless network
+  id: totrans-26
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 配置无线网络
 - en: Nowadays, wireless networks are very popular; companies, universities, airports,
     and coffee shops use this kind of network to establish connections to the Internet.
     We will learn how to configure your Linux Mint computer to use a wireless network.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 如今，无线网络非常流行；公司、大学、机场和咖啡店都使用这种网络来建立互联网连接。我们将学习如何配置您的Linux Mint计算机以使用无线网络。
 - en: Time for action – how to connect your computer to a wireless network
+  id: totrans-28
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 操作时间 – 如何将计算机连接到无线网络
 - en: Imagine we need to connect our computer to a wireless network that is using
     **Testing** as **SSID** and the **WEP-128** method for security. Also, we're going
     to use the same data for the **IP address**, **Subnet mask**, and **Gateway address**
     input boxes as we used when we configured our network in the previous section.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 设想我们需要将计算机连接到一个无线网络，该网络使用**测试**作为**SSID**，并使用**WEP-128**安全方法。此外，我们将使用与上一节配置网络时相同的IP地址、子网掩码和网关地址数据。
 - en: Launch the **Control Center** tool from the main menu.
+  id: totrans-30
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从主菜单启动**控制中心**工具。
 - en: Click on the **Network Connections** option from the **Other** group.
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从**其他**组中选择**网络连接**选项。
 - en: Click on the **Wireless** tab, and then click on the **Add** button.
+  id: totrans-32
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**无线**选项卡，然后点击**添加**按钮。
 - en: Now you have a new window where you can add your configuration data. Choose
     a name for your connection, add **Testing** to the **SSID** input box, and click
     on the **Save...** button when you're ready, as shown in the following screenshot:![Time
     for action – how to connect your computer to a wireless network](img/9601_07_03.jpg)
+  id: totrans-33
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在您有一个新窗口，可以在其中添加配置数据。为您的连接选择一个名称，在**SSID**输入框中添加**测试**，并在准备好时点击**保存...**按钮，如下面的截图所示：![操作时间
+    – 如何将计算机连接到无线网络](img/9601_07_03.jpg)
 - en: Click on the **Wireless Security** tab and choose **WEP 128-bit Passphrase**
     from the **Security** drop-down menu. Inside the **Key** textbox, enter `MyKey`.
     If you want to make sure what you are entering is correct, check the **Show key**
     checkbox:![Time for action – how to connect your computer to a wireless network](img/9601_07_04.jpg)
+  id: totrans-34
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**无线安全**选项卡，并从**安全**下拉菜单中选择**WEP 128位密码短语**。在**密钥**文本框中，输入`MyKey`。如果您想确保输入正确，请勾选**显示密钥**复选框：![操作时间
+    – 如何将计算机连接到无线网络](img/9601_07_04.jpg)
 - en: Now it's time for setting your IP properties. Click on the **Add** button and
     enter `192.168.1.45` for the **IP address** input box, `255.255.255.0` for the
     **Subnet mask** input box, and `192.168.1.125` for the **Gateway address** input
     box.
+  id: totrans-35
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在是设置IP属性的时间。点击**添加**按钮，在**IP地址**输入框中输入`192.168.1.45`，在**子网掩码**输入框中输入`255.255.255.0`，在**网关地址**输入框中输入`192.168.1.125`。
 - en: Click on the **Save...** button. Your wireless network is now configured.
+  id: totrans-36
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**保存...**按钮。您的无线网络现已配置完成。
 - en: '*What just happened?*'
+  id: totrans-37
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: Mint offers us a simple but effective graphic tool to configure our wireless
     connection. You've learned how to do that using manual configuration for your
     IP address, subnet mask, and gateway. Also, our example used the **WEP 128-bit**
@@ -192,145 +273,203 @@
     that you are trying to configure is using a different security method, you can
     select it accordingly. Other available methods for security are **WEP 40/128-bit**,
     **LEAP**, **dynamic WEP**, and **WPA**.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: Mint为我们提供了一个简单但有效的图形工具来配置我们的无线连接。您已经学会了如何使用手动配置IP地址、子网掩码和网关。此外，我们的示例使用了**WEP
+    128位**安全方法，这需要一个密钥，我们需要输入它。如果您尝试配置的网络使用不同的安全方法，您可以相应地选择。其他可用的安全方法包括**WEP 40/128位**、**LEAP**、**动态WEP**和**WPA**。
 - en: On the other hand, similar to a wired network, you can use DHCP instead of a
     manual configuration. It depends on your wireless network.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一方面，与有线网络类似，您可以使用DHCP而不是手动配置。这取决于您的无线网络。
 - en: By now, you must have noticed that inside the configuration window there exists
     a marked option that allows you to connect automatically to the wireless network.
     Thanks to this option, your computer will be connected to the wireless network
     every time it boots.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，您一定已经注意到，在配置窗口中有一个标记的选项，允许您自动连接到无线网络。多亏了这个选项，您的计算机每次启动时都会连接到无线网络。
 - en: If your computer has a wireless card, Mint will try to autodetect, by default,
     which wireless networks are available. You can configure your connection by choosing
     any one of them.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您的计算机有无线网卡，Mint将默认尝试自动检测可用的无线网络。您可以选择任何一个来配置您的连接。
 - en: Accessing a Windows-shared folder
+  id: totrans-42
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 访问Windows共享文件夹
 - en: It is very useful to share resources such as folders, files, and printers inside
     a computer network. Usually, computers in the same network may be using different
     operating systems. Because Windows is one of the most widely used operating system,
     more than one computer inside your network can use it. Keeping this fact in mind,
     it could be very interesting to know how to access a Windows-shared folder from
     Linux.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 在计算机网络内部共享资源（如文件夹、文件和打印机）非常有用。通常，同一网络中的计算机可能使用不同的操作系统。由于Windows是最广泛使用的操作系统之一，您的网络中可能有多台计算机使用它。考虑到这一点，了解如何从Linux访问Windows共享文件夹可能会非常有趣。
 - en: Time for action – how to access a specific shared folder
+  id: totrans-44
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 如何访问特定的共享文件夹
 - en: 'We''re going to access a shared folder called `windows_shared`, which exists
     in a Windows 7 computer and is accessible from your Linux Mint computer over the
     network. This is how we can access a specific shared folder:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将访问名为`windows_shared`的共享文件夹，该文件夹存在于一台Windows 7计算机上，并且可以通过网络从您的Linux Mint计算机访问。以下是访问特定共享文件夹的方法：
 - en: In your Linux Mint desktop, you can see an icon depicted as a labeled folder,
     indicating that this icon represents your home folder. This icon gives you access
     to **Caja**, the Linux Mint file manager. For example, if your username is **john**,
     the icon label would be **john's Home**.
+  id: totrans-46
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在Linux Mint桌面中，您会看到一个标有名称的文件夹图标，表明这个图标代表您的家目录。通过这个图标，您可以访问**Caja**，即Linux Mint的文件管理器。例如，如果您的用户名是**john**，那么图标标签将是**john的家**。
 - en: Caja is now opened and you can see an icon with the **Network** label; click
     on it.
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: Caja现在已打开，您可以看到一个标有**网络**的图标；点击它。
 - en: At this point, you should see an icon that represents a Windows PC. This icon
     will use a label with the name of the Windows hostname's computer. Click on it
     to access the shared folders. For example, in the following screenshot, it is
     named **AL-PC**:![Time for action – how to access a specific shared folder](img/9601_07_05.jpg)
+  id: totrans-48
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 此时，您应该看到一个代表Windows PC的图标。这个图标将使用Windows主机名计算机的名称作为标签。点击它以访问共享文件夹。例如，在下图中，它被命名为**AL-PC**：![行动时间
+    – 如何访问特定的共享文件夹](img/9601_07_05.jpg)
 - en: A new dialog window, asking you about your username, password, and domain, will
     be now displayed. Enter your data and click on the **Connect** button when you're
     ready.
+  id: totrans-49
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在将显示一个新的对话框窗口，询问您的用户名、密码和域。输入您的信息，准备好后点击**连接**按钮。
 - en: Now, the **windows_shared** folder will be available in the Windows manager.
     You can now double-click on it to access the files inside it.![Time for action
     – how to access a specific shared folder](img/9601_07_07.jpg)
+  id: totrans-50
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，**windows_shared**文件夹将在Windows管理器中可用。您现在可以双击它来访问其中的文件。![行动时间 – 如何访问特定的共享文件夹](img/9601_07_07.jpg)
 - en: '*What just happened?*'
+  id: totrans-51
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: Thanks to Samba, it is now possible to access shared folders in Windows from
     Linux. From the technical point of view, Samba is a free reimplementation of the
     **SMB/CIFS** networking protocol. This protocol operates as an application-layer
     network and is used by Windows for sharing files, printers, and other resources.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 多亏了Samba，现在可以从Linux访问Windows中的共享文件夹。从技术角度来看，Samba是对**SMB/CIFS**网络协议的免费重新实现。该协议作为应用层网络运行，并被Windows用于共享文件、打印机和其他资源。
 - en: Obviously, before accessing the Windows-shared folders from Linux, you need
     to know some important information, such as workgroup, username, and password.
     This data should be provided by the Windows system administrator.
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 显然，在从Linux访问Windows共享文件夹之前，您需要了解一些重要信息，例如工作组、用户名和密码。这些数据应由Windows系统管理员提供。
 - en: By default, Linux Mint explores your network for discovering which computers
     are accessible. This happens when you click on the **Network** button of Caja.
     When your Windows computer is detected and you click on its icon, you can enter
     your data to access these shared folders. Then, you can work with the files inside
     this folder as if they were locally inside your computer.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，Linux Mint会探索您的网络以发现哪些计算机是可访问的。当您点击Caja的**网络**按钮时，就会发生这种情况。当检测到您的Windows计算机并点击其图标时，您可以输入数据以访问这些共享文件夹。然后，您可以像处理本地计算机内的文件一样处理该文件夹内的文件。
 - en: Remember that, by default, all shared folders will be displayed on Caja after
     authentication. However, you can only access those folders with permissions from
     a user who is connected to a Windows PC.
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，默认情况下，所有共享文件夹在验证后都会显示在Caja上。但是，只有连接到Windows PC的用户才能访问具有权限的那些文件夹。
 - en: Connecting to servers
+  id: totrans-56
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 连接到服务器
 - en: It's very common for servers on the Internet to provide access to other servers
     and computers by using different network protocols. **FTP** , **SSH** , and **WebDAV**
     are common protocols to access remote servers, and hence it would be very interesting
     to know how to connect with other computers from Linux Mint using these protocols.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 互联网上的服务器通常通过使用不同的网络协议为其他服务器和计算机提供访问。**FTP**、**SSH**和**WebDAV**是访问远程服务器的常见协议，因此了解如何使用这些协议从Linux
+    Mint连接到其他计算机将非常有趣。
 - en: Time for action – connecting to an FTP server
+  id: totrans-58
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 操作时间 – 连接到FTP服务器
 - en: We're going to connect to a public FTP server, which provides access to Linux
     kernel resources. It can be reached at [ftp.kernel.org](http://ftp.kernel.org);
     we don't need any username or password to access it.
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将连接到一个公共FTP服务器，该服务器提供对Linux内核资源的访问。它可以通过[ftp.kernel.org](http://ftp.kernel.org)访问，我们不需要任何用户名或密码即可访问。
 - en: Open the Caja file manager by clicking on the **Home Folder** option, which
     is accessible through the main menu, in the **Places** group.
+  id: totrans-60
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 通过点击**主文件夹**选项打开Caja文件管理器，该选项可通过主菜单在**位置**组中访问。
 - en: Go to the **File** menu, and click on **Connect to server**.
+  id: totrans-61
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 前往**文件**菜单，点击**连接到服务器**。
 - en: A new dialog will be displayed. Choose **Public FTP** from the **Service** drop-down
     menu. Enter **ftp.kernel.org** in the **Server** textbox as shown in the following
     screenshot:![Time for action – connecting to an FTP server](img/9601_07_08.jpg)
+  id: totrans-62
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将显示一个新对话框。从**服务**下拉菜单中选择**公共FTP**。在**服务器**文本框中输入**ftp.kernel.org**，如下面的截图所示：![操作时间
+    – 连接到FTP服务器](img/9601_07_08.jpg)
 - en: You can see all the available folders through the FTP server in your file manager
     window, as shown here:![Time for action – connecting to an FTP server](img/9601_07_09.jpg)
+  id: totrans-63
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 您可以在文件管理器窗口中看到通过FTP服务器可用的所有文件夹，如下所示：![操作时间 – 连接到FTP服务器](img/9601_07_09.jpg)
 - en: '*What just happened?*'
+  id: totrans-64
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: The Caja file manager helps us connect to servers using different network protocols.
     In our example, we've learned how to connect to a public FTP server. This kind
     of server doesn't need a username and password combination. If you need to connect
@@ -339,48 +478,71 @@
     the files and folders through Caja as if they were in your computer. This means
     you can copy content directly from another file manager window using the drag-and-drop
     technique.
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: Caja文件管理器帮助我们使用不同的网络协议连接到服务器。在我们的示例中，我们学习了如何连接到公共FTP服务器。这种类型的服务器不需要用户名和密码组合。如果需要连接到此类服务器，可以从**服务**下拉菜单中选择**FTP（带登录）**选项。一旦建立了连接，您就可以通过Caja访问文件和文件夹，就像它们在您的计算机上一样。这意味着您可以直接从另一个文件管理器窗口使用拖放技术复制内容。
 - en: Inside the connection dialog, you can see that an option called **Add bookmark
     exists**. By selecting that option, a shortcut will be created in your file manager.
     Thanks to this functionality, you can quickly access your most common server connections.
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 在连接对话框中，你可以看到一个名为**添加书签**的选项。通过选择该选项，将在你的文件管理器中创建一个快捷方式。得益于这一功能，你可以快速访问最常用的服务器连接。
 - en: Have a go hero – connecting to a server using the secure WebDAV protocol
+  id: totrans-67
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 尝试英雄 – 使用安全WebDAV协议连接到服务器
 - en: Try connecting to a server through the secure WebDAV protocol. You can follow
     the same steps as explained before for connecting to a public FTP server. We only
     need to select **Secure WebDAV (HTTPS)** from the **Security** drop-down menu.
     Also, you can enter your username for the server, and the default folder name
     where the connection will be established.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 尝试通过安全WebDAV协议连接到服务器。你可以按照之前连接到公共FTP服务器的相同步骤进行操作。我们只需要从“安全”下拉菜单中选择**Secure WebDAV
+    (HTTPS)**。此外，你可以输入服务器的用户名，以及连接将建立的默认文件夹名称。
 - en: Summary
+  id: totrans-69
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 总结
 - en: We learned a lot in this chapter about how to perform some basic networking
     operations.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们学到了很多关于如何执行一些基本网络操作的知识。
 - en: 'Specifically, we covered the following topics:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 具体来说，我们涵盖了以下主题：
 - en: Connecting to wired and wireless networks
+  id: totrans-72
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 连接有线和无线网络
 - en: Accessing remote computers using the FTP and WebDAV protocols
+  id: totrans-73
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用FTP和WebDAV协议访问远程计算机
 - en: Connecting to a Windows-shared folder
+  id: totrans-74
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 连接到Windows共享文件夹
 - en: Now that you know how to deal with networks, it's time to learn about the different
     types of available filesystems and how to make and restore backups.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 既然你已经知道如何处理网络，现在是时候学习不同类型的可用文件系统和如何创建和恢复备份了。

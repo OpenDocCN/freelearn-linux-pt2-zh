@@ -1,154 +1,219 @@
 - en: Chapter 6. Configuring hardware
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第 6 章 配置硬件
 - en: '*Your computer includes and uses different hardware and peripherals such as
     a processor, keyboard, monitor, graphical card, and a sound card. When these devices
     are working properly, your computer works without any hardware problem. In this
     chapter, we''re going to learn how to configure the hardware of your computer.*'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '*您的计算机包含并使用不同的硬件和外设，如处理器、键盘、显示器、图形卡和声卡。当这些设备正常工作时，您的计算机不会出现任何硬件问题。在本章中，我们将学习如何配置计算机硬件。*'
 - en: 'We shall cover the following topics in this chapter:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章我们将涵盖以下主题：
 - en: How to detect hardware
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何检测硬件
 - en: Configuring your monitor
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 配置您的显示器
 - en: How to configure your keyboard and mouse
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何配置您的键盘和鼠标
 - en: Configure sound
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 配置声音
 - en: How to install additional drivers
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何安装附加驱动
 - en: Detecting hardware
+  id: totrans-8
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 检测硬件
 - en: Before proceeding to configure your hardware, it's important to find out which
     devices are working within your computer. Linux Mint offers a graphical tool to
     get information about the hardware installed on your computer. Also, we're going
     to learn how to use commands to display low-level information about devices using
     USB and PCI interfaces.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 在配置硬件之前，了解计算机内部工作的设备非常重要。Linux Mint 提供了一个图形工具，用于获取有关计算机上安装的硬件信息。此外，我们还将学习如何使用命令显示使用
+    USB 和 PCI 接口的设备的低级信息。
 - en: Time for action – how to display the device information
+  id: totrans-10
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 开始行动 – 如何显示设备信息
 - en: 'Let''s display information about devices running on your computer. To do that,
     follow these steps:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们显示计算机上运行的设备信息。为此，请按照以下步骤操作：
 - en: Click on the **Menu** button from the bottom panel and then click on the **Control
     Center** menu option belonging to the **System** group, as shown in the following
     screenshot:![Time for action – how to display the device information](img/9601_06_01.jpg)
+  id: totrans-12
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击底部面板上的 **菜单** 按钮，然后点击 **系统** 组中的 **控制中心** 菜单选项，如下所示：![开始行动 – 如何显示设备信息](img/9601_06_01.jpg)
 - en: Now you can see a new window; click on the **Hardware** menu option:![Time for
     action – how to display the device information](img/9601_06_02.jpg)
+  id: totrans-13
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在您可以看到一个新窗口；点击 **硬件** 菜单选项：![开始行动 – 如何显示设备信息](img/9601_06_02.jpg)
 - en: Click on the **System Information** link, you'll then see a new window, which
     belongs to an application called **HardInfo**.
+  id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击 **系统信息** 链接，您将看到一个新窗口，它属于一个名为 **HardInfo** 的应用程序。
 - en: On the left-hand side pane of the main window, you'll find a tree structure
     where the **Devices** icon gives you access to information about hardware installed
     on your computer, as shown in the following screenshot:![Time for action – how
     to display the device information](img/9601_06_03.jpg)
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在主窗口的左侧窗格中，您将找到一个树形结构，其中 **设备** 图标为您提供有关计算机上安装的硬件信息，如下所示：![开始行动 – 如何显示设备信息](img/9601_06_03.jpg)
 - en: '*What just happened?*'
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: Linux Mint included HardInfo for displaying information about the hardware installed
     on your computer. You can see information about many devices, such as a processor,
     memory, printers, and USB devices connected to your computer. Also, HardInfo offers
     you other relevant information about environment variables, users, or kernel modules
     loaded during boot time.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux Mint 包含 HardInfo 用于显示有关计算机上安装的硬件信息。您可以查看有关许多设备的信息，如处理器、内存、打印机以及连接到计算机的
+    USB 设备。此外，HardInfo 还为您提供其他相关信息，如环境变量、用户或启动时加载的内核模块。
 - en: If you need to get any information provided by HardInfo in HTML or text format,
     you can do it through the **Generate Report** button. This report can be very
     useful to share information about the hardware installed on your computer.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您需要以 HTML 或文本格式获取 HardInfo 提供的任何信息，可以通过 **生成报告** 按钮实现。该报告对于共享有关计算机上安装的硬件信息非常有用。
 - en: On the other hand, HardInfo is accessible through **Control Center**, a software
     tool that provides you access to many useful applications for configuring different
     aspects of your operating system.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一方面，HardInfo 可通过 **控制中心** 访问，这是一个提供您访问许多有用应用程序的软件工具，用于配置操作系统不同方面的设置。
 - en: Have a go hero – using the dmesg, lspci, and lsusb commands
+  id: totrans-20
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 动手实践 – 使用 dmesg、lspci 和 lsusb 命令
 - en: Although, HardInfo is a very intuitive and easy-to-use tool, you also can use
     other commands to get information about hardware installed on your computer. For
     example, `dmesg` is a command that prints on the shell information provided by
     the kernel. This means that if a USB device is connected to your computer, the
     Linux kernel will produce information about this fact; so `dmesg` will get you
     this kind of information.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管HardInfo是一个非常直观且易于使用的工具，你也可以使用其他命令来获取计算机上安装的硬件信息。例如，`dmesg`是一个命令，它会在shell上打印由内核提供的信息。这意味着如果将USB设备连接到计算机，Linux内核将产生有关此事实的信息；因此`dmesg`将获取这类信息。
 - en: In order to get data about the USB devices connected to your computer, you can
     execute the `lsusb` command. If you want to get information about your PCI devices,
     the `lspci` command can be used, as it provides you with a complete list of the
     required information.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了获取连接到计算机的USB设备的数据，你可以执行`lsusb`命令。如果你想获取有关PCI设备的信息，可以使用`lspci`命令，因为它为你提供了所需信息的完整列表。
 - en: Configuring your monitor
+  id: totrans-23
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 配置显示器
 - en: Monitors are one of the most important peripheral of your computer. Thanks to
     your monitor, you can see all your information and data displayed for your computer.
     Several monitors allow you to change some properties, such as screen resolution,
     rotation, and refresh rate. We're going to learn how to change some of these properties
     through a graphical tool provided by Linux Mint.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示器是计算机最重要的外设之一。多亏了显示器，你可以看到计算机上所有信息和数据的显示。多个显示器允许你更改一些属性，如屏幕分辨率、旋转和刷新率。我们将学习如何通过Linux
+    Mint提供的图形工具来更改这些属性。
 - en: Time for action – changing the screen resolution
+  id: totrans-25
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 更改屏幕分辨率
 - en: 'Although you can change many different properties of your monitor, we''ll learn
     how to change screen resolution; this can be done by following these steps:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管你可以更改显示器的许多不同属性，但我们将学习如何更改屏幕分辨率；这可以通过以下步骤完成：
 - en: Launch the **Control Center** application, and click on the **Monitors** link.
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 启动**控制中心**应用程序，然后点击**显示器**链接。
 - en: Go to the **Resolution** option, and choose the appropriate resolution for your
     monitor; a sample is shown in the following screenshot:![Time for action – changing
     the screen resolution](img/9601_06_04.jpg)
+  id: totrans-28
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 转到**分辨率**选项，并选择适合你显示器的分辨率；以下是示例截图：![行动时间 – 更改屏幕分辨率](img/9601_06_04.jpg)
 - en: Click on the **Apply** button when you're done.
+  id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成操作后，点击**应用**按钮。
 - en: '*What just happened?*'
+  id: totrans-30
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: It's pretty easy to change some of the properties of your monitor, thanks to
     the graphic tool provided by Mint. You've learned how to change the resolution
     of your screen; along with this, you can also change the rotation and refresh
@@ -158,229 +223,324 @@
     monitors, Mint allows you to configure each of them without any problem. Don't
     forget to click on the **Apply** button after changing the properties, otherwise
     your changes won't be applied.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 多亏了Mint提供的图形工具，更改显示器的一些属性非常容易。你已经学会了如何更改屏幕分辨率；此外，你还可以更改显示器的旋转和刷新率。还可以检测哪些显示器或显示器连接到计算机。基于这种检测，Mint可以自动为那些显示器/显示器选择更好的分辨率。如果你连接了多个显示器，Mint允许你配置每个显示器而没有任何问题。别忘了在更改属性后点击**应用**按钮，否则你的更改将不会被应用。
 - en: Configuring a keyboard
+  id: totrans-32
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 配置键盘
 - en: In the previous section, you learned how to configure your monitor, now it's
     time for another important peripheral—your keyboard. Linux Mint allows you to
     choose a specific keyboard brand and model, it also adds different layouts and
     configures your keyboard for getting accessibility. In this section, we're going
     to learn how to add a new layout.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 在前一节中，你学习了如何配置显示器，现在是时候关注另一个重要外设——你的键盘了。Linux Mint允许你选择特定的键盘品牌和型号，它还添加了不同的布局，并为键盘配置了辅助功能。在本节中，我们将学习如何添加新布局。
 - en: Time for action – adding a new layout
+  id: totrans-34
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 添加新布局
 - en: 'Let''s figure out how to add a Spanish layout to your keyboard. Here is how
     this can be done:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来弄清楚如何为键盘添加西班牙语布局。以下是如何完成此操作的方法：
 - en: Launch **Control Center,** and click on the **Keyboard** button.
+  id: totrans-36
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 启动**控制中心**，然后点击**键盘**按钮。
 - en: Click on the **Layouts** tab, which is shown in the following screenshot:![Time
     for action – adding a new layout](img/9601_06_05.jpg)
+  id: totrans-37
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**布局**标签，如下图所示：![行动时间 – 添加新布局](img/9601_06_05.jpg)
 - en: Click on the **Add…** button.
+  id: totrans-38
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**添加…**按钮。
 - en: Now, click on the **By language** tab.
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，点击**按语言**标签。
 - en: Look for the **Spanish; Castilian** option, and select it for the **Language**
     drop-down menu, as shown in the following screenshot:![Time for action – adding
     a new layout](img/9601_06_06.jpg)
+  id: totrans-40
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 寻找**西班牙语；卡斯蒂利亚语**选项，并将其选中用于**语言**下拉菜单，如下图所示：![行动时间 – 添加新布局](img/9601_06_06.jpg)
 - en: Click on the **Add** button when you're done.
+  id: totrans-41
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成后点击**添加**按钮。
 - en: Now you have a **Spanish** layout available for your keyboard, as shown in the
     following screenshot:![Time for action – adding a new layout](img/9601_06_07.jpg)
+  id: totrans-42
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在您的键盘上有了一个**西班牙语**布局，如下图所示：![行动时间 – 添加新布局](img/9601_06_07.jpg)
 - en: '*What just happened?*'
+  id: totrans-43
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚才发生了什么？*'
 - en: Some users would want to use a different layout for their keyboard. For example,
     there may be some developers whose mother tongue is not English, but they prefer
     to use this kind of layout for programming. However, they need to use another
     different layout for writing in languages such as French or Spanish. Only a single
     layout can be selected at a time, but users can change their layouts at any time.
     Keep in mind that you must add a new layout before using it.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些用户可能希望为他们的键盘使用不同的布局。例如，可能有一些开发人员，他们的母语不是英语，但他们更喜欢使用这种类型的布局进行编程。然而，他们需要使用另一种不同的布局来书写法语或西班牙语等语言。一次只能选择一个布局，但用户可以随时更改他们的布局。请记住，在使用之前必须添加新布局。
 - en: In addition to configuring the layout for your keyboard, you can also configure
     different aspects such as the brand and model of your keyboard, or decide if the
     cursor should blink or not in text fields. Changing these properties is easy,
     thanks to the graphic tool provided by Linux Mint.
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了配置键盘布局外，您还可以配置诸如键盘品牌和型号或决定文本字段中光标是否应该闪烁等不同方面。多亏了Linux Mint提供的图形工具，更改这些属性很容易。
 - en: Configuring your mouse
+  id: totrans-46
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 配置您的鼠标
 - en: In the preceding sections, we've learned how to configure our monitor and our
     keyboard, but we have another important peripheral that allows us to communicate
     with our computer. We're talking about the mouse. Mint provides a simple and easy-to-use
     tool to change properties of your mouse.
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 在前面的部分中，我们学习了如何配置我们的显示器和键盘，但我们还有一个重要的外围设备，允许我们与计算机通信。我们说的是鼠标。Mint提供了一个简单易用的工具来更改鼠标属性。
 - en: Time for action – changing mouse orientation
+  id: totrans-48
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 更改鼠标方向
 - en: 'Let''s learn how to change the orientation of the mouse from right-hand to
     left-hand. This is can be done by following these steps:'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们学习如何将鼠标从右手方向更改为左手方向。这可以通过以下步骤完成：
 - en: Again, we'll launch the **Control Center** application, and click on the **Keyboard**
     button on the **Hardware** group.
+  id: totrans-50
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 再次，我们将启动**控制中心**应用程序，并在**硬件**组中点击**键盘**按钮。
 - en: Select the **Left-handed** option on the **Mouse Orientation** group.
+  id: totrans-51
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在**鼠标方向**组中选择**左手**选项。
 - en: Click on the **Close** button when you're done.
+  id: totrans-52
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成后点击**关闭**按钮。
 - en: '*What just happened?*'
+  id: totrans-53
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚才发生了什么？*'
 - en: Although, we explained a simple example of configuring the mouse, Mint allows
     you to change additional properties, such as the pointer speed, timeout for double-clicking,
     or showing position of the mouse pointer when the *Ctrl* key is pressed. Also,
     it's possible to configure your mouse for better accessibility.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管我们解释了一个简单的鼠标配置示例，但Mint允许您更改其他属性，例如指针速度、双击超时或按下*Ctrl*键时显示鼠标指针位置。此外，还可以为更好的可访问性配置鼠标。
 - en: Configuring sound
+  id: totrans-55
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 配置声音
 - en: If your computer includes a sound card, you can configure the behavior of sound
     in your machine. Mint offers you a graphic tool to change and configure many aspects
     related to the sound, such as output volume, sound effects, kind of sound for
     alerts, and enable or disable sound for windows and buttons. In order to get familiar
     with how to configure sound, we're going to learn how to enable sound for windows
     and buttons.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您的计算机包含声卡，您可以配置机器中声音的行为。Mint为您提供了一个图形工具，用于更改和配置与声音相关的许多方面，例如输出音量、声音效果、警报声音类型以及启用或禁用窗口和按钮的声音。为了熟悉如何配置声音，我们将学习如何启用窗口和按钮的声音。
 - en: Time for action – how to enable window and button sound
+  id: totrans-57
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 如何启用窗口和按钮声音
 - en: 'Let''s learn how to enable sound for windows and buttons using the graphic
     tool included in Linux Mint. The following are the steps:'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们学习如何使用Linux Mint中包含的图形工具为窗口和按钮启用声音。以下是步骤：
 - en: Launch **Control Center**.
+  id: totrans-59
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 启动**控制中心**。
 - en: Click on the **Sound** button, after which you see a contextual menu; click
     on the **Start Sound** option.
+  id: totrans-60
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 单击**声音**按钮，之后您会看到一个上下文菜单；单击**启动声音**选项。
 - en: Now, you can access the **Sound Preferences** window; check the **Enable window
     and buttons sound** checkbox.
+  id: totrans-61
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，您可以访问**声音首选项**窗口；选中**启用窗口和按钮声音**复选框。
 - en: Click on the **Close** button to finish the **Sound Preferences** application.
+  id: totrans-62
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 单击**关闭**按钮以完成**声音首选项**应用程序。
 - en: '*What just happened?*'
+  id: totrans-63
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: The **Sound Preferences** window allows you to configure many sound-related
     aspects. Using this window, we learned how to enable sound for windows and buttons.
     In addition to that, you can use this window to change volume for the output,
     use the mute function to disable all sounds, or to decide which applications are
     going to use sounds.
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: '**声音首选项**窗口允许您配置许多与声音相关的方面。使用此窗口，我们学习了如何为窗口和按钮启用声音。此外，您可以使用此窗口更改输出音量，使用静音功能禁用所有声音，或决定哪些应用程序将使用声音。'
 - en: Installing additional drivers
+  id: totrans-65
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 安装额外的驱动程序
 - en: During the installation process, Linux Mint detects your hardware and installs
     the required drivers for it. Some GNU/Linux distributions don't install or provide
     the proprietary drivers; however, Mint offers us the option to install these kinds
     of drivers. This is a good idea, because it makes life easier to novice users.
     The goal is to get all hardware working inside your computer, including multimedia
     support, monitors, and graphic cards.
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 在安装过程中，Linux Mint检测您的硬件并安装所需的驱动程序。一些GNU/Linux发行版不安装或提供专有驱动程序，但Mint为我们提供了安装此类驱动程序的选项。这是一个好主意，因为它使新手用户的生活更轻松。目标是让计算机内的所有硬件都能正常工作，包括多媒体支持、显示器和图形卡。
 - en: Modern PCs include graphic cards manufactured from different brands that need
     proprietary drivers. If manufactures release source codes, it's possible to compile
     it and to generate binary packages. This is part of the job of Mint developers,
     who provide software to allow us to use our computer with Linux Mint out of the
     box.
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 现代PC包含由不同品牌制造的图形卡，这些图形卡需要专有驱动程序。如果制造商发布了源代码，则可以编译它并生成二进制包。这是Mint开发人员工作的一部分，他们提供软件，使我们能够开箱即用地使用Linux
+    Mint计算机。
 - en: You can check if Mint provides additional drivers for your hardware. In order
     to do that, you can access **Control Center,** and click on the **Additional Drivers**
     button. Then a search process will start and Mint will inform you about which
     additional drivers can be installed.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以检查Mint是否为您的硬件提供额外的驱动程序。为此，您可以访问**控制中心**，然后单击**附加驱动程序**按钮。然后，搜索过程将开始，Mint将通知您可以安装哪些额外的驱动程序。
 - en: Summary
+  id: totrans-69
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 总结
 - en: In this chapter, we talked about how to detect and configure the hardware of
     your computer. We provided simple examples of configurations, but it's easy to
     configure devices such as keyboard, mouse, and monitors thanks to the graphic
     tools included in Linux Mint.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们讨论了如何检测和配置计算机硬件。我们提供了配置示例，但得益于Linux Mint中包含的图形工具，配置设备（如键盘、鼠标和显示器）非常简单。
 - en: 'Specifically, we covered the following topics:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 具体来说，我们涵盖了以下主题：
 - en: Detecting hardware attached to your computer
+  id: totrans-72
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 检测连接到计算机的硬件
 - en: Configuring important peripherals such as a keyboard, monitor, and mouse
+  id: totrans-73
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 配置重要的外围设备，如键盘、显示器和鼠标
 - en: Configuring sound
+  id: totrans-74
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 配置声音
 - en: Installing additional drivers
+  id: totrans-75
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安装额外的驱动程序
 - en: The community website of Linux Mint provides complete information about which
     hardware is compatible with this distribution of GNU/Linux. This resource is known
     as *Hardware Data* *base* and it's accessible at [http://community.linuxmint.com/hardware](http://community.linuxmint.com/hardware).
     You can look for hardware based on the level of compatibility, brand, type, or
     Mint releases.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux Mint社区网站提供了有关哪些硬件与GNU/Linux的此发行版兼容的完整信息。该资源被称为*硬件数据库*，可访问于[http://community.linuxmint.com/hardware](http://community.linuxmint.com/hardware)。您可以根据兼容性级别、品牌、类型或Mint版本搜索硬件。
 - en: In the next chapter, we're going to learn how to deal with networking in Linux
     Mint.
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 在下一章中，我们将学习如何在Linux Mint中处理网络。

@@ -1,41 +1,59 @@
 - en: Chapter 10. Monitoring Your System
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第10章 监控您的系统
 - en: '*Once a computer is configured and different services are running, it''s time
     to make sure everything is correct and things continue as usual. This chapter
     is going to introduce ways to monitor a system that is taking care of services
     and running processes, and how computer resources, such as memory, CPU, and network,
     are used.*'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '*一旦计算机配置完成并且不同的服务正在运行，就该确保一切正常，并且事情继续按常规进行。本章将介绍如何监控负责服务和运行进程的系统，以及计算机资源（如内存、CPU和网络）的使用情况。*'
 - en: 'In this chapter, we''re going to cover the following topics:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将涵盖以下主题：
 - en: What are processes and services
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 什么是进程和服务
 - en: Starting and stopping services
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 启动和停止服务
 - en: Activating services
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 激活服务
 - en: Listing the running processes
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 列出正在运行的进程
 - en: Displaying CPU, memory, and network usage
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 显示CPU、内存和网络使用情况
 - en: Processes and services
+  id: totrans-8
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 进程和服务
 - en: 'Novice Linux users always ask about two widely used concepts in GNU/Linux distributions:
     processes and services. These are very important for system administrators because
     they describe the applications that are running on our operating system. Obviously,
@@ -43,16 +61,20 @@
     system. The number of processes and services impact the performance of a server
     directly. System administrators should control which applications are running
     and how they are affecting the operating system and other resources and devices.'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 新手Linux用户总是询问关于GNU/Linux发行版中广泛使用的两个概念：进程和服务。对于系统管理员来说，这些非常重要，因为它们描述了在我们操作系统上运行的应用程序。显然，当我们谈论如何监督计算机系统时，我们需要关注这一点。进程和服务的数量直接影响服务器的性能。系统管理员应该控制哪些应用程序正在运行，以及它们如何影响操作系统和其它资源和设备。
 - en: Basically, a **process** is a computer program or application in execution,
     including its current activity, that affects the resources such as CPU, open files,
     and memory. The operating system needs a set of information about each process
     in execution. This kind of information is known as **process descriptors** and
     includes state, parent processes, list of open files, memory address, and a unique
     identification number called PID.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 基本上，**进程**是正在执行的计算机程序或应用程序，包括其当前活动，它影响资源，如CPU、打开的文件和内存。操作系统需要一组关于每个执行进程的信息。这种信息被称为**进程描述符**，包括状态、父进程、打开文件列表、内存地址和一个称为PID的唯一识别号码。
 - en: On the other hand, we found services related to processes. A **service** is
     a computer program that runs without direct intervention of an operating system
     user. It's very common to use the term "background" to refer to this kind of execution.
@@ -64,241 +86,345 @@
     that. A simple convention is to use the suffix "d" to identify which programs
     are running as daemons. For example, `sshd` is the name of the daemon running
     an SSH server.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一方面，我们发现与进程相关的服务。**服务**是无需操作系统用户直接干预即可运行的计算机程序。使用“后台”一词来指代这种执行方式非常常见。请记住，在后台运行的应用程序不会向终端发送任何输出，尽管通常使用文件来实现这一目的。在UNIX和基于Linux的操作系统中，通常使用**守护进程**来指代服务。我们可以认为这两个概念是等价的。Linux内核在启动时启动一些守护进程，因此系统管理员可以对此做出决策。一个简单的约定是使用后缀“d”来识别哪些程序作为守护进程运行。例如，`sshd`是运行SSH服务器的守护进程的名称。
 - en: Usually, operating systems include tools to manage processes and services. Linux
     Mint is not an exception, and we'll find out later which tools can be used to
     manage running applications through services and processes.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，操作系统包含管理进程和服务的工具。Linux Mint也不例外，我们稍后将了解哪些工具可用于通过服务和进程管理运行的应用程序。
 - en: In addition to processes and services, system administrators need to control
     and manage resources such as CPU, memory, network, and filesystems. All of them
     are part of system monitoring, because they affect the performance. In this chapter,
     we'll learn the basics about how to monitor our system, while taking care about
     mentioned resources including processes and services.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了进程和服务，系统管理员还需要控制和管理资源，如 CPU、内存、网络和文件系统。所有这些都是系统监控的一部分，因为它们影响性能。在本章中，我们将学习有关如何监控我们的系统的基本知识，同时关注提到的资源，包括进程和服务。
 - en: Starting and stopping services
+  id: totrans-14
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 启动和停止服务
 - en: System administrators need to know how to start and stop a specific service.
     As part of their daily job, system administrators check the running services and
     start new ones. Sometimes a service should be stopped; for example, when a service
     is no longer needed, we can stop it. Also, a restarting can be required. All of
     these tasks can be carried out through an application called `initctl`. Let's
     see how to use it.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 系统管理员需要知道如何启动和停止特定服务。作为他们日常工作的一部分，系统管理员检查正在运行的服务并启动新的服务。有时，服务应该被停止；例如，当不再需要某个服务时，我们可以停止它。此外，可能需要重新启动。所有这些任务都可以通过一个名为
+    `initctl` 的应用程序来完成。让我们看看如何使用它。
 - en: Time for action – stopping and starting an SSH daemon
+  id: totrans-16
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 停止和启动 SSH 守护进程
 - en: We're going to learn how to stop and start our SSH service. Remember that we
     learned how to install an SSH previously in [Chapter 9](ch09.html "Chapter 9. Security"),
     *Security*. After installing this application, our SSH service will be running
     by default, so we'll begin learning how to stop it.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将学习如何停止和启动我们的 SSH 服务。请记住，我们在 [第 9 章](ch09.html "第 9 章. 安全")《安全》中学习了如何安装 SSH。安装此应用程序后，我们的
+    SSH 服务将默认运行，因此我们将开始学习如何停止它。
 - en: Launch the MATE Terminal as usual.
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 像往常一样启动 MATE 终端。
 - en: 'Type the following command in the shell:'
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在 shell 中输入以下命令：
 - en: '[PRE0]'
+  id: totrans-20
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Our SSH daemon is stopped and you''ll receive an output message such as the
     following one:'
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们的 SSH 守护进程已停止，您将收到一条输出消息，例如以下内容：
 - en: '[PRE1]'
+  id: totrans-22
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Now, we''re going to launch our SSH daemon again. Just type the following command:'
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们将重新启动我们的 SSH 守护进程。只需输入以下命令：
 - en: '[PRE2]'
+  id: totrans-24
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Once the SSH service starts running, you can see a message such as the following
     one:'
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 一旦 SSH 服务开始运行，您将看到一条消息，例如以下内容：
 - en: '[PRE3]'
+  id: totrans-26
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Also, you can find out the current status of the SSH service by executing the
     following command:'
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 您可以通过执行以下命令来了解 SSH 服务的当前状态：
 - en: '[PRE4]'
+  id: totrans-28
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*What just happened?*'
+  id: totrans-29
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚刚发生了什么？*'
 - en: Linux Mint includes a tool called `initctl` that offers us control over the
     `init` daemon. This daemon is a special one, which gets started during the boot
     process of the Linux Kernel, and it's the parent of the rest of the services and
     processes. Usually, `init` has a PID of `1` and Linux Mint implements a specific
     event-based daemon called `Upstart`.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux Mint 包含一个名为 `initctl` 的工具，它为我们提供了对 `init` 守护进程的控制。这个守护进程是一个特殊的进程，在 Linux
+    内核启动过程中启动，并且它是其余服务和进程的父进程。通常，`init` 的 PID 为 `1`，而 Linux Mint 实现了一个特定的事件驱动型守护进程，称为
+    `Upstart`。
 - en: The `initctl` application accepts many commands as arguments; two of them are
     `start` and `stop` as you've learned before. As a third argument, we can pass
     the name of the service that will be affected by the operation, so the arguments
     `stop ssh` indicates the operation and service name respectively.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '`initctl` 应用程序接受许多作为参数的命令；其中两个是您之前学过的 `start` 和 `stop`。作为第三个参数，我们可以传递将受操作影响的服务的名称，因此
+    `stop ssh` 分别表示操作和服务名称。'
 - en: In our example, we checked the current status of our SSH service using the `list`
     operation. This command returns a simple message informing us whether the service
     is up or down. Also, it's possible to use the `restart` operation, which stops
     and starts a specific server in that order.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们的示例中，我们使用 `list` 操作检查了 SSH 服务的当前状态。此命令返回一个简单的消息，告诉我们服务是启动还是关闭。此外，还可以使用 `restart`
+    操作，它按顺序停止和启动特定的服务器。
 - en: It's important to know that we need to run `initctl` as the root user, otherwise
     we cannot start, stop, or restart services. The reason for this is that only the
     root user has access to these kind of operations. It doesn't make sense if any
     user can do that, because services are important for the security and the integrity
     of the system.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 重要的是要知道，我们需要以 root 用户身份运行 `initctl`，否则我们无法启动、停止或重新启动服务。这是因为只有 root 用户才有权访问这些类型的操作。如果任何用户都可以这样做，那就没有意义了，因为服务对系统的安全和完整性至关重要。
 - en: Have a go hero – checking current status of all services
+  id: totrans-34
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 尝试一下 – 检查所有服务的当前状态
 - en: 'Sometimes system administrators need to know about the current status of all
     running and stopped services in the operating system. In order to do that, we
     can use the `initctl` tool passing an argument called `list`. The command is as
     follows:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时系统管理员需要了解操作系统中所有运行和停止的服务的当前状态。为了做到这一点，我们可以使用`initctl`工具传递一个名为`list`的参数。命令如下：
 - en: '[PRE5]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'We''ll get a response, as shown in the following screenshot:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将得到如下截图所示的响应：
 - en: '![Have a go hero – checking current status of all services](img/9601_10_01.jpg)'
+  id: totrans-38
   prefs: []
   type: TYPE_IMG
+  zh: '![动手实践 - 检查所有服务当前状态](img/9601_10_01.jpg)'
 - en: Activating services
+  id: totrans-39
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 激活服务
 - en: Previously we've learned how to start and stop services through the command
     line. However, Linux Mint also includes a simple GUI application that allows us,
     with a simple button click, to select the services we want to activate or deactivate
     when the system starts. Let's see how to activate services through the **Services
     Settings** application.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 之前我们学习了如何通过命令行启动和停止服务。然而，Linux Mint还包括一个简单的GUI应用程序，允许我们通过简单的按钮点击来选择我们想要在系统启动时激活或停用的服务。让我们看看如何通过**服务设置**应用程序激活服务。
 - en: Time for action – activating Samba
+  id: totrans-41
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 - 激活Samba
 - en: In order to share files and directories with Windows systems, we can use the
     **Samba** protocol. Let's imagine that we have installed in our Linux Mint a set
     of tools and a daemon to do that. We're going to learn how to activate a Samba
     service.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了与Windows系统共享文件和目录，我们可以使用**Samba**协议。假设我们在Linux Mint上安装了一组工具和一个守护进程来完成这项工作。我们将学习如何激活Samba服务。
 - en: Click on the **Menu** button and click again on the **All Applications** button.
+  id: totrans-43
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**菜单**按钮，然后再次点击**所有应用程序**按钮。
 - en: Click on the **Services** menu option of the **Administration** group.
+  id: totrans-44
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**管理**组中的**服务**菜单选项。
 - en: A new window belonging to the **Service Settings** application is displayed.
+  id: totrans-45
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 属于**服务设置**应用程序的新窗口显示。
 - en: Look for the **samba** option and click on it:![Time for action – activating
     Samba](img/9601_10_02.jpg)
+  id: totrans-46
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 查找**samba**选项并点击它：![行动时间 - 激活Samba](img/9601_10_02.jpg)
 - en: After selecting the **samba** option, you must type your password. Then click
     on the **Close** button. Next time you boot your system, the Samba service will
     be started automatically.
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 选择**samba**选项后，您必须输入密码。然后点击**关闭**按钮。下次启动系统时，Samba服务将自动启动。
 - en: '*What just happened?*'
+  id: totrans-48
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚刚发生了什么？*'
 - en: Usually, it's very useful to configure many services to start automatically
     at boot time. By applying this configuration, the system administrator can save
     time and they are sure that services will start automatically.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，将许多服务配置为在启动时自动启动非常有用。通过应用此配置，系统管理员可以节省时间，并确保服务将自动启动。
 - en: Despite configuring your services through the command line, Linux Mint provides
     a simple and intuitive tool to do that. As you have learned, this tool is **Services
     Settings,** and you can access it easily from the main menu.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管可以通过命令行配置服务，但Linux Mint提供了一个简单直观的工具来完成这项工作。正如你所学到的，这个工具是**服务设置**，你可以轻松地从主菜单访问它。
 - en: Listing the running processes
+  id: totrans-51
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 列出运行的进程
 - en: One of the most important things that the system administrator should supervise
     is the list of current processes running on the operating system of each machine
     under their control. Remember that each running process is using some resource,
     such as the CPU, memory, and files. This means that it's important to control
     processes because they affect the performance and security of the system directly.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 系统管理员应该监督的最重要的事情之一是每台机器操作系统上当前运行的进程列表。请记住，每个运行的进程都在使用某些资源，如CPU、内存和文件。这意味着控制进程很重要，因为它们直接影响系统的性能和安全性。
 - en: Linux Mint offers us a specific tool for monitoring processes, CPU, memory,
     network, and the filesystem of our machine. We're going to learn how to use this
     tool for monitoring our system, and we'll learn about how to list the running
     processes.
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux Mint为我们提供了一个特定的工具来监控进程、CPU、内存、网络和我们的机器文件系统。我们将学习如何使用这个工具来监控我们的系统，并了解如何列出运行的进程。
 - en: Time for action – list the processes running on our machine
+  id: totrans-54
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 - 列出我们机器上运行的进程
 - en: Earlier we talked about a tool for monitoring our system. Well, its name is
     **System Monitor** and is installed in Linux Mint by default. Let's learn how
     to access this tool and how to list the running processes.
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 之前我们谈到了一个监控我们系统的工具。嗯，它的名字是**系统监视器**，默认安装在Linux Mint中。让我们学习如何访问这个工具以及如何列出运行的进程。
 - en: Click on the **Menu** button and click again on the **System Monitor** button:![Time
     for action – list the processes running on our machine](img/9601_10_03.jpg)
+  id: totrans-56
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**菜单**按钮，然后再次点击**系统监视器**按钮：![行动时间 – 列出我们机器上运行的进程](img/9601_10_03.jpg)
 - en: Then a new window is displayed. Click on the **Processes** tab.
+  id: totrans-57
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 随后会显示一个新窗口。点击**进程**标签。
 - en: Now, you can see the processes that are running and additional information about
     them, such as CPU and memory usage:![Time for action – list the processes running
     on our machine](img/9601_10_04.jpg)
+  id: totrans-58
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，您可以看到正在运行的进程以及有关它们的其他信息，例如CPU和内存使用情况：![行动时间 – 列出我们机器上运行的进程](img/9601_10_04.jpg)
 - en: '*What just happened?*'
+  id: totrans-59
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚刚发生了什么？*'
 - en: Thanks to the **System Monitor** tool, you can see which processes are running,
     and you can find out their current status and the CPU and the memory usage of
     each one. In addition to this kind of information, **System Monitor** displays
@@ -308,134 +434,187 @@
     current status of a machine, and threshold values can be applied to decide when
     some actions should be taken. Remember that our goal is to help our machine to
     run processes without collapsing the system.
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 多亏了**系统监视器**工具，您可以看到哪些进程正在运行，并了解它们的当前状态以及每个进程的CPU和内存使用情况。除了这类信息外，**系统监视器**还显示基于CPU使用率的计算机平均负载。如您所见，**系统监视器**显示了过去1分钟、5分钟和15分钟的平均负载信息。这些值帮助系统管理员控制机器的当前状态，并可以应用阈值来决定何时应采取某些操作。请记住，我们的目标是帮助我们的机器运行进程而不使系统崩溃。
 - en: '**System Monitor** offers us menu options to display different views about
     running processes. Specifically, we can display all processes (default view),
     active processes, and my processes (root user by default). Also, it''s possible
     to change the order of displaying information, so you can display, for example,
     all processes ordered according to their memory consumption.'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: '**系统监视器**为我们提供了菜单选项，以显示有关运行进程的不同视图。具体来说，我们可以显示所有进程（默认视图）、活动进程和我的进程（默认情况下为root用户）。此外，还可以更改显示信息的顺序，因此您可以显示例如按内存消耗排序的所有进程。'
 - en: The **Edit** menu gives us access to different actions that can be applied to
     a running process. You can stop, kill, and change the priority of each process.
     In order to take these actions, first you need to select a specific process from
     the list. Then you can execute each action by accessing the options belonging
     to the mentioned **Edit** menu.
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: '**编辑**菜单为我们提供了对运行进程应用不同操作的访问权限。您可以停止、杀死和更改每个进程的优先级。为了执行这些操作，首先需要从列表中选择一个特定进程。然后，您可以通过访问上述**编辑**菜单中的选项来执行每个操作。'
 - en: Another interesting feature provided by **System Monitor** is the possibility
     of finding out which files are opened by each process. You only need to select
     a process and then click on the **Open** **Files** menu option of the **Edit**
     menu. Keep in mind that this information can change automatically when the window
     is open, as each process can open and close files during its execution.
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '**系统监视器**提供的另一个有趣功能是能够找出每个进程打开的文件。您只需选择一个进程，然后点击**编辑**菜单中的**打开文件**菜单选项。请记住，当窗口打开时，此信息可能会自动更改，因为每个进程在执行过程中都可能打开和关闭文件。'
 - en: Displaying CPU, memory, and network usage
+  id: totrans-64
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 显示CPU、内存和网络使用情况
 - en: Besides processes and services, it's very important to take care of resources
     of our machine as applications need to use these resources. CPU, memory, and network
     are the most important resources used by our computer, so system administrator
     always should keep an eye on them. To make life easier, Linux Mint provides information
     about how these resources are used in real time through the **System Monitor**
     application. We'll learn how to display the current use of these resources.
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了进程和服务之外，照顾我们机器的资源也非常重要，因为应用程序需要使用这些资源。CPU、内存和网络是我们计算机使用的最重要的资源，因此系统管理员应始终关注它们。为了使生活更轻松，Linux
+    Mint 通过**系统监视器**应用程序提供有关这些资源实时使用情况的信息。我们将学习如何显示这些资源的当前使用情况。
 - en: Time for action – Displaying resources information in real time
+  id: totrans-66
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 实时显示资源信息
 - en: Let's find out how to get basic information about main computer resources that
     are used in real time.
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们了解如何获取实时使用的主要计算机资源的基本信息。
 - en: Click on the **Menu** button and click again on the **System Monitor** button.
+  id: totrans-68
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**菜单**按钮，然后再次点击**系统监视器**按钮。
 - en: Click on the **Resources** tab and you have access to all information regarding
     CPU, memory, and network usage as shown:![Time for action – Displaying resources
     information in real time](img/9601_10_05.jpg)
+  id: totrans-69
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**资源**选项卡，您可以访问有关CPU、内存和网络使用情况的所有信息，如下所示：![实时显示资源信息](img/9601_10_05.jpg)
 - en: '*What just happened?*'
+  id: totrans-70
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: When you click on the **Resources** tab of **System Monitor**, a set of charts
     is displayed. The first one offers you information about the percentage of CPU
     usage by time. Also, the current percentage of CPU is displayed below the chart.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 当您点击**系统监视器**的**资源**选项卡时，会显示一组图表。第一个图表提供按时间划分的CPU使用百分比信息。此外，图表下方显示当前的CPU百分比。
 - en: Regarding memory, we find information related to the main and swap memory usage.
     Percentage values related to the total memory are displayed. The purple line on
     the chart represents main memory, and the green line is used for the swap memory.
     Both lines are displayed inside the chart so you can compare both easily.
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于内存，我们可以找到与主内存和交换内存使用相关的信息。显示了与总内存相关的百分比值。图表中的紫色线代表主内存，绿色线用于交换内存。两条线都在图表内显示，以便您可以轻松比较两者。
 - en: Network information is separated between received and sent packages; different
     colors are used to denote them. You can see total packages in bytes that have
     been sent and received by your computer. Also, you can obtain how many of them
     were sent or received each second.
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 网络信息分为接收和发送的数据包；使用不同的颜色来表示它们。您可以看到您的计算机发送和接收的总数据包的字节数。此外，您还可以获取每秒发送或接收的数据包数量。
 - en: As you've realized, all information about resources is displayed based on history.
     This means that each graph is based on time, and it's alive in a sense that the
     information is displayed in real time.
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如您所意识到的，所有资源信息都是基于历史记录显示的。这意味着每个图表都是基于时间的，并且在某种意义上是实时的，因为信息是实时显示的。
 - en: Have a go hero – getting information about filesystems usage
+  id: totrans-75
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 尝试一下 - 获取文件系统使用情况的信息
 - en: In addition to memory, processes, CPU, and network usage, you can get information
     about your filesystem's usage. In order to take this action, you only need to
     click on the **File Systems** tab and **System Monitor** displays for each filesystem,
     information about mounted directories, total space, available space, and percentage
     of used space.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了内存、进程、CPU和网络使用情况外，您还可以获取有关文件系统使用情况的信息。为了执行此操作，您只需点击**文件系统**选项卡，**系统监视器**会为每个文件系统显示有关挂载目录、总空间、可用空间和已用空间百分比的信息。
 - en: Summary
+  id: totrans-77
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 总结
 - en: 'In this chapter, we''ve learned the basics about system monitoring, being an
     important area for system administrators. We introduced processes and services,
     and then we learned how to manage services and how to monitor the most valuable
     resources in a computer: memory, CPU, hard disks, and network.'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们学习了系统监控的基础知识，这对于系统管理员来说是一个重要的领域。我们介绍了进程和服务，然后学习了如何管理服务以及如何监控计算机中最有价值的资源：内存、CPU、硬盘和网络。
 - en: 'Specifically, we covered:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 具体来说，我们涵盖了：
 - en: Basic concepts such as processes and services
+  id: totrans-80
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 基本概念，如进程和服务
 - en: How to deal with services
+  id: totrans-81
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何处理服务
 - en: Finding out the running processes and being able to stop them
+  id: totrans-82
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 查找正在运行的进程并能够停止它们
 - en: Discovering charts indicating how the usage of CPU, memory, and networking are
     affecting our computer
+  id: totrans-83
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 发现图表显示CPU、内存和网络的使用情况如何影响我们的计算机
 - en: It's important to keep in mind that this chapter is just a basic introduction
     to system monitoring. This is a big area, and a good understanding and good practice
     requires experience, and it depends on the complexity of the system that we want
     to supervise.
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 重要的是要记住，本章只是系统监控的基本介绍。这是一个广泛的领域，良好的理解和实践需要经验，并且取决于我们想要监控的系统的复杂性。
 - en: At this point we know how to configure and supervise our computer; in the next
     chapter, we're going to talk about how to solve common problems that can happen
     when a Linux Mint server or workstation is running.
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 此时，我们知道如何配置和监控我们的计算机；在下一章中，我们将讨论在Linux Mint服务器或工作站运行时可能发生的常见问题的解决方法。

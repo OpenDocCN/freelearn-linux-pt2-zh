@@ -1,1 +1,0 @@
-["```\n    /dev/sda3  /home  ext4  defaults,usrquota,grpquota   1 2\n\n    ```", "```\n    $ quotacheck -avug\n\n    ```", "```\n    $ edquota arturo\n\n    ```", "```\nquotacheck -avug\n\n```"]

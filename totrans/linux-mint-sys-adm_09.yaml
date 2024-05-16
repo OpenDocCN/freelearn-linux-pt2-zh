@@ -1,39 +1,57 @@
 - en: Chapter 9. Security
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第9章。安全性
 - en: '*Security is one of the most important aspects for system administrators, no
     doubt. In this chapter, we''re going to learn about the basic mechanisms and tools
     that can be used to secure our Linux Mint computer.*'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '*安全性无疑是系统管理员最重要的方面之一。在本章中，我们将学习用于保护Linux Mint计算机的基本机制和工具。*'
 - en: 'In this chapter, we''re going to learn the following topics:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将学习以下主题：
 - en: Running an SSH server
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 运行SSH服务器
 - en: Installing an anti-virus software
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安装防病毒软件
 - en: Installing and configuring a firewall
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安装和配置防火墙
 - en: Using a security module for the kernel
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用内核安全模块
 - en: Building a security checklist
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 构建安全检查清单
 - en: Running an SSH server
+  id: totrans-8
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 运行SSH服务器
 - en: Sometimes you need to establish a remote connection from your computer to a
     server. Also, users need access to your server or servers. A remote connection
     allows you to execute commands directly on the server from your computer. **Telnet**
@@ -44,110 +62,157 @@
     From the technical point of view, SSH creates a secure channel between a server
     and a client. Usually, a client and server are different machines, but it's possible
     to use the same machine to play both roles.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时，您需要从您的计算机远程连接到服务器。此外，用户需要访问您的服务器或服务器。远程连接允许您直接从您的计算机在服务器上执行命令。**Telnet**是用于在计算机之间建立连接的最常用协议之一。然而，Telnet不是安全协议，因此当我们需要安全连接时，需要其他协议。这就是**安全外壳**（**SSH**）发挥作用的地方。多亏了SSH，用户可以从他们的计算机安全地连接到服务器。从技术角度来看，SSH在服务器和客户端之间创建了一个安全通道。通常，客户端和服务器是不同的机器，但也可以使用同一台机器扮演两个角色。
 - en: Time for action – installing and configuring an SSH server
+  id: totrans-10
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 安装和配置SSH服务器
 - en: We're going to install and configure the **openssh-server** software to use
     our computer as an SSH server. Regarding configuration, our server will deny access
     to the root user, and it will be accessible through the `5656` port.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将安装并配置**openssh-server**软件，将我们的计算机用作SSH服务器。关于配置，我们的服务器将拒绝root用户的访问，并且它将通过`5656`端口可访问。
 - en: Click on the **Menu** button, and click again on the **Software Manager** button
     inside the **System** group.
+  id: totrans-12
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**菜单**按钮，然后在**系统**组中再次点击**软件管理器**按钮。
 - en: Type `openssh server` in the text input field of the **Software Manager** application.
+  id: totrans-13
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在**软件管理器**应用程序的文本输入字段中输入`openssh server`。
 - en: Select **openssh-server** and then click on the **Install** button.![Time for
     action – installing and configuring an SSH server](img/9601_09_01.jpg)
+  id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 选择**openssh-server**，然后点击**安装**按钮。![行动时间 – 安装和配置SSH服务器](img/9601_09_01.jpg)
 - en: Now you have the **openssh-server** installed on you computer.
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，您的计算机上已安装**openssh-server**。
 - en: Launch MATE Terminal by clicking on the **Terminal** button accessible form
     the main menu.
+  id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 通过点击主菜单中的**终端**按钮启动MATE终端。
 - en: 'We''re going to edit a `/etc/ssh/sshd_config` file using the `vi` editor as
     the root user, so you should type the following command on the terminal:'
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们将以root用户身份使用`vi`编辑器编辑`/etc/ssh/sshd_config`文件，因此您应该在终端中输入以下命令：
 - en: '[PRE0]'
+  id: totrans-18
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Type `i` to enter in edit mode inside `vi`. Look for a line that contains **PermitRootLogin**
     and replace it with the following line:'
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 输入`i`以在`vi`中进入编辑模式。查找包含**PermitRootLogin**的行，并将其替换为以下行：
 - en: '[PRE1]'
+  id: totrans-20
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Let''s continue with the same file and look for another line that contains
     **Port** and replace that line with the following one:'
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 让我们继续编辑同一文件，查找包含**Port**的另一行，并将其替换为以下行：
 - en: '[PRE2]'
+  id: totrans-22
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Save the `/etc/ssh/sshd_config` file; you can click the *Escape* key and then
     type `:wq`.
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存`/etc/ssh/sshd_config`文件；您可以点击*Escape*键，然后输入`:wq`。
 - en: 'Now it''s time for restarting the SSH server, then your server will be installed,
     configured, and ready to use. You can test this by executing the following command:'
+  id: totrans-24
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在是重启SSH服务器的时候了，然后您的服务器将安装、配置并准备好使用。您可以通过执行以下命令来测试这一点：
 - en: '[PRE3]'
+  id: totrans-25
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'You can test your SSH server by trying to connect to it and typing on the terminal
     the following command:'
+  id: totrans-26
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 您可以通过尝试连接到它并在终端中输入以下命令来测试您的SSH服务器：
 - en: '[PRE4]'
+  id: totrans-27
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Now you can see a message asking for your authorization. Type `yes` and your
     password. You're now connected to your our server through the SSH protocol.
+  id: totrans-28
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在您可以看到一条消息，要求您授权。输入`yes`和您的密码。现在，您已通过SSH协议连接到我们的服务器。
 - en: '*What just happened?*'
+  id: totrans-29
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: Thanks to the openssh-server software, we can create and configure an SSH server,
     which allows users to connect to a remote server through their computers. Linux
     Mint doesn't install the mentioned software by default, so you need to install
     it using **Software Manager** or the **Package Manager** application.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 多亏了openssh-server软件，我们可以创建和配置一个SSH服务器，允许用户通过他们的计算机连接到远程服务器。Linux Mint默认不安装上述软件，因此你需要使用**软件管理器**或**包管理器**应用程序来安装它。
 - en: Once openssh-server is installed on your computer, users can connect to it directly
     using an SSH client. This kind of client is installed by default on major GNU/Linux
     distributions and Mac OS X computers.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦在你的计算机上安装了openssh-server，用户就可以直接使用SSH客户端连接到它。这种类型的客户端在主要的GNU/Linux发行版和Mac
+    OS X计算机上默认安装。
 - en: Despite the openssh-server including a default configuration that allows us
     to connect to the server, it's recommended to change the configuration to suit
     our requirements. This is a task for system administrators. In our example, we
@@ -158,216 +223,305 @@
     wall. On the other hand, if we allow the root user to connect to our SSH server,
     somebody can crack the connection and get root access to our server, which is
     not good.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管openssh-server包含一个默认配置，允许我们连接到服务器，但建议更改配置以满足我们的需求。这是系统管理员的任务。在我们的例子中，我们不允许通过root用户进行连接，并将默认的`22`端口更改为`5656`。这些更改为SSH连接提供了最低限度的安全性，以防止潜在的攻击者试图使用默认端口通过SSH协议连接到服务器。通过我们的配置更改，我们建立了一道第一级防线。另一方面，如果我们允许root用户连接到我们的SSH服务器，有人可能会破解连接并获得对我们服务器的root访问权限，这是不好的。
 - en: In order to change the configuration file for the SSH server, we used the `vi`
     editor, which is installed in Linux Mint by default. This is a **modal** editor,
     and by typing `:wq`, we're saving and exiting. On the other hand, when you type
     `i`, `vi` enters the **insert** mode. Obviously, you can use other editors such
     as `Pluma` for editing the configuration file.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了更改SSH服务器的配置文件，我们使用了默认安装在Linux Mint中的`vi`编辑器。这是一个**模式化**编辑器，通过输入`:wq`，我们可以保存并退出。另一方面，当你输入`i`时，`vi`进入**插入**模式。显然，你也可以使用其他编辑器，如`Pluma`来编辑配置文件。
 - en: Finally, we restarted the SSH daemon using the `restart` command and passing
     `ssh` as an argument. We'll talk more about daemon services in the next chapter.
     At the moment, we only need to know that the `restart` command is used for restarting
     services.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，我们使用`restart`命令并传递`ssh`作为参数来重启SSH守护进程。我们将在下一章中更多地讨论守护进程服务。目前，我们只需要知道`restart`命令用于重启服务。
 - en: Installing an anti-virus software
+  id: totrans-35
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 安装防病毒软件
 - en: Everybody knows that Windows operating systems need an anti-virus software because
     it's very common that viruses infect the family of Microsoft operating systems.
     Though it's more difficult to find viruses affecting a GNU/Linux distribution,
     a good practice is to install an anti-virus on our server. One of the most popular
     anti-viruses for Linux is **Clam-AV** ([www.clamav.net](http://www.clamav.net)),
     so we're going to learn how to install it on our server.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 众所周知，Windows操作系统需要防病毒软件，因为病毒感染微软操作系统家族的情况非常普遍。尽管在GNU/Linux发行版中找到病毒更为困难，但良好的实践是在我们的服务器上安装防病毒软件。Linux上最受欢迎的防病毒软件之一是**Clam-AV**（[www.clamav.net](http://www.clamav.net)），因此我们将学习如何在服务器上安装它。
 - en: Time for action – installing Clam-AV anti-virus
+  id: totrans-37
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 - 安装Clam-AV防病毒软件
 - en: We'll install Clam-AV anti-virus on our computer.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将在我们的计算机上安装Clam-AV防病毒软件。
 - en: Click on the **Menu** button and click again on the **Software Manager** button
     inside the **System** group.
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**菜单**按钮，然后在**系统**组中再次点击**软件管理器**按钮。
 - en: Type `clamav` in the input box of the main window of **Software Manager**.
+  id: totrans-40
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在**软件管理器**主窗口的输入框中输入`clamav`。
 - en: Click on the first element of the results list.
+  id: totrans-41
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击结果列表中的第一个元素。
 - en: Now you can click on the **Install** button, and type your password when it
     is required.![Time for action – installing Clam-AV anti-virus](img/9601_09_02.jpg)
+  id: totrans-42
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在你可以点击**安装**按钮，并在需要时输入你的密码。![行动时间 - 安装Clam-AV防病毒软件](img/9601_09_02.jpg)
 - en: Once installation is finished, you can use the `clamscan` application from the
     command line.
+  id: totrans-43
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 安装完成后，你可以从命令行使用`clamscan`应用程序。
 - en: 'In order to test our anti-virus, we''re going to open the MATE Terminal and
     scan our `home` directory. You only need to type the following command:'
+  id: totrans-44
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为了测试我们的防病毒软件，我们将打开MATE终端并扫描我们的`home`目录。您只需要输入以下命令：
 - en: '[PRE5]'
+  id: totrans-45
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: The output of `clamscan` should be similar to the following screenshot:![Time
     for action – installing Clam-AV anti-virus](img/9601_09_03.jpg)
+  id: totrans-46
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`clamscan`的输出应该类似于以下截图：![操作时间 – 安装Clam-AV防病毒软件](img/9601_09_03.jpg)'
 - en: '*What just happened?*'
+  id: totrans-47
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: We've used the **Software Manager** application for installing an application.
     In this case, we've installed Clam-AV anti-virus, which contains a main executable
     called `clamscan`. This command scans a directory and searches for viruses in
     our system. When the scan is finished, we get a simple report with information
     about scanned files and directories and which of them are infected.
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们使用了**软件管理器**应用程序来安装一个应用程序。在这种情况下，我们安装了Clam-AV防病毒软件，它包含一个名为`clamscan`的主要可执行文件。这个命令扫描一个目录并在我们的系统中搜索病毒。扫描完成后，我们会得到一个简单的报告，其中包含有关扫描的文件和目录以及哪些文件被感染的信息。
 - en: Configuring a firewall
+  id: totrans-49
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 配置防火墙
 - en: A **firewall** is one of the most important components in computer security.
     From the technical point of view, a firewall is a barrier designed to prevent
     unauthorized access to services and resources in a computer. Software and hardware
     components can be used to build a firewall. We're going to focus only on software.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 防火墙是计算机安全中最重要的组件之一。从技术角度来看，防火墙是一种屏障，设计用来防止未经授权访问计算机中的服务和资源。软件和硬件组件都可以用来构建防火墙。我们只关注软件方面。
 - en: The configuration of a firewall can be pretty easy or very complicated; depends
     on the security level that we want to apply. Obviously, it's different to configure
     a web server and a computer workstation. In order to use and configure a firewall
     in Linux, we can use a program called `iptables`, which is a packet filtering
     application based on rules defined by system administrators. Linux kernel uses
     different kernel modules to apply rules and creates a firewall for a computer.
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 防火墙的配置可以非常简单，也可以非常复杂；这取决于我们想要应用的安全级别。显然，配置一个Web服务器和一台计算机工作站是不同的。为了在Linux中使用和配置防火墙，我们可以使用一个名为`iptables`的程序，它是一个基于系统管理员定义的规则的包过滤应用程序。Linux内核使用不同的内核模块来应用规则，并为计算机创建一个防火墙。
 - en: Despite `iptables` being a very good application, it's not easy for beginners.
     This application doesn't use a graphical interface and it's *required* to know
     how to apply rules from the command line. However, Linux Mint includes a GUI application
     that provides a frontend to **Uncomplicated Firewall** (`ufw`), a software designed
     to build firewalls easily. We'll learn how to use this useful tool to configure
     a simple firewall.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管`iptables`是一个非常优秀的应用程序，但对于初学者来说并不容易。该应用程序不使用图形界面，并且*需要*知道如何从命令行应用规则。然而，Linux
+    Mint包含了一个提供**简单防火墙**（`ufw`）前端的GUI应用程序，这是一种设计用来轻松构建防火墙的软件。我们将学习如何使用这个有用的工具来配置一个简单的防火墙。
 - en: Time for action – how to configure a simple firewall
+  id: totrans-53
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 操作时间 – 如何配置一个简单的防火墙
 - en: As a simple example of building a firewall in Linux Mint, we're going to configure
     our firewall to deny access to a specific IP (`192.168.1.66`) to port `22`. Remember
     that we configured this port previously to run an SSH server.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为一个在Linux Mint中构建防火墙的简单示例，我们将配置我们的防火墙以拒绝特定IP（`192.168.1.66`）访问端口`22`。请记住，我们之前配置了这个端口以运行SSH服务器。
 - en: Go to the main menu and click on the **Firewall Configuration** button belonging
     to the **Administration** category.
+  id: totrans-55
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 转到主菜单并点击属于**管理**类别的**防火墙配置**按钮。
 - en: Then a new window will be displayed; click on the **Unlock** button and type
     your password.
+  id: totrans-56
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 然后将显示一个新窗口；点击**解锁**按钮并输入您的密码。
 - en: Activate the firewall by selecting the **ON** option in **Status**.
+  id: totrans-57
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 通过在**状态**中选择**开启**选项来激活防火墙。
 - en: Access the **Edit** menu and click on the **Add Rule...** button.
+  id: totrans-58
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 访问**编辑**菜单并点击**添加规则...**按钮。
 - en: Click on the **Advanced** tab and select **Deny** for the first drop-down option.
     Then type `192.168.1.66` in the **From** input box and `22` for the port input
     box.
+  id: totrans-59
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**高级**选项卡，并为第一个下拉选项选择**拒绝**。然后在**从**输入框中输入`192.168.1.66`，在端口输入框中输入`22`。
 - en: In the **To** input box, type your IP and type `22` again for port. Click on
     the **Add** button when you're ready:![Time for action – how to configure a simple
     firewall](img/9601_09_04.jpg)
+  id: totrans-60
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在**到**输入框中，输入您的IP，并在端口处再次输入`22`。准备好后点击**添加**按钮：![操作时间 – 如何配置一个简单的防火墙](img/9601_09_04.jpg)
 - en: Then click the **Close** button and you'll see how your new rule has been added
     to the rules list:![Time for action – how to configure a simple firewall](img/9601_09_05.jpg)
+  id: totrans-61
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 然后点击 **关闭** 按钮，您将看到您的新规则已添加到规则列表中：![动手实践 – 如何配置简单防火墙](img/9601_09_05.jpg)
 - en: Your firewall is configured and is now up and running.
+  id: totrans-62
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 您的防火墙已配置完成，现在正在运行。
 - en: '*What just happened?*'
+  id: totrans-63
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚刚发生了什么？*'
 - en: Linux Mint allows us to configure and run a firewall through an application
     called `Gufw`. This tool is a simple and intuitive frontend to `ufw`, another
     tool for configuring a firewall, which is easier than `iptables`. `Gufw` has three
     main controls that allow us to enable or disable a firewall, and helps control
     incoming and outgoing traffic. A simple list shows us the rules that are enabled,
     and the two buttons below this list allows us to add and remove rules.
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux Mint 允许我们通过一个名为 `Gufw` 的应用程序来配置和运行防火墙。这个工具是 `ufw`（另一个用于配置防火墙的工具，比 `iptables`
+    更简单）的简单直观的用户界面。`Gufw` 有三个主要控件，允许我们启用或禁用防火墙，并帮助控制传入和传出流量。一个简单的列表显示了我们启用的规则，列表下方的两个按钮允许我们添加和删除规则。
 - en: Keep in mind that the default behavior in `ufw` is to block all incoming traffic
     and allow outgoing traffic. Usually, system administrators prefer to block everything
     and then configure the applications, ports, and protocols that are allowed for
     connections. This technique is known as **white list** .
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，`ufw` 的默认行为是阻止所有传入流量并允许传出流量。通常，系统管理员倾向于阻止所有内容，然后配置允许连接的应用程序、端口和协议。这种技术被称为
+    **白名单**。
 - en: 'Basically, you can choose three actions that will be applied to incoming and
     outgoing traffic for your machine: **Allow**, **Deny**, and **Reject**. The difference
     between **Deny** and **Reject** actions is that the first one implies that each
     packet will be discarded. However, **Reject** means that server will send a response
     to the client informing about the computer using a firewall that denies access.'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 基本上，您可以选择三种操作，这些操作将应用于您机器的传入和传出流量：**允许**、**拒绝** 和 **拒绝并通知**。**拒绝** 和 **拒绝并通知**
+    操作之间的区别在于，前者意味着每个数据包都将被丢弃。然而，**拒绝并通知** 意味着服务器将向客户端发送响应，告知计算机使用防火墙拒绝访问。
 - en: We've used advanced options to select IP's and ports, but also it's possible
     to use the **Preconfigured** and **Simple** tabs to allow or deny access only
     to applications and to protocols respectively.
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经使用高级选项来选择 IP 和端口，但也可以使用 **预配置** 和 **简单** 选项卡仅允许或拒绝访问应用程序和协议。
 - en: Have a go hero – disabling firewall on startup using the command line
+  id: totrans-68
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 动手实践 – 使用命令行禁用启动时的防火墙
 - en: 'You''ve learned how to use `Gufw` to configure your firewall. In addition to
     this tool, you can use the `ufw` application directly from command line. For example,
     you can disable your firewall on startup. In order to do that, launch the MATE
     Terminal and type the following command:'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 您已经学会了如何使用 `Gufw` 来配置您的防火墙。除了这个工具，您还可以直接从命令行使用 `ufw` 应用程序。例如，您可以禁用启动时的防火墙。为此，启动
+    MATE 终端并输入以下命令：
 - en: '[PRE6]'
+  id: totrans-70
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'After executing the preceding command, you''ll receive a message, such as the
     following one:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 执行前面的命令后，您将收到一条消息，例如以下内容：
 - en: '[PRE7]'
+  id: totrans-72
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Using a security module for the kernel
+  id: totrans-73
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用内核的安全模块
 - en: Linux kernel offers system administrators mechanisms to support control access
     policies to actions that applications can executed inside an operating system.
     Currently, **Security-Enhanced Linux** (**SELinux**) and **Application Armor**
@@ -382,68 +536,103 @@
     do. If a program contains a security vulnerability, AppArmor can detect it leaving
     other software unaffected. In other words, AppArmor restricts capabilities of
     a program to apply a predefined security profile.
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux 内核为系统管理员提供了支持访问控制策略的机制，以控制应用程序在操作系统内部可以执行的操作。目前，**安全增强型 Linux** (**SELinux**)
+    和 **应用程序防护** (**AppArmor**) 是实现这一目的最流行的工具。SELinux 由美国**国家安全局** (**NSA**) 开发，它提供了一组可以应用于不同
+    GNU/Linux 操作系统的 Linux 内核修改。SELinux 的设计和架构允许系统管理员创建将应用于操作系统上运行的用户和进程的不同策略。与 SELinux
+    相关，我们找到了 AppArmor，这是一个为 Linux 内核设计的安全模块。得益于这个模块，可以通过不同的配置文件建立一组策略来限制每个程序可以执行的操作。如果程序包含安全漏洞，AppArmor
+    可以检测到它，而不会影响其他软件。换句话说，AppArmor 限制了程序的能力，以应用预定义的安全配置文件。
 - en: AppArmor and SELinux use **Linux Security Modules** (**LSM**), a framework for
     supporting different computer security models for the Linux kernel. Basically,
     LSM provides tools to implement mandatory access control based on different policies.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: AppArmor 和 SELinux 使用 **Linux 安全模块** (**LSM**)，这是一个支持 Linux 内核不同计算机安全模型的框架。基本上，LSM
+    提供了实现基于不同策略的强制访问控制的工具。
 - en: Linux Mint includes SELinux and AppArmor, but they aren't installed by default.
     AppArmor is easy to configure, deploy, and learn, so we'll find out how to install
     it on our server.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux Mint 包含 SELinux 和 AppArmor，但它们默认未安装。AppArmor 易于配置、部署和学习，因此我们将了解如何在服务器上安装它。
 - en: Time for action – installing AppArmor
+  id: totrans-77
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 操作时间 - 安装 AppArmor
 - en: The learning curve for AppArmor is hard, so we're only going to learn how to
     install it.
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: AppArmor 的学习曲线较陡峭，因此我们只学习如何安装它。
 - en: Launch **Software Manager**.
+  id: totrans-79
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 启动**软件管理器**。
 - en: Look for **apparmor**, select it from the list, and click on the **Install**
     button.![Time for action – installing AppArmor](img/9601_09_06.jpg)
+  id: totrans-80
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在列表中查找**apparmor**，选中它并点击**安装**按钮。![操作时间 - 安装 AppArmor](img/9601_09_06.jpg)
 - en: 'Once AppArmor is installed, you can check its status when executing the following
     command on MATE Terminal:'
+  id: totrans-81
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 安装 AppArmor 后，您可以在 MATE 终端中执行以下命令来检查其状态：
 - en: '[PRE8]'
+  id: totrans-82
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: We'll see something like the following screenshot:![Time for action – installing
     AppArmor](img/9601_09_07.jpg)
+  id: totrans-83
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们将看到类似于以下截图的内容：![操作时间 - 安装 AppArmor](img/9601_09_07.jpg)
 - en: '*What just happened?*'
+  id: totrans-84
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚刚发生了什么？*'
 - en: We simply installed AppArmor from the **Software Manager** application. The
     package included in Linux Mint provides different executable commands, such as
     `apparmor_status` and `apparmor_parser`. The first one offers us information about
     the defined and enabled profiles, and `apparmor_parser` is used for loading profiles
     into the Linux kernel.
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们只是从**软件管理器**应用程序安装了 AppArmor。Linux Mint 中的软件包提供了不同的可执行命令，如 `apparmor_status`
+    和 `apparmor_parser`。第一个命令为我们提供了有关已定义和启用的配置文件的信息，而 `apparmor_parser` 用于将配置文件加载到
+    Linux 内核中。
 - en: If you're interested in learning more about how to configure AppArmor, you can
     take a look at the official documentation at [http://wiki.apparmor.net/index.php/Documentation](http://wiki.apparmor.net/index.php/Documentation).
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您有兴趣了解更多关于如何配置 AppArmor 的信息，可以查看官方文档：[http://wiki.apparmor.net/index.php/Documentation](http://wiki.apparmor.net/index.php/Documentation)。
 - en: Managing your password safely
+  id: totrans-87
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 安全管理您的密码
 - en: 'System administrators work with passwords each day. Connecting to servers,
     accessing resources, and managing users are actions that require the use of passwords.
     Storing passwords in a safe place is very important and it''s critical for the
@@ -454,171 +643,242 @@
     a master password that the user should remember. This master password locks a
     database where other passwords are stored. From the technical point of view, KeePass
     uses two of the most secure encryption algorithms: **AES** and **Twofish** .'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 系统管理员每天都要处理密码。连接服务器、访问资源和管理用户等操作都需要使用密码。将密码安全地存储在一个地方非常重要，这对于系统的安全性至关重要。如果我们能够使用一个工具来存储、读取和更新密码，日常工作将会变得更加容易。最受欢迎的用于处理密码相关任务的软件之一是**KeePass**（[http://keepass.info/](http://keepass.info/)），这是一个设计用来安全管理密码的工具。基本上，KeePass只使用一个用户应该记住的主密码。这个主密码锁定了一个存储其他密码的数据库。从技术角度来看，KeePass使用了两种最安全的加密算法：**AES**和**Twofish**。
 - en: Time for action – installing and using KeePass
+  id: totrans-89
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 安装和使用KeePass
 - en: We'll learn how to install and use KeePass for storing some passwords. After
     installing KeePass, we'll create a new password for a user called `lucas`, who
     has access to a development server.
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将学习如何安装和使用KeePass来存储一些密码。安装KeePass后，我们将为名为`lucas`的用户创建一个新密码，该用户可以访问一个开发服务器。
 - en: Go to the **Software Manager** application, look for **keepass2**, select the
     first item of searched items, and click on the **Install** button.
+  id: totrans-91
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 前往**软件管理器**应用程序，搜索**keepass2**，选择搜索结果中的第一个项目，然后点击**安装**按钮。
 - en: Once **KeePass2** is installed, you can launch it by accessing the main menu
     and by clicking on the **KeePass2** menu option belonging to the **Accessories**
     group.
+  id: totrans-92
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 一旦**KeePass2**安装完成，您可以通过访问主菜单并点击属于**附件**组的**KeePass2**菜单选项来启动它。
 - en: Select the **File** option in the toolbar of the main window of **KeePass2**
     and click on the **New...** menu option.
+  id: totrans-93
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在**KeePass2**主窗口的工具栏中选择**文件**选项，然后点击**新建...**菜单选项。
 - en: Then a new window asking for the master password is displayed. We'll type the
     same password in the **Master password** and **Repeat password** input boxes.![Time
     for action – installing and using KeePass](img/9601_09_08.jpg)
+  id: totrans-94
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 然后会显示一个要求输入主密码的新窗口。我们将在**主密码**和**重复密码**输入框中输入相同的密码。![行动时间 – 安装和使用KeePass](img/9601_09_08.jpg)
 - en: Click on **OK** when you're ready and a new dialog window will be displayed.
     Now, we need to choose a name for a database where passwords will be stored. Choose
     a name and a database description, then click on the **OK** button:![Time for
     action – installing and using KeePass](img/9601_09_09.jpg)
+  id: totrans-95
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 准备好后点击**确定**，将显示一个新的对话窗口。现在，我们需要为存储密码的数据库选择一个名称。选择一个名称和数据库描述，然后点击**确定**按钮：![行动时间
+    – 安装和使用KeePass](img/9601_09_09.jpg)
 - en: Your new database has been created and **KeePass** displays a tree widget where
     you can find different categories below the name of your database.
+  id: totrans-96
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 您的新数据库已经创建，**KeePass**显示一个树形小部件，您可以在数据库名称下找到不同的类别。
 - en: Now, go to the **Edit** menu and click on the **Add entry...** menu option.
     You can see a new dialog window. Enter a title and a username, and the password
     will be generated by default.![Time for action – installing and using KeePass](img/9601_09_10.jpg)
+  id: totrans-97
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，转到**编辑**菜单并点击**添加条目...**菜单选项。您会看到一个新的对话窗口。输入标题和用户名，密码将默认生成。![行动时间 – 安装和使用KeePass](img/9601_09_10.jpg)
 - en: Click on the **OK** button, and a new entry will be created for your password.
+  id: totrans-98
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**确定**按钮，将为您的密码创建一个新条目。
 - en: '*What just happened?*'
+  id: totrans-99
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: KeePass is a complete tool to manage passwords. You can use and create many
     categories to organize your passwords. By default, passwords are generated when
     you create a new entry. It's possible to change configuration and decide how passwords
     are generated by default. Surely you must have realized that passwords are hidden,
     and you only can see stars. In order to change that, click on the button close
     to the **Password** input box.
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: KeePass是一个完整的密码管理工具。您可以使用并创建多个类别来组织您的密码。默认情况下，创建新条目时会生成密码。可以更改配置并决定默认情况下密码的生成方式。您肯定已经意识到密码是被隐藏的，您只能看到星号。为了更改这一点，请点击**密码**输入框旁边的按钮。
 - en: Each time you access KeePass, you need to type your master password. However,
     when you click on an entry, you'll see information, including the password that
     you entered before.
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 每次访问KeePass时，都需要输入主密码。但是，当你点击一个条目时，你会看到包括之前输入的密码在内的信息。
 - en: Other useful functionality provided by KeePass is the ability to generate random
     passwords, although you don't want to use this tool to store it.
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: KeePass提供的其他有用功能包括生成随机密码的能力，尽管你不希望使用此工具来存储密码。
 - en: Building a security checklist
+  id: totrans-103
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 构建安全检查清单
 - en: 'When the system administrator is configuring a safe server, it''s a very good
     practice to use a simple checklist with some issues that should be checked. We''re
     going to build one of these checklists based on concepts that we''ve learned in
     this chapter. Specifically, our checklist will contain the following issues:'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 当系统管理员在配置安全服务器时，使用简单的检查清单来检查一些应该检查的问题是一个非常好的实践。我们将根据本章中学到的概念构建一个这样的检查清单。具体来说，我们的检查清单将包含以下问题：
 - en: Install and enable only services that users need.
+  id: totrans-105
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 仅安装和启用用户所需的服务。
 - en: Build and run a firewall based on a specific policy.
+  id: totrans-106
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 根据特定策略构建和运行防火墙。
 - en: Disable root access through SSH and change the default port for this connection
     service.
+  id: totrans-107
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 禁用通过SSH的root访问并更改此连接服务的默认端口。
 - en: Install and configure an anti-virus, Clam-AV is a good choice.
+  id: totrans-108
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安装并配置防病毒软件，Clam-AV是一个不错的选择。
 - en: Keep your system up-to-date. Always install security updates for your operating
     system and applications.
+  id: totrans-109
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 保持你的系统更新。始终为你的操作系统和应用程序安装安全更新。
 - en: Use KeePass or another password manager to store, read, and write your password
     securely.
+  id: totrans-110
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用KeePass或其他密码管理器安全地存储、读取和写入密码。
 - en: Choose secure passwords that include different types of characters.
+  id: totrans-111
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 选择包含不同类型字符的安全密码。
 - en: Encrypt your sensitive data. **GNU Privacy Guard** (**GPG**) can help you to
     do that. Also, Linux Mint allows you to encrypt your `home` folder from the installation
     process.
+  id: totrans-112
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 加密你的敏感数据。**GNU隐私卫士**（**GPG**）可以帮助你做到这一点。此外，Linux Mint允许你在安装过程中加密你的`home`文件夹。
 - en: If your computer needs extra security, it's a good idea to install and configure
     a network protocol analyzer such as **Wireshark**. In addition, you can install
     a network intrusion detection tool such as **Snort**.
+  id: totrans-113
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果你的计算机需要额外的安全保障，安装和配置网络协议分析器如**Wireshark**是一个好主意。此外，你可以安装网络入侵检测工具如**Snort**。
 - en: Summary
+  id: totrans-114
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 总结
 - en: In this chapter, we talked about security, one of the most important issues
     for system administrators. We discovered some tools such as KeePass, Clam-AV,
     AppArmor, and `Gufw`.
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们讨论了安全问题，这是系统管理员最关心的问题之一。我们发现了一些工具，如KeePass、Clam-AV、AppArmor和`Gufw`。
 - en: 'Specifically, we covered the following topics:'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 具体来说，我们涵盖了以下主题：
 - en: Running an SSH server
+  id: totrans-117
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 运行SSH服务器
 - en: Installing Clam-AV anti-virus
+  id: totrans-118
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安装Clam-AV防病毒软件
 - en: Installing and configuring a simple firewall using Gufw
+  id: totrans-119
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安装和配置使用Gufw的简单防火墙
 - en: Discovering AppArmor and SELinux
+  id: totrans-120
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 探索AppArmor和SELinux
 - en: Installing and using KeePass for managing passwords
+  id: totrans-121
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安装和使用KeePass管理密码
 - en: Defining a security checklist
+  id: totrans-122
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 制定安全检查清单
 - en: Despite having learned some basic tools to secure our computer, we can use other
     tools for the same purpose. For example, it's a good idea to use a tool to detect
     network intrusions. Inside this kind of software, Snort ([http://www.snort.org](http://www.snort.org))
@@ -627,5 +887,7 @@
     potential security risks. After learning basic concepts and tools about security,
     you're ready to learn how to monitor your system, which will be explained in the
     next chapter.
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管我们已经学会了一些基本的工具来保护我们的计算机，但我们还可以使用其他工具来达到同样的目的。例如，使用工具来检测网络入侵是一个好主意。在这种类型的软件中，Snort（[http://www.snort.org](http://www.snort.org)）是最受欢迎的之一。另一方面，像Wireshark（[http://www.wireshark.org](http://www.wireshark.org)）这样的工具可以帮助你分析网络流量，这对于检测潜在的安全风险非常有用。在了解了关于安全的基本概念和工具之后，你已经准备好学习如何监控你的系统，这将在下一章中解释。
