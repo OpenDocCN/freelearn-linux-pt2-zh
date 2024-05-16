@@ -1,3 +1,4 @@
++   [Linux 管理秘籍](README.md)
 +   [前言](linux-adm-cb_00.md)
 +   [第一章：介绍和环境设置](linux-adm-cb_01.md)
 +   [第二章：使用 SSH 进行远程管理](linux-adm-cb_02.md)
