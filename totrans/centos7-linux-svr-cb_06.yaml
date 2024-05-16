@@ -1,49 +1,71 @@
 - en: Chapter 6. Providing Security
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第6章 提供安全性
 - en: 'In this chapter, we will cover the following topics:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将介绍以下主题：
 - en: Locking down remote access and hardening SSH
+  id: totrans-2
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 锁定远程访问并加固SSH
 - en: Installing and configuring fail2ban
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安装和配置fail2ban
 - en: Working with a firewall
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用防火墙
 - en: Forging the firewall rules by example
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 通过示例伪造防火墙规则
 - en: Generating self-signed certificates
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 生成自签名证书
 - en: Using secure alternatives to FTP
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用安全的FTP替代方案
 - en: Introduction
+  id: totrans-8
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 引言
 - en: This chapter is a collection of recipes that provides a solid framework on which
     a server can be made secure in almost any environment. Security is the cornerstone
     of a good administrator, and this chapter illustrates how quickly and easily you
     can design and implement a series of checkpoints that will deliver the protection
     you need.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章是一系列操作的集合，为服务器在几乎任何环境中提供安全性提供了坚实的基础。安全性是优秀管理员的基础，本章说明了您可以如何快速轻松地设计和实施一系列检查点，以提供所需的保护。
 - en: Locking down remote access and hardening SSH
+  id: totrans-10
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 锁定远程访问并加固SSH
 - en: In this recipe, we will learn how to provide additional security measures in
     order to harden the secure shell environment. The **Secure Shell** (**SSH**) is
     the basic toolkit that provides remote access to your server. The actual distance
@@ -53,103 +75,149 @@
     in a secure environment. It is an important tool; as the gateway to your system,
     it is the purpose of this recipe to show you how to perform a few rudimentary
     configuration changes that will serve to protect your server from unwanted guests.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本操作中，我们将学习如何提供额外的安全措施以加固安全Shell环境。**安全Shell**（**SSH**）是提供远程访问服务器的基本工具包。远程机器的实际距离无关紧要，但Shell环境使您能够执行维护、升级、软件包安装和文件传输；您还可以在安全环境中执行作为管理员所需执行的任何操作。这是一个重要的工具；作为进入系统的门户，本操作的目的是向您展示如何执行一些基本的配置更改，以保护您的服务器免受不受欢迎的访客。
 - en: Getting ready
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备
 - en: To complete this recipe, you will require a minimal installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to download additional packages. It
     is assumed that your server already maintains at least one non-root-based administration
     account that can use the new features provided by this recipe.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此操作，您需要具备CentOS 7操作系统的最小安装、具有root权限、您选择的基于控制台的文本编辑器以及连接到互联网以下载其他软件包的能力。假设您的服务器已经至少维护了一个基于非root的管理员帐户，可以使用此操作提供的功能。
 - en: How to do it...
+  id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'The role of SSH will be vital if you are forced to administer your server from
     a remote location, and for this reason it is essential that a few basic steps
     are provided to keep it safe:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: SSH的作用对于远程管理服务器至关重要，因此有必要提供一些基本步骤以确保其安全：
 - en: 'To begin, log in as `root` and create a backup of the original configuration
     file by typing the following command:'
+  id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以`root`身份登录并创建原始配置文件的备份，方法是键入以下命令：
 - en: '[PRE0]'
+  id: totrans-17
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Now, open the main `sshd` configuration file by typing the following:'
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，通过键入以下内容打开主`sshd`配置文件：
 - en: '[PRE1]'
+  id: totrans-19
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'We shall begin by adjusting the time allowed to complete the login process,
     so scroll down and find the line that reads:'
+  id: totrans-20
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们将首先调整允许完成登录过程的时间，因此请向下滚动并找到以下行：
 - en: '[PRE2]'
+  id: totrans-21
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Uncomment this line and change its value to something more appropriate such
     as:'
+  id: totrans-22
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 取消注释此行并将其值更改为更合适的值，例如：
 - en: '[PRE3]'
+  id: totrans-23
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Now, scroll down a couple of more lines and find the line that reads as follows:'
+  id: totrans-24
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，再向下滚动几行并找到以下行：
 - en: '[PRE4]'
+  id: totrans-25
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Change this to the following:'
+  id: totrans-26
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将其更改为以下内容：
 - en: '[PRE5]'
+  id: totrans-27
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Find the following line:'
+  id: totrans-28
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 找到以下行：
 - en: '[PRE6]'
+  id: totrans-29
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'And change it to the following:'
+  id: totrans-30
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 并将其更改为以下内容：
 - en: '[PRE7]'
+  id: totrans-31
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Save and close the file before restarting the SSH service, as shown here:'
+  id: totrans-32
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在重新启动SSH服务之前，保存并关闭文件，如下所示：
 - en: '[PRE8]'
+  id: totrans-33
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: At this stage, you may want to consider creating a new SSH session using the
     new settings before exiting the current session. This is to ensure that everything
     is working correctly and to avoid locking yourself out of the server accidentally.
@@ -158,33 +226,45 @@
     SSH service). However, if no difficulties have been encountered and you are on
     a successful secondary login, you may close the original shell environment by
     typing `exit`.
+  id: totrans-34
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在此阶段，您可能希望在退出当前会话之前，使用新设置创建一个新的SSH会话。这是为了确保一切正常工作，并避免意外锁定自己无法访问服务器。如果您在启动新的SSH会话时遇到困难，只需返回到原始会话窗口并进行必要的调整（然后重新启动SSH服务）。但是，如果没有遇到任何困难，并且您已成功登录到辅助会话，则可以通过键入`exit`关闭原始shell环境。
 - en: Note
+  id: totrans-35
   prefs:
   - PREF_IND
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Remember, having followed this recipe you should now find that root access to
     the shell is denied and you must log in using a standard user account. Any further
     work requiring root privilege will require the `su` or `sudo` command, depending
     on your preferences.
+  id: totrans-36
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 请记住，遵循本教程后，您现在应该发现shell的root访问权限已被拒绝，您必须使用标准用户帐户登录。任何需要root权限的进一步工作都需要使用`su`或`sudo`命令，具体取决于您的偏好。
 - en: How it works...
+  id: totrans-37
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: SSH is a vital service that enables you to access your server remotely. A server
     administrator cannot work without it. In this recipe, you were shown how to make
     that service a little more secure.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: SSH是一项至关重要的服务，它使您能够远程访问服务器。没有它，服务器管理员将无法工作。在本教程中，我们向您展示了如何使该服务更加安全。
 - en: So, what did we learn from this experience?
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: We began the recipe by creating a backup copy of our original main `sshd` configuration
     file. The next step was to open and edit it. The configuration file for SSH maintains
     a long list of settings that is ideal for most internal needs, but for a server
@@ -208,37 +288,55 @@
     of making sure that the modifications did indeed work as expected. No system is
     ever safe, but having done this you can now relax, safe in the knowledge of having
     made the SSH server a little bit safer.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先创建了原始主`sshd`配置文件的备份副本。接下来是打开并编辑它。SSH的配置文件维护了一个长长的设置列表，这些设置非常适合大多数内部需求，但对于生产环境中的服务器，通常建议更改默认的SSH配置文件以满足您的特定需求。在这方面，第一步是建议更改登录宽限时间，`LoginGraceTime
+    30`。与默认的两分钟不同，前面的值将只允许最多30秒。这是用户可以连接但尚未开始身份验证过程的时间段；数字越低，保持打开的未经验证的连接就越少。接下来，我们通过使用`PermitRootLogin
+    no`指令删除了远程用户以root用户身份登录的能力。在大多数情况下，这是必须的，除非服务器处于受控环境中，否则远程服务器不应允许直接root登录。这样做的原因是为了降低被黑客攻击的风险。每个SSH黑客试图破解的第一件事是root用户的密码。如果您不允许root登录，攻击者还需要猜测用户名，这要复杂得多。下一个设置简单地禁用了`X11Forwarding`。在这些情况下，通常是一个好主意，应用短语“如果您不使用它，请禁用它”。为了完成本教程，您需要重新启动SSH服务器，以便允许更改立即生效，并启动一个新的SSH会话，以确保修改确实按预期工作。没有任何系统是绝对安全的，但通过这样做，您现在可以放心，知道您已经使SSH服务器更加安全。
 - en: There's more...
+  id: totrans-41
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'There are a few more topics to cover to make your SSH server even more secure:
     we should change the SSH port number and show you how to limit SSH access to specific
     system users.'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了使您的SSH服务器更加安全，还有几个主题需要涵盖：我们应该更改SSH端口号，并向您展示如何限制特定系统用户的SSH访问。
 - en: Changing the SSH port number of your server
+  id: totrans-43
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 更改服务器SSH端口号
 - en: 'Port 22 is the default port used by all SSH servers, and changing the port
     number used can go a small way to increase the overall security of your server.
     Again, open the main SSH daemon configuration file, `sshd_config`. Now, scroll
     down and locate the following line that reads:'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 端口22是所有SSH服务器使用的默认端口，更改使用的端口号可以在一定程度上增加服务器整体安全性。再次打开主SSH守护程序配置文件`sshd_config`。现在，向下滚动并找到以下行：
 - en: '[PRE9]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'Remove the leading `#` character (uncomment) and change the port number to
     another value by replacing `XXXX` with an appropriate port number:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 删除前面的`#`字符（取消注释）并将端口号更改为另一个值，将`XXXX`替换为适当的端口号：
 - en: '[PRE10]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'You must ensure that the new port number is not already in use, and when complete,
     save the file and close it. It is important to remember that any changes made
     here are reflected in your firewall configuration. So, we need to open the new
@@ -246,52 +344,78 @@
     (replace `XXXX` with your new SSH port), then execute the following `sed` command
     to change the SSH firewalld service file and reload the `firewalld` daemon afterwards
     (for details, read the firewall recipe in this chapter):'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 您必须确保新端口号未被使用，完成后保存文件并关闭。请记住，此处所做的任何更改都会反映在您的防火墙配置中。因此，我们还需要在firewalld中打开新端口。通过环境变量`NEWPORT`设置新端口（将`XXXX`替换为您的新SSH端口），然后执行以下`sed`命令以更改SSH
+    firewalld服务文件并在之后重新加载`firewalld`守护进程（有关详细信息，请阅读本章中的防火墙配方）：
 - en: '[PRE11]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'Also, we have to tell SELinux (see [Chapter 14](part0111_split_000.html#39REE1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 14. Working with SELinux"), *Working with SELinux* to learn more about
     it) about the port change because it is restricted to port 22 by default. Make
     sure that the SELinux tools have been installed, then create a security label
     for our custom port, replacing `XXXX` with your changed port number:'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，我们还需要告诉SELinux（参见[第14章](part0111_split_000.html#39REE1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第14章。使用SELinux"），*使用SELinux*了解更多信息）关于端口更改的信息，因为它默认限制在端口22。确保已安装SELinux工具，然后为我们的自定义端口创建一个安全标签，将`XXXX`替换为您更改的端口号：
 - en: '[PRE12]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: Finally restart the sshd service to apply our port change.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后重启sshd服务以应用我们的端口更改。
 - en: Limiting SSH access by user or group
+  id: totrans-53
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 通过用户或组限制SSH访问
 - en: 'By default, all valid users on the system are allowed to log in and enjoy the
     benefit of SSH. However, a more secure policy is to only allow a predetermined
     list of users or groups to log in. When `henry`, `james`, and `helen` represent
     valid SSH users on the system, in the `sshd_config` add this line to read as follows:'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，系统上的所有有效用户都可以登录并享受SSH的好处。然而，更安全的策略是只允许预定的用户列表或组登录。当`henry`、`james`和`helen`代表系统上的有效SSH用户时，在`sshd_config`中添加以下行：
 - en: '[PRE13]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'Alternatively, you can use the following method to enable any user that is
     a member of a valid administration group to log in. When admin represents a valid
     SSH group on the system, add this line to read as follows:'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者，您可以使用以下方法允许任何属于有效管理员组的用户登录。当admin代表系统上的有效SSH组时，添加以下行：
 - en: '[PRE14]'
+  id: totrans-57
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: When you have finished, save and close the file before restarting the SSH service.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 完成后，保存并关闭文件，然后重启SSH服务。
 - en: Installing and configuring fail2ban
+  id: totrans-59
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 安装和配置fail2ban
 - en: In this recipe, we will learn how to implement additional security measures
     for protecting the SSH server with a package called `fail2ban`. This is a tool
     that serves to protect a variety of services including SSH, FTP, SMTP, Apache,
@@ -301,101 +425,146 @@
     a direct application level, but it is the purpose of this recipe to show that,
     when faced with the possibility of Brute Force Attacks, an added layer of protection
     is always useful.
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们将学习如何使用名为`fail2ban`的包来为SSH服务器实施额外的安全措施。这是一个用于保护包括SSH、FTP、SMTP、Apache等在内的多种服务的工具。它通过读取日志文件中基于失败的登录尝试的模式来工作，并相应地处理违规IP地址。当然，你可能已经在直接应用层面上加强了你的SSH服务器或其他服务，但本食谱的目的是展示，在面对暴力破解攻击的可能性时，额外的保护层总是有用的。
 - en: Getting ready
+  id: totrans-61
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to download additional packages. In
     addition to this, it will be assumed that YUM is already configured to download
     packages from the EPEL repository (see [Chapter 4](part0045_split_000.html#1AT9A1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 4. Managing Packages with YUM"), *Managing Packages with YUM*).
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了完成本食谱，你需要一个具有root权限的CentOS 7操作系统的有效安装，你选择的基于控制台的文本编辑器，以及一个互联网连接以下载额外的包。此外，假设YUM已经配置为从EPEL仓库下载包（参见[第4章](part0045_split_000.html#1AT9A1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第4章。使用YUM管理包")，*使用YUM管理包*）。
 - en: How to do it...
+  id: totrans-63
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'Fail2ban is not installed by default, and for this reason we will need to invoke
     the YUM package manager and download the necessary packages:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: '`fail2ban`默认未安装，因此我们需要调用YUM包管理器并下载必要的包：'
 - en: 'To begin this recipe, log in as `root` and type the following command:'
+  id: totrans-65
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为了开始本食谱，以`root`身份登录并输入以下命令：
 - en: '[PRE15]'
+  id: totrans-66
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'Create a new configuration file in your favorite text editor, like so:'
+  id: totrans-67
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在你的首选文本编辑器中创建一个新的配置文件，如下所示：
 - en: '[PRE16]'
+  id: totrans-68
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'Put in the following content:'
+  id: totrans-69
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 放入以下内容：
 - en: '[PRE17]'
+  id: totrans-70
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 'Now, append the following line that defines the ban period. It is calculated
     in seconds, so adjust the time period to reflect a more suitable value. In this
     case, we have chosen this to be one hour:'
+  id: totrans-71
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，添加以下定义封禁期限的行。它是以秒为单位计算的，因此调整时间期限以反映一个更合适的值。在这种情况下，我们选择将其设为一小时：
 - en: '[PRE18]'
+  id: totrans-72
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 'Then, append the maximum number of login attempts:'
+  id: totrans-73
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 然后，添加最大登录尝试次数：
 - en: '[PRE19]'
+  id: totrans-74
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 'If you are running SSH over a custom port other than `22`, you need to tell
     this to `fail2ban` as well (replace `XXXX` with your port number of choice) otherwise
     skip this step:'
+  id: totrans-75
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果你通过非`22`的定制端口运行SSH，你需要告诉`fail2ban`这一点（用你选择的端口号替换`XXXX`），否则跳过此步骤：
 - en: '[PRE20]'
+  id: totrans-76
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'Now, save and close the file in the usual way before proceeding to enable the
     `fail2ban` service at boot. To do this, type the following command:'
+  id: totrans-77
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，以通常的方式保存并关闭文件，然后继续在启动时启用`fail2ban`服务。为此，输入以下命令：
 - en: '[PRE21]'
+  id: totrans-78
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 'To complete this recipe, you should now start the service by typing:'
+  id: totrans-79
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为了完成本食谱，你现在应该通过输入以下命令来启动服务：
 - en: '[PRE22]'
+  id: totrans-80
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: How it works...
+  id: totrans-81
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: '`fail2ban` is designed to monitor users who repeatedly fail to log in correctly
     on your server, and its main purpose is to mitigate attacks designed to crack
     passwords and steal user credentials. It works by continuously reading your system''s
@@ -403,11 +572,15 @@
     then it will proceed to act against the offending IP address. We all know that
     servers do not exist in isolation, and by using this tool, within a few minutes,
     the server will be running with an additional blanket of protection.'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '`fail2ban`旨在监控那些在你的服务器上反复登录失败的用户，其主要目的是减轻旨在破解密码和窃取用户凭据的攻击。它通过持续读取系统日志文件来工作，如果其中包含指示多次失败尝试的模式，那么它将采取行动对抗违规IP地址。我们都知道服务器不是孤立存在的，通过使用这个工具，在几分钟内，服务器将运行在额外的保护层之下。'
 - en: So, what did we learn from this experience?
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: '`fail2ban` is not available from the standard CentOS repositories, and for
     this reason your server will need to have access to the EPEL repository. The installation
     of the `fail2ban` packages was very simple; besides the main `fail2ban` package,
@@ -427,19 +600,27 @@
     settings, try to authenticate a user using SSH and provide a wrong password five
     times. On the sixth occasion, you should not be able to get back to the login
     prompt for one hour!'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: '`fail2ban`并未包含在标准的CentOS仓库中，因此您的服务器需要能够访问EPEL仓库。`fail2ban`软件包的安装非常简单；除了主要的`fail2ban`软件包外，我们还安装了另外两个软件包，以便将其集成到CentOS
+    7的新`systemd`和firewalld服务器技术中。接下来，为了进行本地定制，我们创建了一个新的`jail.local`文件。我们首先为所有目标（在`[DEFAULT]`部分中指定）指定了`findtime`参数，这是用户尝试登录的时间。该值以秒为单位，意味着如果用户在指定时间内未能成功登录，则他们将被禁止。接下来，我们通过添加一个`[sshd]`部分来启用`fail2ban`服务。在该部分中，我们引入了`bantime`值，该值表示如果主机违反规则，将被阻止访问服务器的总秒数。基于此，您被要求确定在阻止之前允许的最大登录尝试次数。此外，如果您更改了服务的标准监听端口，则必须使用`port`指令定义自定义端口。为了测试您的设置，请尝试使用SSH认证用户并提供错误的密码五次。在第六次尝试时，您应该在一个小时内无法返回到登录提示！'
 - en: 'Protecting the `sshd` service from Brute Force Attacks is just the first step
     to get you started, and there is much more to learn with `failban`. To troubleshoot
     the service, please look at its log file at `/var/log/fail2ban.log`. To get some
     ideas about what can be done with it, open the following example `failban` config
     file: `less /etc/fail2ban/jail.conf`.'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 保护`sshd`服务免受暴力攻击只是开始的第一步，而使用`failban`还有很多需要学习的地方。要排查服务问题，请查看位于`/var/log/fail2ban.log`的日志文件。为了获取一些关于如何使用它的想法，请打开以下示例`failban`配置文件：`less
+    /etc/fail2ban/jail.conf`。
 - en: Working with a firewall
+  id: totrans-86
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 与防火墙协同工作
 - en: A firewall is a program that monitors and controls your system's network interfaces'
     incoming and outgoing network traffic, and can restrict the transmission to only
     useful and non-harmful data into and out of a computer system or network. By default,
@@ -448,120 +629,175 @@
     the famous iptables application to control it, in version 7, the new standard
     netfilter management program has changed to a service called `firewalld`, which
     is already installed and enabled on every CentOS 7 server by default.
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 防火墙是一种程序，它监控和控制系统网络接口的传入和传出网络流量，并可以限制传输到仅对计算机系统或网络有用和无害的数据。默认情况下，CentOS提供了一个极其强大的防火墙，直接构建在内核中，称为**netfilter**。虽然在旧版本的CentOS中，我们使用著名的iptables应用程序来控制它，但在版本7中，新的标准netfilter管理程序已更改为名为`firewalld`的服务，该服务默认情况下已在每个CentOS
+    7服务器上安装并启用。
 - en: It is a very powerful service to take full control over your server's firewall
     security, and is much easier to work with than iptables. Its main advantages are
     that it features a better structured and more logical approach to managing and
     configuring every aspect of a modern firewall solution. Therefore, it will be
     the foundation of your server's security, and for this reason it is the purpose
     of this recipe to get you started on the fundamentals of firewalld quickly.
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个非常强大的服务，可以完全控制服务器的防火墙安全，并且比iptables更容易使用。它的主要优点是它具有更好的结构和更逻辑的方法来管理和配置现代防火墙解决方案的各个方面。因此，它将成为您服务器安全的基础，因此本食谱的目的是让您快速了解firewalld的基本原理。
 - en: Getting ready
+  id: totrans-89
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a minimal installation of the CentOS
     7 operating system with root privileges and a console-based text editor of your
     choice.
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本食谱，您需要具有root权限的CentOS 7操作系统的最小安装以及您选择的基于控制台的文本编辑器。
 - en: How to do it...
+  id: totrans-91
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何做到这一点...
 - en: As the `firewalld` service is running on every CentOS 7 server by default, we
     can start directly working with the service by logging in to your server using
     the `root` user.
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于`firewalld`服务在每个CentOS 7服务器上默认运行，因此我们可以直接通过以`root`用户身份登录到服务器来开始使用该服务。
 - en: 'Type the following commands to query zone-related information:'
+  id: totrans-93
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 键入以下命令以查询与区域相关的信息：
 - en: '[PRE23]'
+  id: totrans-94
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 'We can switch to a different firewall `default` zone by using the following
     line:'
+  id: totrans-95
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们可以通过使用以下行切换到不同的防火墙`默认`区域：
 - en: '[PRE24]'
+  id: totrans-96
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'Add a network interface to a `zone` temporarily:'
+  id: totrans-97
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 临时将网络接口添加到`区域`：
 - en: '[PRE25]'
+  id: totrans-98
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: 'Now, add a service to a `zone` temporarily:'
+  id: totrans-99
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，临时将服务添加到`区域`：
 - en: '[PRE26]'
+  id: totrans-100
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: 'Test if adding the interface and service has been successful:'
+  id: totrans-101
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 测试添加接口和服务是否成功：
 - en: '[PRE27]'
+  id: totrans-102
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'Now, add the service permanently:'
+  id: totrans-103
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，永久添加服务：
 - en: '[PRE28]'
+  id: totrans-104
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: 'Finally, let''s create a new firewall zone by opening the following file:'
+  id: totrans-105
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，让我们通过打开以下文件来创建一个新的防火墙区域：
 - en: '[PRE29]'
+  id: totrans-106
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: 'Now put in the following content:'
+  id: totrans-107
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在输入以下内容：
 - en: '[PRE30]'
+  id: totrans-108
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: 'Save and close, then reload the `firewall` config so that we can see the new
     zone:'
+  id: totrans-109
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭，然后重新加载`防火墙`配置，以便我们可以看到新区域：
 - en: '[PRE31]'
+  id: totrans-110
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: 'Finally, check that the new zone is available:'
+  id: totrans-111
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，检查新区域是否可用：
 - en: '[PRE32]'
+  id: totrans-112
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: How it works...
+  id: totrans-113
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: 'In comparison to iptables, the new firewalld system hides away the creation
     of sophisticated networking rules and has a very easy syntax that is less error-prone.
     It can dynamically reload netfilter settings at runtime without having to restart
@@ -570,11 +806,15 @@
     such as for mobile devices like laptops. In this recipe, we have given you an
     introduction to the two fundamental building blocks of firewalld: the **zone**
     and the **service**.'
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 与iptables相比，新的firewalld系统隐藏了创建复杂网络规则的过程，并且具有非常简单的语法，出错的可能性较小。它可以在运行时动态重新加载netfilter设置，而无需重新启动整个服务，并且我们可以在每个系统上设置多个防火墙配置，这使得它在不断变化的网络环境中工作时非常出色，例如对于移动设备如笔记本电脑。在本食谱中，我们向您介绍了firewalld的两个基本构建块：**区域**和**服务**。
 - en: So, what did we learn from this experience?
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: We started this recipe using `firewall-cmd` to get information about available
     firewall zones on the system. Firewalld introduces the new concept of network
     or firewall zones, which assigns different levels of trust to your server's network
@@ -594,17 +834,25 @@
     services on the network to not harm you. On CentOS 7, the standard `default` zone
     configuration set after installation is the `public` zone, which we displayed
     using the command's `--get-default-zone` parameter, and in more detail using `--list-all`.
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从这个食谱开始使用`firewall-cmd`来获取系统上可用防火墙区域的信息。Firewalld引入了网络或防火墙区域的新概念，它为服务器的网络接口及其相关连接分配不同级别的信任。在CentOS
+    7中，已经存在一些预定义的firewalld区域，所有这些区域（例如，`private`、`home`、`public`等，除了`trusted`区域）将阻止任何形式的传入网络连接到服务器，除非它们被附加到区域的特殊规则明确允许（这些规则称为firewalld服务，我们将在后面看到）。我们使用`firewall-cmd`查询区域信息，使用`--get-zones`或（更详细）使用`--list-all-zones`参数。每个这些区域都作为一个完整和全面的防火墙，您可以根据系统的环境和位置使用。例如，顾名思义，`home`区域适用于您的计算机位于家庭区域的情况。如果选择此选项，您基本上信任网络上的所有其他计算机和服务不会损害您的计算机，而公共区域更多地用于公共场所，如公共接入点等。在这里，您不信任网络上的其他计算机和服务不会伤害您。在CentOS
+    7上，安装后设置的标准`default`区域配置是`public`区域，我们使用命令的`--get-default-zone`参数显示，并使用`--list-all`更详细地显示。
 - en: Note
+  id: totrans-117
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Simply put, firewalld zones are all about controlling incoming connections to
     the server. Limiting outgoing connections with firewalld is also possible but
     is outside the scope of this book.
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 简而言之，firewalld区域主要是关于控制服务器上的传入连接。使用firewalld限制传出连接也是可能的，但这超出了本书的范围。
 - en: Also, to get more technical information about all currently available zones,
     we used the firewall client's `--list-all-zones` parameter. In the command's output,
     you will notice that a zone can have some associated networking interfaces and
@@ -629,8 +877,10 @@
     one associated with our network interface (using its active or if not available
     its default configuration); after finding it, it will apply all the service rules
     against the network packets belonging to it.
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，为了获取所有当前可用区域的更多技术信息，我们使用了防火墙客户端的`--list-all-zones`参数。在命令的输出中，您会注意到一个区域可以有一些关联的网络接口和一个属于它的服务列表，这些是应用于传入网络连接的特殊防火墙规则。您可能还会注意到，虽然默认列出所有区域及其关联服务的详细信息，但所有firewalld区域都非常限制，几乎不允许任何东西连接到服务器。此外，从上面的命令输出中还可以看到另一个非常重要的概念。我们的`public`区域被标记为`default`和`active`。虽然`active`区域是直接与网络接口关联的区域，但如果您有多个网络适配器可用，`default`区域确实可以变得非常重要。在这里，它充当标准的最小防火墙保护和回退策略，以防您错过了为每个接口分配一些活动区域。对于只有一个网络接口设置的系统，`default`区域还将自动设置`active`区域。要设置`default`区域，我们使用了`--set-default-zone`参数，并且要使区域对某个接口处于活动状态，我们使用了`--add-interface`。请注意，如果您不指定`--zone`参数，大多数`firewall-cmd`命令将使用`default`区域来应用设置。Firewalld正在监听系统上的每个网络接口，并等待新的网络数据包到达。总之，我们可以说，如果有新的数据包进入特定接口，Firewalld接下来要做的是找出与我们网络接口关联的正确区域（使用其活动配置，或者如果没有可用的话，使用其默认配置）；找到它之后，它将对属于它的网络数据包应用所有服务规则。
 - en: Next, we showed you how to work with firewalld services. Simply put, firewalld
     services are rules that open and allow a certain connection within our firewall
     to our server. Using such service file definitions allows the reusability of the
@@ -651,62 +901,88 @@
     changes will be lost. To make those temporary changes permanent, we can use the
     `--permanent` flag with the `firewall-cmd` program call to write it to the permanent
     configuration file as well.
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们向您展示了如何使用firewalld服务。简单来说，firewalld服务是规则，它们在我们的防火墙内打开并允许与我们的服务器建立特定连接。使用这种服务文件定义允许包含的规则的可重用性，因为它们可以添加或删除到任何区域。此外，使用系统中已有的预定义firewalld服务，而不是手动查找并打开协议、端口或端口范围，使用复杂的iptables语法为您的系统服务感兴趣，可以使您的管理工作变得更加容易。我们通过调用`--add-service`将`ftp`服务添加到`work`区域。之后，我们使用`--list-all`打印出work区域的详细信息。firewalld被设计为具有分离的运行时和永久配置。对运行时配置的任何更改都会立即生效，但会消失，而永久配置将在重新加载或重启firewalld服务后仍然存在。一些命令，如切换默认区域，会将更改写入两个配置，这意味着它们会立即在运行时应用，并且在服务重启后仍然持久。其他配置设置，如将服务添加到区域，仅写入运行时配置。如果重新启动firewalld，重新加载其配置，或重新启动计算机，这些临时更改将丢失。为了使这些临时更改永久化，我们可以使用`--permanent`标志与`firewall-cmd`程序调用一起将其写入永久配置文件。
 - en: Other than with the runtime options, here the changes are not effective immediately,
     but only after a service restart/reload or system reboot. Therefore, the most
     common approach to apply permanent settings for such runtime-only commands is
     to first apply the setting with the `--permanent` parameter, and afterwards reload
     the firewall's configuration file to actually activate them.
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 与运行时选项不同，这里的更改不会立即生效，只有在服务重启/重新加载或系统重启后才会生效。因此，对于这种仅运行时命令的永久设置，最常见的方法是首先使用`--permanent`参数应用设置，然后重新加载防火墙的配置文件以实际激活它们。
 - en: Finally, we showed you how to create your own zone, which is just a XML file
     you have to create in the `/etc/firewalld/zones/` directory, and where we specified
     a name, description, and all the services that you want to activate. If you change
     something in any firewall configuration file, don't forget to reload the firewall
     config afterwards.
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，我们向您展示了如何创建自己的区域，这只是一个您需要在`/etc/firewalld/zones/`目录中创建的XML文件，我们在其中指定了名称、描述以及您想要激活的所有服务。如果您在任何防火墙配置文件中做了更改，别忘了之后重新加载防火墙配置。
 - en: 'To finish this recipe, we will revert our permanent changes made to the `work`
     zone and reload firewalld to reset all the non-permanent changes we applied in
     this recipe:'
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了完成这个配置，我们将撤销对`work`区域所做的永久性更改，并重新加载firewalld以重置在本配置中应用的所有非永久性更改：
 - en: '[PRE33]'
+  id: totrans-124
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: There's more...
+  id: totrans-125
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'To troubleshoot blocking services, instead of turning off the firewall completely,
     you should just switch `zone` to `trusted`, which will open all the incoming ports
     to the firewall:'
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了解决阻止服务的问题，而不是完全关闭防火墙，您应该将`zone`切换到`trusted`，这将打开所有传入端口到防火墙：
 - en: '[PRE34]'
+  id: totrans-127
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: 'Once you have finished your tests, just switch back to the zone that you were
     in before, for example:'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦您完成了测试，只需切换回您之前所在的区域，例如：
 - en: '[PRE35]'
+  id: totrans-129
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: Forging the firewall rules by example
+  id: totrans-130
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 通过示例构建防火墙规则
 - en: In this recipe, we want to show you how to create your own firewalld service
     definitions or how to change existing ones, which any CentOS 7 system administrator
     should know if the predefined service files don't fit your system's need.
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们希望向您展示如何创建您自己的firewalld服务定义，或者如何更改现有的服务定义，这是任何CentOS 7系统管理员都应该知道的，如果预定义的服务文件不符合您系统的需求。
 - en: Getting ready
+  id: totrans-132
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a minimal installation of the CentOS
     7 operating system with `root` privileges and a console-based text editor of your
     choice. We will be changing the SSH service's port number in firewalld, so make
@@ -716,116 +992,170 @@
     web server that we will use to demonstrate the integration of new system service's
     into firewalld. It's advantageous to grasp the basics of firewalld by working
     through the *Working with a firewall* recipe before starting here.
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本教程，您需要一个最小安装的CentOS 7操作系统，具有`root`权限和一个基于控制台的文本编辑器。我们将更改firewalld中SSH服务的端口号，因此请确保您已按照教程*锁定远程访问并加固SSH*中的说明配置了新端口。在我们的示例中，我们将端口更改为`2223`。此外，我们将为一个小型的基于Python的Web服务器创建一个新的firewalld服务，我们将使用它来演示如何将新的系统服务集成到firewalld中。在开始之前，通过*使用防火墙*教程掌握firewalld的基础知识是有益的。
 - en: How to do it...
+  id: totrans-134
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: Here in this recipe, we will show you how to change and how to create new firewalld
     service definitions. In this recipe, it is considered that we are in the default
     public zone.
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将向您展示如何更改和如何创建新的firewalld服务定义。在本教程中，我们假设我们处于默认的公共区域。
 - en: To change an existing firewalld service (ssh)
+  id: totrans-136
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 更改现有的firewalld服务（ssh）
 - en: 'First, log in as `root` and copy the `ssh` service to the right place to edit
     it:'
+  id: totrans-137
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以`root`身份登录，并将`ssh`服务复制到正确的位置以进行编辑：
 - en: '[PRE36]'
+  id: totrans-138
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: 'Next, open the `ssh` service definition file:'
+  id: totrans-139
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，打开`ssh`服务定义文件：
 - en: '[PRE37]'
+  id: totrans-140
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: 'Change the port from `22` to `2223`, then save the file and close it:'
+  id: totrans-141
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将端口从`22`更改为`2223`，然后保存文件并关闭它：
 - en: '[PRE38]'
+  id: totrans-142
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: 'Finally, reload the firewall:'
+  id: totrans-143
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，重新加载防火墙：
 - en: '[PRE39]'
+  id: totrans-144
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: To create your own new service
+  id: totrans-145
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 创建您自己的新服务
 - en: 'Perform the following steps to create your own new service:'
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: 执行以下步骤以创建您自己的新服务：
 - en: 'Open a new file:'
+  id: totrans-147
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 打开一个新文件：
 - en: '[PRE40]'
+  id: totrans-148
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: 'Put in the following service definition:'
+  id: totrans-149
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 输入以下服务定义：
 - en: '[PRE41]'
+  id: totrans-150
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: 'Save and close the file, and then finally reload the firewall:'
+  id: totrans-151
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件，然后最后重新加载防火墙：
 - en: '[PRE42]'
+  id: totrans-152
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: 'Now, add this new service to our `default` zone:'
+  id: totrans-153
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，将此新服务添加到我们的`default`区域：
 - en: '[PRE43]'
+  id: totrans-154
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: 'Afterwards, run the following command to start a simple Python web server in
     the foreground on port `8000` (press the key combination *Ctrl* + *C* to stop
     it):'
+  id: totrans-155
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，运行以下命令以在端口`8000`上启动一个简单的Python Web服务器（按下*Ctrl* + *C*组合键停止它）：
 - en: '[PRE44]'
+  id: totrans-156
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: 'Congratulations! Your new web server sitting at port `8000` can now be reached
     from other computers in your network:'
+  id: totrans-157
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 恭喜！您的新网络服务器位于端口`8000`，现在可以从您网络中的其他计算机访问了。
 - en: '[PRE45]'
+  id: totrans-158
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: How it works...
+  id: totrans-159
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: 'Here in this recipe, we have shown how easy it is to customize or define new
     firewalld services if the predefined needs to be changed, or for new system services
     that are not defined at all. Service definition files are simple XML files where
@@ -833,11 +1163,15 @@
     directories where our firewalld service files live: `/usr/lib/firewalld/services`
     for all predefined services available from the system installation, and `/etc/firewalld/services`
     for all custom and user-created services.'
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们展示了如何轻松地自定义或定义新的firewalld服务，如果预定义的服务需要更改，或者对于全新的系统服务，这些服务根本未定义。服务定义文件是简单的XML文件，您在其中为给定的系统服务或程序定义规则。我们的firewalld服务文件存放在两个不同的目录中：`/usr/lib/firewalld/services`用于系统安装时提供的所有预定义服务，以及`/etc/firewalld/services`用于所有自定义和用户创建的服务。
 - en: So, what did we learn from this experience?
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: 'We started this recipe by making a working copy of the SSH firewalld service
     file in the right place at `/etc/firewalld/services`. We could just copy the original
     file because all files in this directory will overload the default configuration
@@ -857,8 +1191,11 @@
     dynamic connections on temporary TCP or UDP ports instead of using static ports.
     After reloading the firewall configuration, we should now be able to test the
     connection from another computer in our network using the altered port.'
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先通过在正确的位置`/etc/firewalld/services`创建SSH firewalld服务文件的工作副本来开始这个配置。我们可以直接复制原始文件，因为该目录中的所有文件都会覆盖`/usr/lib/firewalld/services`中的默认配置文件。接下来，我们打开文件并将其默认端口从`22`更改为`2223`。每当更改系统服务的标准监听端口时，我们都需要这样做，以便让防火墙知道它应该允许通过更改后的端口的网络流量。打开文件时，您会看到服务文件是简单的XML文本文件，包含一些强制性和一些可选的标签和属性。它们包含一个或多个端口和协议的列表，这些定义了如果服务连接到某个区域，firewalld应该启用什么。XML文件中还可以有另一个重要设置：辅助模块。例如，如果您打开位于`/usr/lib/firewalld/services/samba.xml`的SAMBA服务文件，您会看到标签`<module
+    name="nf_conntrack_netbios_ns"/>`。这些是特殊的内核netfilter辅助模块，可以动态加载到基于内核的防火墙中，并且对于某些系统服务（如Samba或FTP）是必需的，这些服务在临时TCP或UDP端口上创建动态连接，而不是使用静态端口。重新加载防火墙配置后，我们现在应该能够使用更改后的端口从网络中的另一台计算机测试连接。
 - en: In the second part of this recipe, we created a brand-new service file for a
     new system service, which is a simple Python web server listening on port 8000
     displaying a simple directory content listing. Therefore, we created a simple
@@ -869,36 +1206,51 @@
     same network. However, as we did not use the `--permanent` flag, if you restart
     the firewalld daemon, the `python-webserver` service will be gone from the `public`
     zone (or you can also use the parameter, `--remove-service=python-webserver`).
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本配置的第二部分，我们为一个新的系统服务创建了一个全新的服务文件，这是一个简单的Python Web服务器，监听端口8000，显示简单的目录内容列表。因此，我们为Python
+    Web服务器创建了一个简单的XML服务文件，包括正确的端口8000，重新启动了防火墙，然后将这个新服务添加到我们的默认公共区域，以便我们实际上可以通过该服务打开连接。现在，您应该能够使用同一网络中的另一台计算机浏览到我们的Web服务器的起始页面。但是，由于我们没有使用`--permanent`标志，如果您重新启动firewalld守护进程，`python-webserver`服务将从`public`区域消失（或者您也可以使用参数`--remove-service=python-webserver`）。
 - en: In summary, we can say that the recommended firewall choice in CentOS 7 is firewalld,
     as all important system services have already been set up to use it via predefined
     service rules. You should remember that Linux firewalls are a very complex topic
     that can easily fill up a whole book, and you can do a lot more with the `firewall-cmd`
     that cannot be covered here in this book.
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 总之，我们可以说，在CentOS 7中推荐的防火墙选择是firewalld，因为所有重要的系统服务都已经通过预定义的服务规则设置为使用它。您应该记住，Linux防火墙是一个非常复杂的主题，很容易填满整本书，而且您可以使用`firewall-cmd`做更多的事情，这些在这本书中无法涵盖。
 - en: There's more...
+  id: totrans-165
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'Often, you just want to quickly open a specific port to test out things before
     writing your own custom-made service definition. In order to do this, you can
     use the following command line, which will open port `2888` using the tcp protocol
     temporarily on the `default` zone:'
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，您可能只想快速打开特定端口来测试事物，然后再编写自己的自定义服务定义。为此，您可以使用以下命令行，该命令行将在`default`区域上临时使用tcp协议打开端口`2888`：
 - en: '[PRE46]'
+  id: totrans-167
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: Once you have finished your tests, just reload the firewall configuration to
     remove and close the specific port again.
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 测试完成后，只需重新加载防火墙配置即可再次删除并关闭特定端口。
 - en: Generating self-signed certificates
+  id: totrans-169
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 生成自签名证书
 - en: In this recipe, we will learn how to create self-signed **Secure Sockets Layer**
     (**SSL**) certificates using the OpenSSL toolkit. SSL is a technology used to
     encrypt messages between two ends of a communication (for example, a server and
@@ -906,98 +1258,136 @@
     are not used for encrypting the data, but they are very important in this communication
     process to ensure that the party you are communicating with is exactly the one
     you suppose it to be. Without them, impersonation attacks would be much more common.
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将学习如何使用OpenSSL工具包创建自签名**安全套接字层**（**SSL**）证书。SSL是一种用于加密通信两端（例如服务器和客户端）之间的消息的技术，以便第三方无法读取它们之间发送的消息。证书不用于加密数据，但它们在通信过程中非常重要，以确保您与之通信的一方正是您认为的那一方。没有它们，身份冒充攻击将更加常见。
 - en: Getting ready
+  id: totrans-171
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges and a console-based text editor of your
     choice.
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此操作，您需要一个具有root权限和您选择的基于控制台的文本编辑器的CentOS 7操作系统的工作安装。
 - en: Note
+  id: totrans-173
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Generally speaking, if you are intending to use an SSL Certificate on a production
     server, you will probably want to purchase a SSL Certificate from a trusted Certificate
     Authority. There are many options open to you regarding what certificate best
     suits your requirements and your budget, but for the purpose of this recipe we
     will confine our discussion to a self-signed certificate that is more than adequate
     for any development server or internal network.
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: 一般来说，如果您打算在生产服务器上使用SSL证书，您可能希望从受信任的证书颁发机构购买SSL证书。关于哪种证书最适合您的需求和预算，您有很多选择，但为了本教程的目的，我们将仅限于讨论自签名证书，这对于任何开发服务器或内部网络来说已经足够了。
 - en: How to do it...
+  id: totrans-175
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'To begin, log in as `root` and go to the following directory so that we can
     use the Makefile to generate our intended certificates and keyfiles:'
+  id: totrans-176
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以`root`身份登录并转到以下目录，以便我们可以使用Makefile生成我们想要的证书和密钥文件：
 - en: '[PRE47]'
+  id: totrans-177
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: 'Now, to create a self-signed certificate with an embedded public key (both
     in the file, `server.crt`) along with its private key for the server (with the
     filename as `server.key`), type the following:'
+  id: totrans-178
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，要创建一个包含嵌入式公钥的自签名证书（两者都在文件`server.crt`中）以及服务器的私钥（文件名为`server.key`），请输入以下命令：
 - en: '[PRE48]'
+  id: totrans-179
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: 'You will then be asked for a password and will receive a series of questions,
     to which you should respond with the appropriate values. Complete all the required
     details by paying special attention to the common name value, which should reflect
     the domain name of the server or IP address that you are going to use this certificate
     for. For example, you may type:'
+  id: totrans-180
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 然后，系统会要求您输入密码并收到一系列问题，您应该用适当的值回答。通过特别注意通用名称值来完成所有必需的详细信息，该值应反映您将为此证书使用的服务器的域名或IP地址。例如，您可以输入：
 - en: '[PRE49]'
+  id: totrans-181
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: 'To create a `pem` file that includes a self-signed certificate and a public
     and a private key in one file, and is valid for five years, type the following:'
+  id: totrans-182
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要创建一个包含自签名证书、公钥和私钥的`pem`文件，有效期为五年，请输入以下命令：
 - en: '[PRE50]'
+  id: totrans-183
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE50]'
 - en: 'Now, let''s create a key pair (a private key and self-signed certificate that
     includes the public key) for an Apache web server that we will need for enabling
     `https`, and which will be generated in `/etc/pki/tls/private/localhost.key` and
     `/etc/pki/tls/certs/localhost.crt` (use a secure password and repeat it in the
     second command):'
+  id: totrans-184
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，让我们为Apache Web服务器创建一个密钥对（一个私钥和包含公钥的自签名证书），我们需要启用`https`，它将在`/etc/pki/tls/private/localhost.key`和`/etc/pki/tls/certs/localhost.crt`中生成（使用安全密码并在第二个命令中重复）：
 - en: '[PRE51]'
+  id: totrans-185
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE51]'
 - en: 'To create a **Certificate Signing Request** (**CSR**) file instead of a self-signed
     certificate, use this:'
+  id: totrans-186
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要创建一个**证书签名请求**（**CSR**）文件而不是自签名证书，请使用以下命令：
 - en: '[PRE52]'
+  id: totrans-187
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE52]'
 - en: How it works...
+  id: totrans-188
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: 'Here in this recipe, we introduced you to the SSL technology that uses **public
     key cryptography** (**PKI**) (where two forms of keys exist: public and private).
     On the server, we store the private key and our clients get a public key. Every
@@ -1019,21 +1409,29 @@
     to a public audience, or you want to offer them only within a company''s intranet
     or just want to test out things before buying, here you can also sign the certificate
     by yourselves (self-signed) with the OpenSSL toolkit.'
+  id: totrans-189
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们向您介绍了使用**公钥加密技术**（**PKI**）的SSL技术（其中存在两种形式的密钥：公钥和私钥）。在服务器上，我们存储私钥，而客户端获得公钥。从一端发送到另一端的每条消息都由属于一侧的密钥加密，并且只能由另一侧的相应密钥解密。例如，使用服务器的私钥加密的消息只能由客户端的公钥解密和阅读，反之亦然。公钥通过证书文件发送给客户端，它是文件的一部分。如前所述，公钥负责加密和解密数据，而证书则负责识别服务器与客户端，并确保您实际上连接到了您试图连接的同一服务器。如果您想在FTPS、HTTPS、POP3S、IMAPS、LDAPS、SMTPS等协议中设置使用SSL加密的安全服务，您需要一个签名的服务器证书来配合工作。如果您想将这些服务用于您的业务，并希望使用和处理这些服务的人信任它们，例如在公共互联网上，您的证书应该由官方的**认证机构**（**CA**）签名。证书的价格按订阅支付，可能非常昂贵。如果您不打算向公众提供您的证书或启用了SSL的服务，或者您只想在公司内部网内提供这些服务，或者只是想在购买前测试一下，您也可以使用OpenSSL工具包自行签名（自签名）证书。
 - en: Note
+  id: totrans-190
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: The only difference between a self-signed certificate and one coming from an
     official CA is that most programs using the certificate for communication will
     give you a warning that it does not know about the CA and that you should not
     trust it. After confirming the security risk, you can work with the service normally.
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: 自签名证书与来自官方CA的证书之间的唯一区别是，大多数使用证书进行通信的程序会向您发出警告，表示它不知道该CA，并且您不应该信任它。在确认安全风险后，您可以正常使用该服务。
 - en: So, what did we learn from this experience?
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: 'We started this recipe by going to the standard location where all the system''s
     certificates can be found in CentOS 7: `/etc/pki/tls/certs`. Here, we can find
     a Makefile, which is a helper script for conveniently generating public/private
@@ -1049,8 +1447,11 @@
     will check the domain names to see if they are valid. The result of running this
     command was the certificate with its embedded public key in file `server.crt`,
     as well as the corresponding private key for the server called `server.key`.'
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从这个食谱开始，前往CentOS 7中所有系统证书的标准位置：`/etc/pki/tls/certs`。在这里，我们可以找到一个Makefile，这是一个方便生成公钥/私钥对、SSL
+    CSR和自签名SSL测试证书的辅助脚本。它通过隐藏OpenSSL程序的复杂命令行参数来工作。它非常易于使用，并且将自动通过你的文件名参数的文件扩展名识别你的目标。因此，通过提供带有`.crt`扩展名的输出文件名来生成SSL密钥对是一个简单的过程。如前所述，你将被要求输入密码和一系列关于证书所有权的问题，其中最重要的是通用名称。这应该反映你计划使用此证书的服务器的域名，因为大多数程序，如网络浏览器或电子邮件客户端，将检查域名以查看它们是否有效。运行此命令的结果是证书及其嵌入的公钥在文件`server.crt`中，以及称为`server.key`的服务器的相应私钥。
 - en: 'Next, we created a `.pem` file and provided a `DAYS` parameter to make the
     certificate valid for five years instead of the default one year when you are
     running without it. A `pem` file is a container file that contains both parts
@@ -1063,37 +1464,54 @@
     if you need to repeat any Makefile run later, you need to delete the generated
     output files; for example, for Apache, you need to delete the following files
     before you can build the output files again:'
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们创建了一个`.pem`文件，并提供了一个`DAYS`参数，使证书有效期为五年，而不是默认的一年，当你不带它运行时。`pem`文件是一个容器文件，包含密钥对的两部分：私钥和自签名证书（带有其嵌入的公钥）。这种文件格式有时是某些程序（如`vsftpd`）所要求的，以启用SSL加密，而不是提供两个分离的文件中的密钥对。接下来，我们运行了Makefile目标`testcert`，它生成了私钥以及公钥，以及正确位置的证书，Apache
+    Web服务器期望在那里设置HTTPS。请注意，如果你需要稍后重复任何Makefile运行，你需要删除生成的输出文件；例如，对于Apache，你需要在可以再次构建输出文件之前删除以下文件：
 - en: '[PRE53]'
+  id: totrans-195
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE53]'
 - en: Finally, we showed you how to generate a CSR file, which will be needed if you
     plan to purchase an SSL certificate from a trusted certificate authority.
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，我们向你展示了如何生成CSR文件，如果你计划从受信任的证书颁发机构购买SSL证书，这将需要。
 - en: There's more...
+  id: totrans-197
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: We did not cover all the possibilities that the Makefile script has to offer
     to generate certificates. If you run the command, `make,` without giving any target
     parameter, the program will print out a usage help text with all possible options.
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们没有涵盖Makefile脚本在生成证书方面提供的所有可能性。如果你运行命令`make`而不给出任何目标参数，程序将打印出一个使用帮助文本，其中包含所有可能的选项。
 - en: 'As we have learned, the public and private keys are generated in pairs, and
     will encrypt and decrypt each partner''s messages. You can verify that your key
     pairs are valid and belong together by comparing the output of the following (which
     must be exactly the same):'
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们所学，公钥和私钥是成对生成的，并将加密和解密对方的消息。你可以通过比较以下输出（必须完全相同）来验证你的密钥对是否有效且属于一起：
 - en: '[PRE54]'
+  id: totrans-200
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE54]'
 - en: Using secure alternatives to FTP
+  id: totrans-201
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用FTP的安全替代方案
 - en: While using FTP is still popular to share data or to transfer files over the
     network, you must be aware that you are using a very unsecure network protocol
     that has no protection built into it out-of-the-box. This means that, during network
@@ -1102,12 +1520,17 @@
     avoid these potential risks, we will show you in this recipe how to use and set
     up two alternatives for securing FTP using FTPS (FTP over SSL or FTP/SSL) or SFTPS
     (SSH-enabled FTP).
+  id: totrans-202
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管FTP仍然流行用于共享数据或在网络上传输文件，但您必须意识到您正在使用一个非常不安全的网络协议，该协议默认情况下没有内置保护。这意味着在网络传输过程中，您的数据完全暴露给潜在的攻击者。这绝不是您希望用于传输敏感数据（如登录凭据）的方式。为了避免这些潜在风险，我们将在此菜谱中向您展示如何使用和设置两种替代方案来保护FTP，即使用FTPS（FTP
+    over SSL或FTP/SSL）或SFTPS（启用SSH的FTP）。
 - en: Getting ready
+  id: totrans-203
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a minimal installation of the CentOS
     7 operating system with root privileges and a console-based text editor of your
     choice. You should already have installed and configured a basic vsftpd server
@@ -1116,148 +1539,217 @@
     it). Also, for setting up SFTP, we will need to create some self-signed certificates;
     if you want to know the details behind it, please read the *Generating self-signed
     certificates* recipe in this chapter.
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此菜谱，您需要一个具有root权限的CentOS 7操作系统的最小安装和一个您选择的基于控制台的文本编辑器。您应该已经安装并配置了一个基本的vsftpd服务器（请参阅[第12章](part0098_split_000.html#2TEN41-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 12. Providing Web Services"），*提供Web服务*了解如何操作）。此外，为了设置SFTP，我们需要创建一些自签名证书；如果您想了解其背后的详细信息，请阅读本章中的*生成自签名证书*菜谱。
 - en: How to do it...
+  id: totrans-205
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: You have to choose beforehand if you want to use SFTP or FTPS. These two methods
     cannot be applied together, so you have to decide which option to choose first.
     If you switch between those methods, you need to restore the default configuration
     file state of `vsftpd.conf` or `sshd_config` first.
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: 您必须事先决定是要使用SFTP还是FTPS。这两种方法不能同时应用，因此您必须首先决定选择哪种选项。如果您在这两种方法之间切换，您需要先恢复`vsftpd.conf`或`sshd_config`的默认配置文件状态。
 - en: Securing your vsftpd server with SSL–FTPS
+  id: totrans-207
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 使用SSL保护您的vsftpd服务器 - FTPS
 - en: 'To secure your vsftpd server with SSL-FTPS perform the following steps:'
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: 要使用SSL-FTPS保护您的vsftpd服务器，请执行以下步骤：
 - en: 'Log in as `root` and go to the standard certificate location:'
+  id: totrans-209
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 以`root`身份登录并转到标准证书位置：
 - en: '[PRE55]'
+  id: totrans-210
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE55]'
 - en: 'Now, let''s create a SSL key pair consisting of the certificate and its embedded
     public key, as well as the private key in one file for our `ftp-server` configuration
     (remember that the `Common name` value should reflect the domain name of your
     FTP server):'
+  id: totrans-211
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，让我们为我们的`ftp-server`配置创建一个SSL密钥对，该密钥对包括证书及其嵌入的公钥以及私钥在一个文件中（请记住，`Common name`值应反映您的FTP服务器的域名）：
 - en: '[PRE56]'
+  id: totrans-212
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE56]'
 - en: 'Change to a more secure file access rule:'
+  id: totrans-213
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 更改到更安全的文件访问规则：
 - en: '[PRE57]'
+  id: totrans-214
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE57]'
 - en: Now, before working on it, first make a backup of the `vsftpd.conf` file.
+  id: totrans-215
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，在对其进行操作之前，首先备份`vsftpd.conf`文件。
 - en: '[PRE58]'
+  id: totrans-216
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE58]'
 - en: 'Now, enable SSL and add the key pair file that we just created to our `vsftpd`
     configuration:'
+  id: totrans-217
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，启用SSL并将我们刚刚创建的密钥对文件添加到我们的`vsftpd`配置中：
 - en: '[PRE59]'
+  id: totrans-218
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE59]'
 - en: 'Next, we need to add a new firewalld service file, so open the following:'
+  id: totrans-219
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们需要添加一个新的firewalld服务文件，因此打开以下内容：
 - en: '[PRE60]'
+  id: totrans-220
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE60]'
 - en: 'Put in the following content:'
+  id: totrans-221
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 请输入以下内容：
 - en: '[PRE61]'
+  id: totrans-222
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE61]'
 - en: 'Finally, reload the firewall, add the `ftps` service, and restart your `vsftpd`
     server:'
+  id: totrans-223
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，重新加载防火墙，添加`ftps`服务，并重启您的`vsftpd`服务器：
 - en: '[PRE62]'
+  id: totrans-224
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE62]'
 - en: Securing your vsftpd server using SSH – SFTP
+  id: totrans-225
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 使用SSH保护您的vsftpd服务器 - SFTP
 - en: 'To secure your vsftpd server using SSL-SFTP perform the following steps:'
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: 要使用SSL-SFTP保护您的vsftpd服务器，请执行以下步骤：
 - en: 'First, create a group for all valid SFTP users:'
+  id: totrans-227
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，为所有有效的SFTP用户创建一个组：
 - en: '[PRE63]'
+  id: totrans-228
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE63]'
 - en: 'We will work on the `sshd` main config file, so please make a backup before
     making any changes:'
+  id: totrans-229
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们将对`sshd`主配置文件进行操作，因此在进行任何更改之前，请先备份：
 - en: '[PRE64]'
+  id: totrans-230
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE64]'
 - en: 'Now, open the `sshd_config` file, go to the line containing the `Subsystem`
     directive, disable it (which means putting a `#` sign at the beginning of the
     line), and add the following line to read as shown:'
+  id: totrans-231
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，打开`sshd_config`文件，转到包含`Subsystem`指令的行，禁用它（这意味着在该行前面加上`#`符号），并添加以下行，如下所示：
 - en: '[PRE65]'
+  id: totrans-232
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE65]'
 - en: 'Next, add the following lines to the end of the file to enable SFTP:'
+  id: totrans-233
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，在文件末尾添加以下行以启用SFTP：
 - en: '[PRE66]'
+  id: totrans-234
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE66]'
 - en: Finally, restart the `sshd` daemon.
+  id: totrans-235
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，重启`sshd`守护进程。
 - en: '[PRE67]'
+  id: totrans-236
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE67]'
 - en: How it works...
+  id: totrans-237
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: Here in this recipe, you have learned how to make your file sharing more secure
     by switching from the standard FTP protocol to using FTP over SSL, or FTP over
     SSH. Regardless of which option you prefer, SSL is used to encrypt the data during
@@ -1265,11 +1757,15 @@
     to you, but remember that SFTP is a bit easier to set up as you do not have to
     configure additional ports or certificates in your firewall, because everything
     runs over SSH and this should be enabled by default on most systems.
+  id: totrans-238
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个过程中，你学会了如何通过从标准FTP协议切换到使用SSL上的FTP或SSH上的FTP来使你的文件共享更安全。无论你选择哪种选项，SSL都用于在传输过程中加密数据，这有助于保护你的隐私。你选择哪种变体取决于你，但要记住，SFTP设置起来稍微容易一些，因为你不需要在你的防火墙中配置额外的端口或证书，因为一切都在SSH上运行，这在大多数系统上应该是默认启用的。
 - en: So, what did we learn from this experience?
+  id: totrans-239
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: 'We began the recipe by configuring FTPS. We went into a special directory called
     `/etc/pki/tls/certs`, where CentOS stores all its certificates. In it, there is
     a Makefile, which we used to create a `.pem` file that contains the public/private
@@ -1280,8 +1776,10 @@
     the SSL protocol, use the self-signed certificate, disallow any non-SSL communication,
     and use a static range of passive control ports. Also, we created a new firewall
     service that will open these passive control ports that are needed for FTPS.'
+  id: totrans-240
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先通过配置FTPS开始这个过程。我们进入了一个特殊的目录，叫做`/etc/pki/tls/certs`，CentOS在这里存储所有的证书。在其中，有一个Makefile，我们用它来创建一个包含公钥/私钥对和自签名证书的`.pem`文件，这是我们FTP服务器配置所需的。之后，我们使用chmod确保只有root用户可以读取这个文件。然后，我们在主`vsftpd`配置文件中追加了六行代码（首先，我们备份了原始文件）；它们相当直观：启用SSL协议，使用自签名证书，禁止任何非SSL通信，并使用一个固定的被动控制端口范围。此外，我们创建了一个新的防火墙服务，它将打开FTPS所需的被动控制端口。
 - en: Afterwards, we configured SFTP using a chroot jail. If setting up SFTP without
     it, every login user can view the root filesystem, which is very unsecure. Configuring
     SFTP is done completely in the main `sshd` config file. After making a backup
@@ -1293,40 +1791,62 @@
     by the users and enforces these rules here instead. To add new chrooted SFTP users,
     all you have to do is create a standard Linux user account and add them to the
     `sshftp` user group.
+  id: totrans-241
   prefs: []
   type: TYPE_NORMAL
+  zh: 之后，我们通过chroot jail配置了SFTP。如果不使用chroot jail设置SFTP，每个登录用户都可以查看根文件系统，这是非常不安全的。SFTP的配置完全在主`sshd`配置文件中完成。在备份原始文件后，我们将FTP子系统更改为`internal-sftp`，这是一个更新的FTP服务器版本，性能更好，并在同一进程中运行。接下来，我们在`vsftpd`配置文件中添加了三行；只有`sshftp`组中的用户使用SFTP，并被放入chroot
+    jail中，只能查看其`home`目录及以下的文件。`ForceCommand`忽略用户的所有本地设置，并在此处强制执行这些规则。要添加新的chroot SFTP用户，你只需创建一个标准的Linux用户账户，并将他们添加到`sshftp`用户组。
 - en: There's more...
+  id: totrans-242
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'If you want to test your enabled FTPS server, you need an FTP client that supports
     "FTP over TLS." You have to find and enable this option in your FTP client''s
     settings. Under Linux, you can install the `lftp` client to test if you can connect
     to our FTPS server. First, install the `lftp` package (for example, `yum install
     lftp`). Then, configure the client using TLS:'
+  id: totrans-243
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想测试你的已启用FTPS服务器，你需要一个支持“FTP over TLS”的FTP客户端。你需要在你的FTP客户端设置中找到并启用这个选项。在Linux下，你可以安装`lftp`客户端来测试你是否可以连接到我们的FTPS服务器。首先，安装`lftp`包（例如，`yum
+    install lftp`）。然后，使用TLS配置客户端：
 - en: '[PRE68]'
+  id: totrans-244
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE68]'
 - en: 'Now, you can connect and test your FTPS server using the following:'
+  id: totrans-245
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，你可以使用以下命令连接并测试你的FTPS服务器：
 - en: '[PRE69]'
+  id: totrans-246
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE69]'
 - en: 'If you want to test your enabled SFTP server, you need the program called `sftp`:'
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想测试你的已启用SFTP服务器，你需要一个名为`sftp`的程序：
 - en: '[PRE70]'
+  id: totrans-248
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE70]'
 - en: Note
+  id: totrans-249
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: You have to remember that all the changes to `sshd_config` will be reflected
     in SFTP as well. So, if you disabled root login or ran SSH over a different port
     than `22`, you have to take it into consideration when you try to log in to SFTP.
+  id: totrans-250
   prefs: []
   type: TYPE_NORMAL
+  zh: 你必须记住，对`sshd_config`所做的所有更改也会反映在SFTP中。因此，如果你禁用了root登录或使SSH在不同于`22`的端口上运行，当你尝试登录SFTP时，必须考虑到这一点。

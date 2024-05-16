@@ -3,6 +3,7 @@
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 前言
 - en: 'This is the second edition of the highly rated *CentOS Linux Server Cookbook*.
     With the advent of CentOS 7 in mid 2014, there has been a long list of significant
     changes and new features to this famous operating system. To name a few, there
@@ -19,6 +20,8 @@
   id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 本书是备受好评的《CentOS Linux服务器食谱》的第二版。随着2014年年中CentOS 7的推出，这个著名的操作系统迎来了一系列重大变化和新特性。例如，新的安装程序、系统管理服务套件、防火墙守护进程、增强的Linux容器支持以及新的标准文件系统。由于操作系统的新进展，《CentOS
+    6 Linux服务器食谱》中很大一部分的食谱变得过时甚至无法使用，因此更新本书的原始内容至关重要。但本书不仅仅是第一版内容的复习：还新增了两章，以跟上最新的开源技术并提供更好的安全性：操作系统级虚拟化和SELinux。最后，为了使本书成为更全面的服务器管理书籍，还增加了一章关于服务器监控的内容。
 - en: Building a server can present a challenge. It is often difficult at the best
     of times and frustrating at the worst of times. They can represent the biggest
     of problems or give you a great sense of pride and achievement. Where the word
@@ -43,11 +46,14 @@
   id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 构建服务器可能会带来挑战。在最好的情况下也常常是困难的，在最坏的情况下则是令人沮丧的。它们可能代表最大的问题，也可能给你带来极大的自豪和成就感。尽管“服务器”这个词可以描述很多事物，但本书的目的是揭开企业级计算系统的神秘面纱，旨在帮助你构建你选择的专业服务器解决方案。CentOS是一个基于社区的企业级操作系统。它是免费提供的，并且作为Red
+    Hat Enterprise Linux（RHEL）的完全兼容衍生版本，它是全球组织、公司、专业人士和家庭用户打算运行服务器的首选操作系统。它被广泛认为是一个非常强大和灵活的Linux发行版，无论你打算运行Web服务器、文件服务器、FTP服务器、域服务器还是多角色解决方案，本书的目的都是提供一系列即用型解决方案，展示你如何快速使用CentOS操作系统构建一个功能全面的服务器系统。因此，可以说这本书不仅仅是对另一个基于服务器的操作系统的又一次介绍。这是一本关于企业级操作系统的食谱，提供了一种逐步使其工作的方法。因此，无论你是新手还是经验丰富的用户，每个人都能在这本书中找到有用的内容，因为这本书将成为你完成任务的实用指南，也是所有CentOS事物的起点。
 - en: What this book covers
   id: totrans-3
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 本书内容概述
 - en: '[Chapter 1](part0015_split_000.html#E9OE1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 1. Installing CentOS"), *Installing CentOS*, is a series of recipes that
     introduces you to the task of installing your server, updating, and enhancing
@@ -57,6 +63,8 @@
   id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '[第1章](part0015_split_000.html#E9OE1-4cf34a6d07944734bb93fb0cd15cce8c "第1章.
+    安装CentOS")，*安装CentOS*，是一系列介绍您安装服务器任务的配方，更新，并通过添加额外工具来增强最小安装。它旨在让您开始，并提供一个参考，向您展示实现所需安装的多种方式。'
 - en: '[Chapter 2](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 2. Configuring the System"), *Configuring the System*, is designed to
     follow on from a successful installation to offer a helping hand and provide you
@@ -68,6 +76,8 @@
   id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '[第2章](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c "第2章.
+    配置系统")，*配置系统*，旨在在成功安装后提供帮助，并为您提供一系列配方，使您能够实现所需的服务器初始配置。从向您展示如何处理文本文件，然后更改语言和时间日期设置，您不仅将学习如何配置网络设置，还将学习如何解析完全限定域名以及如何使用内核模块。'
 - en: '[Chapter 3](part0034_split_000.html#10DJ41-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 3. Managing the System"), *Managing the System*, provides the building
     blocks that will enable you to champion your server and take control of your environment.
@@ -77,6 +87,8 @@
   id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '[第3章](part0034_split_000.html#10DJ41-4cf34a6d07944734bb93fb0cd15cce8c "第3章.
+    管理系统")，*管理系统*，提供了构建块，使您能够掌握您的服务器并控制您的环境。在这里，您将通过传播大量信息来启动您作为服务器管理员的角色，这些信息将引导您完成开发全面考虑和专业服务器解决方案所需的多种步骤。'
 - en: '[Chapter 4](part0045_split_000.html#1AT9A1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 4. Managing Packages with YUM"), *Managing Packages with YUM*, serves
     to introduce you to working with software packages on CentOS 7\. From upgrading
@@ -87,6 +99,9 @@
   id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '[第4章](part0045_split_000.html#1AT9A1-4cf34a6d07944734bb93fb0cd15cce8c "第4章.
+    使用YUM管理软件包")，*使用YUM管理软件包*，旨在向您介绍在CentOS 7上使用软件包的工作。从升级系统到查找、安装、卸载以及通过添加额外的仓库来增强系统，本章的目的是解释开源命令行包管理工具，即Yellowdog
+    Updater Modified（YUM）以及RPM包管理器。'
 - en: '[Chapter 5](part0055_split_000.html#1KEEU1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 5. Administering the Filesystem"), *Administering the Filesystem*, focuses
     on working with your server''s file system. From creating mocking disk devices
@@ -96,6 +111,8 @@
   id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '[第5章](part0055_split_000.html#1KEEU1-4cf34a6d07944734bb93fb0cd15cce8c "第5章.
+    管理文件系统")，*管理文件系统*，专注于与服务器文件系统的工作。从创建模拟磁盘设备以测试概念到高级格式化和分区命令，您将学习如何使用逻辑卷管理器，维护文件系统以及使用磁盘配额。'
 - en: '[Chapter 6](part0061_split_000.html#1Q5IA1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 6. Providing Security"), *Providing Security*, discusses the need to
     implement a series of solutions that will deliver the level of protection you
@@ -107,6 +124,8 @@
   id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '[第6章](part0061_split_000.html#1Q5IA1-4cf34a6d07944734bb93fb0cd15cce8c "第6章.
+    提供安全性")，*提供安全性*，讨论了实施一系列解决方案的必要性，这些解决方案将提供您运行成功服务器解决方案所需级别的保护。从保护您的ssh和FTP服务，到了解新的firewalld管理器和创建证书，您将看到构建一个不仅考虑减少外部攻击风险，而且为您的用户提供额外保护的服务器是多么容易。'
 - en: '[Chapter 7](part0068_split_000.html#20R681-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 7. Building a Network"), *Building a Network*, explains the steps required
     to implement various forms of resource sharing within your network''s computers.
@@ -116,6 +135,8 @@
   id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '[第7章](part0068_split_000.html#20R681-4cf34a6d07944734bb93fb0cd15cce8c "第7章.
+    构建网络")，*构建网络*，解释了在您的网络计算机中实现各种形式的资源共享所需的步骤。从IP地址和打印设备到各种形式的文件共享协议，无论您是打算支持家庭网络还是完整的商业环境，本章在任何服务器中都扮演着至关重要的角色。'
 - en: '[Chapter 8](part0075_split_000.html#27GQ61-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 8. Working with FTP"), *Working with FTP*, concentrates on the role of
     VSFTP with a series of recipes that will provide the guidance you need to install,
@@ -124,6 +145,8 @@
   id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '[第8章](part0075_split_000.html#27GQ61-4cf34a6d07944734bb93fb0cd15cce8c "第8章.
+    使用FTP")，*使用FTP*，专注于VSFTP的角色，并提供了一系列的食谱，将为您提供所需的指导，以在CentOS 7服务器上安装、配置和管理您想要提供的文件传输协议（FTP）。'
 - en: '[Chapter 9](part0080_split_000.html#2C9D01-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 9. Working with Domains"), *Working with Domains*, considers the steps
     required to implement domain names, domain resolution, and DNS queries on a CentOS
@@ -134,6 +157,8 @@
   id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '[第9章](part0080_split_000.html#2C9D01-4cf34a6d07944734bb93fb0cd15cce8c "第9章.
+    使用域名")，*使用域名*，考虑了在CentOS 7服务器上实施域名、域名解析和DNS查询所需的步骤。域名系统在任何服务器中都扮演着至关重要的角色，无论您是打算支持家庭网络还是完整的商业环境，本章的目的是提供一系列的解决方案，将为您提供一个未来证明的解决方案的开始。'
 - en: '[Chapter 10](part0086_split_000.html#2I0GC1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 10. Working with Databases"), *Working with Databases*, provides a series
     of recipes that deliver instant access to MySQL and PostgreSQL with the intention
@@ -141,6 +166,8 @@
   id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '[第10章](part0086_split_000.html#2I0GC1-4cf34a6d07944734bb93fb0cd15cce8c "第10章.
+    使用数据库")，*使用数据库*，提供了一系列的食谱，旨在解释在CentOS 7服务器上部署MySQL和PostgreSQL所需的必要步骤。'
 - en: '[Chapter 11](part0093_split_000.html#2OM4A1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 11. Providing Mail Services"), *Providing Mail Services*, introduces
     you to the process of enabling a domain-wide Mail Transport Agent to your CentOS
@@ -150,6 +177,8 @@
   id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '[第11章](part0093_split_000.html#2OM4A1-4cf34a6d07944734bb93fb0cd15cce8c "第11章.
+    提供邮件服务")，*提供邮件服务*，向您介绍如何为您的CentOS 7服务器启用域范围内的邮件传输代理。从构建本地POP3/SMTP服务器到配置Fetchmail，本章的目的是为您的所有未来基于电子邮件的需求提供基础。'
 - en: '[Chapter 12](part0098_split_000.html#2TEN41-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 12. Providing Web Services"), *Providing Web Services*, investigates
     the role of the well-known Apache server technology to full effect, and whether
@@ -159,6 +188,8 @@
   id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '[第12章](part0098_split_000.html#2TEN41-4cf34a6d07944734bb93fb0cd15cce8c "第12章.
+    提供Web服务")，*提供Web服务*，深入研究了著名的Apache服务器技术的角色，无论您是打算运行开发服务器还是实时生产服务器，本章都为您提供了必要的步骤，以提供您成为基于Web的发布解决方案大师所需的功能。'
 - en: '[Chapter 13](part0106_split_000.html#352RK1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 13. Operating System-Level Virtualization"), *Operating System-Level
     Virtualization*, introduces you to the word of Linux containers using the state-of-the-art
@@ -167,6 +198,8 @@
   id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '[第13章](part0106_split_000.html#352RK1-4cf34a6d07944734bb93fb0cd15cce8c "第13章.
+    操作系统级虚拟化")，*操作系统级虚拟化*，向您介绍使用最先进的开源平台Docker的Linux容器世界，并指导您构建、运行和共享您的第一个Docker镜像。'
 - en: '[Chapter 14](part0111_split_000.html#39REE1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 14. Working with SELinux"), *Working with SELinux*, helps to understand
     and demystify Security Enhanced Linux, which is one of the most little-known topics
@@ -174,6 +207,8 @@
   id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '[第14章](part0111_split_000.html#39REE1-4cf34a6d07944734bb93fb0cd15cce8c "第14章。使用SELinux")，*使用SELinux*，有助于理解和解开CentOS
+    7中最不为人知的话题之一——安全增强型Linux的神秘面纱。'
 - en: '[Chapter 15](part0116_split_000.html#3EK181-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 15. Monitoring IT Infrastructure"), *Monitoring IT Infrastructure*, introduces
     and shows how to set up Nagios Core, the de-facto industry standard for monitoring
@@ -181,11 +216,14 @@
   id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '[第15章](part0116_split_000.html#3EK181-4cf34a6d07944734bb93fb0cd15cce8c "第15章。监控IT基础设施")，*监控IT基础设施*，介绍并展示了如何设置Nagios
+    Core，这是监控整个IT基础设施的行业标准。'
 - en: What you need for this book
   id: totrans-19
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 本书所需
 - en: The requirements of this book are relatively simple and begin with the need
     to download the CentOS operating system. The software is free, but you will need
     a computer that is capable of fulfilling the role of a server, some free installation
@@ -194,6 +232,7 @@
   id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 本书的要求相对简单，首先是需要下载CentOS操作系统。该软件是免费的，但你需要一台能够充当服务器的计算机，一些免费的安装介质（空白CD-R/DVD-R或USB设备），互联网连接，一些空闲时间，以及享受乐趣的愿望。
 - en: In saying that, many readers will be aware that you do not need a spare computer
     to take advantage of this book as the option of installing CentOS on virtualization
     software is always available. This approach is quite common and where the recipes
@@ -204,11 +243,13 @@
   id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 话虽如此，许多读者都会意识到，你不需要一台备用计算机来利用这本书，因为始终可以选择在虚拟化软件上安装CentOS。这种方法非常常见，在这些页面中包含的食谱仍然适用的情况下，你应该知道本书不考虑使用虚拟化软件。因此，任何关于使用该软件的支持请求都应直接向相应的供应商提出。
 - en: Who this book is for
   id: totrans-22
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 本书适合谁
 - en: This is a practical guide for building a server solution, and rather than being
     about CentOS itself, this is a book that will show you how to get CentOS up and
     running. It is a book that has been written with the novice-to-intermediate Linux
@@ -220,71 +261,85 @@
   id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一本关于构建服务器解决方案的实用指南，而不是关于CentOS本身。本书将向你展示如何让CentOS运行起来。它是一本为初学者到中级Linux用户编写的书，他们打算将CentOS作为下一个服务器的基础。但是，如果你对整个操作系统还不熟悉，那么不用担心；本书还将为你提供构建完整服务器解决方案所需的逐步方法，并附带许多行业技巧。
 - en: Sections
   id: totrans-24
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 章节
 - en: In this book, you will find several headings that appear frequently (Getting
     ready, How to do it, How it works and There's more).
   id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本书中，你会发现一些频繁出现的标题（准备就绪，如何做，它是如何工作的，还有更多）。
 - en: 'To give clear instructions on how to complete a recipe, we use these sections
     as follows:'
   id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了给出如何完成食谱的明确指示，我们使用以下章节：
 - en: Getting ready
   id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: This section tells you what to expect in the recipe, and describes how to set
     up any software or any preliminary settings required for the recipe.
   id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 本节告诉你食谱中可以期待的内容，并描述如何设置任何软件或任何预先设置，这些是食谱所必需的。
 - en: How to do it…
   id: totrans-29
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何做…
 - en: This section contains the steps required to follow the recipe.
   id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 本节包含遵循食谱所需的步骤。
 - en: How it works…
   id: totrans-31
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的…
 - en: This section usually consists of a detailed explanation of what happened in
     the previous section.
   id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 本节通常包含对上一节中发生的事情的详细解释。
 - en: There's more…
   id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多…
 - en: This section consists of additional information about the recipe in order to
     make the reader more knowledgeable about the recipe.
   id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 本节包含有关食谱的额外信息，旨在使读者对食谱有更深入的了解。
 - en: Conventions
   id: totrans-35
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 约定
 - en: In this book, you will find a number of text styles that distinguish between
     different kinds of information. Here are some examples of these styles and an
     explanation of their meaning.
   id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本书中，你会发现许多文本样式，用于区分不同类型的信息。以下是这些样式的一些示例及其含义的解释。
 - en: 'Code words in text, database table names, folder names, filenames, file extensions,
     pathnames, dummy URLs, user input, and Twitter handles are shown as follows: "For
     the purpose of this recipe, it is assumed that all the downloads will be stored
@@ -293,10 +348,13 @@
   id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 文本中的代码词、数据库表名、文件夹名、文件名、文件扩展名、路径名、虚拟URL、用户输入和Twitter句柄如下所示：“为了本食谱的目的，假设所有下载将存储在Windows上的个人`C:\Users\<username>\Downloads`文件夹中，或者如果使用OS
+    X系统，则存储在`/Users/<username>/Downloads`文件夹中。”
 - en: 'A block of code is set as follows:'
   id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 代码块的设置如下：
 - en: '[PRE0]'
   id: totrans-39
   prefs: []
@@ -306,6 +364,7 @@
   id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 任何命令行输入或输出如下所示：
 - en: '[PRE1]'
   id: totrans-41
   prefs: []
@@ -317,60 +376,72 @@
   id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '**新术语**和**重要词汇**以粗体显示。您在屏幕上看到的单词，例如在菜单或对话框中，如下所示：“单击**下一步**按钮将您移动到下一个屏幕。”'
 - en: Note
   id: totrans-43
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Warnings or important notes appear in a box like this.
   id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 警告或重要注意事项以这样的框显示。
 - en: Tip
   id: totrans-45
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 提示
 - en: Tips and tricks appear like this.
   id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 提示和技巧如下所示。
 - en: Reader feedback
   id: totrans-47
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 读者反馈
 - en: Feedback from our readers is always welcome. Let us know what you think about
     this book—what you liked or disliked. Reader feedback is important for us as it
     helps us develop titles that you will really get the most out of.
   id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们始终欢迎读者的反馈。请告诉我们您对这本书的看法——您喜欢或不喜欢的地方。读者反馈对我们很重要，因为它帮助我们开发您将真正从中受益的标题。
 - en: To send us general feedback, simply e-mail `<[feedback@packtpub.com](mailto:feedback@packtpub.com)>`,
     and mention the book's title in the subject of your message.
   id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 要向我们发送一般反馈，只需发送电子邮件至`<[feedback@packtpub.com](mailto:feedback@packtpub.com)>`，并在您的消息主题中提及书的标题。
 - en: If there is a topic that you have expertise in and you are interested in either
     writing or contributing to a book, see our author guide at [www.packtpub.com/authors](http://www.packtpub.com/authors).
   id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您在某个主题上具有专业知识，并且有兴趣撰写或为书籍做出贡献，请参阅我们的作者指南，网址为[www.packtpub.com/authors](http://www.packtpub.com/authors)。
 - en: Customer support
   id: totrans-51
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 客户支持
 - en: Now that you are the proud owner of a Packt book, we have a number of things
     to help you to get the most from your purchase.
   id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 既然您是Packt书籍的自豪拥有者，我们有一系列的事情可以帮助您从购买中获得最大收益。
 - en: Errata
   id: totrans-53
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 勘误
 - en: Although we have taken every care to ensure the accuracy of our content, mistakes
     do happen. If you find a mistake in one of our books—maybe a mistake in the text
     or the code—we would be grateful if you could report this to us. By doing so,
@@ -383,17 +454,20 @@
   id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管我们已经尽一切努力确保我们内容的准确性，但错误仍然会发生。如果您在我们的书中发现错误——可能是文本或代码中的错误——如果您能向我们报告，我们将不胜感激。通过这样做，您可以节省其他读者的烦恼，并帮助我们改进这本书的后续版本。如果您发现任何勘误，请通过访问[http://www.packtpub.com/submit-errata](http://www.packtpub.com/submit-errata)来报告它们，选择您的书，点击**勘误提交表单**链接，并输入您的勘误细节。一旦您的勘误经过验证，您的提交将被接受，勘误将被上传到我们的网站或添加到该标题的勘误部分下的任何现有勘误列表中。
 - en: To view the previously submitted errata, go to [https://www.packtpub.com/books/content/support](https://www.packtpub.com/books/content/support)
     and enter the name of the book in the search field. The required information will
     appear under the **Errata** section.
   id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 要查看以前提交的勘误，请访问[https://www.packtpub.com/books/content/support](https://www.packtpub.com/books/content/support)并在搜索字段中输入书名。所需信息将出现在**勘误**部分下。
 - en: Piracy
   id: totrans-56
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 盗版
 - en: Piracy of copyrighted material on the Internet is an ongoing problem across
     all media. At Packt, we take the protection of our copyright and licenses very
     seriously. If you come across any illegal copies of our works in any form on the
@@ -402,6 +476,7 @@
   id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 互联网上版权材料的盗版是所有媒体持续存在的问题。在Packt，我们非常认真地保护我们的版权和许可。如果您在互联网上遇到任何形式的我们作品的非法副本，请立即向我们提供位置地址或网站名称，以便我们可以采取补救措施。
 - en: Please contact us at `<[copyright@packtpub.com](mailto:copyright@packtpub.com)>`
     with a link to the suspected pirated material.
   id: totrans-58

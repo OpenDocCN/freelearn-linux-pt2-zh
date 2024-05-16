@@ -1,254 +1,366 @@
 - en: Chapter 2. Configuring the System
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第2章 配置系统
 - en: 'In this chapter, we will cover the following topics:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将涵盖以下主题：
 - en: Navigating text files with less
+  id: totrans-2
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用less浏览文本文件
 - en: Introduction to Vim
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 介绍Vim
 - en: Speaking the right language
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用正确的语言
 - en: Synchronizing the system clock with NTP and the chrony suite
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用NTP和chrony套件同步系统时钟
 - en: Setting your hostname and resolving the network
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 设置主机名并解析网络
 - en: Becoming a superuser
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 成为超级用户
 - en: Building a static network connection
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 建立静态网络连接
 - en: Customizing your system banners and messages
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 自定义系统横幅和消息
 - en: Priming the kernel
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 初始化内核
 - en: Introduction
+  id: totrans-11
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 介绍
 - en: This chapter is a collection of recipes that covers the basic practice of establishing
     the basic needs of a server. For many, building a server can often seem to be
     a daunting task, and so the purpose of this chapter is to provide you with an
     instant method to achieve the desired goals.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章是一系列涵盖建立服务器基本需求的基本实践的集合。对于许多人来说，构建服务器可能常常看起来是一项艰巨的任务，因此本章的目的是为您提供一种即时方法来实现所需的目标。
 - en: Navigating text files with less
+  id: totrans-13
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用less浏览文本文件
 - en: Throughout this book, you will often use programs and tools that use the program
     less or a less-like navigation to view and read file content or display output.
     At first, the control can seem a bit unintuitive .Here, in this recipe, we will
     show you the basics of how to navigate through a file using less controls.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本书中，您将经常使用使用less程序或类似导航的程序和工具来查看和阅读文件内容或显示输出。起初，控制可能会显得有些不直观。在本节中，我们将向您展示如何使用less控制来浏览文件的基本知识。
 - en: Getting ready
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本节内容，您需要一个具有root权限的CentOS 7操作系统的有效安装。
 - en: How to do it...
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'To begin, log in as root and type the following command to open a program that
     uses less for navigation:'
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录并输入以下命令以打开使用less进行导航的程序：
 - en: '[PRE0]'
+  id: totrans-19
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: To navigate, press the *up* and *down* key to scroll up and down one line at
     a time, the *spacebar* to scroll down a page, and the *b* key to scroll up a page.
     You can search within the text using the forward slash key, */*,followed by the
     search term, then press *Return* to search. Press *n* to jump to the next search
     result. Press the *q* key to exit.
+  id: totrans-20
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要导航，请按*上*和*下*键以逐行滚动，按*空格键*以向下滚动一页，按*b*键以向上滚动一页。您可以使用正斜杠键*/*在文本中搜索，然后输入搜索词，按*Return*键进行搜索。按*n*键跳转到下一个搜索结果。按*q*键退出。
 - en: How it works...
+  id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 工作原理...
 - en: Here, in this short recipe, we have shown you the very basics of less navigation,
     which is essential for reading man pages and is used by a lot of other programs
     throughout this book to display text. We only showed you the basic commands and
     there is much more to learn. Please read the less manual to find out more on `man
     less` command.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，在这篇简短的节中，我们向您展示了less导航的基本知识，这对于阅读man页面至关重要，并且在本书中被许多其他程序用于显示文本。我们只向您展示了基本命令，还有很多需要学习。请阅读less手册以了解更多关于`man
+    less`命令的信息。
 - en: Introduction to Vim
+  id: totrans-23
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 介绍Vim
 - en: In this recipe, we will give you a very brief introduction to the text editor,
     Vim, which is used as the standard text editor throughout this book. You can also
     use any other text editor you prefer, such as nano or emacs, instead.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们将简要介绍文本编辑器Vim，它是本书中使用的标准文本编辑器。您也可以使用您喜欢的任何其他文本编辑器，例如nano或emacs。
 - en: Getting ready
+  id: totrans-25
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本节内容，您需要一个具有root权限的CentOS 7操作系统的有效安装。
 - en: How to do it...
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'We will start this recipe by installing the `vim-enhanced` package, as it contains
     a tutorial you can use to learn working with Vim:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将从安装`vim-enhanced`包开始本节，因为它包含一个您可以用来学习使用Vim的教程：
 - en: 'To begin, log in as root and install the following package:'
+  id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录并安装以下包：
 - en: '[PRE1]'
+  id: totrans-30
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Afterwards, type the following command to start the Vim tutorial:'
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，输入以下命令以启动Vim教程：
 - en: '[PRE2]'
+  id: totrans-32
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: This will open the Vim tutorial in the Vim editor. To navigate, press the *up*
     and *down* key to scroll up and down single-line wise. To exit the tutorial, press
     the *Esc* key, then type `:q!`, followed by the *Return* key to exit.
+  id: totrans-33
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 这将打开Vim教程，在Vim编辑器中。要导航，请按*上*和*下*键以逐行滚动。要退出教程，请按*Esc*键，然后输入`:q!`，接着按*Return*键退出。
 - en: You should now read through the file and go through the lessons to get a basic
     understanding of Vim, to learn how to edit your text documents.
+  id: totrans-34
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，你应该阅读文件并学习课程，以获得对Vim的基本理解，学习如何编辑你的文本文件。
 - en: How it works...
+  id: totrans-35
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: The tutorial shown in this recipe should be seen as a starting point from which
     to learn the basics for working with one of the most powerful and effective text
     editors available for Linux. Vim has a very steep learning curve, but after dedicating
     about half an hour to the vimtutor guide you should be able to do all the common
     text editing tasks without any problem, such as opening, editing, and saving text
     files.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 本配方中显示的教程应该被视为学习Linux最强大和有效的文本编辑器之一的基础知识的起点。Vim的学习曲线非常陡峭，但如果你花大约半小时的时间来学习vimtutor指南，你应该能够毫无问题地完成所有常见的文本编辑任务，例如打开、编辑和保存文本文件。
 - en: Speaking the right language
+  id: totrans-37
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 说正确的语言
 - en: In this recipe, we will show you how to change the language settings of your
     CentOS 7 installation for the whole system and for single users. The need to change
     this is rare but can be important, for example if we accidentally chose the wrong
     language during installation.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本配方中，我们将向你展示如何为整个系统和单个用户更改CentOS 7安装的语言设置。更改这个的需求很少，但可能是重要的，例如，如果我们不小心在安装过程中选择了错误的语言。
 - en: Getting ready
+  id: totrans-39
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, and a console-based text editor of your
     choice. You should have read the *Navigating text files with less* recipe, because
     some commands in this recipe will use less for printing output.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成这个配方，你需要一个具有root权限的CentOS 7操作系统的工作安装，以及你选择的基于控制台的文本编辑器。你应该已经阅读了*使用less导航文本文件*配方，因为本配方中的一些命令将使用less来打印输出。
 - en: How to do it...
+  id: totrans-41
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何做到这一点...
 - en: 'There are two categories of settings that you have to adjust if you want to
     change the system-wide language settings of your CentOS 7 system. We begin by
     changing the system locale information and then the keyboard settings:'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想更改CentOS 7系统的系统范围语言设置，你需要调整两个类别的设置。我们首先更改系统区域设置信息，然后更改键盘设置：
 - en: 'To begin, log in as root and type the following command to show the current
     locale settings for the console, graphical window managers (X11 layout), and also
     the current keyboard layout:'
+  id: totrans-43
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root用户身份登录并输入以下命令，以显示控制台、图形窗口管理器（X11布局）的当前区域设置，以及当前键盘布局：
 - en: '[PRE3]'
+  id: totrans-44
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Next, to change these settings, we first need to know all the available locale
     and keyboard settings on this system (both commands use `less` navigation):'
+  id: totrans-45
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，要更改这些设置，我们首先需要了解系统上所有可用的区域设置和键盘设置（两个命令都使用`less`导航）：
 - en: '[PRE4]'
+  id: totrans-46
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'If you have picked the right locale from the output above in our example, `de_DE.utf8`
     and `keymap de-mac` (change to your own appropriate needs), you can change your
     locale and keyboard settings using:'
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果你在我们的示例中从上面的输出中选择了正确的区域设置，`de_DE.utf8`和`keymap de-mac`（根据你自己的适当需求进行更改），你可以使用以下命令更改你的区域设置和键盘设置：
 - en: '[PRE5]'
+  id: totrans-48
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Now, verify the persistence of your changes using the same command again:'
+  id: totrans-49
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，使用相同的命令再次验证你的更改的持久性：
 - en: '[PRE6]'
+  id: totrans-50
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: How it works...
+  id: totrans-51
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: As we have seen, the `localectl` command is a very convenient tool that can
     take care of managing all important language settings in a CentOS 7 system.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们所见，`localectl`命令是一个非常方便的工具，可以管理CentOS 7系统中所有重要的语言设置。
 - en: So what have we learned from this experience?
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: We started by logging in to our command line with the root user. Then, we ran
     the `localectl` command with the parameter `status`, which gave us an overview
     of the current language settings in the system. The output of this command showed
     us that language properties in a CentOS 7 system can be separated into locale
     (system locale) and keymap (VC keymap and all X11 layout properties) settings.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先以root用户身份登录到命令行。然后，我们使用`status`参数运行`localectl`命令，这为我们提供了系统当前语言设置的概览。该命令的输出向我们展示了CentOS
+    7系统中的语言属性可以分为区域设置（系统区域设置）和键盘映射（VC键盘映射和所有X11布局属性）设置。
 - en: Locales on Linux are used to set the system's language as well as other language-specific
     properties. This can include texts from error messages, log output, user interfaces,
     and, if you are using a window manager such as Gnome, even **Graphical User Interfaces**
@@ -256,40 +368,57 @@
     paper sizes, numbers and their natural sorting, currency information, and so on.
     They also define character encoding, which can be important if you chose a language
     that has characters that cannot be found in the standard ASCII encoding.
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux 上的区域设置用于设置系统的语言以及其他特定于语言的属性。这可以包括来自错误消息、日志输出、用户界面以及如果您使用的是 Gnome 等窗口管理器，甚至是
+    **图形用户界面**（**GUI**）的文本。区域设置还可以定义特定于区域的格式，例如纸张尺寸、数字及其自然排序、货币信息等。它们还定义字符编码，如果您选择了一种具有无法在标准
+    ASCII 编码中找到的字符的语言，这可能很重要。
 - en: Keymap settings on the other hand define the exact layout of each key on your
     keyboard.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一方面，键盘映射设置定义了键盘上每个键的确切布局。
 - en: 'Next, to change these settings, we first issued the `localectl` command with
     the `list-locales` parameter to retrieve a full list of all locales on the system,
     and `list-keymaps` to show a list of all keyboard settings available in the system.
     Locales as outputted from the `list-locales` parameter use a very compact annotation
     for defining a language:'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，要更改这些设置，我们首先使用 `localectl` 命令和 `list-locales` 参数来检索系统上所有区域设置的完整列表，以及 `list-keymaps`
+    来显示系统上所有键盘设置的列表。从 `list-locales` 参数输出的区域设置使用非常紧凑的注释来定义语言：
 - en: '[PRE7]'
+  id: totrans-58
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Only the `Language` part is mandatory, all the rest is optional. Examples for
     language and region are: `en_US` for English and region United States or American
     English, `es_CU` would be language Spanish and Region Cuba or Cuban Spanish.'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 只有 `Language` 部分是强制性的，其余部分都是可选的。语言和地区的示例包括：`en_US` 表示英语和美国地区或美式英语，`es_CU` 表示西班牙语和古巴地区或古巴西班牙语。
 - en: Encodings are important for special characters such as German umlaut or accents
     in the French language. The memory representation of these special characters
     can be interpreted differently depending on the used encoding type. In general
     UTF-8 should be used as it is capable of encoding almost any character in every
     language.
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 编码对于特殊字符（如德语变音符号或法语重音符号）很重要。这些特殊字符的内存表示可以根据所使用的编码类型以不同的方式解释。通常应使用 UTF-8，因为它能够对每种语言中的几乎任何字符进行编码。
 - en: Modificators are used to change settings defined by the locale. For example,
     `sr_RS.utf8@latin` is used if you want to have Latin settings for serbian Serbia,
     which normally uses Cyrillic definitions. This will change to western settings
     such as sorting, currency information, and so on.
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 修饰符用于更改由区域设置定义的设置。例如，`sr_RS.utf8@latin` 用于您希望为塞尔维亚的塞尔维亚语提供拉丁语设置，而通常使用西里尔语定义。这将更改为西方设置，例如排序、货币信息等。
 - en: 'To change the actual locale, we used the `set-locale LANG=de_DE.utf8` parameter.
     Here, the encoding was selected to display proper German umlauts. Please note
     that we used the `LANG` option to set the same locale value (for example, `de_DE.utf8`)
@@ -300,11 +429,17 @@
     man pages before using the `yum install man-pages` command). You can set these
     additional options using a similar syntax, for example, to set the time locale
     use:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 要更改实际的区域设置，我们使用了 `set-locale LANG=de_DE.utf8` 参数。在这里，编码被选择来正确显示德语变音符号。请注意，我们使用了
+    `LANG` 选项来为所有可用的区域设置选项设置相同的区域设置值（例如，`de_DE.utf8`）。如果您不想为所有可用选项设置相同的区域设置值，您可以使用更精细的控制来控制单个区域设置选项。请参考使用手册页的区域设置描述，`man
+    7 locale`（在最小安装上；您需要在使用 `yum install man-pages` 命令之前安装所有 Linux 文档手册页）。您可以使用类似的语法设置这些附加选项，例如，要设置时间区域设置，请使用：
 - en: '[PRE8]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: Next, we showed all available keymap codes using the `list-keymaps` parameter.
     As we have seen from running `localectl status`, the keymaps can be separated
     in non-graphical (VC keymap) and graphical (X11 layout) settings, which allows
@@ -315,231 +450,335 @@
     mappings. If you want different mappings for X11 than for the console, use `localectl
     --no-convert set-x11-keymap cz-querty`, where we use `cz-querty` for the keymap
     code to a Czech querty keyboard model (change this accordingly).
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们使用`list-keymaps`参数显示所有可用的键盘映射代码。正如我们从运行`localectl status`中看到的，键盘映射可以分为非图形（VC键盘映射）和图形（X11布局）设置，这允许在使用Gnome等窗口管理器时以及在控制台中灵活配置不同的键盘布局。运行带有参数`set-keymap
+    de-mac`的`localectl`命令，将当前键盘映射设置为德国苹果Macintosh键盘模型。此命令将给定的键盘类型应用于正常的VC和X11键盘映射。如果希望X11与控制台的映射不同，请使用`localectl
+    --no-convert set-x11-keymap cz-querty`，其中我们使用`cz-querty`作为键盘映射代码到捷克querty键盘模型（根据需要更改此设置）。
 - en: There's more…
+  id: totrans-65
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多…
 - en: Sometimes, single system users need different language settings than the system's
     locale (which can only be set by the root user), according to their regional keyboard
     differences and for interacting with the system in their preferred human language.
     System-wide locales get inherited by every user as long as they are not overwritten
     by local environment variables.
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时，单个系统用户需要与系统区域设置（只能由root用户设置）不同的语言设置，根据他们的区域键盘差异以及与系统交互时使用他们首选的人类语言。只要没有被本地环境变量覆盖，系统范围的区域设置就会由每个用户继承。
 - en: Note
+  id: totrans-67
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Changing system-wide locales does not necessarily have an effect on your user's
     locales if they have already defined something else for themselves.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 更改系统范围的区域设置并不一定会影响用户已为自己定义的其他区域设置。
 - en: 'To print all the current locale environment variables for any system user,
     we can use the command, `locale`. To set single environment variables with the
     appropriate variable name; for example, to set the time locale to US time we would
     use the following line:'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 要打印任何系统用户的当前区域设置环境变量，我们可以使用命令`locale`。要设置具有适当变量名称的单个环境变量；例如，要将时间区域设置为美国时间，我们将使用以下行：
 - en: '[PRE9]'
+  id: totrans-70
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'But, most likely we would want to change all the locales to the same value;
     this can be done by setting `LANG`. For example, to set all the locales to American
     English, use the following line:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 但是，我们很可能希望将所有区域设置更改为相同的值；这可以通过设置`LANG`来实现。例如，要将所有区域设置更改为美式英语，请使用以下行：
 - en: '[PRE10]'
+  id: totrans-72
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'To test the effect of locale changes, we can now produce an error message that
     will be shown in the language set by the `locale` command. Here is the different
     language output for changing locale from English to German:'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 要测试区域设置更改的效果，我们现在可以生成一个错误消息，该消息将显示在由`locale`命令设置的语言中。以下是将区域设置从英语更改为德语的不同语言输出：
 - en: '[PRE11]'
+  id: totrans-74
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'The following output will be printed:'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下输出将被打印：
 - en: '[PRE12]'
+  id: totrans-76
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'Now, change to German locale settings:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，更改为德语区域设置：
 - en: '[PRE13]'
+  id: totrans-78
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'The following output will be printed:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下输出将被打印：
 - en: '[PRE14]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'Setting a locale in an active console using the `export` command will not survive
     closing the window or opening a new terminal session. If you want to make those
     changes permanent, you can set any locale environment variables, such as the `LANG`
     variable, in a file called `.bashrc` in your home directory, which will be read
     everytime a shell is opened. To change the locale settings permanently to `de_DE.UTF-8`
     in our example (change this to your own needs) use the following line:'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 在活动控制台中使用`export`命令设置区域设置不会在关闭窗口或打开新终端会话后继续存在。如果希望使这些更改永久生效，可以在主目录中的名为`.bashrc`的文件中设置任何区域设置环境变量，例如`LANG`变量，该文件将在每次打开shell时读取。在我们的示例中，要将区域设置永久更改为`de_DE.UTF-8`（根据需要更改此设置），请使用以下行：
 - en: '[PRE15]'
+  id: totrans-82
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: Synchronizing the system clock with NTP and the chrony suite
+  id: totrans-83
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用NTP和chrony套件同步系统时钟
 - en: In this recipe, we will learn how to synchronize the system clock with an external
     time server using the **Network Time Protocol** (**NTP**) and the chrony suite.
     From the need to time-stamp documents, e-mails, and log files, to securing, running,
     and debugging a network, or to simply interact with shared devices and services,
     everything on your server is dependent on maintaining an accurate system clock,
     and it is the purpose of this recipe to show you how this can be achieved.
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们将学习如何使用**网络时间协议**（**NTP**）和chrony套件将系统时钟与外部时间服务器同步。从需要为文档、电子邮件和日志文件打时间戳，到安全运行和调试网络，或者仅仅与共享设备和服务交互，您的服务器上的所有操作都依赖于保持一个准确的系统时钟，本食谱的目的就是向您展示如何实现这一点。
 - en: Getting ready
+  id: totrans-85
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet to facilitate downloading additional packages.
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本食谱，您需要一个具有root权限的CentOS 7操作系统的工作安装，您选择的基于控制台的文本编辑器，以及连接到互联网以便下载额外软件包的能力。
 - en: How to do it...
+  id: totrans-87
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'In this recipe, we will use the `chrony` service to manage our time synchronization.
     As chrony is not installed by default on CentOS minimal, we will start this recipe
     by installing it:'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们将使用`chrony`服务来管理我们的时间同步。由于chrony在CentOS最小化安装中默认未安装，我们将从安装它开始：
 - en: 'To begin, log in as root and install the `chrony` service, then start it and
     verify that it is running:'
+  id: totrans-89
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录并安装`chrony`服务，然后启动它并验证它是否正在运行：
 - en: '[PRE16]'
+  id: totrans-90
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'Also, if we want to use chrony permanently, we will have to enable it on server
     startup:'
+  id: totrans-91
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 此外，如果我们想让chrony永久运行，我们需要在服务器启动时启用它：
 - en: '[PRE17]'
+  id: totrans-92
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 'Next, we need to check whether the system already uses NTP to synchronize our
     system clock over the network:'
+  id: totrans-93
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们需要检查系统是否已经使用NTP通过网络同步我们的系统时钟：
 - en: '[PRE18]'
+  id: totrans-94
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 'If the output from the last step showed `No` for `NTP synchronized`, we need
     to enable it using:'
+  id: totrans-95
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果上一步的输出显示`NTP同步`为`否`，我们需要使用以下命令启用它：
 - en: '[PRE19]'
+  id: totrans-96
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: If you run the command (from step 3) again, you should see that it is now synchronizing
     NTP.
+  id: totrans-97
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果您再次运行第3步中的命令，您应该会看到它现在正在同步NTP。
 - en: 'The default installation of chrony will use a public server that has access
     to the atomic clock, but in order to optimize the service we will need to make
     a few simple changes to streamline and optimize at what time servers are used.
     To do this, open the main chrony configuration file with your favorite text editor,
     as shown here:'
+  id: totrans-98
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: chrony的默认安装将使用一个可以访问原子钟的公共服务器，但为了优化服务，我们需要对使用哪些时间服务器进行一些简单的更改。为此，使用您喜欢的文本编辑器打开主要的chrony配置文件，如下所示：
 - en: '[PRE20]'
+  id: totrans-99
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'In the file, scroll down and look for the lines containing the following:'
+  id: totrans-100
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在文件中，向下滚动并查找包含以下内容的行：
 - en: '[PRE21]'
+  id: totrans-101
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 'Replace the values shown with a list of preferred local time servers:'
+  id: totrans-102
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 用首选本地时间服务器的列表替换显示的值：
 - en: '[PRE22]'
+  id: totrans-103
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: Note
+  id: totrans-104
   prefs:
   - PREF_IND
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Visit [http://www.pool.ntp.org/](http://www.pool.ntp.org/) to obtain a list
     of local servers geographically near your current location. Remember, the use
     of three or more servers will have a tendency to increase the accuracy of the
     NTP service.
+  id: totrans-105
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 访问[http://www.pool.ntp.org/](http://www.pool.ntp.org/)以获取一份地理位置接近您当前位置的本地服务器列表。请记住，使用三个或更多服务器往往有助于提高NTP服务的准确性。
 - en: 'When complete, save and close the file before synchronizing your server using
     the `sytstemctl` command:'
+  id: totrans-106
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成后，保存并关闭文件，然后使用`sytstemctl`命令同步您的服务器：
 - en: '[PRE23]'
+  id: totrans-107
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 'To check whether the modifications in the `config` file were successful, you
     can use the following command:'
+  id: totrans-108
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要检查`config`文件中的修改是否成功，您可以使用以下命令：
 - en: '[PRE24]'
+  id: totrans-109
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'To check whether chrony is taking care of your system time synchronization,
     use the following:'
+  id: totrans-110
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要检查chrony是否正在处理您的系统时间同步，请使用以下命令：
 - en: '[PRE25]'
+  id: totrans-111
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: 'To check the network sources chrony uses for synchronization, use the following:'
+  id: totrans-112
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要检查chrony用于同步的网络源，请使用以下命令：
 - en: '[PRE26]'
+  id: totrans-113
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: How it works...
+  id: totrans-114
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 工作原理...
 - en: Our CentOS 7 operating system's time is set on every boot based on the hardware
     clock, which is a small-battery driven clock located on the motherboard of your
     computer. Often, this clock is too inaccurate or has not been set right, therefore
@@ -547,22 +786,30 @@
     uses real atomic time). The chrony daemon, `chronyd`, sets and maintains system
     time through a process of synchronization with a remote server using the NTP protocol
     for communication.
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的CentOS 7操作系统在每次启动时都会根据硬件时钟设置时间，这是一个位于计算机主板上的小型电池驱动时钟。通常，这个时钟不够准确或者设置不正确，因此最好从互联网上的可靠来源（使用真正的原子时间）获取系统时间。chrony守护进程`chronyd`通过使用NTP协议与远程服务器进行通信的过程来设置和维护系统时间。
 - en: So, what have we learned from this experience?
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: As a first step, we installed the `chrony` service, since it is not available
     by default on a CentOS 7 minimal installation. Afterwards, we enabled the synchronization
     of our system time with NTP using the `timedatectl set-ntp yes` command.
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为第一步，我们安装了`chrony`服务，因为它在CentOS 7最小安装中默认不可用。之后，我们使用`timedatectl set-ntp yes`命令启用了系统时间与NTP的同步。
 - en: After that, we opened the main chrony configuration file, `/etc/chrony.conf`,
     and showed how to change the external time servers used. This is particularly
     useful if your server is behind a corporate firewall and have your own NTP server
     infrastructure.
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 之后，我们打开了主要的chrony配置文件`/etc/chrony.conf`，并展示了如何更改使用的外部时间服务器。如果您的服务器位于企业防火墙后面并且拥有自己的NTP服务器基础设施，这尤其有用。
 - en: Having restarted the service, we then learned how to check and monitor our new
     configuration using the `chronyc` command. This is a useful command line tool
     (c stands for client) for interacting and controlling a chrony daemon (locally
@@ -570,207 +817,298 @@
     detailed information of the current NTP synchronization process with a specific
     server. Please refer to the `man` pages of the `chronyc` command if you need further
     help about the properties shown in the output (`man chronyc`).
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 重新启动服务后，我们学习了如何使用`chronyc`命令检查和监视我们的新配置。这是一个有用的命令行工具（c代表客户端），用于与chrony守护进程（本地或远程）交互和控制。我们使用`tracking`参数与`chronyc`一起使用，这向我们展示了与特定服务器的当前NTP同步过程的详细信息。如果您需要进一步帮助关于输出中显示的属性，请参考`chronyc`命令的`man`页面（`man
+    chronyc`）。
 - en: We also used the `sources` parameter with the `chronyc` program, which showed
     us an overview of the used NTP time servers.
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还使用`sources`参数与`chronyc`程序一起使用，这向我们展示了使用的NTP时间服务器的概述。
 - en: You can also use the older `date` command to validate correct time synchronization.
     It is important to realize that the process of synchronizing your server may not
     be instantaneous, and it can take a while for the process to complete. However,
     you can now relax in the full knowledge that you now know how to install, manage
     and synchronize your time using the NTP protocol.
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 您还可以使用较旧的`date`命令来验证正确的时间同步。重要的是要意识到同步服务器的过程可能不是即时的，并且可能需要一段时间才能完成。然而，您现在可以放心地知道，您现在知道如何安装、管理和使用NTP协议同步时间。
 - en: There's more...
+  id: totrans-122
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'In this recipe, we set our system''s time using the `chrony` service and the
     NTP protocol. Usually, system time is set as **Coordinated Universal Time** (**UTC**)
     or world time, which means it is one standard time used across the whole world.
     From it, we need to calculate our local time using time zones. To find the right
     time zone, use the following command (read the *Navigating textfiles with less*
     recipe to work with the output):'
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们使用`chrony`服务和NTP协议设置系统时间。通常，系统时间设置为**协调世界时**（**UTC**）或世界时间，这意味着它是全球统一使用的一种标准时间。从它开始，我们需要使用时区来计算我们的本地时间。要找到正确的时间区域，请使用以下命令（阅读*使用less浏览文本文件*食谱以处理输出）：
 - en: '[PRE27]'
+  id: totrans-124
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'If you have found the right time zone, write it down and use it in the next
     command; for example, if you are located in Germany and are near the city of Berlin,
     use the following command:'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您找到了正确的时间区域，请记下来并在下一个命令中使用它；例如，如果您位于德国并且靠近柏林市，请使用以下命令：
 - en: '[PRE28]'
+  id: totrans-126
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: 'Use `timedatectl` again to check if your local time is correct now:'
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次使用`timedatectl`检查您的本地时间是否正确：
 - en: '[PRE29]'
+  id: totrans-128
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: 'Finally, if it is correct, you can synchronize your hardware clock with your
     system time to make it more precise:'
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，如果它是正确的，您可以同步硬件时钟与系统时间以使其更精确：
 - en: '[PRE30]'
+  id: totrans-130
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: Setting your hostname and resolving the network
+  id: totrans-131
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 设置主机名和解决网络问题
 - en: The process of setting the hostname is typically associated with the installation
     process. If you ever need to change it or your server's **Domain Name System**
     (**DNS**) resolver, this recipe will show you how.
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: 设置主机名的过程通常与安装过程相关联。如果您需要更改它或您服务器的**域名系统**（**DNS**）解析器，本指南将向您展示如何操作。
 - en: Getting ready
+  id: totrans-133
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, and a console-based text editor of your
     choice.
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本指南，您需要具备具有root权限的CentOS 7操作系统的有效安装，以及您选择的基于控制台的文本编辑器。
 - en: How to do it...
+  id: totrans-135
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'To begin this recipe, we shall start by accessing the system as root and opening
     the following file in order to name or rename your current server''s hostname:'
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 要开始本指南，我们将首先以root身份访问系统并打开以下文件，以便为您的当前服务器命名或重命名主机名：
 - en: 'Log in as root and type in the following command to see the current hostname:'
+  id: totrans-137
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 以root身份登录并输入以下命令以查看当前主机名：
 - en: '[PRE31]'
+  id: totrans-138
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: 'Now, change the hostname value to your preferred name. For example, if you
     want to call your server `jimi`, you would type (change appropriately):'
+  id: totrans-139
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，将主机名值更改为您的首选名称。例如，如果您想将服务器称为`jimi`，您将输入（适当更改）：
 - en: '[PRE32]'
+  id: totrans-140
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: Note
+  id: totrans-141
   prefs:
   - PREF_IND
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Static hostnames are case-sensitive and restricted to using an Internet-friendly
     alphanumeric string of text. The overall length should be no longer than 63 characters,
     but try to keep it much shorter.
+  id: totrans-142
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 静态主机名区分大小写，并且限制为使用互联网友好的字母数字字符串。总长度不应超过63个字符，但尽量保持更短。
 - en: 'Next, we need the IP address of the server. Type in the following command to
     find it (you need to identify the correct network interface in the output):'
+  id: totrans-143
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们需要服务器的IP地址。输入以下命令以查找它（您需要在输出中识别正确的网络接口）：
 - en: '[PRE33]'
+  id: totrans-144
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: 'Afterwards, we will set the **Fully Qualified Domain Name** (**FQDN**), in
     order to do this, we will need to open and edit the hosts file:'
+  id: totrans-145
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，我们将设置**完全限定域名**（**FQDN**），为此，我们需要打开并编辑主机文件：
 - en: '[PRE34]'
+  id: totrans-146
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: 'Here, you should add a new line appropriate to your needs. For example, if
     your server''s hostname was called jimi, (with an IP address of `192.168.1.100`,
     and a domain name of `henry.com`) your final line to append will look like this:'
+  id: totrans-147
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在这里，您应该添加一条符合您需求的新行。例如，如果您的服务器主机名称为jimi（IP地址为`192.168.1.100`，域名为`henry.com`），您需要追加的最终行将如下所示：
 - en: '[PRE35]'
+  id: totrans-148
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: Note
+  id: totrans-149
   prefs:
   - PREF_IND
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: For a server found on a local network only, it is advisable to use a non-Internet
     based top-level address. For example, you could use `.local` or `.lan`, or even
     `.home`, and by using these references you will avoid any confusion with the typical
     `.com`, `.co.uk`, or `.net` domain names.
+  id: totrans-150
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 对于仅在本地网络上找到的服务器，建议使用非基于互联网的顶级地址。例如，您可以使用`.local`或`.lan`，甚至是`.home`，通过使用这些引用，您将避免与典型的`.com`、`.co.uk`或`.net`域名混淆。
 - en: 'Next, we will open the `resolv.conf` file, which is responsible for configuring
     static DNS server addresses that the system will use:'
+  id: totrans-151
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们将打开`resolv.conf`文件，该文件负责配置系统将使用的静态DNS服务器地址：
 - en: '[PRE36]'
+  id: totrans-152
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: 'Replace the content of the file with the following:'
+  id: totrans-153
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 用以下内容替换文件内容：
 - en: '[PRE37]'
+  id: totrans-154
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: 'When complete, save and close your file before rebooting your server to allow
     the changes to take immediate effect. To do this, return to your console and type:'
+  id: totrans-155
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成后，保存并关闭文件，然后重新启动服务器以使更改立即生效。为此，请返回控制台并输入：
 - en: '[PRE38]'
+  id: totrans-156
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: 'On a successful reboot, you can now check your new hostname and FQDN by typing
     the following commands and waiting for the response:'
+  id: totrans-157
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 成功重启后，您可以通过输入以下命令并等待响应来检查您的新主机名和FQDN：
 - en: '[PRE39]'
+  id: totrans-158
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: 'To test if we can resolve domain names to IP addresses using our static DNS
     server addresses, use the following command:'
+  id: totrans-159
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要测试我们是否可以使用静态DNS服务器地址将域名解析为IP地址，请使用以下命令：
 - en: '[PRE40]'
+  id: totrans-160
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: How it works...
+  id: totrans-161
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: A hostname is a unique label created to identify a machine on a network. It
     is restricted to alphanumeric-based characters, and making a change to your server's
     hostname can be achieved by using the `hostnamectl` command. A DNS server is used
     to translate domain names to IP addresses. There are several public DNS servers
     available; in a later recipe, we will build our own DNS service.
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 主机名是为网络上的机器创建的唯一标签。它限制为基于字母数字的字符，并且可以通过使用`hostnamectl`命令来更改服务器的主机名。DNS服务器用于将域名翻译成IP地址。有多个公共DNS服务器可用；在后面的指南中，我们将构建我们自己的DNS服务。
 - en: So, what have we learned from this experience?
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: 'In the first stage of the recipe, we changed the current hostname used by our
     server with the `hostnamectl` command. This command can set three different types
     of hostnames. Using the command with the `set-hostname` parameter will set the
@@ -779,30 +1117,41 @@
     static hostname which is used to initialize the kernel hostname at boot (for example
     `lennarts-laptop`), and the transient hostname, which is a default received from
     network configurations.'
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱的第一阶段，我们使用`hostnamectl`命令更改了服务器当前使用的主机名。该命令可以设置三种不同类型的主机名。使用带有`set-hostname`参数的命令将为所有三个主机名设置相同的名称：高级的`pretty`主机名，可能包含各种特殊字符（例如，`Lennart's
+    Laptop`），静态主机名，用于在启动时初始化内核主机名（例如`lennarts-laptop`），以及瞬态主机名，它是从网络配置中接收的默认主机名。
 - en: Following this, we set the FQDN of our server. A FQDN is the hostname along
     with a domain name after it. A domain name gets important when you are running
     a private DNS, or allowing external access to your server. Besides using a DNS
     server setting the FQDN can be achieved by updating the hosts file found at `/etc/hosts`.
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们设置了服务器的FQDN。FQDN是主机名加上其后的域名。当你运行私有DNS或允许外部访问你的服务器时，域名变得重要。除了使用DNS服务器设置FQDN外，还可以通过更新位于`/etc/hosts`的hosts文件来实现。
 - en: This file is used by CentOS to map hostnames to an IP address, and it is often
     found to be incorrect on a new, un-configured, or recently installed server. For
     this reason, we first had to find out the IP address of the server using `ip addr
     list`.
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 该文件由CentOS用于将主机名映射到IP地址，并且在新安装的、未配置的服务器上经常发现它是错误的。因此，我们首先必须使用`ip addr list`找出服务器的IP地址。
 - en: An FQDN should consist of a short hostname and the domain name. Based on the
     example shown in this recipe, we set the FQDN for a server named `henry`, whose
     IP address is `192.168.1.100` and domain name is `henry.com`.
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个FQDN应该由一个简短的主机名和域名组成。根据本食谱中所示的示例，我们为名为`henry`的服务器设置了FQDN，其IP地址为`192.168.1.100`，域名为`henry.com`。
 - en: Saving this file would arguably complete this process. However, because the
     kernel makes a record of the hostname during the boot process, there is no choice
     but to reboot your server before you can use the changed settings.
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 保存此文件可以说完成了这个过程。然而，由于内核在启动过程中记录了主机名，因此别无选择，只能重启服务器才能使用更改后的设置。
 - en: Next, we opened the system's `resolv.conf` file, which keeps the IP addresses
     of the system's DNS servers. If your server does not use or have any DNS records,
     your system is not able to use domain names for network destinations in any program
@@ -812,13 +1161,18 @@
     infrastructures). On a successful reboot, we confirmed your new settings by using
     the `hostname` command, which can print out the hostname or the FQDN based on
     the parameters given.
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们打开了系统的`resolv.conf`文件，该文件保存了系统DNS服务器的IP地址。如果服务器没有使用或没有DNS记录，系统将无法在任何程序中使用域名作为网络目的地。在我们的示例中，我们输入了公共Google
+    DNS服务器的IP地址，但你可以使用任何你想要或必须使用的DNS服务器（在企业环境中，在防火墙后面，你通常必须使用内部DNS服务器基础设施）。在成功重启后，我们使用`hostname`命令确认了你的新设置，该命令可以根据给定的参数打印出主机名或FQDN。
 - en: 'So, in conclusion, you can say that this recipe has not only served to show
     you how to rename your server and resolve the network, but has also showed you
     the difference between a hostname and domain name:'
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，综上所述，可以说这个食谱不仅向你展示了如何重命名服务器和解决网络问题，还向你展示了主机名和域名之间的区别：
 - en: As we have learned, a server is not only known by the use of a shorter, easier-to-remember,
     and quicker-to-type single-word-based host name, it also consists of three values
     separated with a period (for example jimi.henry.com). The relationship between
@@ -827,39 +1181,57 @@
     that the domain name remains distinct from the hostname by virtue of being determined
     by the resolver subsystem, and it is only by putting them together that your server
     will yield the FQDN of the system as a whole.
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们所学，服务器不仅可以通过更短、更易记、更快捷的单字节主机名来识别，还由三个用句点分隔的值组成（例如jimi.henry.com）。这些值之间的关系可能在一开始显得奇怪，尤其是对于许多人来说，它们似乎是一个单一的值。但是，通过完成这个配方，您已经发现域名与主机名是不同的，因为域名是由解析器子系统确定的，只有将它们组合在一起，您的服务器才会产生整个系统的完全限定域名（FQDN）。
 - en: There's more...
+  id: totrans-172
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: The hosts file consists of a list of IP addresses and corresponding hostnames,
     and if your network contains computers whose IP addresses are not listed in an
     existing DNS record, then in order to speed up your network it is often recommended
     that you add them to this file.
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 主机文件包含一系列IP地址及其对应的域名。如果您的网络中存在未在现有DNS记录中列出的IP地址的计算机，为了加快网络速度，通常建议您将这些计算机添加到此文件中。
 - en: 'This can be achieved on any operating system, but to do this on CentOS, simply
     open the hosts file in your favorite text editor, as shown next:'
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: 此操作可在任何操作系统上实现，但在CentOS上，只需使用您喜欢的文本编辑器打开主机文件，如下所示：
 - en: '[PRE41]'
+  id: totrans-175
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: 'Now, scroll down to the bottom of the file and add the following values by
     substituting the domain names and IP addresses shown here with something more
     appropriate to your own needs:'
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，滚动到文件底部，通过将此处显示的域名和IP地址替换为更适合您自己需求的值，添加以下值：
 - en: '[PRE42]'
+  id: totrans-177
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: 'You can even use external address such as:'
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: 您甚至可以使用外部地址，例如：
 - en: '[PRE43]'
+  id: totrans-179
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: 'This method provides you with the chance to create mappings between domain
     names and IP addresses without the need to use a DNS, and it can be applied to
     any workstation or server. The list is not restricted by size, and you can even
@@ -868,147 +1240,207 @@
     real address of `www.website.com` is `192.168.1.200` and you want to restrict
     access to it, then simply make the following changes to the hosts file on the
     computer that you want to block from access:'
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种方法为您提供了创建域名与IP地址映射的机会，无需使用DNS。它可以应用于任何工作站或服务器。列表大小不受限制，您甚至可以使用这种方法通过将所有请求重定向到已知网站的不同IP地址来阻止对某些网站的访问。例如，如果`www.website.com`的真实地址是`192.168.1.200`，而您想限制对其的访问，只需在您希望阻止访问的计算机上对主机文件进行以下更改：
 - en: '[PRE44]'
+  id: totrans-181
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: It isn't failsafe, but in this instance anyone trying to access `www.website.com`
     on this system will automatically be sent to `127.0.0.1`, which is your local
     network address, so this will just block access.
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: 这并非万无一失，但在这种情况下，任何尝试访问`www.website.com`的系统都会自动被重定向到`127.0.0.1`，即本地网络地址，从而阻止访问。
 - en: When you have finished, remember to save and close your file in the usual way
     before proceeding to enjoy the benefits of faster and safer domain name resolution
     across any available network.
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: 完成操作后，请记得以常规方式保存并关闭文件，然后继续享受更快速、更安全的域名解析带来的好处，无论是在任何可用的网络上。
 - en: Building a static network connection
+  id: totrans-184
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 建立静态网络连接
 - en: In this recipe, we will learn how to configure a static IP address for a new
     or existing CentOS server.
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本配方中，我们将学习如何为新创建或现有的CentOS服务器配置静态IP地址。
 - en: While a dynamically assigned IP address or DHCP reservation may be fine for
     most desktop and laptop users, if you are setting up a server, it is often the
     case that you will require a static IP address. From web pages to e-mail, databases
     to file sharing, a static IP address will become a permanent location from which
     your server will deliver a range of applications and services, and it is the intention
     of this recipe to show you how easily it can be achieved.
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然动态分配的IP地址或DHCP保留可能适用于大多数台式机和笔记本电脑用户，但如果您正在设置服务器，通常需要静态IP地址。从网页到电子邮件，从数据库到文件共享，静态IP地址将成为您的服务器提供一系列应用程序和服务的永久位置。本配方的目的是向您展示实现这一目标是多么容易。
 - en: Getting ready
+  id: totrans-187
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges and a console-based text editor of your
     choice.
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此操作，您需要一个具有root权限和您选择的基于控制台的文本编辑器的CentOS 7操作系统的工作安装。
 - en: How to do it...
+  id: totrans-189
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: For the purpose of this recipe, you will be able to find all the relevant files
     in the directory, `/etc/sysconfig/network-scripts/`. First, you need to find out
     the correct name of the network interface that you want to set as static. If you
     need to set more than one network interface as static, repeat this recipe for
     every device.
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了本操作的目的，您将能够在目录`/etc/sysconfig/network-scripts/`中找到所有相关文件。首先，您需要找出要设置为静态的网络接口的正确名称。如果您需要将多个网络接口设置为静态，请为每个设备重复此操作。
 - en: 'To do this, log in as root and type the following command to get a list of
     all of your system''s network interfaces:'
+  id: totrans-191
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要执行此操作，以root身份登录并键入以下命令以获取系统所有网络接口的列表：
 - en: '[PRE45]'
+  id: totrans-192
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: If you have only one network card installed, it should be very easy to find
     out its name; just select the one not named `lo` (which is the loopback device).
     If you got more than one, having a look at the IP addresses of the different devices
     can help you choose the right one. In our example, the device is called `enp0s3`.
+  id: totrans-193
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果您只安装了一个网络卡，那么很容易找到其名称；只需选择未命名为`lo`（这是环回设备）的那个。如果您有多个，查看不同设备的IP地址可以帮助您选择正确的设备。在我们的示例中，设备名为`enp0s3`。
 - en: 'Next, make a backup of the network interface configuration file (change the
     `enp0s3` part accordingly, if your network interface is named differently):'
+  id: totrans-194
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，备份网络接口配置文件（根据需要更改`enp0s3`部分，如果您的网络接口名称不同）：
 - en: '[PRE46]'
+  id: totrans-195
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: 'When you are ready to proceed, open the following file in your favorite text
     editor by typing what is shown next:'
+  id: totrans-196
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当您准备好继续时，在您最喜欢的文本编辑器中打开以下文件，如下所示：
 - en: '[PRE47]'
+  id: totrans-197
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: 'Now, work down the file and apply the following changes:'
+  id: totrans-198
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，向下浏览文件并应用以下更改：
 - en: '[PRE48]'
+  id: totrans-199
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: 'Now, add your IP information by customizing the values of `XXX.XXX.XXX.XXX`
     as required:'
+  id: totrans-200
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，通过根据需要自定义`XXX.XXX.XXX.XXX`的值来添加您的IP信息：
 - en: '[PRE49]'
+  id: totrans-201
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: 'We must now add a default gateway. Typically, this should be the address of
     your router. To do this, simply add a new line at the bottom of the file, as shown
     next, and customize the value as required:'
+  id: totrans-202
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们现在必须添加一个默认网关。通常，这应该是您的路由器的地址。要执行此操作，只需在文件底部添加新行，如下所示，并根据需要自定义值：
 - en: '[PRE50]'
+  id: totrans-203
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE50]'
 - en: When ready, save and close the file before repeating this step for any remaining
     Ethernet devices that you want to make static. When doing this, remember to assign
     a different IP address to each device.
+  id: totrans-204
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 准备好后，保存并关闭文件，然后为要设置为静态的任何剩余以太网设备重复此步骤。执行此操作时，请记住为每个设备分配不同的IP地址。
 - en: 'When finished, save and close this file before restarting your network service:'
+  id: totrans-205
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成后，保存并关闭此文件，然后重新启动您的网络服务：
 - en: '[PRE51]'
+  id: totrans-206
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE51]'
 - en: How it works...
+  id: totrans-207
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: In this recipe, you have seen the process associated with changing the state
     of your server's IP address from a dynamic value obtained from an external DHCP
     provider, to that of a static value assigned by you. This IP address will now
     form a unique network location from which you will be able to deliver a whole
     host of services and applications. It is a permanent modification, and yes, you
     could say that the process itself was relatively straightforward.
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本操作中，您已经看到了将服务器的IP地址从外部DHCP提供商获得的动态值更改为由您分配的静态值的过程。此IP地址现在将形成一个独特的网络位置，您将能够从中提供各种服务和应用程序。这是一个永久性的修改，是的，您可以说这个过程本身相对简单。
 - en: So, what have we learned from this experience?
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: Having started the recipe by identifying your network interface name of choice
     and creating a backup of the original Ethernet configuration files, we then opened
     the configuration file located at `/etc/sysconfig/network-scripts/ifcfg-XXX` (with
@@ -1019,27 +1451,37 @@
     To complete our configuration changes, we then moved on to add our specific network
     values and set the IP address, the netmask, broadcast, and the default gateway
     address.
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过识别您选择的网络接口名称并创建原始以太网配置文件的备份来开始本教程，然后我们打开了位于`/etc/sysconfig/network-scripts/ifcfg-XXX`（其中`XXX`是您的接口名称，例如`enp0s3`）的配置文件。由于不再需要网络管理器的服务，我们通过将值设置为`no`来禁用`NM_CONTROLLED`。接下来，由于我们正在转向静态IP地址，`BOOTPROTO`已被设置为`none`，因为我们不再使用DHCP。为了完成我们的配置更改，我们接着添加了特定的网络值，并设置了IP地址、子网掩码、广播和默认网关地址。
 - en: In order to assist the creation of a static IP address, the default gateway
     is a very important setting in as much as it allows the server to contact the
     wider world through a router.
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了帮助创建静态IP地址，默认网关是一个非常重要的设置，因为它允许服务器通过路由器与更广阔的世界通信。
 - en: When finished, we were asked to save and close the file before repeating this
     step for any remaining Ethernet devices. Having done this, we were then asked
     to restart the network service in order to complete this recipe and to enable
     our changes to take immediate effect.
+  id: totrans-212
   prefs: []
   type: TYPE_NORMAL
+  zh: 完成后，我们被要求保存并关闭文件，然后为任何剩余的以太网设备重复此步骤。完成这些操作后，我们被要求重新启动网络服务，以完成本教程并使我们的更改立即生效。
 - en: Becoming a superuser
+  id: totrans-213
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 成为超级用户
 - en: In this recipe, we will learn how to provide nominated users or groups with
     the ability to execute a variety of commands with elevated privileges.
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将学习如何授予指定的用户或组执行各种具有提升权限的命令的能力。
 - en: On CentOS Linux, many files, folders, or commands can only be accessed or executed
     by a user called `root`, which is the name of the user who can control everything
     on a Linux system. Having one root user per system may suit your needs, but for
@@ -1047,82 +1489,117 @@
     to provide a limited array of administrative capabilities to a select number of
     trusted users, you have come to the right place. It is the purpose of this recipe
     to show you how to activate and configure the **sudo** (**superuser do**) command.
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: 在CentOS Linux系统中，许多文件、文件夹或命令只能由名为`root`的用户访问或执行，该用户可以控制Linux系统上的所有内容。每个系统拥有一个root用户可能满足您的需求，但对于那些希望获得更高灵活性、可靠的审计跟踪以及能够向选定的可信用户提供有限的管理权限的人来说，您来对地方了。本教程的目的是向您展示如何激活和配置**sudo**（**超级用户执行**）命令。
 - en: Getting ready
+  id: totrans-216
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a minimal installation of the CentOS
     7 operating system with root privileges. It is assumed that your server maintains
     one or more users (other than root) who qualify for this escalation in powers.
     If you did not create a system user account during installation, please do so
     by first applying the recipe, *Managing users and their groups*, in [Chapter 3](part0034_split_000.html#10DJ41-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 3. Managing the System"), *Managing the System*.
+  id: totrans-217
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了完成本教程，您需要一个具有root权限的CentOS 7最小安装操作系统。假设您的服务器维护一个或多个用户（除了root之外），他们有资格获得这种权限提升。如果在安装过程中没有创建系统用户账户，请首先应用本教程，*管理用户及其组*，在[第3章](part0034_split_000.html#10DJ41-4cf34a6d07944734bb93fb0cd15cce8c
+    "第3章。管理系统")，*管理系统*。
 - en: How to do it...
+  id: totrans-218
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: To start this recipe, we will first test the `sudo` command with a non-privileged
     user.
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了开始本教程，我们将首先使用非特权用户测试`sudo`命令。
 - en: 'To begin, log in to your system using a non-root user account, then type the
     following to verify that `sudo` is not enabled (use your user account''s password
     when asked):'
+  id: totrans-220
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，使用非root用户账户登录到您的系统，然后输入以下命令以验证`sudo`未启用（在提示时使用您的用户账户密码）：
 - en: '[PRE52]'
+  id: totrans-221
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE52]'
 - en: 'This will print the following error output with `<username>`, which is the
     user you are currently logged in with:'
+  id: totrans-222
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 这将打印出以下错误输出，其中`<username>`是您当前登录的用户：
 - en: '[PRE53]'
+  id: totrans-223
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE53]'
 - en: 'Now, log out the system user using the command:'
+  id: totrans-224
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，使用以下命令注销系统用户：
 - en: '[PRE54]'
+  id: totrans-225
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE54]'
 - en: 'Next, log in as root and use the following command to give the non-root user
     sudo power (change `<username>` appropriately):'
+  id: totrans-226
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，以root身份登录并使用以下命令为非root用户赋予sudo权限（适当更改`<username>`）：
 - en: '[PRE55]'
+  id: totrans-227
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE55]'
 - en: 'Now, you can test if `sudo` is working by logging out root again and re-logging
     in the user from step 1, and then trying again:'
+  id: totrans-228
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，你可以通过再次注销root并重新登录步骤1中的用户来测试`sudo`是否工作，然后再次尝试：
 - en: '[PRE56]'
+  id: totrans-229
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE56]'
 - en: Congratulations, you've now set a normal user to have sudo powers and can view
     and execute files and directories restricted to the root user.
+  id: totrans-230
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 祝贺你，现在你已经将一个普通用户设置为拥有sudo权限，可以查看和执行限制给root用户的文件和目录。
 - en: How it works...
+  id: totrans-231
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: Unlike some Linux distributions, CentOS does not provide sudo by default. Instead,
     you are typically allowed to access restricted parts of the system with the root
     user only. This offers a certain degree of security, but for a multi-user server
@@ -1130,137 +1607,196 @@
     with full administrative root access permissions. This is not advisable, and for
     this reason it was the purpose of this recipe to show you how to provide one or
     more users with the right to execute commands with elevated privileges.
+  id: totrans-232
   prefs: []
   type: TYPE_NORMAL
+  zh: 与某些Linux发行版不同，CentOS默认不提供sudo。相反，你通常只被允许以root用户身份访问系统的受限部分。这提供了一定程度的安全性，但对于多用户服务器来说，除非你简单地为这些人提供完整的管理员root访问权限，否则几乎没有灵活性。这并不明智，因此本食谱的目的是向你展示如何为一个或多个用户提供执行具有提升权限的命令的权利。
 - en: So, what did we learn from this experience?
+  id: totrans-233
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: We started by logging in to the system with a normal user account having no
     root privileges or sudo powers. With this user, we then tried to list a directory
     that normally only the root user is allowed to see, so we applied the `sudo` command
     on it. It failed, giving us the error that we are not in the sudoers list.
+  id: totrans-234
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先以一个没有root权限或sudo权限的普通用户账户登录系统。使用这个用户，我们尝试列出一个通常只有root用户才能看到的目录，因此我们在其上应用了`sudo`命令。但失败了，给出了我们不在sudoers列表中的错误。
 - en: The `sudo` command provides nominated users or groups with the ability to execute
     a command as if they were the root user. All actions are recorded (in a file called
     `/var/log/secure`), so there will be a trace of all the commands and arguments
     used.
+  id: totrans-235
   prefs: []
   type: TYPE_NORMAL
+  zh: '`sudo`命令为指定的用户或组提供了执行命令的能力，就像他们是root用户一样。所有操作都会被记录（在一个名为`/var/log/secure`的文件中），因此将会有所有命令和参数使用的痕迹。'
 - en: We then logged in as the true root user and added a group called wheel to the
     system user that we wanted sudo rights for. This group is used as a special administration
     group and every member of it is granted sudo rights automatically.
+  id: totrans-236
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们随后以真正的root用户身份登录，并为希望获得sudo权限的系统用户添加了一个名为wheel的组。这个组被用作特殊的管理组，其所有成员都会自动获得sudo权限。
 - en: 'From now on, the nominated user can implement sudo in order to execute any
     command with elevated privileges. To do this, the user would be required to type
     the word `sudo` before any command, for example, they could run the following
     command:'
+  id: totrans-237
   prefs: []
   type: TYPE_NORMAL
+  zh: 从现在开始，指定的用户可以使用sudo来执行任何具有提升权限的命令。为此，用户需要在任何命令前输入`sudo`这个词，例如，他们可以运行以下命令：
 - en: '[PRE57]'
+  id: totrans-238
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE57]'
 - en: They will be asked to confirm their user password (not the root password!),
     and after successful authentication the program will be executed as the user root.
+  id: totrans-239
   prefs: []
   type: TYPE_NORMAL
+  zh: 系统会要求他们确认自己的用户密码（不是root密码！），在成功验证后，程序将以root用户身份执行。
 - en: 'Finally, we can say that there are three ways to become root on a CentOS Linux
     system:'
+  id: totrans-240
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，我们可以说在CentOS Linux系统上有三种成为root的方式：
 - en: First, to log in as the true user root to the system. Second, you can use the
     command, `su – root`, while any normal system user is logged in, giving the root
     user's password to switch to a root shell prompt permanently. Third, you can give
     a normal user sudo rights so that they can execute single commands using their
     own passwords as if they were the root user, while staying logged in as themselves.
+  id: totrans-241
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，以真正的root用户身份登录系统。其次，你可以使用命令`su – root`，同时任何普通系统用户登录，输入root用户的密码以永久切换到root
+    shell提示符。第三，你可以给一个普通用户sudo权限，以便他们可以使用自己的密码执行单个命令，就像他们是root用户一样，同时保持自己的登录状态。
 - en: Note
+  id: totrans-242
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: '**sudo** (**superuser do**) should not be confused with the **su** (**substitute
     user**) command, which allows you to switch to another user permanently instead
     of executing only single commands as you would do being the root user.'
+  id: totrans-243
   prefs: []
   type: TYPE_NORMAL
+  zh: '**sudo**（**超级用户执行**）不应与**su**（**替代用户**）命令混淆，后者允许你永久切换到另一个用户，而不是像root用户那样只执行单个命令。'
 - en: The `sudo` command allows great flexibility for servers that have a lot of users,
     where one administrator is not enough to manage the whole system.
+  id: totrans-244
   prefs: []
   type: TYPE_NORMAL
+  zh: '`sudo`命令为拥有大量用户的服务器提供了极大的灵活性，其中一名管理员不足以管理整个系统。'
 - en: Customizing your system banners and messages
+  id: totrans-245
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 自定义系统横幅和消息
 - en: In this recipe, we will learn how to display a welcome message if a user successfully
     logs in to our CentOS 7 system using SSH or console, or opens a new terminal window
     in a graphical window manager. This is often used to show the user informative
     messages, or for legal reasons.
+  id: totrans-246
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们将学习如何在用户通过SSH或控制台成功登录到我们的CentOS 7系统，或在图形窗口管理器中打开新的终端窗口时显示欢迎消息。这通常用于向用户显示信息性消息，或出于法律原因。
 - en: Getting ready
+  id: totrans-247
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a minimal installation of the CentOS
     7 operating system with root privileges and a console-based text editor of your
     choice.
+  id: totrans-248
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此食谱，你需要具有root权限的CentOS 7操作系统的最小安装和所选的基于控制台的文本编辑器。
 - en: How to do it...
+  id: totrans-249
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'To begin, log in to your system using your root user account and create the
     following new file with your favorite text editor:'
+  id: totrans-250
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，使用你的root用户账户登录到你的系统，并使用你喜欢的文本编辑器创建以下新文件：
 - en: '[PRE58]'
+  id: totrans-251
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE58]'
 - en: 'Next, we will put in the following content in this new file:'
+  id: totrans-252
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们将在此新文件中放入以下内容：
 - en: '[PRE59]'
+  id: totrans-253
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE59]'
 - en: Save and close this file.
+  id: totrans-254
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭此文件。
 - en: Congratulations, you have now set a banner message for whenever a user successfully
     logs in to the system using ssh or a console.
+  id: totrans-255
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 恭喜，现在你已经为通过ssh或控制台成功登录系统的用户设置了横幅消息。
 - en: How it works...
+  id: totrans-256
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: For legal reasons, it is strongly recommended that computers display a banner
     before allowing users to log in; lawyers suggest that the offense of unauthorized
     access can only be committed if the offender knows at the time that the access
     he intends to obtain is unauthorized. Login banners are the best way to achieve
     this. Apart from this reason, you can provide the user with useful system information.
+  id: totrans-257
   prefs: []
   type: TYPE_NORMAL
+  zh: 出于法律原因，强烈建议计算机在允许用户登录之前显示横幅；律师建议，只有在犯罪者知道他打算获得未经授权的访问时，才能犯下未经授权访问的罪行。登录横幅是实现这一点的最佳方式。除了这个原因，你还可以向用户提供有用的系统信息。
 - en: So, what did we learn from this experience?
+  id: totrans-258
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: We started this recipe by opening the file, `/etc/motd`, which stands for message
     of the day; this content will be displayed after a user logged in a console or
     ssh. Next, we put in that file a standard legal disclaimer and saved the file.
+  id: totrans-259
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从这个食谱开始，打开文件`/etc/motd`，代表每日消息；用户在控制台或ssh登录后将显示此内容。接下来，我们在该文件中放入标准的法律免责声明并保存文件。
 - en: There's more...
+  id: totrans-260
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'As we have seen, the `/etc/motd` file displays static text after a user successfully
     logs in to the system. If you want to also display a message when an ssh connection
     is first established, you can use ssh banners. The banner behavior is disabled
@@ -1268,30 +1804,44 @@
     be displayed if a user establishes an ssh connection. To enable this feature,
     log in as root on your server and open the `/etc/ssh/sshd_config` file using your
     favorite text editor, and put in the following content at the end of the file:'
+  id: totrans-261
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们所见，`/etc/motd`文件在用户成功登录系统后显示静态文本。如果你想在首次建立ssh连接时也显示一条消息，可以使用ssh横幅。默认情况下，ssh守护进程配置文件中的横幅行为是禁用的，这意味着如果用户建立ssh连接，将不会显示任何消息。要启用此功能，请以root身份登录到服务器，使用你喜欢的文本编辑器打开`/etc/ssh/sshd_config`文件，并在文件末尾添加以下内容：
 - en: '[PRE60]'
+  id: totrans-262
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE60]'
 - en: Then, create and open a new file called `/etc/ssh-banner`, and put in a new
     custom ssh greeting message.
+  id: totrans-263
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，创建并打开一个名为`/etc/ssh-banner`的新文件，并输入一个新的自定义ssh问候消息。
 - en: 'Finally, restart your ssh daemon using the following line:'
+  id: totrans-264
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，使用以下命令重新启动你的ssh守护进程：
 - en: '[PRE61]'
+  id: totrans-265
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE61]'
 - en: The next time someone establishes an ssh connection to your server, this new
     message will be printed out.
+  id: totrans-266
   prefs: []
   type: TYPE_NORMAL
+  zh: 下次有人建立到你的服务器的ssh连接时，将打印出这条新消息。
 - en: The `motd` file can only print static messages and some system information details,
     but it is impossible to generate real dynamic messages or use bash commands in
     it if a user successfully logs in.
+  id: totrans-267
   prefs: []
   type: TYPE_NORMAL
+  zh: '`motd`文件只能打印静态消息和一些系统信息细节，但如果用户成功登录，则无法在其中生成真正的动态消息或使用bash命令。'
 - en: 'Also, `motd` does not work in non-login shells, such as when you open a new
     terminal within a graphical window manager. In order to achieve this, we can create
     a custom script in the `/etc/profile.d` directory. All scripts in this directory
@@ -1301,151 +1851,220 @@
     create a custom message, such as the following, where we can use bash commands
     and write little scripts (use the back ticks to run bash shell commands in this
     file):'
+  id: totrans-268
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，`motd`在非登录shell中不起作用，例如当你在图形窗口管理器中打开一个新的终端时。为了实现这一点，我们可以在`/etc/profile.d`目录中创建一个自定义脚本。如果用户登录到系统，该目录中的所有脚本都会自动执行。首先，我们删除`/etc/motd`文件中的任何内容，因为我们不想显示两个欢迎横幅。然后，我们打开新文件`/etc/profile.d/motd.sh`，使用文本编辑器创建一个自定义消息，例如以下内容，我们可以在其中使用bash命令并编写小脚本（使用反引号在该文件中运行bash
+    shell命令）：
 - en: '[PRE62]'
+  id: totrans-269
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE62]'
 - en: Priming the kernel
+  id: totrans-270
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 初始化内核
 - en: The Linux kernel is a program that constitutes the central core of the operating
     system. It can directly access the underlying hardware and make it available to
     the user to work with it using the shell.
+  id: totrans-271
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux内核是一个构成操作系统核心的程序。它可以直接访问底层硬件，并使用户能够通过shell与之交互。
 - en: In this recipe, we will learn how to prime the kernel by working with dynamically
     loaded kernel modules. Kernel modules are device driver files (or filesystem driver
     files) that add support for specific pieces of hardware so that we can access
     them.
+  id: totrans-272
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们将学习如何通过使用动态加载的内核模块来初始化内核。内核模块是设备驱动程序文件（或文件系统驱动程序文件），它们为特定的硬件部件添加支持，以便我们可以访问它们。
 - en: You will not work very often with kernel modules as a system administrator,
     but having a basic understanding of them can be beneficial if you have a device
     driver problem or an unsupported piece of hardware.
+  id: totrans-273
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为系统管理员，你不会经常与内核模块打交道，但如果你遇到设备驱动问题或不支持的硬件，对它们有一个基本的了解可能是有益的。
 - en: Getting ready
+  id: totrans-274
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a minimal installation of the CentOS
     7 operating system with root privileges.
+  id: totrans-275
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本食谱，你需要具备具有root权限的CentOS 7操作系统的最小安装。
 - en: How to do it...
+  id: totrans-276
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何做到这一点...
 - en: 'To begin, log in to your system using your root user account, and type the
     following command in order to show the status of all Linux kernel modules currently
     loaded:'
+  id: totrans-277
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，使用root用户账户登录到你的系统，并输入以下命令以显示当前加载的所有Linux内核模块的状态：
 - en: '[PRE63]'
+  id: totrans-278
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE63]'
 - en: 'In the output, you will see all loaded device drivers (module); let''s see
     if a `cdrom` and `floppy` module have been loaded:'
+  id: totrans-279
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在输出中，你将看到所有加载的设备驱动程序（模块）；让我们看看`cdrom`和`floppy`模块是否已被加载：
 - en: '[PRE64]'
+  id: totrans-280
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE64]'
 - en: 'On most servers, there will be the following output:'
+  id: totrans-281
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在大多数服务器上，将会有以下输出：
 - en: '[PRE65]'
+  id: totrans-282
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE65]'
 - en: 'Now, we want to show detailed information about the `sr_mod` cdrom module:'
+  id: totrans-283
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们想要展示关于`sr_mod` cdrom模块的详细信息：
 - en: '[PRE66]'
+  id: totrans-284
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE66]'
 - en: 'Next, unload these two modules from the kernel (you can only do this if the
     module and hardware have been found and loaded on your system; otherwise skip
     this step):'
+  id: totrans-285
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，从内核中卸载这两个模块（只有当模块和硬件已经在你的系统上被找到并加载时，你才能这样做；否则跳过此步骤）：
 - en: '[PRE67]'
+  id: totrans-286
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE67]'
 - en: 'Check if the modules have been unloaded (output should be empty now):'
+  id: totrans-287
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 检查模块是否已被卸载（输出现在应该是空的）：
 - en: '[PRE68]'
+  id: totrans-288
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE68]'
 - en: 'Now, to show a list of all kernel modules available on your system, use the
     following directory where you can look around:'
+  id: totrans-289
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，要显示系统上所有可用的内核模块列表，请使用以下目录，你可以在其中浏览：
 - en: '[PRE69]'
+  id: totrans-290
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE69]'
 - en: 'Let''s pick a module from the subfolder `/lib/modules/$(uname -r)/kernel/drivers/`
     called `bluetooth` and verify that it is not loaded yet (output should be empty):'
+  id: totrans-291
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 让我们从子目录`/lib/modules/$(uname -r)/kernel/drivers/`中选择一个名为`bluetooth`的模块，并验证它尚未加载（输出应该是空的）：
 - en: '[PRE70]'
+  id: totrans-292
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE70]'
 - en: 'Get more information about the module:'
+  id: totrans-293
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 获取有关模块的更多信息：
 - en: '[PRE71]'
+  id: totrans-294
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE71]'
 - en: 'Finally, load this bluetooth USB module:'
+  id: totrans-295
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，加载这个蓝牙USB模块：
 - en: '[PRE72]'
+  id: totrans-296
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE72]'
 - en: 'Verify again that it is loaded now:'
+  id: totrans-297
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 再次验证它现在是否已加载：
 - en: '[PRE73]'
+  id: totrans-298
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE73]'
 - en: How it works...
+  id: totrans-299
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: Kernel modules are the drivers that your system's hardware needs to communicate
     with the kernel and operating system (also, they are needed to load and enable
     filesystems). They are loaded dynamically, which means that only the drivers or
     modules are loaded at runtime, which reflects your own custom specific hardware.
+  id: totrans-300
   prefs: []
   type: TYPE_NORMAL
+  zh: 内核模块是系统硬件与内核和操作系统通信所需的驱动程序（此外，加载和启用文件系统也需要它们）。它们是动态加载的，这意味着只有驱动程序或模块在运行时加载，这反映了你自己的特定硬件。
 - en: So, what did we learn from this experience?
+  id: totrans-301
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: 'We started using the `lsmod` command to view all the currently loaded kernel
     modules in our system. The output shows three columns: the module name, the amount
     of RAM the module occupies while loaded, and the number of processes this module
@@ -1454,31 +2073,42 @@
     output, we saw that the `cdrom` module is dependent on the `sr_mod` module. So,
     next we used the `modinfo` command to get detailed information about it. Here,
     we learned that `sr_mod` is the SCSI `cdrom` driver.'
+  id: totrans-302
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们开始使用`lsmod`命令查看系统中当前加载的所有内核模块。输出显示三列：模块名称、模块加载时占用的RAM量，以及使用该模块的进程数和使用它的其他模块的依赖项列表。接下来，我们检查内核是否已经加载了`cdrom`和`floppy`模块。在输出中，我们看到`cdrom`模块依赖于`sr_mod`模块。因此，接下来我们使用`modinfo`命令获取有关它的详细信息。在这里，我们了解到`sr_mod`是SCSI
+    `cdrom`驱动程序。
 - en: Since we only need the floppy and cdrom drivers while we first installed the
     base system we can now disable those kernel modules and save us some memory. We
     unloaded the modules and their dependencies with the `modprobe -r` command and
     rechecked whether this was successful by using `lsmod` again.
+  id: totrans-303
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们只在首次安装基础系统时需要软盘和cdrom驱动程序，我们现在可以禁用这些内核模块，为我们节省一些内存。我们使用`modprobe -r`命令卸载模块及其依赖项，并再次使用`lsmod`检查这是否成功。
 - en: Next, we browsed the standard kernel module directory (for example, `/lib/modules/$(uname
     -r)/kernel/drivers`). The `uname` substring command prints out the current kernel
     version so that it makes sure that we are always listing the current kernel modules
     after having installed more than one version of the kernel on our system.
+  id: totrans-304
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们浏览了标准内核模块目录（例如，`/lib/modules/$(uname -r)/kernel/drivers`）。`uname`子字符串命令打印出当前内核版本，以确保在系统上安装了多个内核版本后，我们总是列出当前内核模块。
 - en: This kernel module directory keeps all the available modules on your system
     structured and categorized using subdirectories. We navigated to `drivers/bluetooth`
     and picked the `btusb` module. Doing `modinfo` on the `btusb` module, we found
     out that it is the generic bluetooth USB driver. Finally, we decided that we needed
     this module, so we loaded it using the `modprobe` command again.
+  id: totrans-305
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个内核模块目录使用子目录将系统上所有可用的模块结构化和分类。我们导航到`drivers/bluetooth`并选择了`btusb`模块。对`btusb`模块执行`modinfo`，我们发现它是通用蓝牙USB驱动程序。最后，我们决定我们需要这个模块，所以我们再次使用`modprobe`命令加载它。
 - en: There's more...
+  id: totrans-306
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'It''s important to say that loading and unloading kernel modules using the
     `modprobe` command is not persistent; this means that if you restart the system,
     all your changes to kernel modules will be gone. To load a kernel module at boot
@@ -1486,47 +2116,72 @@
     where `<filename>` is a name of your choice. There you put in `modprobe` execution
     commands just as you would on the normal command line. Here is an example of additionally
     loading the bluetooth driver on startup, for example `/etc/sysconfig/modules/btusb.modules`:'
+  id: totrans-307
   prefs: []
   type: TYPE_NORMAL
+  zh: 重要的是要说明，使用`modprobe`命令加载和卸载内核模块不是持久的；这意味着如果你重新启动系统，所有对内核模块的更改都将消失。要在启动时加载内核模块，创建一个新的可执行脚本文件，`/etc/sysconfig/modules/<filename>.modules`，其中`<filename>`是你选择的名称。在那里，你放入`modprobe`执行命令，就像在正常命令行上一样。以下是启动时额外加载蓝牙驱动程序的示例，例如`/etc/sysconfig/modules/btusb.modules`：
 - en: '[PRE74]'
+  id: totrans-308
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE74]'
 - en: 'Finally, you need to make your new module file executable via the following
     line:'
+  id: totrans-309
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，你需要通过以下行使你的新模块文件可执行：
 - en: '[PRE75]'
+  id: totrans-310
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE75]'
 - en: Recheck your new module settings with `lsmod` after reboot.
+  id: totrans-311
   prefs: []
   type: TYPE_NORMAL
+  zh: 重启后，使用`lsmod`命令重新检查新模块的设置。
 - en: 'To remove a kernel module at boot time for example `sr_mod`, we need to blacklist
     the module''s name using the `rdblacklist` kernel boot option. We can set this
     option by appending it to the end of the `GRUB_CMDLINE_LINUX` directive in the
     GRUB2 configuration file `/etc/default/grub` so it will look like:'
+  id: totrans-312
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，要在启动时移除内核模块`sr_mod`，我们需要使用`rdblacklist`内核启动选项将模块名称列入黑名单。我们可以通过将此选项附加到GRUB2配置文件`/etc/default/grub`中的`GRUB_CMDLINE_LINUX`指令末尾来设置此选项，使其看起来像：
 - en: '[PRE76]'
+  id: totrans-313
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE76]'
 - en: If you need to blacklist multiple modules, the `rdblacklist` option can be specified
     multiple times like `rdblacklist=sr_mod rdblacklist=nouveau`.
+  id: totrans-314
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你需要将多个模块列入黑名单，`rdblacklist`选项可以像`rdblacklist=sr_mod rdblacklist=nouveau`这样指定多次。
 - en: Next recreate the GRUB2 configuration using the `grub2-mkconfig` command (to
     learn more read the *Getting started and customizing the boot loader* recipe in
     [Chapter 1](part0015_split_000.html#E9OE1-4cf34a6d07944734bb93fb0cd15cce8c "Chapter 1. Installing
     CentOS"), *Installing CentOS*).
+  id: totrans-315
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，使用`grub2-mkconfig`命令重新创建GRUB2配置（要了解更多信息，请阅读[第1章](part0015_split_000.html#E9OE1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第1章. 安装CentOS")中的*入门和自定义引导加载程序*配方，*安装CentOS*）。
 - en: '[PRE77]'
+  id: totrans-316
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE77]'
 - en: 'Finally we also need to `blacklist` the module name using the blacklist directive
     in a `new.conf` file of your choice in the `/etc/modprobe.d/` directory for example:'
+  id: totrans-317
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，我们还需要使用位于`/etc/modprobe.d/`目录下您选择的`new.conf`文件中的黑名单指令来`blacklist`模块名称。
 - en: '[PRE78]'
+  id: totrans-318
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE78]'

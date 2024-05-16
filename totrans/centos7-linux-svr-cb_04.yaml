@@ -1,60 +1,88 @@
 - en: Chapter 4. Managing Packages with YUM
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第4章。使用YUM管理软件包
 - en: 'In this chapter, we will cover the following topics:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将涵盖以下主题：
 - en: Using YUM to update the system
+  id: totrans-2
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用YUM更新系统
 - en: Using YUM to search for packages
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用YUM搜索软件包
 - en: Using YUM to install packages
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用YUM安装软件包
 - en: Using YUM to remove packages
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用YUM删除软件包
 - en: Keeping YUM clean and tidy
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 保持YUM的清洁和整洁
 - en: Knowing your priorities
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 了解您的优先级
 - en: Using a third-party repository
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用第三方仓库
 - en: Creating a YUM repository
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 创建YUM仓库
 - en: Working with the RPM package manager
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用RPM软件包管理器
 - en: Introduction
+  id: totrans-11
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 引言
 - en: This chapter is a collection of recipes that provides a review of the tools
     required to grow your server. Package management is at the heart of any Linux-based
     system and the purpose of this chapter highlights the critical tools needed to
     manage software packages on a CentOS based server.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章是一系列教程的集合，提供了对扩展服务器所需的工具的回顾。软件包管理是任何基于Linux的系统的核心，本章的目的强调了在基于CentOS的服务器上管理软件包所需的关键工具。
 - en: Using YUM to update the system
+  id: totrans-13
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用YUM更新系统
 - en: In this recipe, we will investigate the role of the **Yellowdog Updater**, **Modified**
     (**YUM**) package manager with regard to running a system update. Every once in
     a while, you may become aware of an update or may simply wish to discover if one
@@ -63,90 +91,124 @@
     as software bugs and vulnerabilities are found all the time and must be fixed
     promptly. In this recipe, you will learn how to achieve this with the help of
     YUM.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将探讨**Yellowdog Updater, Modified**（**YUM**）软件包管理器在运行系统更新方面的角色。每隔一段时间，您可能会意识到有更新，或者可能只是想了解是否存在更新。应用补丁和更新是每个服务器管理员的常规任务，一个最新的系统可以帮助提高或确保您的服务器的安全性，因为软件错误和漏洞一直在被发现，并且必须及时修复。在本教程中，您将学习如何借助YUM实现这一点。
 - en: Getting ready
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to facilitate the download of additional
     packages.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本教程，您需要具备具有root权限的CentOS 7操作系统的正常安装，您选择的基于控制台的文本编辑器，以及连接到互联网以便于下载额外软件包的能力。
 - en: How to do it...
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'You can run this recipe, as often as required but it should be done frequently,
     based on a schedule of your own choosing in the full knowledge that on occasion,
     some updates may require a full system reboot:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以根据自己的选择的时间表经常运行本教程，但应该经常进行，完全了解有时某些更新可能需要完全系统重启：
 - en: 'Log in as root and check whether there are any updates for your installed packages.
     To do this, log in and type the following:'
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 以root身份登录并检查是否有任何适用于您已安装软件包的更新。为此，请登录并输入以下命令：
 - en: '[PRE0]'
+  id: totrans-20
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'If no updates are available, then the update process will end and no further
     work will need to be done. However, if updates are available, YUM will now return
     a list of all package updates from the repositories known to your system. To complete
     the update process, type the following command:'
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果没有可用的更新，那么更新过程将结束，不需要进行进一步的工作。然而，如果有可用的更新，YUM现在将返回来自系统已知仓库的所有软件包更新的列表。要完成更新过程，请输入以下命令：
 - en: '[PRE1]'
+  id: totrans-22
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: By using the `-y` flag, the preceding command will now bypass the need to confirm
     the transaction summary, and your system will now undergo an immediate update
     process. When complete, you will be provided with a final report that identifies
     what dependencies have been installed and what packages have been updated.
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 通过使用`-y`标志，前面的命令现在将绕过确认交易摘要的需要，您的系统现在将立即进行更新过程。完成后，您将获得一个最终报告，该报告标识了已安装的依赖项和已更新的软件包。
 - en: 'Generally speaking, no further work is required and you may resume typical
     operations. However, if a new kernel has been installed, or an important security
     update has taken place, it may be necessary to reboot the system for the new changes
     to take effect. To do this, type the following:'
+  id: totrans-24
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 通常情况下，不需要进一步的工作，您可以恢复正常的操作。然而，如果安装了新的内核，或者进行了重要的安全更新，可能需要重启系统以使新的更改生效。为此，请输入以下命令：
 - en: '[PRE2]'
+  id: totrans-25
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Note
+  id: totrans-26
   prefs:
   - PREF_IND
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: While there is much debate as to whether an update will require a full system
     restart in practice, this is only to be considered after a kernel update, which
     is an update to `glibc` and particular security-based features that are activated
     during the boot process.
+  id: totrans-27
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 尽管关于更新是否需要在实践中进行全面系统重启存在很多争议，但这只有在进行内核更新后才需要考虑，内核更新是对`glibc`和在启动过程中激活的特定安全功能的更新。
 - en: How it works...
+  id: totrans-28
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: YUM is the default package management system for CentOS and part of its role
     is to automatically calculate what packages may require updating, what dependencies
     are required, and to manage the entire process of updating your system in a very
     simple way.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: YUM是CentOS默认的包管理器，其职责之一是自动计算哪些包可能需要更新，哪些依赖项是必需的，并以非常简单的方式管理整个系统更新过程。
 - en: So, what have we learned from this experience?
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: We started the recipe by checking to see if any updates were available to our
     system using the `yum` command with the `check-update` option. In this way, YUM
     will now check a central repository to confirm if an update is applicable to our
@@ -165,12 +227,17 @@
     given, and to confirm that we have already agreed to make these updates after
     running the previous check. Otherwise, you would simply confirm the requests by
     using the *Y* key.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们通过使用`yum`命令和`check-update`选项检查系统是否有可用更新来开始这个配方。这样，YUM现在将检查中央存储库以确认我们的系统是否有适用的更新。存储库是一个包含预制软件包和实用程序的远程目录或网站。YUM将使用此设施自动定位和获取正确的**Red
+    Hat Package Manager**（**RPM**）和依赖项，如果有可用更新，YUM将相应地响应，提供有关哪些包和依赖项可用的完整摘要。因此，YUM是一个非常有用的工具，毫无疑问，其机制确实简化了与包管理相关的流程，因为它可以与存储库对话，这使我们不必手动查找和安装新应用程序或更新。如果有可用更新，输出将向我们显示受影响的包，然后我们可以继续使用YUM的`update`参数更新系统。在这种情况下，前面的命令包括`-y`标志。这是为了绕过同意交易摘要的需要，并确认我们已经在运行前面的检查后同意进行这些更新。否则，你只需使用*Y*键确认请求。
 - en: There's more...
+  id: totrans-32
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'You can also use the update parameter to update single packages instead of
     the whole system by providing the package name like so: `yum update package_name`.
     YUM will serve to ensure that all of the requirements for an application are met
@@ -181,12 +248,17 @@
     system. If you want to automate the updating of your system using a specific time
     interval, you can install the `yum-cron` package, which can be highly customized
     but is outside the scope of this book. To start after installation, use `man yum-cron`.'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 你还可以使用更新参数来更新单个包而不是整个系统，只需提供包名，例如：`yum update package_name`。YUM将确保在安装应用程序时满足所有要求，并自动安装系统上尚未存在的任何依赖项的包。然而，我确信你会很高兴听到这一点，如果新应用程序有与现有软件冲突的要求，YUM将中止过程而不对系统进行任何更改。如果你想使用特定时间间隔自动更新系统，可以安装`yum-cron`包，该包可以高度定制，但超出了本书的范围。安装后启动，使用`man
+    yum-cron`。
 - en: Using YUM to search for packages
+  id: totrans-34
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用YUM搜索包
 - en: In this recipe, we will investigate the role of using YUM to find a package.
     YUM was developed to improve the installation of RPM software packages, and it
     is used to access a growing list of packages that provide a full range of services
@@ -195,69 +267,98 @@
     To overcome this, YUM maintains an extensive range of discovery tools and it is
     the purpose of this recipe to show you how to use this functionality in order
     to search through the various repositories and find the package you need.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们将研究使用 YUM 查找包的作用。YUM 是为了改进 RPM 软件包的安装而开发的，它用于访问提供服务器提供的全方位服务的不断增长的数学包列表。YUM
+    使用起来很简单，但如果你不确定包的名称，那么作为服务器管理员的工作就会变得更加困难。为了克服这一点，YUM 维护了广泛的发现工具，本食谱的目的是向您展示如何使用此功能来搜索各种存储库并找到您需要的包。
 - en: Getting ready
+  id: totrans-36
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本食谱，您需要具有 root 权限的 CentOS 7 操作系统的工作安装、您选择的基于控制台的文本编辑器以及互联网连接。
 - en: How to do it...
+  id: totrans-38
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何做到这一点...
 - en: 'This recipe will show you how to find one or more packages by invoking YUM''s
     searching options. To do this, you will need to log in as the root user and complete
     the following process:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 本食谱将向您展示如何通过调用 YUM 的搜索选项来找到一个或多个包。为此，您需要以 root 用户身份登录并完成以下过程：
 - en: 'To search for a single package, replace the `keyword` value with the appropriate
     phrase, string, or parameter, and type the following:'
+  id: totrans-40
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要搜索单个包，请将 `keyword` 值替换为适当的短语、字符串或参数，然后键入以下内容：
 - en: '[PRE3]'
+  id: totrans-41
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Wait for a summary of the search results, and when a list is generated, you
     can query any package shown by simply replacing `package_name` with the appropriate
     value:'
+  id: totrans-42
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 等待搜索结果的摘要，当生成列表时，您可以通过简单地将 `package_name` 替换为适当的值来查询任何显示的包：
 - en: '[PRE4]'
+  id: totrans-43
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'If the preceding results prove satisfactory, and you want to view a list of
     dependencies associated with the package in question, type the following:'
+  id: totrans-44
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果前面的结果令人满意，并且您想查看与该包相关的依赖项列表，请键入以下内容：
 - en: '[PRE5]'
+  id: totrans-45
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: How it works...
+  id: totrans-46
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: Searching for packages with YUM can be achieved in the same way as you would
     search for anything on the **World Wide Web** (**WWW**). The types of words you
     can search for can be as specific or as general as you like. They can even consist
     of full or partial words; having found a package that you may be interested in,
     you will have noticed that this recipe has also served to show you how to discover
     additional information about the package in question.
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 YUM 搜索包的方式与在 **万维网**（**WWW**）上搜索任何内容的方式相同。您可以搜索的单词类型可以像您喜欢的那样具体或一般。它们甚至可以由完整或部分单词组成；找到您可能感兴趣的包后，您会注意到，本食谱还向您展示了如何发现有关该包的更多信息。
 - en: So, what have we learned from this experience?
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: YUM maintains extensive search features and it allows you to query packages
     by keyword, package name, and pathname. For example, if you want to locate the
     correct package for compiling C, Objective-C, and C++ code, you can use the `yum
@@ -269,8 +370,12 @@
     reveals the full package details together with a detailed description of what
     functionality the package is intended to provide. Generally speaking, you may
     not need to know any further details.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: YUM 维护了广泛的搜索功能，允许您通过关键字、包名和路径名查询包。例如，如果您想找到编译 C、Objective-C 和 C++ 代码的正确包，可以使用
+    `yum search compiler` 查询。在命令行上使用这些搜索词时，会出现许多相关结果，每个包都附有简短描述，使我们能够通过简单的排除过程来选择最明显或最相关的值。考虑到这一点，您可以使用
+    `info` 参数向 YUM 查询以了解有关某些包的更多信息。此选项显示了完整的包详细信息以及包旨在提供的功能的详细描述。一般来说，您可能不需要知道更多细节。
 - en: However, there may be circumstances in which you want to know how this package
     interacts with the server as a whole (especially if you are working with source
     installations or troubleshooting broken packages), so we can use YUM's `deplist`
@@ -279,12 +384,16 @@
     you may or may not need to install in order to fix an underlying issue. This command
     is particularly useful when debugging dependencies or when working with source-based
     installations.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，在某些情况下，您可能想知道该软件包如何与整个服务器交互（特别是如果您正在处理源安装或修复损坏的软件包），因此我们可以使用YUM的`deplist`参数，它可以提供相当详细的报告；如果您碰巧有任何损坏的软件包，您可以使用此输出来详细说明您可能需要或不需要安装哪些依赖项来解决潜在问题。当调试依赖关系或处理基于源的安装时，此命令特别有用。
 - en: There's more...
+  id: totrans-51
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'Sometimes, you may not want to search for a specific package, and instead you
     may prefer to display the contents of your repositories in a catalog-style format.
     Again, this is easy to do and YUM provides for this functionality with the following
@@ -297,12 +406,19 @@
     file or feature, simply run the following command at any time by substituting
     `your_filename_here` with something more relevant to your own needs: `yum provides
     your_filename_here`.'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时，您可能不想搜索特定的软件包，而是可能更愿意以目录式格式显示您存储库的内容。同样，这很容易做到，YUM提供了以下命令来实现这一功能。如果您想简单地列出当前系统使用的存储库中所有可用的软件包，请键入`yum
+    list all`。然而，由于此列表可能非常详尽，您可能更愿意通过使用`yum list all | less`来分页浏览结果。类似地，如果您只想列出系统上当前安装的所有软件，请键入`yum
+    list installed | less`。如果您想确定哪些软件包提供了特定的文件或功能，只需随时运行以下命令，将`your_filename_here`替换为与您自己的需求更相关的内容：`yum
+    provides your_filename_here`。
 - en: Using YUM to install packages
+  id: totrans-53
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用YUM安装软件包
 - en: In this recipe, we will investigate the role of YUM in installing new packages
     on your server. An important task for every server administrator is the installation
     of applications and services. There are several different ways to achieve this,
@@ -311,70 +427,96 @@
     and specify the installation of one or more packages. YUM is a modern and definitive
     way to install your packages on your server, and it is the purpose of this recipe
     to show you how it is done.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将探讨YUM在服务器上安装新软件包的作用。对于每位服务器管理员来说，安装应用程序和服务是一项重要任务。有多种方法可以实现这一点，但最有效的方法涉及使用YUM包管理器。YUM能够搜索任意数量的存储库，自动解决软件包依赖关系，并指定安装一个或多个软件包。YUM是现代且确定性的方法，用于在服务器上安装软件包，本教程的目的就是向您展示如何做到这一点。
 - en: Getting ready
+  id: totrans-55
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to facilitate the download of additional
     packages. It's also good if you have already found some interesting packages to
     install, which can be learned by using the instructions from the *Using YUM to
     search for packages* recipe.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本教程，您需要具备CentOS 7操作系统的有效安装，拥有root权限，选择一个基于控制台的文本编辑器，以及连接到互联网以便下载额外的软件包。如果您已经找到了一些有趣的软件包来安装，那么使用*使用YUM搜索软件包*教程中的说明来学习这些软件包是很好的。
 - en: How to do it...
+  id: totrans-57
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何做到这一点...
 - en: 'This recipe will show you how to install one or more packages by invoking the
     YUM installation option. To do this, you will need to log in as the root user
     and complete the following process:'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 本教程将向您展示如何通过调用YUM安装选项来安装一个或多个软件包。为此，您需要以root用户身份登录并完成以下过程：
 - en: 'To install a single package, replace the `package_name` value with the appropriate
     value and type the following:'
+  id: totrans-59
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要安装单个软件包，请将`package_name`值替换为适当的值，然后键入以下内容：
 - en: '[PRE6]'
+  id: totrans-60
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Your system will now provide a transaction report that will require your approval.
     So, when prompted, simply respond by using the *Y* or *N* key and press the *Return*
     key to either accept or decline the transaction, as shown as follows:'
+  id: totrans-61
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 你的系统现在将提供一个交易报告，需要你的批准。因此，当提示时，只需使用*Y*或*N*键并按*Return*键来接受或拒绝交易，如下所示：
 - en: '[PRE7]'
+  id: totrans-62
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: If you have declined the transaction, then no further work is required and you
     will exit the package management routine. However, if you have confirmed the transaction,
     then watch the progress of your installation, and in the end it will show you
     a `Complete!` message.
+  id: totrans-63
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果你拒绝了交易，那么不需要进行进一步的工作，你将退出软件包管理例程。然而，如果你确认了交易，那么请观察安装进度，最终它会显示一个`Complete!`消息。
 - en: Congratulations! You now have successfully installed your package of choice.
+  id: totrans-64
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 恭喜！你现在已经成功安装了你选择的软件包。
 - en: How it works...
+  id: totrans-65
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: All packages are stored in the RPM package file format, and it is the role of
     YUM to provide access to those files that are stored in various repositories on
     the Internet. YUM is the power behind the package management for CentOS and it
     really does make the installation process very easy, but what have we learned
     from this experience?
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有软件包都存储在RPM软件包文件格式中，而YUM的作用是提供对存储在互联网上各种仓库中的这些文件的访问。YUM是CentOS软件包管理背后的力量，它确实使得安装过程变得非常简单，但我们从这次经历中学到了什么？
 - en: 'Having invoked the `install` command, YUM will conduct a search of the various
     repositories in order to find the relevant headers and metadata associated with
     the package in question. For example, if you wanted to install a package called
@@ -388,101 +530,142 @@
     as you can see, by using the *Y* key, we will be providing YUM with the permission
     to fulfill the request, which in turn will result in the download, verification,
     and installation of the package(s) concerned.'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 调用`install`命令后，YUM将在各个仓库中进行搜索，以找到与所讨论的软件包相关的相关标题和元数据。例如，如果你想安装一个名为`wget`的软件包，你将首先发出这样的`install`命令：`yum
+    install wget`。然后，YUM将定位该软件包，并生成一个交易摘要，该摘要不仅指示所需的磁盘空间和预期的安装大小，还将指示所请求的软件包所需的任何必要依赖项。YUM将检查几个不同的仓库（`base`，`extras`，和`updates`），并在解决了任何必要依赖项的需求后，YUM将要求我们在继续安装过程之前确认请求。因此，正如你所见，通过使用*Y*键，我们将向YUM提供执行请求的权限，这将导致下载、验证和安装相关软件包。
 - en: There's more...
+  id: totrans-68
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'There are times when you may wish to install more than one package at a time.
     To do this, simply invoke the same `install` command, but instead of naming a
     single package, simply identify the full list of packages you may require in such
     a way that it forms a long shopping list:'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时你可能希望一次性安装多个软件包。要实现这一点，只需调用相同的`install`命令，但不是指定单个软件包，而是以形成一个长购物清单的方式列出你可能需要的所有软件包：
 - en: '[PRE8]'
+  id: totrans-70
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: The number of packages you can install in this way is unlimited, but always
     leave a single space between each package name and keep the command on a single
     line. For very long installation instructions, line-wrapping may occur.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以以这种方式安装的软件包数量没有限制，但始终在每个软件包名称之间留一个空格，并保持命令在一行上。对于非常长的安装指令，可能会发生行包装。
 - en: You do not need to list the packages in any particular order and the request
     will be processed in exactly the same way as it was in the original recipe, and
     again after listing the transaction summary, it will remain pending until it is
     confirmed or declined. Again, use the *Y* key to confirm your request so that
     the process completes.
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 你不需要以任何特定顺序列出软件包，请求将以与原始配方完全相同的方式处理，并且在列出交易摘要后，它将保持待定状态，直到确认或拒绝。再次使用*Y*键确认你的请求，以便完成该过程。
 - en: Using YUM to remove packages
+  id: totrans-73
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用YUM删除软件包
 - en: In this recipe, we will investigate the role of using YUM with the intention
     of removing packages from your server. During the lifetime of your server, it
     is possible that certain applications and services may no longer be required.
     In such situations, it is typical that you will want to remove such packages in
     order to optimize your working environment, and it is the purpose of this recipe
     to show you how this is done.
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个食谱中，我们将探讨使用YUM的目的，即从你的服务器上移除软件包。在你的服务器生命周期中，某些应用程序和服务可能不再需要。在这种情况下，通常你会想要移除这些软件包以优化你的工作环境，而这个食谱的目的就是向你展示如何做到这一点。
 - en: Getting ready
+  id: totrans-75
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成这个食谱，你需要一个安装了CentOS 7操作系统的工作环境，具有root权限，选择一个基于控制台的文本编辑器，以及互联网连接。
 - en: How to do it...
+  id: totrans-77
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'This recipe will show you how to remove one or more packages by invoking the
     `yum remove` option. To do this, you will need to log in as the root user and
     complete the following process:'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个食谱将向你展示如何通过调用`yum remove`选项来移除一个或多个软件包。为此，你需要以root用户身份登录并完成以下过程：
 - en: 'To remove a single package, replace the `package_name` value with the appropriate
     value and type the following:'
+  id: totrans-79
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要移除单个软件包，将`package_name`替换为适当的值，并输入以下内容：
 - en: '[PRE9]'
+  id: totrans-80
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'Wait for the transaction summary and confirmation prompt to be displayed, and
     then press either the *Y* key to confirm, or the *N* key to decline the transaction,
     as shown next:'
+  id: totrans-81
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 等待交易摘要和确认提示显示，然后按*Y*键确认，或按*N*键拒绝交易，如下所示：
 - en: '[PRE10]'
+  id: totrans-82
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: If you have declined the transaction, then no further work is required and you
     will exit YUM. However, if you have confirmed the transaction, then simply watch
     the progress of package removal until it is confirmed and prints out a `Complete!`
     message.
+  id: totrans-83
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果你拒绝了交易，那么不需要进一步的工作，你将退出YUM。然而，如果你确认了交易，那么只需观察软件包移除的进度，直到它被确认并打印出`Complete!`消息。
 - en: How it works...
+  id: totrans-84
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: Applications that are no longer required can be removed with YUM. The process
     is very intuitive and similar to installing a new package, and it only requires
     you to confirm the name of the packages you want to remove.
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 不再需要的应用程序可以通过YUM移除。这个过程非常直观，类似于安装新软件包，只需要你确认要移除的软件包名称。
 - en: So, what have we learned from this experience?
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: 'Having invoked the `remove` command, YUM will search your system to discover
     the relevant package; and by reading the package headers and metadata, it will
     also determine what dependencies this will affect. For example, if we wanted to
@@ -498,15 +681,22 @@
     to end the current transaction and simply de-activate or disable the software
     concerned. As with the `install` command, you can also remove multiple packages
     at a time, leaving a single space between the package names:'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 调用了`remove`命令后，YUM将在你的系统中搜索相关软件包；通过阅读软件包头和元数据，它还将确定这将影响哪些依赖项。例如，如果我们想移除名为`wget`的软件包，我们将开始发出`remove`命令，如下所示：`yum
+    remove wget`。然后，YUM将从你的系统中找到软件包详细信息，并获取一个交易摘要，其中可能包括任何不再需要的必要依赖项。打印出的交易将保持待定状态，直到你指示YUM移除相关软件包。确认后，YUM将完成交易，这将导致移除软件包或软件包。如果摘要提到任何依赖项，你应该格外小心，因为这些可能被其他RPM所需。如果你担心某些依赖项应该保留在系统上，通常一个好的做法是结束当前交易，并简单地停用或禁用相关软件。与`install`命令一样，你也可以一次移除多个软件包，软件包名称之间留一个空格：
 - en: '[PRE11]'
+  id: totrans-88
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Keeping YUM clean and tidy
+  id: totrans-89
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 保持YUM的整洁
 - en: In this recipe, we will investigate the role of YUM with regard to ensuring
     that the working cache remains current. As a part of its typical mode of operation,
     YUM will create a cache that consists of metadata and packages. These files are
@@ -517,87 +707,123 @@
     quite frustrating, but it is the purpose of this recipe to provide a quick solution
     that will serve to assist you in cleaning the cache and restoring YUM to its original
     working state.
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个步骤中，我们将调查YUM在确保工作缓存保持最新方面的作用。作为其典型操作模式的一部分，YUM将创建一个由元数据和软件包组成的缓存。这些文件非常有用，但随着时间的推移，它们会积累到一定程度，你可能会发现YUM行为异常或不如预期。这种情况发生的频率因系统而异，但通常意味着YUM缓存系统需要你立即关注。这种情况可能会非常令人沮丧，但这个步骤的目的是提供一个快速解决方案，帮助你清理缓存并将YUM恢复到原始工作状态。
 - en: Getting ready
+  id: totrans-91
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to facilitate the download of additional
     packages.
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成这个步骤，你需要一个具有root权限的CentOS 7操作系统的工作安装，一个你选择的基于控制台的文本编辑器，以及一个互联网连接，以便于下载额外的软件包。
 - en: How to do it...
+  id: totrans-93
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'Before we begin, it is important to realize that, while we are troubleshooting
     a current problem, this same recipe can be run as often as required in order to
     keep YUM in an optimal working state:'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们开始之前，重要的是要意识到，虽然我们正在解决当前的问题，但这个相同的步骤可以按需运行，以保持YUM处于最佳工作状态：
 - en: 'We will begin this recipe by asking YUM to clean any cached package information.
     To do this, log in as root and type the following:'
+  id: totrans-95
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们将从这个步骤开始，让YUM清理任何缓存的软件包信息。为此，以root身份登录并输入以下内容：
 - en: '[PRE12]'
+  id: totrans-96
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'Allow time for your system to respond and when finished, type the following
     command to remove any cached XML-based metadata:'
+  id: totrans-97
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 允许系统响应一段时间，完成后，输入以下命令以删除任何缓存的基于XML的元数据：
 - en: '[PRE13]'
+  id: totrans-98
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'Again, wait for YUM to respond and when ready, type the following command to
     remove any cached database files:'
+  id: totrans-99
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 再次等待YUM响应，准备就绪后，输入以下命令以删除任何缓存的数据库文件：
 - en: '[PRE14]'
+  id: totrans-100
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'Following this, you will want to clean all the files to confirm the preceding
     instructions and to ensure that unnecessary disk space is not used. To do this,
     type the following line:'
+  id: totrans-101
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，你需要清理所有文件以确认前面的指令，并确保不使用不必要的磁盘空间。为此，输入以下行：
 - en: '[PRE15]'
+  id: totrans-102
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'Finally, you will want to rebuild the YUM cache by typing what is shown next:'
+  id: totrans-103
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，你需要通过输入以下内容来重建YUM缓存：
 - en: '[PRE16]'
+  id: totrans-104
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: How it works...
+  id: totrans-105
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: YUM is a very powerful tool that is known for its ability to resolve package
     dependencies and automate the process of package management, but as with all things,
     there are times when even the best utilities can get confused and may report errors
     or behave erratically. Fixing this issue is relatively simple and the approach
     outlined in this recipe will also serve to keep your package manager in a healthy
     running state for the life of your operating system.
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: YUM是一个非常强大的工具，以其解决软件包依赖关系和自动化软件包管理过程的能力而闻名，但正如所有事物一样，有时即使是最好的工具也会感到困惑，可能会报告错误或行为异常。解决这个问题相对简单，本步骤中概述的方法也将有助于保持你的软件包管理器在你的操作系统生命周期内保持健康运行状态。
 - en: So, what have we learned from this experience?
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: 'During its typical operation, YUM will create a cache of metadata and packages
     that can be found at `/var/cache/yum`. These files are essential, but as they
     grow in size, this cache will ultimately serve to slow down the overall use of
@@ -611,45 +837,65 @@
     in order to reclaim any unused disk space: `yum clean all`. Finally, we restored
     YUM to its normal working state by rebuilding the cache using the `makecache`
     option.'
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 在YUM的典型运行过程中，它会在`/var/cache/yum`位置创建一个元数据和包的缓存。这些文件至关重要，但随着它们的大小增长，这个缓存最终会减慢该工具的整体使用速度，甚至可能导致一些问题。为了解决这个问题，我们首先使用以下命令清理当前基于包的缓存，使用YUM的`clean
+    packages`参数选项。然后，我们通过执行`clean metadata`命令清理元数据缓存，这将删除任何多余的基于XML的文件。YUM在其正常操作中使用SQLite数据库，因此下一步是使用`clean
+    dbcache`参数删除任何剩余的数据库文件。接下来，我们清理所有与启用仓库相关的文件，以回收任何未使用的磁盘空间：`yum clean all`。最后，我们通过使用`makecache`选项重建缓存，将YUM恢复到正常工作状态。
 - en: There's more...
+  id: totrans-109
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: On a typical server, YUM is a great tool that will solve the most complex problems
     related to package dependencies and package management. However, in instances
     where you have knowingly mixed incompatible repositories or have used incomplete
     sources, there is a risk that YUM will not be able to help.
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 在典型的服务器上，YUM是一个出色的工具，它将解决与包依赖关系和包管理相关的最复杂问题。然而，在明知混合了不兼容的仓库或使用了不完整的源的情况下，YUM可能无法提供帮助。
 - en: Note
+  id: totrans-111
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Remember, in this situation, you should consider the following advice to be
     a temporary remedy only. A tendency to ignore any warnings provided by YUM will
     only lead to bigger problems later on.
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 记住，在这种情况下，你应该将以下建议视为仅是临时补救措施。忽视YUM提供的任何警告只会导致将来出现更大的问题。
 - en: 'If such instances occur, and if the error is RPM-based, as a temporary fix,
     you can skip broken packages by using the following command:'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果发生这种情况，并且错误是基于RPM的，作为临时修复，你可以使用以下命令跳过损坏的包：
 - en: '[PRE17]'
+  id: totrans-114
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: This command will allow YUM to continue working by bypassing any packages with
     errors, but as stated earlier this should be regarded as a temporary fix only.
     You should always be aware that a system with broken dependencies is not considered
     to be a healthy system. This situation is to be avoided at all costs, and under
     these circumstances fixing such errors should become your first priority.
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个命令将允许YUM继续工作，绕过任何有错误的包，但正如前面所述，这应该被视为仅是临时修复。你应该始终意识到，一个依赖关系损坏的系统不被认为是一个健康的系统。这种情况应该不惜一切代价避免，在这种情况下，修复此类错误应该成为你的首要任务。
 - en: Knowing your priorities
+  id: totrans-116
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 了解你的优先级
 - en: In this recipe, we will investigate the task of preparing YUM to manage additional
     repositories by installing a plugin known as **YUM priorities**. YUM has the ability
     to search, remove, install, retrieve, and update packages from various remote
@@ -658,107 +904,153 @@
     the system unstable. Stability is one of the many advantages of using the CentOS
     operating system, and it is the purpose of this recipe to show you how this confidence
     can be maintained while simultaneously allowing for the addition of new repositories.
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们将探讨准备YUM管理额外仓库的任务，通过安装一个名为**YUM priorities**的插件。YUM有能力从各种远程位置搜索、删除、安装、检索和更新包。这些功能使YUM成为一个强大的工具，但如果你决定添加额外的第三方仓库，有可能冲突会导致系统不稳定。稳定性是使用CentOS操作系统的众多优势之一，本食谱的目的是展示如何在同时允许添加新仓库的情况下保持这种信心。
 - en: Getting ready
+  id: totrans-118
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to facilitate the download of additional
     packages.
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成这个食谱，你需要一个具有root权限的CentOS 7操作系统的正常安装，一个基于控制台的文本编辑器，以及一个互联网连接，以便下载额外的包。
 - en: How to do it...
+  id: totrans-120
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何做...
 - en: 'This recipe will show you how to prepare YUM in order to manage the process
     of using one or more third-party repositories by installing and configuring YUM
     priorities:'
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 本食谱将向您展示如何准备YUM，以便通过安装和配置YUM优先级来管理使用一个或多个第三方仓库的过程：
 - en: 'To begin this recipe, log in as root and type the following:'
+  id: totrans-122
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要开始这个食谱，请以root身份登录并输入以下内容：
 - en: '[PRE18]'
+  id: totrans-123
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 'Confirm the installation, and when complete type what is shown here:'
+  id: totrans-124
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 确认安装，完成后输入以下内容：
 - en: '[PRE19]'
+  id: totrans-125
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: You should ensure that this file indicates that the plugin is enabled. It should
     show the instruction `enabled = 1`. It is not expected that you will need to change
     anything in this file, but if you have made any changes, simply save and close
     the file before proceeding.
+  id: totrans-126
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 您应该确保此文件指示插件已启用。它应该显示指令`enabled = 1`。通常不需要在此文件中进行任何更改，但如果您已进行任何更改，请在继续之前保存并关闭文件。
 - en: 'We now need to establish a priority value for each repository. This is a numeric
     value in ascending order, where the highest priority is given the lowest number.
     To do this, open the following file as shown next:'
+  id: totrans-127
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在我们需要为每个仓库建立一个优先级值。这是一个升序的数值，其中最高优先级被赋予最低的数字。为此，按照以下所示打开以下文件：
 - en: '[PRE20]'
+  id: totrans-128
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'Add the following line at the end of the `[base]` section:'
+  id: totrans-129
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在`[base]`部分末尾添加以下行：
 - en: '[PRE21]'
+  id: totrans-130
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 'Now, add the following line at the end of the `[updates]` section:'
+  id: totrans-131
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，在`[updates]`部分末尾添加以下行：
 - en: '[PRE22]'
+  id: totrans-132
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: 'And finally, add the following line at the end of the `[extras]` section:'
+  id: totrans-133
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，在`[extras]`部分末尾添加以下行：
 - en: '[PRE23]'
+  id: totrans-134
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 'When complete, save and close the file before running a package update:'
+  id: totrans-135
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成后，保存并关闭文件，然后运行软件包更新：
 - en: '[PRE24]'
+  id: totrans-136
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: How it works...
+  id: totrans-137
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: YUM priorities is a simple plugin that enables YUM to decide what repositories
     will assume the highest priority when installing and updating new packages. Using
     this plugin will reduce the chance of package confusion by ensuring that any particular
     package will always be installed or updated from the same repository. In this
     way, you can add an unlimited number of repositories and enable YUM to stay in
     control of package management.
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: YUM优先级是一个简单的插件，它使YUM能够决定在安装和更新新软件包时哪些仓库将具有最高优先级。使用此插件将减少软件包混淆的可能性，确保任何特定软件包始终从同一仓库安装或更新。这样，您可以添加无限数量的仓库，并使YUM保持对软件包管理的控制。
 - en: So, what did we learn from this experience?
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: 'Enhancing YUM with this plugin was simply a matter of installing the `yum-plugin-priorities`
     package and ensuring that it was enabled in its configuration file. We then discovered
     that the priority is set in ascending order, where the lowest values are given
@@ -776,8 +1068,10 @@
     need to set a priority value for it, but for the purpose of this recipe such an
     action was not required. Finally, we ran a simple YUM package update in order
     to activate our revised settings.'
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过安装`yum-plugin-priorities`软件包并确保在其配置文件中启用它，我们简单地增强了YUM。然后我们发现优先级是按升序设置的，其中最低值优先于所有其他值。当然，这简化了整个过程，因此我们确保默认仓库被赋予值`1`（`priority=1`）。这将确保默认仓库保持最高优先级，因此当您决定添加其他仓库时，可以为它们分配优先级值2、3、4…和10，或更多。另一方面，应该注意的是，我们只在三个主要部分设置了此值：`[base]`、`[updates]`和`[extras]`。简单来说，这只是因为其他部分显示为禁用。例如，您可能已经注意到`/etc/yum.repos.d/CentOS-Base.repo`中的`[centosplus]`部分包含以下行：`enabled=0`，而`[updates]`和`[extras]`部分显示此值为`enabled=1`。当然，如果您打算激活此仓库，则需要为其设置优先级值，但为了本食谱的目的，不需要进行此操作。最后，我们运行了一个简单的YUM软件包更新以激活我们的修订设置。
 - en: So, as we can see, YUM priorities is an extremely flexible package that enables
     you to determine what repositories take priority when you want to expand your
     installation options. However, you should always be aware that YUM priorities
@@ -790,12 +1084,16 @@
     from external repositories, then you should give careful consideration to the
     use of this plugin or at least consider and research the integrity of the third-party
     repositories used.
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，正如我们所见，YUM优先级是一个极其灵活的软件包，它使您能够确定在扩展安装选项时哪些存储库具有优先权。然而，您应该始终意识到，YUM优先级可能并不适合您的系统，因为您赋予了它决定哪些软件包将被忽略、哪些软件包将被安装、哪些软件包将被更新以及以何种顺序和从哪个存储库获取它们的权力。对于大多数不倾向于远离典型服务器功能的用户来说，这可能不是立即关注的问题；您甚至可以安全地忽略这个警告。但如果稳定性和安全性是压倒性的关注点，并且您确实打算从外部存储库使用额外的软件包，那么您应该仔细考虑使用此插件，或者至少考虑并研究所使用的第三方存储库的完整性。
 - en: Using a third-party repository
+  id: totrans-142
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用第三方存储库
 - en: In this recipe, we will investigate the desire to take full advantage of the
     packages that are available to CentOS by installing both the EPEL and Remi repositories.
     CentOS is an enterprise-based operating system that prides itself on stability,
@@ -806,114 +1104,164 @@
     These are not the only repositories available, but because they represent one
     of the most popular combinations, it is the purpose of this recipe to show you
     how both the EPEL and Remi repositories can be added to your system.
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本配方中，我们将探讨充分利用CentOS可用软件包的愿望，通过安装EPEL和Remi存储库。CentOS是一个以稳定性为傲的企业级操作系统，在您的服务器生命周期中，可能并非您需要的每一件软件都能在默认存储库中找到。您也可能需要当前软件的更新软件包，出于这些原因，许多服务器管理员选择安装EPEL和Remi存储库。这些不是唯一可用的存储库，但由于它们代表了最受欢迎的组合之一，因此本配方的目的是向您展示如何将EPEL和Remi存储库添加到您的系统中。
 - en: Getting ready
+  id: totrans-144
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to facilitate the download of additional
     packages.
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成这个配方，您需要一个具有root权限的CentOS 7操作系统的有效安装，您选择的基于控制台的文本编辑器，以及连接到互联网以便于下载额外软件包的能力。
 - en: How to do it...
+  id: totrans-146
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: Before we start, it is assumed that you have followed the previous recipe that
     showed you how to install and activate YUM priorities.
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们开始之前，假设您已经遵循了之前的配方，该配方向您展示了如何安装和激活YUM优先级。
 - en: 'To begin, log in as root and install the EPEL release repository using YUM:'
+  id: totrans-148
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录并使用YUM安装EPEL发布存储库：
 - en: '[PRE25]'
+  id: totrans-149
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: 'Next, from your home directory, type the following commands to download the
     `remi release` `rpm` package:'
+  id: totrans-150
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，从您的家目录中，键入以下命令以下载`remi release` `rpm`软件包：
 - en: '[PRE26]'
+  id: totrans-151
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: Note
+  id: totrans-152
   prefs:
   - PREF_IND
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Please note that, while you are reading this, this URL may have changed; if
     so, please do some Internet research to find out if there is a new URL available.
+  id: totrans-153
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 请注意，当您阅读本文时，此URL可能已更改；如果是这样，请进行一些互联网研究，以了解是否有新的URL可用。
 - en: 'The preceding file should now be located in your home folder. To proceed, type
     the following command:'
+  id: totrans-154
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 前面的文件现在应该位于您的家目录中。要继续，请键入以下命令：
 - en: '[PRE27]'
+  id: totrans-155
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'After the installation is done, open the Remi repository file with your favorite
     text editor:'
+  id: totrans-156
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 安装完成后，使用您最喜欢的文本编辑器打开Remi存储库文件：
 - en: '[PRE28]'
+  id: totrans-157
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: Change `enabled=0` to `enabled=1` and add the line `priority=10` to the end
     of the `[remi]` section.
+  id: totrans-158
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将`enabled=0`更改为`enabled=1`，并在`[remi]`部分的末尾添加行`priority=10`。
 - en: 'Now, open the EPEL repository file with your favorite text editor:'
+  id: totrans-159
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，使用您最喜欢的文本编辑器打开EPEL存储库文件：
 - en: '[PRE29]'
+  id: totrans-160
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: Again, change `enabled=0` to `enabled=1` if not set automatically and add the
     line `priority=10` in the `[epel]` section.
+  id: totrans-161
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 再次，如果未自动设置，请将`enabled=0`更改为`enabled=1`，并在`[epel]`部分中添加行`priority=10`。
 - en: 'To finish, update YUM as shown here:'
+  id: totrans-162
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，按照以下方式更新YUM：
 - en: '[PRE30]'
+  id: totrans-163
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: If updates are available, choose *Y* to proceed. Having completed the update
     process, you will now be able to download and install packages from both the Remi
     and EPEL repositories as an addition to those that are used by default.
+  id: totrans-164
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果有可用更新，请选择*Y*继续。完成更新过程后，您现在将能够从Remi和EPEL存储库下载和安装软件包，作为默认使用的补充。
 - en: How it works...
+  id: totrans-165
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: In order to use and enjoy the benefits of a third-party repository, you are
     required to install and enable it first using the YUM and RPM package manager.
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了使用和享受第三方存储库的好处，您首先需要使用YUM和RPM包管理器安装并启用它。
 - en: So, what did we learn from this experience?
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: Having started the recipe, the task of installing both the Remi and EPEL repositories
     is a remarkably smooth process. While the installation of the EPEL repository
     using YUM is very safe to changes, the preceding URL for Remi is maintained at
@@ -936,8 +1284,10 @@
     case if this is for a mission-critical production server. Remember, if all the
     priority values are the same, then YUM will attempt to download the latest version
     by default.
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 开始执行配方后，安装Remi和EPEL存储库的任务是一个非常顺畅的过程。虽然使用YUM安装EPEL存储库非常安全，不会对系统造成影响，但Remi存储库的先前URL由存储库所有者自行维护，因此您应始终确保它们是最新的。然而，一旦获得了必要的存储库设置文件，接下来就是使用基于RPM的命令在系统上安装所有必要的存储库文件。完成这一步后，我们还需要打开每个已安装存储库的相关配置文件并启用它们（通过将`enabled=0`更改为`enabled=1`），并设置优先级值（`priority=10`）。前一个值仅会打开存储库，而后一个值将由YUM用于在我们调用`update`命令时正确识别哪些存储库最为合适。正如在前一个关于YUM优先级的配方中所讨论的，一个简单的经验法则是记住这句话：“数字越低，优先级越高。”这本身（取决于您的目的）可能不是一件坏事，但对于本配方的目的，它表明默认的CentOS存储库应该优先于所有其他存储库。当然，您可能不同意这一点，并且确实没有任何阻止您将相同的优先级规则应用于第三方供应商，但我确实在您深入之前提醒您，特别是在这是为了关键任务生产服务器的情况下。请记住，如果所有优先级值都相同，那么YUM将默认尝试下载最新版本。
 - en: The reason for setting both Remi and EPEL to a higher value than the existing
     CentOS-based repositories is based on the need to consider security updates. Unless
     you have determined otherwise, it is always advised that the base files should
@@ -953,23 +1303,31 @@
     every third-party on a case-by-case basis. The Remi and EPEL repositories are
     very popular, so if you do intend to add more third-party resources, read around
     the subject, choose your repositories carefully, and stay loyal.
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: 将Remi和EPEL的优先级设置得比现有的基于CentOS的仓库更高，是基于考虑安全更新的需要。除非你另有决定，否则始终建议基础文件应首先来自CentOS。这包括但不限于内核更新、SELinux及相关软件包。第三方仓库应用于获取无法从原始来源获得的额外软件包，或访问可能不适用于CentOS基础版本的特定更新。这可能包括Apache、MariaDB或PHP等软件包。最后，你可能会注意到Remi和EPEL仓库共享相同的优先级值。这是有意为之，因为这些仓库通常被视为合作伙伴。然而，如果你决定开始混合使用仓库，或使用此方法作为安装此处未提及的其他仓库的途径，那么你应该始终进行研究，并逐个评估每个第三方仓库。Remi和EPEL仓库非常受欢迎，所以如果你确实打算添加更多第三方资源，请围绕主题进行阅读，谨慎选择你的仓库，并保持忠诚。
 - en: There's more...
+  id: totrans-170
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: There are many other interesting repositories available for CentOS 7, such as
     ELRepo, which focuses on hardware-related packages such as filesystem drivers,
     graphics drivers, network drivers, sound drivers, and webcam or video drivers.
     Go to [http://elrepo.org](http://elrepo.org) to learn how to install and access
     it.
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: CentOS 7有许多其他有趣的仓库，例如专注于硬件相关软件包的ELRepo，如文件系统驱动、图形驱动、网络驱动、声音驱动以及摄像头或视频驱动。访问[http://elrepo.org](http://elrepo.org)学习如何安装和访问它。
 - en: Creating a YUM repository
+  id: totrans-172
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 创建YUM仓库
 - en: If you maintain multiple CentOS servers in your local network and want to save
     Internet bandwidth or speed up the downloading of the same remote repository packages
     over and over again, or are within a very restrictive network environment where
@@ -980,12 +1338,17 @@
     crowd or if you just want to create an official CentOS 7 repository mirror site.
     Here in this recipe we will show you how to set up your own first YUM CentOS 7
     repository and how to serve it to your local network.
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你在本地网络中维护多个CentOS服务器，并希望节省互联网带宽或加快重复下载相同远程仓库软件包的速度，或者处于一个非常受限的网络环境中，你的客户端无法访问任何远程CentOS仓库，你可能需要考虑运行自己的YUM仓库。拥有自己的仓库也是一个很好的解决方案，如果你想向本地用户推出一些自定义或非官方的RPM软件包（例如内部配置文件或程序），或者你只是想创建一个官方CentOS
+    7仓库的镜像站点。在本方法中，我们将向你展示如何设置你自己的第一个YUM CentOS 7仓库，以及如何为你的本地网络提供服务。
 - en: Getting ready
+  id: totrans-174
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet to facilitate the download of additional packages.
@@ -998,117 +1361,171 @@
     please read the first recipe in [Chapter 12](part0098_split_000.html#2TEN41-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 12. Providing Web Services"), *Providing Web Services* in order to learn
     how to set it up.
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此配方，您需要一个具有root权限的CentOS 7操作系统的有效安装，您选择的基于控制台的文本编辑器，以及连接到互联网以方便下载额外软件包。为了使此配方工作，您还需要将CentOS
+    7 Everything DVD iso文件图像放置在服务器的根目录中，如果您还没有下载它，请参考[第1章](part0015_split_000.html#E9OE1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第1章。安装CentOS")中的第一个配方，*安装CentOS*（但下载最新的`CentOS-7-x86_64-Everything-XXXX.iso`文件而不是最小iso文件）。此外，我们需要一个正在运行的Apache
+    Web服务器来共享我们的YUM仓库到我们的本地网络；请阅读[第12章](part0098_split_000.html#2TEN41-4cf34a6d07944734bb93fb0cd15cce8c
+    "第12章。提供Web服务")中的第一个配方，*提供Web服务*，以了解如何设置它。
 - en: How to do it...
+  id: totrans-176
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'To create our own YUM repository, we need the `createrepo` program, which is
     not installed on CentOS 7 by default. Let''s begin our journey by installing it.
     In this example, we will use the IP address, `192.168.1.7`, for our YUM repository
     server:'
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: 要创建我们自己的YUM仓库，我们需要`createrepo`程序，该程序在CentOS 7上默认未安装。让我们从安装它开始我们的旅程。在本例中，我们将使用IP地址`192.168.1.7`作为我们的YUM仓库服务器：
 - en: 'Log in as root on your server and install the following package:'
+  id: totrans-178
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 以root身份登录到您的服务器并安装以下软件包：
 - en: '[PRE31]'
+  id: totrans-179
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: 'Next, for every repository you want to share, create a subfolder beneath the
     Apache web root folder under `/var/www/html/repository/`, which will be publicly
     available when Apache is running; for example, to share the complete CentOS 7
     `Everything` repository packages, you could use:'
+  id: totrans-180
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，对于您想要共享的每个仓库，在Apache Web根目录下的`/var/www/html/repository/`下创建一个子文件夹，当Apache运行时，该文件夹将公开可用；例如，要共享完整的CentOS
+    7 `Everything`仓库包，您可以使用：
 - en: '[PRE32]'
+  id: totrans-181
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: 'Now, put all your RPM package files of choice into the repository folders created
     here. In our example, we will put all RPM packages from the `Everything` iso image
     file into our new local repository location after we have mounted the content
     of the iso file to the filesystem:'
+  id: totrans-182
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，将您选择的RPM包文件放入此处创建的仓库文件夹中。在我们的示例中，我们将把`Everything` iso文件中的所有RPM包放入我们新的本地仓库位置，之后我们将把iso文件的内容挂载到文件系统上：
 - en: '[PRE33]'
+  id: totrans-183
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: 'Afterwards, we need to update the SELinux security contexts for all the new
     files copied into the Apache web root directory:'
+  id: totrans-184
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，我们需要为复制到Apache Web根目录中的所有新文件更新SELinux安全上下文：
 - en: '[PRE34]'
+  id: totrans-185
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: 'Now, for every repository we want to set up, run the following command:'
+  id: totrans-186
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，对于我们想要设置的每个仓库，运行以下命令：
 - en: '[PRE35]'
+  id: totrans-187
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: 'Congratulations, you now have successfully created your first YUM repository,
     which can be accessed from any computer in the same network through the running
     Apache web server. In order to test it, log in as root to any other CentOS 7-based
     system that can ping our repository server and add our new repository to its YUM
     repository configuration directory:'
+  id: totrans-188
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 恭喜，您现在已经成功创建了您的第一个YUM仓库，该仓库可以通过正在运行的Apache Web服务器从同一网络中的任何计算机访问。为了测试它，以root身份登录到任何其他可以ping通我们的仓库服务器的CentOS
+    7系统，并将我们的新仓库添加到其YUM仓库配置目录中：
 - en: '[PRE36]'
+  id: totrans-189
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: 'Add the following content to this empty file (change the `baseurl` appropriately
     to fit your own needs):'
+  id: totrans-190
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将以下内容添加到这个空文件中（根据您的需要适当更改`baseurl`）：
 - en: '[PRE37]'
+  id: totrans-191
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: 'Save and close the file, then test if your new repository is available (it
     should appear on the list) on your client:'
+  id: totrans-192
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件，然后测试您的新仓库是否可用（它应该出现在列表中）在您的客户端上：
 - en: '[PRE38]'
+  id: totrans-193
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: 'Now, to test our new YUM repository, we can try the following command:'
+  id: totrans-194
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，为了测试我们的新YUM仓库，我们可以尝试以下命令：
 - en: '[PRE39]'
+  id: totrans-195
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: How it works...
+  id: totrans-196
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: In this recipe, we have shown you how easy it is to install and set up a local
     YUM repository. However, we have only shown you how to create a mirror site of
     all the CentOS 7 Everything iso RPM packages, but you can repeat this process
     for creating YUM repositories of every kind of package that you want to share
     with your network.
+  id: totrans-197
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们已经向你展示了安装和设置本地YUM仓库是多么容易。然而，我们只向你展示了如何创建所有CentOS 7 Everything iso RPM包的镜像站点，但你可以重复此过程来创建你想要与你的网络共享的任何类型的包的YUM仓库。
 - en: So, what did we learn from this experience?
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: Setting up your own YUM repository was simply a matter of installing the `createrepo`
     package and copying all the RPM packages that you want to share into a subfolder
     of your choice beneath your Apache's document root directory (In our example,
@@ -1121,8 +1538,11 @@
     repository folder, which will create our new repository's metadata that is needed
     for any YUM client that wants to connect to the repository later to make queries
     to it.
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: 设置自己的YUM仓库只需安装`createrepo`包，并将你想要共享的所有RPM包复制到Apache文档根目录下的一个子文件夹中（在我们的例子中，我们需要挂载CentOS
+    7 Everything iso文件到文件系统，以便访问我们想要共享的包含的RPM包文件）。由于Apache的文档根目录受SELinux控制，之后我们需要将该目录中新RPM文件的安全上下文设置为`httpd_sys_content_t`类型标签；否则，通过Web服务器将无法访问。最后，我们需要在我们的新仓库文件夹上运行`createrepo`命令，这将创建我们新仓库所需的元数据，以便任何想要连接到仓库的YUM客户端稍后可以对其进行查询。
 - en: Afterwards, to test our new repository, we created a new repository definition
     file on another CentOS 7 system that wants to use this new service and that must
     be in the same network as our YUM repository server. In this custom `.repo` configuration
@@ -1135,12 +1555,17 @@
     `search`, `info`, `list`, and so on. This was just for testing; if you want to
     combine your new repository with the existing ones, please use YUM priorities
     for it (as shown in another recipe in this chapter).
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: 随后，为了测试我们的新仓库，我们在另一台想要使用这项新服务的CentOS 7系统上创建了一个新的仓库定义文件，该系统必须与我们的YUM仓库服务器处于同一网络中。在这个自定义的`.repo`配置文件中，我们设置了正确的仓库URL路径，启用了`gpg`检查，并采用了标准的CentOS
+    7 `gpgkey`，以便我们的YUM客户端能够验证官方仓库包的有效性。最后，我们使用带有`--disablerepo="*"`和`--enablerepo="myCentosMirror"`参数的`yum`命令，这将确保只使用我们的新自定义仓库作为源。你可以将这两个参数与任何其他`yum`命令（如`install`、`search`、`info`、`list`等）结合使用。这只是为了测试；如果你想要将你的新仓库与现有的仓库结合使用，请使用YUM优先级（如本章另一节中所述）。
 - en: There's more...
+  id: totrans-201
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'Now, before we announce our new centralized YUM repository to our network,
     we should first make an update of all the RPM packages that have changed since
     the release of the CentOS Everything iso. In order to do this, visit [http://www.centos.org](http://www.centos.org)
@@ -1153,25 +1578,38 @@
     if not done already. Now, open the following empty script file `vi ~/update-myCentosMirror-repo.sh`
     file and put in the following content (replacing the `rsync://` location accordingly,
     if needed):'
+  id: totrans-202
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，在我们向我们的网络宣布新的集中式YUM仓库之前，我们应该首先更新自CentOS Everything iso发布以来已更改的所有RPM包。为此，请访问[http://www.centos.org](http://www.centos.org)并选择一个`rsync://`镜像链接，该链接地理位置上靠近您当前的位置。例如，如果您位于德国，一个选项可能是[rsync://ftp.hosteurope.de/centos/](http://rsync://ftp.hosteurope.de/centos/)（有关导航CentOS网站的更详细说明，请阅读[第1章](part0015_split_000.html#E9OE1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第1章。安装CentOS"）中的第一个配方，*安装CentOS*）。此外，在我们能够使用`rsync`协议之前，我们需要安装`rsync`包（`yum install
+    rsync`），如果尚未完成。现在，打开以下空脚本文件`vi ~/update-myCentosMirror-repo.sh`并将以下内容放入（如果需要，相应地替换`rsync://`位置）：
 - en: '[PRE40]'
+  id: totrans-203
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: 'Now, make the file executable using `chmod +x ~/update-myCentosMirror-repo.sh`,
     and run it with `~/update-myCentosMirror-repo.sh`. This should update your repository
     to the latest version. Finally, to automate this process, let''s create a cron
     job that will update our repository packages with the other mirror site every
     night at 2:30 am (open `crontab -e`):'
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，使用`chmod +x ~/update-myCentosMirror-repo.sh`命令使文件可执行，并通过`~/update-myCentosMirror-repo.sh`运行它。这应该会将您的仓库更新到最新版本。最后，为了自动化这个过程，让我们创建一个cron作业，该作业将在每天凌晨2:30更新我们的仓库包与其他镜像站点（打开`crontab
+    -e`）：
 - en: '[PRE41]'
+  id: totrans-205
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: Working with the RPM package manager
+  id: totrans-206
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用RPM包管理器
 - en: All software on a CentOS 7 system is distributed through RPM packages. Most
     of the time the YUM package manager is the first choice of any system administrator,
     performing software installation and maintenance, and is highly recommended whenever
@@ -1183,92 +1621,132 @@
     dependencies or work with repositories, it can be still relevant today since it
     provides very useful querying options that are not available in YUM, and it can
     be used to install single software packages manually.
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: CentOS 7系统上的所有软件都通过RPM包分发。大多数情况下，YUM包管理器是任何系统管理员的首选，执行软件安装和维护，并且建议尽可能使用，因为它提供了系统完整性检查和出色的包依赖关系解决。在本配方中，我们将向您展示一种替代方法来管理您的包。我们将探索RPM包管理器，这是一个强大的工具，用于构建、安装、查询、验证、更新和删除单个RPM软件包。虽然它不像YUM那样*智能*，因为它无法解决包依赖关系或与仓库工作，但它今天仍然相关，因为它提供了YUM中不可用的非常有用的查询选项，并且可以用于手动安装单个软件包。
 - en: Getting ready
+  id: totrans-208
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to facilitate the download of additional
     RPM packages.
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此配方，您需要一个具有root权限的CentOS 7操作系统的工作安装，您选择的基于控制台的文本编辑器，以及连接到互联网以便下载额外的RPM包。
 - en: How to do it...
+  id: totrans-210
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'We start this recipe by downloading a `rpm` package from the Internet, which
     we will use to show you an example of how the `rpm` command works:'
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们通过从互联网下载一个`rpm`软件包开始这个配方，我们将使用它来向您展示`rpm`命令的工作原理：
 - en: 'We will begin by logging in as root into the root''s home directory and downloading
     the pipe view program from the EPEL repository, which cannot be found in the official
     CentOS repository:'
+  id: totrans-212
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们将首先以root身份登录到root的主目录，并从EPEL仓库下载管道视图程序，该程序在官方CentOS仓库中找不到：
 - en: Note
+  id: totrans-213
   prefs:
   - PREF_IND
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: '[PRE42]'
+  id: totrans-214
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: Please note that while you are reading this, the package URL may have changed.
+  id: totrans-215
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 请注意，当您阅读本文时，软件包URL可能已更改。
 - en: 'After the download has been completed, we will install this package using the
     following `rpm` command:'
+  id: totrans-216
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 下载完成后，我们将使用以下`rpm`命令安装此包：
 - en: '[PRE43]'
+  id: totrans-217
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: 'If the installation has finished, let''s check if the installation of the package
     was successful by querying the RPM database:'
+  id: totrans-218
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果安装已完成，让我们通过查询RPM数据库来检查软件包的安装是否成功：
 - en: '[PRE44]'
+  id: totrans-219
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: 'You can also test the `pv` program directly (press *Ctrl*+*C* keys to quit):'
+  id: totrans-220
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 你也可以直接测试`pv`程序（按*Ctrl*+*C*键退出）：
 - en: '[PRE45]'
+  id: totrans-221
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: 'We can now use the `rpm` command''s rich querying options to show useful information
     of the installed package:'
+  id: totrans-222
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们可以使用`rpm`命令的丰富查询选项来显示已安装包的有用信息：
 - en: '[PRE46]'
+  id: totrans-223
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: 'Finally, let''s remove the package if you don''t like or need it anymore:'
+  id: totrans-224
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，如果你不再喜欢或需要该包，我们可以将其移除：
 - en: '[PRE47]'
+  id: totrans-225
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: How it works...
+  id: totrans-226
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: 'Here, in this recipe, we introduced you to the RPM package manager, which is
     the original program to manage RPM packages. The RPM package is a packaging standard
     for the distribution of software, and contains useful metadata in the file to
@@ -1281,66 +1759,90 @@
     uninstalling, updating, querying, and verifying rpm packages. Here, in this recipe,
     we showed you how to use the most important five operations (we don''t show building
     RPM''s).'
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们向你介绍了RPM包管理器，这是管理RPM包的原生程序。RPM包是软件分发的标准包，文件中包含用于验证作者身份（例如，使用PGP签名验证）和软件完整性的有用元数据。与手动从源代码编译和构建相比，安装包含二进制程序的包要容易得多且更一致，但RPM包也可以包含任何类型的文件，如源代码或仅仅是文档文件。如前所述，`rpm`命令有六种不同的操作模式：构建、安装、卸载、更新、查询和验证RPM包。在本食谱中，我们向你展示了最重要的五种操作（我们没有展示构建RPM）。
 - en: So, what have we learned from this experience?
+  id: totrans-228
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: We started by logging in as root and downloading the `pv` (pipe viewer) rpm
     package example from the non-official EPEL CentOS repository (EPEL contains high-quality
     add-on packages, thoroughly checked and officially conformed; see the *Using a
     third-party repository* recipe to learn more about the EPEL repository) manually
     using `curl`, because it is not available in the official repository but can be
     a very useful tool.
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先以root身份登录并从非官方的EPEL CentOS仓库手动下载了`pv`（管道查看器）rpm包示例（EPEL包含高质量的附加包，经过彻底检查并正式确认；请参阅*使用第三方仓库*食谱以了解更多关于EPEL仓库的信息），因为官方仓库中没有，但它是一个非常有用的工具。
 - en: Note
+  id: totrans-230
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Although there are many RPM repositories and download sources on the Internet,
     for security and compatibility reasons, on productive systems you should consider
     installing only official CentOS 7 RPM packages from valid and reputable repositories
     and sources. In general, the packages contained are best tested and reviewed by
     many experts and users.
+  id: totrans-231
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管互联网上有很多RPM仓库和下载源，但由于安全和兼容性原因，在生产系统上，你应该考虑只安装来自有效且信誉良好的仓库和源的官方CentOS 7 RPM包。通常，包含的包已经过许多专家和用户的最佳测试和审查。
 - en: 'The downloaded package file''s name can be read the following way, which follows
     the following non-mandatory naming convention for RHEL/CentOS packages:'
+  id: totrans-232
   prefs: []
   type: TYPE_NORMAL
+  zh: 下载的包文件的名称可以按以下方式读取，这遵循了RHEL/CentOS包的非强制性命名约定：
 - en: '[PRE48]'
+  id: totrans-233
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: Next, we installed the downloaded `pv` package using the RPM package manager,
     which can be executed using the `rpm` command on the command line. We used it
     with the `-Uvh` command parameters together with the full name of the downloaded
     package rpm file.
+  id: totrans-234
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们使用RPM包管理器安装了下载的`pv`包，该管理器可以通过命令行上的`rpm`命令执行。我们使用了带有`-Uvh`命令参数的`rpm`命令，以及下载的包rpm文件的完整名称。
 - en: Note
+  id: totrans-235
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: If using the rpm command for installing or upgrading rpm software packages,
     you should always use `-Uvh` with one exception; which are kernel packages. `-U`
     will remove old packages while updating, and this is not what you want if you
     install a new kernel. Use `-i` (for installing) here instead, as this will keep
     the old kernel files so that you can go back to an earlier version if you run
     into some problems.
+  id: totrans-236
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果使用rpm命令安装或升级rpm软件包，您应该始终使用`-Uvh`，但有一个例外；即内核包。`-U`会在更新时删除旧包，如果您安装新内核，这不是您想要的。请改用`-i`（用于安装），因为这将保留旧内核文件，以便在遇到问题时可以回退到较早的版本。
 - en: '`-U` is the parameter for installing or upgrading a package. If the package
     is not installed on the system, it will get installed; otherwise `rpm` tries to
     upgrade it if it the RPM package version is newer than the one installed. The
     `-v` parameter prints a more verbose output, while `-h` displays a nice progress
     bar. Installing the `pv` package when you have not enabled the EPEL repository
     on your system will get the following warning message:'
+  id: totrans-237
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-U`是安装或升级包的参数。如果系统上未安装该包，它将被安装；否则，如果RPM包版本比已安装的版本新，`rpm`将尝试升级它。`-v`参数打印更详细的输出，而`-h`显示一个漂亮的进度条。如果您在系统上未启用EPEL仓库的情况下安装`pv`包，将收到以下警告消息：'
 - en: '[PRE49]'
+  id: totrans-238
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: 'RPM will automatically check the validity of the package''s signature before
     installing to make sure that the package''s content has not been modified since
     it has been signed. Also, it checks that an RPM package is trustworthy, as it
@@ -1349,11 +1851,15 @@
     a secure source. To permanently trust EPEL sources, you can install its `gpg`
     public key on your system using the following command and getting rid of all future
     signature warning messages:'
+  id: totrans-239
   prefs: []
   type: TYPE_NORMAL
+  zh: RPM在安装前会自动检查包的签名有效性，以确保包的内容自签名后未被篡改。同时，它还会检查RPM包的可信度，因为应该由官方第三方权威供应商使用加密密钥进行签名。您可以忽略此消息，因为EPEL仓库的包来自安全源。要永久信任EPEL源，您可以使用以下命令在系统上安装其`gpg`公钥，从而消除所有未来的签名警告消息：
 - en: '[PRE50]'
+  id: totrans-240
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE50]'
 - en: Having successfully installed the package, we now have a nice command line tool
     called `pv` to show the progress of data going through a Unix pipe, which can
     be useful if you are transferring huge amounts of data through pipelines where
@@ -1364,15 +1870,21 @@
     that we used when we installed the packages in the first place. The same is true
     when removing an installed package; please specify the package name and not the
     version number or full filename.
+  id: totrans-241
   prefs: []
   type: TYPE_NORMAL
+  zh: 成功安装包后，我们现在拥有一个名为`pv`的漂亮命令行工具，它可以显示通过Unix管道的数据进度，如果您通过管道传输大量数据，这可能会很有用，因为您通常永远不会知道当前的进度状态。之后，我们查询了存储有关CentOS
+    7系统上所有已安装包信息的RPM数据库，使用带有`-q`标志的`rpm`命令。在处理RPM数据库时，我们必须使用真实的包名（`pv`）而不是安装包时使用的文件名（`pv-1.4.6-1.x86_64.rpm`）。在卸载已安装的包时也是如此；请指定包名，而不是版本号或完整文件名。
 - en: To get detailed information about the installed package, `pv`, we used `-qi`
     (`i` for information), with the `-ql` parameter; we showed the full filename and
     path of all files in the package. `-qd` showed all the files in the package containing
     documentation. To read about more querying options, type `man rpm` and look under
     the `PACKAGE QUERY OPTIONS` section.
+  id: totrans-242
   prefs: []
   type: TYPE_NORMAL
+  zh: 要获取有关已安装包`pv`的详细信息，我们使用了`-qi`（`i`表示信息），并使用`-ql`参数；我们显示了包中所有文件的完整文件名和路径。`-qd`显示了包中包含文档的所有文件。要了解更多的查询选项，请键入`man
+    rpm`并查看`PACKAGE QUERY OPTIONS`部分。
 - en: In summary, we can say that there are situations in a system administrator's
     life where one needs to install a piece of software that is not distributed through
     an official repository (for example, non-open-source, cutting-edge program or
@@ -1385,8 +1897,11 @@
     or installed packages on your system, there are situations where it's better to
     use the older `rpm` command without having to install additional YUM-based software
     such as `yum-utils`.
+  id: totrans-243
   prefs: []
   type: TYPE_NORMAL
+  zh: 总之，我们可以说，在系统管理员的生活中，有时需要安装一个不是通过官方仓库分发的软件（例如，非开源、前沿程序或测试版、有许可证不允许将其放入仓库的软件，如Java，或来自独立开发者的软件），这时需要下载单独的RPM包并手动安装它们。在幕后，YUM也依赖并使用RPM包管理器，因此你也可以使用YUM程序来安装rpm文件（`yum
+    install <filename.rpm>`）。然而，当涉及到查询你下载的rpm文件或系统上已安装的包时，有时使用较旧的`rpm`命令而不必安装额外的基于YUM的软件（如`yum-utils`）会更好。
 - en: The biggest weakness of RPM is that it does not support repositories and is
     missing a dependency management system. If you work with RPM alone to install
     all your software on a CentOS system, you will easily run into package dependency
@@ -1394,34 +1909,50 @@
     other packages. Often, when you try to install the dependent packages, you need
     other packages that they depend on and so on. This can be very tedious work and
     should always be avoided by using YUM instead.
+  id: totrans-244
   prefs: []
   type: TYPE_NORMAL
+  zh: RPM的最大弱点是它不支持仓库，并且缺少依赖管理系统。如果你仅使用RPM在CentOS系统上安装所有软件，你很容易遇到包依赖问题，因为你无法安装特定的包，因为它依赖于其他一些包。通常，当你尝试安装依赖的包时，你需要它们依赖的其他包，如此类推。这可能是一项非常繁琐的工作，应该始终通过使用YUM来避免。
 - en: There's more...
+  id: totrans-245
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'The `rpm` command can not only be used to query the rpm database for information
     about installed packages, you can also use it to query rpm files that you downloaded.
     For example, use the `-qlp` parameter to show all files in a local `rpm` package
     file:'
+  id: totrans-246
   prefs: []
   type: TYPE_NORMAL
+  zh: '`rpm`命令不仅可以用于查询rpm数据库中关于已安装包的信息，还可以用于查询你下载的rpm文件。例如，使用`-qlp`参数来显示本地`rpm`包文件中的所有文件：'
 - en: '[PRE51]'
+  id: totrans-247
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE51]'
 - en: 'To get detailed information about the package from the `rpm` file, use the
     `-qip` parameter, as shown here:'
+  id: totrans-248
   prefs: []
   type: TYPE_NORMAL
+  zh: 要从`rpm`文件中获取关于包的详细信息，使用`-qip`参数，如下所示：
 - en: '[PRE52]'
+  id: totrans-249
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE52]'
 - en: 'If you want to install an RPM package that you have downloaded locally and
     that has dependencies, you can use the `yum localinstall` command. This will install
     the local package once supplied with its filename, and will try to resolve all
     the dependencies from remote sources, for example:'
+  id: totrans-250
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想安装一个本地下载的RPM包，并且该包有依赖关系，你可以使用`yum localinstall`命令。一旦提供了包的文件名，该命令将安装本地包，并尝试从远程源解决所有依赖关系，例如：
 - en: '[PRE53]'
+  id: totrans-251
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE53]'

@@ -1,61 +1,89 @@
 - en: Chapter 1. Installing CentOS
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第1章 安装CentOS
 - en: 'In this chapter, we will cover:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将涵盖：
 - en: Downloading CentOS and confirming the checksum on Windows or OS X
+  id: totrans-2
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在Windows或OS X上下载CentOS并确认校验和
 - en: Creating USB installation media on Windows or OS X
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在Windows或OS X上创建USB安装介质
 - en: Performing an installation of CentOS using the graphical installer
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用图形安装程序执行CentOS安装
 - en: Running a netinstall over HTTP
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 通过HTTP进行网络安装
 - en: Installing CentOS using a kickstart file
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用kickstart文件安装CentOS
 - en: Re-installing the boot loader
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 重新安装引导加载程序
 - en: Troubleshooting the system in rescue mode
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在救援模式下排除系统故障
 - en: Getting started and customizing the boot loader
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 开始使用并自定义引导加载程序
 - en: Updating the installation and enhancing the minimal install with additional
     administration and development tools
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更新安装并使用额外的管理和发展工具增强最小安装
 - en: Introduction
+  id: totrans-11
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 引言
 - en: This chapter is a collection of recipes that covers the basic practice of installing
     the CentOS 7 operating system. The purpose of this chapter is to show you how
     quickly you can get CentOS up and running whilst enabling you to customize your
     installation with a few 'tricks of the trade' thrown in for good measure.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章是一系列涵盖安装CentOS 7操作系统基本实践的操作的集合。本章的目的是向您展示您可以多快地让CentOS运行起来，同时让您能够使用一些“行业技巧”来定制您的安装。
 - en: Downloading CentOS and confirming the checksum on Windows or OS X
+  id: totrans-13
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 在Windows或OS X上下载CentOS并确认校验和
 - en: In this recipe, we will learn how to download and confirm the checksum of one
     or more CentOS 7 disk images using a typical Windows or OS X desktop computer.
     CentOS is made available in various formats by HTTP, FTP, or the rsync protocol
@@ -65,12 +93,16 @@
     order to ensure that any resulting media would function and perform as expected
     when installing. This also makes certain that the files are genuine and come from
     the original source.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本操作中，我们将学习如何使用典型的Windows或OS X桌面计算机下载并确认一个或多个CentOS 7磁盘映像的校验和。CentOS通过HTTP、FTP或rsync协议从全球各地的一系列镜像站点或通过BitTorrent网络以各种格式提供。对于从互联网下载非常重要的文件，例如操作系统映像，验证这些文件的校验和被认为是最佳实践，以确保任何生成的媒体在安装时都能按预期运行和执行。这也确保了文件是真实的，并且来自原始来源。
 - en: Getting ready
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备
 - en: To complete this recipe, it is assumed that you are using a typical Windows-based
     (Windows 7, Windows Vista, or similar) or OS X computer with full administration
     rights. You will need an Internet connection to download the required installation
@@ -79,148 +111,205 @@
     For the purpose of this recipe, it is assumed that all the downloads will be stored
     on Windows in your personal `C:\Users\<username>\Downloads` folder, or if using
     an OS X system, in the `/Users/<username>/Downloads` folder.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此操作，假设您正在使用具有完全管理权限的典型Windows（Windows 7、Windows Vista或类似）或OS X计算机。您需要互联网连接以下载所需的安装文件，并且需要访问具有适当软件的标准DVD/CD刻录机，以便从映像文件创建相关的安装磁盘。对于此操作，假设所有下载将存储在Windows上的个人`C:\Users\<username>\Downloads`文件夹中，或者如果使用OS
+    X系统，则存储在`/Users/<username>/Downloads`文件夹中。
 - en: How to do it...
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'Regardless of the type of installation files you download, the following techniques
     can be applied to all the image files supplied by the CentOS project:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 无论您下载哪种类型的安装文件，以下技术都可以应用于CentOS项目提供的所有映像文件：
 - en: Let's begin by visiting [http://www.centos.org](http://www.centos.org) in a
     web browser and navigate to the button link **Get CentOS Now**. Then click the
     link **list of the current mirrors** in the text.
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 让我们首先在网络浏览器中访问[http://www.centos.org](http://www.centos.org)，导航到**立即获取CentOS**按钮链接。然后点击文本中的**当前镜像列表**链接。
 - en: The mirror sites are categorized, so from the resulting list of links, choose
     a mirror that is geographically near your current location. For example, if you
     are in London (UK), you can choose a mirror from **EU** and **United Kingdom**.
     Now choose a mirror site by selecting either the HTTP or the FTP link.
+  id: totrans-20
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 镜像站点被分类，因此从链接列表中选择一个地理位置接近您当前位置的镜像。例如，如果您在伦敦（英国），您可以选择来自**欧盟**和**英国**的镜像。现在通过选择HTTP或FTP链接来选择一个镜像站点。
 - en: Having made your selection, you will now see a list of directories of all the
     available CentOS versions. To proceed, simply click the appropriate folder that
     reads `7`. Next, you will see an additional list of directories, such as `atomic`,
     `centosplus`, `cloud`, and so on. We proceed by choosing the `isos` directory.
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 做出选择后，现在将看到所有可用CentOS版本的目录列表。要继续，只需单击读取`7`的相应文件夹。接下来，您将看到一个额外的目录列表，如`atomic`、`centosplus`、`cloud`等。我们选择`isos`目录继续。
 - en: CentOS 7 currently only supports the 64-bit architecture, so browse to the only
     directory available labeled `x86_64`, which is a container for the 64-bit version.
+  id: totrans-22
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: CentOS 7目前仅支持64位架构，因此浏览到唯一可用的标记为`x86_64`的目录，这是一个包含64位版本的容器。
 - en: You will now be presented with a series of files available for download. Begin
     by downloading a copy of the valid checksum result identified as `md5sum.txt`.
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在将为您提供一系列可供下载的文件。首先下载有效的校验和结果副本，标识为`md5sum.txt`。
 - en: 'If you are new to CentOS or are intending to follow the recipes found throughout
     this book, then the minimal installation is ideal. This contains the least amount
     of packages to have a functional system, so choose the following (`XXXX` is the
     month stamp of this release):'
+  id: totrans-24
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果您是CentOS新手或打算遵循本书中找到的配方，那么最小安装是理想的。这包含尽可能少的软件包以拥有一个功能系统，因此选择以下内容（`XXXX`是此版本的月份标记）：
 - en: '[PRE0]'
+  id: totrans-25
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: On a Windows-based system only (on Mac, this tool is already available in the
     system), visit [http://mirror.centos.org/centos/dostools/](http://mirror.centos.org/centos/dostools/)
     in your browser and download the program `md5sum.exe`.
+  id: totrans-26
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 仅在基于Windows的系统上（在Mac上，此工具已在系统中可用），在浏览器中访问[http://mirror.centos.org/centos/dostools/](http://mirror.centos.org/centos/dostools/)并下载程序`md5sum.exe`。
 - en: 'Now on Windows, open the command prompt (typically found at **Start** | **All
     Programs** | **Accessories** | **Command Prompt**) and type the following commands
     into the window that will open (press the *Enter* key at the end of all the lines):'
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在在Windows上，打开命令提示符（通常位于**开始** | **所有程序** | **附件** | **命令提示符**）并输入以下命令到打开的窗口中（在所有行的末尾按下*回车*键）：
 - en: '[PRE1]'
+  id: totrans-28
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'On OS X, open the program **Finder** | **Applications** | **Utilities** | **Terminal**,
     then type the following commands (press the *Enter* key at the end of all the
     lines):'
+  id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在OS X上，打开程序**Finder** | **Applications** | **Utilities** | **Terminal**，然后输入以下命令（在所有行的末尾按下*回车*键）：
 - en: '[PRE2]'
+  id: totrans-30
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: You should now see all the files in your download folder (including all the
     downloaded CentOS installation image files, the md5sum.txt file and on Windows,
     the md5sum.exe program).
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在您应该看到下载文件夹中的所有文件（包括所有下载的CentOS安装图像文件、md5sum.txt文件以及在Windows上的md5sum.exe程序）。
 - en: 'Based on the file names shown, modify the following command in order to check
     the checksum of your downloaded ISO image file. On Windows, type the following
     command (change the `XXXX` month stamp accordingly):'
+  id: totrans-32
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 根据显示的文件名，修改以下命令以检查您下载的ISO图像文件的校验和。在Windows上，输入以下命令（根据需要更改`XXXX`月份标记）：
 - en: '[PRE3]'
+  id: totrans-33
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'On OS X, use instead:'
+  id: totrans-34
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在OS X上，请使用以下命令：
 - en: '[PRE4]'
+  id: totrans-35
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Press the *Return* key to proceed and then wait for the command prompt to respond.
     The response is known as the MD5 sum and the result could look like the following:'
+  id: totrans-36
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 按下*回车*键继续，然后等待命令提示符响应。响应被称为MD5总和，结果可能看起来像以下内容：
 - en: '[PRE5]'
+  id: totrans-37
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Now look at the the sum and compare against the relevant listing for your particular
     image file in `md5sum.txt` (open in a text editor). If both the numbers match,
     then you can be confident that you have indeed downloaded a valid CentOS image
     file. If not, your downloaded file is probably corrupted, so please restart this
     procedure by downloading the image file again.
+  id: totrans-38
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在查看总和，并与`md5sum.txt`文件中与您的特定图像文件相关的列表进行比较（在文本编辑器中打开）。如果两个数字匹配，那么您可以确信您确实下载了一个有效的CentOS图像文件。如果不是，您的下载文件可能已损坏，因此请重新启动此过程，再次下载图像文件。
 - en: When you have finished, simply burn your image file(s) to a blank CD-ROM or
     DVD-ROM using your preferred desktop software, or create a USB installation media
     from it, as we will show you in the next recipe in this chapter.
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成后，只需使用您首选的桌面软件将您的图像文件刻录到空白CD-ROM或DVD-ROM上，或者从中创建USB安装介质，我们将在本章的下一个配方中向您展示。
 - en: How it works…
+  id: totrans-40
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的…
 - en: So what have we learned from this experience?
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: The act of downloading a CentOS installation image is just the first step towards
     building the perfect server. Although this process is very simple, many do forget
     the need to confirm the checksum. In this book, we will work with the minimal
     installation image, but you should be aware that there are other installation
     options available to you, such as NetInstall, DVD, Everything, and various LiveCDs.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 下载CentOS安装镜像只是构建完美服务器的第一步。尽管这个过程非常简单，但许多人忘记了确认校验和的必要性。在本书中，我们将使用最小安装镜像，但您应该知道还有其他安装选项可供您选择，例如NetInstall、DVD、Everything和各种LiveCDs。
 - en: Creating USB installation media on Windows or OS X
+  id: totrans-43
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 在Windows或OS X上创建USB安装介质
 - en: In this recipe, we will learn how to create a USB installation media on Windows
     or OS X. Nowadays, more and more server systems, desktop PCs, and laptops get
     shipped without any optical drive. Installing a new operating system, such as
@@ -228,12 +317,17 @@
     option is available, as there is no other way to boot the installation media.
     Also, installing CentOS using USB media can be considerably faster than using
     the CD/DVD approach.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本操作中，我们将学习如何在Windows或OS X上创建USB安装介质。如今，越来越多的服务器系统、台式机和笔记本电脑在发货时不带任何光驱。使用USB设备安装新操作系统，例如CentOS
+    Linux，对于它们来说变得至关重要，因为没有其他安装选项可用，因为没有其他方式可以启动安装介质。此外，使用USB介质安装CentOS可以比使用CD/DVD方法快得多。
 - en: Getting ready
+  id: totrans-45
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: Before we begin, it is assumed that you have followed the previous recipe in
     which you were shown how to download a minimal CentOS image and confirm the checksum
     of the relevant image files. It is also assumed that all the downloads (including
@@ -245,56 +339,79 @@
     media for CentOS 7 for the minimal version must be roughly 700 megabyte. If you
     are working on a Windows computer, you will need a working Internet connection
     to download additional software. On OS X, you need an administrator user account.
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们开始之前，假设您已经按照前面的操作步骤，下载了最小化的CentOS镜像并确认了相关镜像文件的校验和。同时，假设所有下载内容（包括下载的ISO文件）都存储在Windows上的`C:\Users\<username>\Downloads`文件夹中，或者在使用OS
+    X系统时，存储在`/Users/<username>/Downloads`文件夹中。接下来，您需要一个能够被操作系统识别的空闲USB设备，该设备有足够的总空间，并且是空的或者其上的数据可以丢弃。准备作为CentOS
+    7最小版本安装介质的USB设备所需的总空间大约为700兆字节。如果您使用的是Windows计算机，您需要一个有效的互联网连接来下载额外的软件。在OS X上，您需要一个管理员用户账户。
 - en: How to do it...
+  id: totrans-47
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: To begin this recipe, start up your Windows or OS X operating system, then connect
     a free USB device with enough capacity, and wait until it gets discovered by **File
     Manager** under Windows or **Finder** under OS X.
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 开始此操作前，启动您的Windows或OS X操作系统，然后连接一个足够容量的空闲USB设备，并等待它被Windows下的**文件管理器**或OS X下的**Finder**识别。
 - en: On a Windows based system, we need to download an additional software called
     `dd`. Visit [http://www.chrysocome.net/dd](http://www.chrysocome.net/dd) in your
     favorite browser. Now download the latest `dd-XX.zip` file you can find there,
     with `XX` being the latest stable version number. For example, `dd-0.5.zip`.
+  id: totrans-49
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在基于Windows的系统上，我们需要下载一个额外的软件叫做`dd`。访问您最喜欢的浏览器中的[http://www.chrysocome.net/dd](http://www.chrysocome.net/dd)。现在下载那里最新的`dd-XX.zip`文件，其中`XX`是最新的稳定版本号。例如，`dd-0.5.zip`。
 - en: On Windows, navigate to your `Downloads` folder using **File Manager**. Here
     you will find the `dd-05.zip` file. Right-click on it and click on **Extract All**,
     and extract the `dd.exe` file without creating any subdirectory.
+  id: totrans-50
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在Windows上，使用**文件管理器**导航到您的`Downloads`文件夹。在这里，您将找到`dd-05.zip`文件。右键点击它并选择**全部提取**，然后提取`dd.exe`文件，不要创建任何子目录。
 - en: 'On Windows, open the command prompt (typically found at **Start** | **All Programs**
     | **Accessories** | **Command Prompt**) and type the following commands:'
+  id: totrans-51
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在Windows上，打开命令提示符（通常位于**开始** | **所有程序** | **附件** | **命令提示符**）并输入以下命令：
 - en: '[PRE6]'
+  id: totrans-52
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'On OS X, open the program **Finder** | **Applications** | **Utilities** | **Terminal**,
     and then type the following commands:'
+  id: totrans-53
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在OS X上，打开**Finder** | **应用程序** | **实用工具** | **终端**程序，然后输入以下命令：
 - en: '[PRE7]'
+  id: totrans-54
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: On Windows, to spot the name of the right USB device you want to use as installation
     media, look into the output of the command under the `removable media` section.
     Below that, you should find a line starting with `Mounting on` and then a drive
     letter, for example, `\.\e:`. This cryptic written drive letter is the most important
     part we need in the next step, so please write it down.
+  id: totrans-55
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在Windows系统中，要找到你想要用作安装介质的正确USB设备的名称，请查看命令输出中的`removable media`部分。在此之下，你应该会找到一条以`Mounting
+    on`开头的行，后面跟着一个驱动器字母，例如，`\.\e:`。这个用晦涩方式书写的驱动器字母是下一步中最重要的部分，所以请记下来。
 - en: On OS X, the device path can be found in the output of the former command and
     has the format of `/dev/disk<number>`, where `number` is a unique identifier of
     the disk. The disks are numbered, starting with zero (`0`). Disk `0` is likely
@@ -302,50 +419,70 @@
     To identify your USB device, try to compare the `NAME`, `TYPE`, and `SIZE` columns
     to the specifications of your USB stick. If you have identified the device name,
     write it down, for example, `/dev/disk3`.
+  id: totrans-56
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在OS X系统中，设备路径可以在前一个命令的输出中找到，格式为`/dev/disk<number>`，其中`number`是磁盘的唯一标识符。磁盘编号从零（`0`）开始。磁盘`0`很可能是OS
+    X恢复磁盘，而磁盘`1`很可能是你的主OS X安装。要识别你的USB设备，尝试比较`NAME`、`TYPE`和`SIZE`列与你的USB闪存盘的规格。如果你已经确定了设备名称，请记下来，例如，`/dev/disk3`。
 - en: 'On Windows, type the following command, assuming your USB device selected as
     a installation media has the Windows device name `\\.\e:` (change this as required
     and be careful what you type – this can create tremendous data loss). Also, substitute
     `XXXX` with the correct `iso` file version number in the next command:'
+  id: totrans-57
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在Windows系统中，输入以下命令，假设你选作安装介质的USB设备在Windows中的设备名称为`\\.\e:`（根据需要更改此设置，并小心输入——这可能会造成巨大的数据丢失）。同时，在下一个命令中将`XXXX`替换为正确的`iso`文件版本号：
 - en: '[PRE8]'
+  id: totrans-58
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'On OS X, you need two commands which will ask for the administrator password
     (replace `XXXX` and `disk3` with the correct version number and the correct USB
     device path):'
+  id: totrans-59
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在OS X系统中，你需要两个命令，这两个命令会要求输入管理员密码（将`XXXX`和`disk3`替换为正确的版本号和正确的USB设备路径）：
 - en: '[PRE9]'
+  id: totrans-60
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: After the `dd` program finishes, there will be some output statistics on how
     long it took and how much data has been transferred during the copy process. On
     OS X, ignore any warning messages about the disk not being readable.
+  id: totrans-61
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在`dd`程序完成后，会有一些输出统计信息，显示复制过程耗时以及传输了多少数据。在OS X系统中，忽略任何关于磁盘不可读的警告信息。
 - en: Congratulations! You now have created your first CentOS 7 USB installation media.
     You now can safely remove the USB drive in Windows or OS X, and physically unplug
     the device and use it as a boot device for installing CentOS 7 on your target
     machine.
+  id: totrans-62
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 恭喜！你现在已经创建了你的第一个CentOS 7 USB安装介质。现在你可以在Windows或OS X系统中安全地移除USB驱动器，并物理拔出设备，将其用作在目标机器上安装CentOS
+    7的启动设备。
 - en: How it works...
+  id: totrans-63
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: So what have we learned from this experience?
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: 'The purpose of this recipe was to introduce you to the concept of creating
     an exact copy of a CentOS installation ISO file on a USB device, using the `dd`
     command-line program. The `dd` program is a Unix based tool which can be used
@@ -365,8 +502,11 @@
     with `/dev/disk2`), your second hard disk would be erased with little to no chances
     of recovering any lost data. So handle with care! If you''re in doubt of the correct
     output file device, never start the `dd` program!'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 本教程的目的是向你介绍使用`dd`命令行程序在USB设备上创建CentOS安装ISO文件的精确副本的概念。`dd`程序是一个基于Unix的工具，可用于将位从源复制到目标文件。这意味着源被逐位读取并写入目标，不考虑内容或文件分配；它只是涉及读取和写入纯原始数据。它期望两个基于文件名的参数：输入文件（`if`）和输出文件（`of`）。我们将使用CentOS镜像文件作为我们的输入文件名，将其精确地`1:1`克隆到USB设备上，该设备可通过其设备文件作为我们的输出文件参数访问。`bs`参数定义了块大小，即一次要复制的数据量。请小心，这是一个绝对的专业工具，在复制数据时会覆盖目标上的任何现有数据，而无需进一步确认或任何安全检查。因此，至少要双重检查目标USB设备的驱动器字母，切勿混淆它们！例如，如果你在`D:`上安装了第二个硬盘，在`E:`上安装了USB设备（在OS
+    X上，分别为`/dev/disk2`和`/dev/disk3`），并且你混淆了驱动器字母`E:`和`D:`（或`/dev/disk3`和`/dev/disk2`），你的第二个硬盘将被擦除，几乎没有恢复任何丢失数据的机会。所以请小心处理！如果你对正确的输出文件设备有疑问，切勿启动`dd`程序！
 - en: In conclusion, it is fair to say that there are other far more convenient solutions
     available for creating a USB installation media for CentOS 7 than the `dd` command,
     such as the Fedora Live USB Creator. But the purpose of this recipe was not only
@@ -375,12 +515,17 @@
     should know how to use. It can be used for a broad variety of daily tasks. For
     example, for securely erasing hard disks, benchmarking network speed, or creating
     random binary files.
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 总之，可以公平地说，对于创建CentOS 7的USB安装媒体，存在比`dd`命令更为便捷的解决方案，例如Fedora Live USB Creator。但本教程的目的不仅在于制作一个即用的CentOS
+    USB安装器，还在于让你熟悉`dd`命令。这是一个常见的Linux命令，每位CentOS系统管理员都应该知道如何使用。它可以用于广泛的日常任务，例如安全擦除硬盘、网络速度基准测试或创建随机二进制文件。
 - en: Performing an installation of CentOS using the graphical installer
+  id: totrans-67
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用图形安装程序执行CentOS安装
 - en: In this recipe, we will learn how to perform a typical installation of CentOS
     using a new graphical installer interface introduced in CentOS 7\. In many respects,
     this is considered to be the recommended approach to installing your system, as
@@ -389,12 +534,16 @@
     layout, package selection, installation type, and so on). Your installation will
     then form the basis of a server on which you can build, develop, and run any type
     of service you may want to provide in the future.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将学习如何使用CentOS 7中引入的新图形安装程序界面执行典型的CentOS安装。在很多方面，这被认为是安装系统的推荐方法，因为它不仅允许你创建所需的硬盘分区，还允许你在很多方面自定义安装（例如，键盘布局、软件包选择、安装类型等）。然后，你的安装将构成一个服务器的基础，在这个服务器上，你可以构建、开发和运行任何类型的服务，你将来可能希望提供这些服务。
 - en: Getting ready
+  id: totrans-69
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: Before we begin, it is assumed that you have followed the previous recipe in
     which you were shown how to download a CentOS image, confirm the checksum of the
     relevant image files, and create the relevant installation optical disks or USB
@@ -402,57 +551,76 @@
     406 MB RAM to load the graphical installer 1 GB or more is recommended if installing
     a graphical window manager such as Gnome), and have at least 10 GB free hard disk
     space.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们开始之前，假设您已经按照之前的步骤操作，其中您被展示了如何下载CentOS镜像，确认相关镜像文件的校验和，并创建相关的安装光盘或USB介质。您的系统必须是64位（x86_64）架构，至少需要406MB
+    RAM来加载图形安装程序（如果安装图形窗口管理器如Gnome，则建议1GB或更多），并且至少有10GB的可用硬盘空间。
 - en: How to do it...
+  id: totrans-71
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: To begin this recipe, insert your installation media (CD/DVD or USB device),
     restart the computer, and press the correct key for selecting the boot device
     during startup. Then choose the inserted device from the list (for many computers,
     this can be reached using *F11* or *F12* but can be different on your system.
     Please refer to your motherboard's manual).
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 要开始这个步骤，插入您的安装介质（CD/DVD或USB设备），重新启动计算机，并在启动时按下选择启动设备的正确键。然后从列表中选择插入的设备（对于许多计算机，这可以通过*F11*或*F12*访问，但在您的系统上可能不同。请参考您的主板手册）。
 - en: On the welcome splash screen, the option **Test this media & install CentOS
     7** is preselected and we will use this option. When you are ready, press the
     *Return* key to proceed.
+  id: totrans-73
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在欢迎屏幕上，**测试此媒体并安装CentOS 7**选项已被预选，我们将使用此选项。准备好后，按*回车*键继续。
 - en: After loading some initial files, the installer then starts to test the installation
     media. A single test should take between 30 seconds to five minutes and will report
     if there are any errors on your installation media. When this process is complete,
     the system will finally load the graphical installer.
+  id: totrans-74
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 加载一些初始文件后，安装程序开始测试安装介质。单个测试应在30秒到五分钟之间，并会报告您的安装介质上是否有任何错误。当这个过程完成后，系统最终将加载图形安装程序。
 - en: The CentOS installer will now present the graphical installation welcome screen.
     From this point onwards, you can use your keyboard and mouse (the latter is highly
     recommended), but remember to enable the number lock on your keyboard if you intend
     to use the keypad.
+  id: totrans-75
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: CentOS安装程序现在将显示图形安装欢迎屏幕。从这一点开始，您可以使用键盘和鼠标（后者强烈推荐），但如果您打算使用数字键盘，请记得在键盘上启用数字锁定。
 - en: On the left side you see the main language category and on the right side, the
     sub-languages for the installer. You can also search for a language using the
     textbox on the left bottom. All changes to your language settings will take effect
     immediately, so when you are ready, choose the **Continue** button to proceed.
+  id: totrans-76
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在左侧，您会看到主要的语言类别，在右侧，安装程序的子语言。您还可以使用左下角的文本框搜索语言。对语言设置的所有更改将立即生效，因此，当您准备好后，选择**继续**按钮以继续。
 - en: Now we reach the main installation menu, which is called **Installation summary**.
+  id: totrans-77
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在我们到达了主要的安装菜单，称为**安装摘要**。
 - en: Most options shown here already have some predefined values and can be used
     without changing, others which do not have any default value and which need your
     attention are labeled with a red exclamation mark like the **Installation Destination**
     under **System** category. So let's click on it using the mouse.
+  id: totrans-78
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 这里显示的大多数选项已经有一些预设值，无需更改即可使用，而那些没有默认值且需要您注意的选项则标有红色感叹号，例如**系统**类别下的**安装目的地**。因此，让我们使用鼠标点击它。
 - en: After clicking the **Installation Destination** button, you will see a graphical
     list of all the hard disk devices currently connected to your computer, which
     you can use for installing the operating system on. You can select your target
@@ -462,9 +630,11 @@
     can proceed, you must select a hard disk. Be careful and choose your target hard
     disk wisely as it will erase any existing data on it during the installation.
     When you are ready, click the **Done** button.
+  id: totrans-79
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**安装位置**按钮后，你将看到一个图形列表，列出了当前连接到你计算机的所有硬盘设备，你可以用它们来安装操作系统。你可以通过点击正确的硬盘图标来选择你的目标硬盘。然后它会在上面打上勾。如果你不确定正确的硬盘，尝试通过比较菜单中显示的品牌和总大小来识别它。在安装可以进行之前，你必须选择一个硬盘。请小心并明智地选择你的目标硬盘，因为安装过程中它将擦除任何现有数据。准备就绪后，点击**完成**按钮。
 - en: 'If your selected hard disk already contained data, then when clicking on **Done,**
     you may see what could be described as a warning/error message. The message may
     read: **You don''t have enough space available to install CentOS**. Don''t worry!
@@ -476,14 +646,18 @@
     on **Reclaim space** to discard any data on this disk, which will complete the
     task of disk initialization and enable you to proceed to the next step. When finished,
     click the **Done** button.'
+  id: totrans-80
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果你的选定硬盘已经包含数据，那么在点击**完成**时，你可能会看到一个可以被描述为警告/错误消息的信息。该消息可能显示：**你没有足够的可用空间来安装CentOS**。别担心！这是预期中的，消息只是要求你重新初始化你的硬盘，因为CentOS只能安装在空白的硬盘上。在大多数情况下，特别是如果你在硬盘上有多个分区，只需点击**回收空间**，这将显示一个新窗口，其中列出了该驱动器上的所有分区。在这里，只需点击**删除所有**，然后再次点击**回收空间**，以丢弃该硬盘上的任何数据，这将完成硬盘初始化的任务，并允许你继续下一步。完成后，点击**完成**按钮。
 - en: Back at the **Installation Summary** screen, the exclamation mark on the **Installation
     Destination** item should be gone now.
+  id: totrans-81
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 回到**安装摘要**屏幕，**安装位置**项上的感叹号现在应该消失了。
 - en: Optionally, we can click on **Network & Hostname** under **System category**.
     On the following page, on the left side, you can choose the primary network adapter
     you would like to connect to the Internet and select it by clicking on it. For
@@ -491,46 +665,60 @@
     it automatically using the **On** position of the switch. Finally, before closing
     this submenu, change the hostname in its text field to something appropriate.
     Click **Done**.
+  id: totrans-82
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在**系统**类别下，我们可以选择性地点击**网络与主机名**。在接下来的页面中，左侧你可以选择你希望连接到互联网的主要网络适配器，并通过点击它来选中。对于选中的设备，点击右侧的开关以启用并自动连接，使用开关的**开启**位置。最后，在关闭此子菜单之前，将其文本字段中的主机名更改为适当的名称。点击**完成**。
 - en: Now back at the **Installation Summary** screen, all the important settings
     have been made or have got predefined values, and all the exclamation marks are
     gone. If you are happy with these settings, click on the **Start installation**
     button or change the settings appropriately.
+  id: totrans-83
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在回到**安装摘要**屏幕，所有重要设置都已经完成或获得了预设值，所有感叹号都消失了。如果你对这些设置满意，点击**开始安装**按钮，或者根据需要更改设置。
 - en: On the next screen, you will be required to create and confirm a root password
     for the root user while the new system gets installed in the background. Choose
     a secure password with not less than six characters.
+  id: totrans-84
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在下一个屏幕上，你需要为root用户创建并确认一个root密码，同时新系统在后台进行安装。选择一个不少于六个字符的安全密码。
 - en: Here on this screen you can also create a standard user account which is highly
     recommended. If you create a new user do not check **Make this user administrator**.
     When you are ready, click **Done** (if you entered a weak password, you have to
     confirm this by clicking twice)
+  id: totrans-85
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在此屏幕上，你还可以创建一个标准用户账户，这是非常推荐的。如果你创建了一个新用户，请不要勾选**使该用户成为管理员**。准备就绪后，点击**完成**（如果你输入了一个弱密码，你需要通过点击两次来确认）。
 - en: CentOS will now partitionate and format your hard disk in the background and
     resolve any dependencies, and the installer will begin writing to the hard disk.
     This may take some time, but a progress bar will indicate the status of your installation.
     When finished, the installer will inform you that the entire process is complete
     and that the installation was successful. So when you are ready, click on the
     **Reboot** button. Now release your installation media from the drive.
+  id: totrans-86
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: CentOS现在将在后台对硬盘进行分区和格式化，并解决任何依赖关系，安装程序将开始向硬盘写入数据。这可能需要一些时间，但进度条将指示安装状态。完成后，安装程序将通知您整个过程已完成，并且安装成功。准备好后，点击**重启**按钮。现在从驱动器中取出安装介质。
 - en: Congratulations! You have now installed CentOS 7 on your computer.
+  id: totrans-87
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 恭喜！您已成功在计算机上安装了CentOS 7。
 - en: How it works…
+  id: totrans-88
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的…
 - en: In this recipe, you have discovered how to install the CentOS 7 operating system.
     Having covered the typical approach to the graphical installation process, you
     are now in a position to develop the server with additional configuration changes
@@ -538,23 +726,31 @@
     installer has been built with the aim to be very intuitive and flexible, and makes
     installation very easy as it will guide the user through some mandatory tasks
     that he has to fulfill before the installation of the main system can be started.
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，您已经了解了如何安装CentOS 7操作系统。在介绍了图形安装过程的典型方法之后，您现在可以对服务器进行额外的配置更改和软件包安装，以满足您打算让服务器承担的角色。这个图形安装程序旨在非常直观和灵活，使得安装过程非常简单，因为它将引导用户完成一些强制性任务，这些任务必须在开始安装主系统之前完成。
 - en: Running a netinstall over HTTP
+  id: totrans-90
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 通过HTTP进行网络安装
 - en: In this recipe, we will learn how to initiate the process of running a netinstall
     over HTTP (using the URL method) in order to install CentOS 7\. It is a process
     in which a small image file is used to boot the computer and let the user select
     and install only the software packages and services he wants and nothing more
     over a network connection thus providing great flexibility.
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将学习如何通过HTTP（使用URL方法）启动网络安装过程，以便安装CentOS 7。这是一个使用一个小型映像文件来启动计算机，并允许用户通过网络连接选择并安装他想要的软件包和服务的过程，而不安装其他任何东西，从而提供了极大的灵活性。
 - en: Getting ready
+  id: totrans-92
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: Before we begin, it is assumed that you already know how to download and checksum
     a CentOS 7 installation image and how to create the relevant installation media
     from it. For this recipe here, we will need to download and create installation
@@ -563,68 +759,94 @@
     it is assumed that you have at least gone through the graphical installation procedure
     once to exactly know how to boot from your installation media and work with the
     installer program.
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们开始之前，假设您已经知道如何下载和校验CentOS 7安装映像，以及如何从中创建相关的安装介质。对于本教程，我们需要下载并创建网络安装映像的安装介质（下载最新的CentOS-7-x86_64-NetInstall-XXXX.iso文件），而不是本章中另一个教程中显示的最小ISO。此外，假设您至少已经通过一次图形安装过程，确切知道如何从安装介质启动并使用安装程序。
 - en: How to do it...
+  id: totrans-94
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作…
 - en: 'To begin this recipe, insert your prepared netinstall media, boot your computer
     from it, and wait for the welcome screen to appear:'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 要开始本教程，请插入您准备好的网络安装介质，从它启动计算机，并等待欢迎屏幕出现：
 - en: On the welcome splash screen, the option **Test this media & install CentOS
     7** is preselected and we will use this option. When you are ready, press the
     *Return* key to proceed.
+  id: totrans-96
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在欢迎屏幕上，**测试此介质并安装CentOS 7**选项已被预选，我们将使用此选项。准备好后，按*回车*键继续。
 - en: After the tests finish, the graphical installer will load and present the typical
     graphical installation summary screen.
+  id: totrans-97
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 测试完成后，图形安装程序将加载并显示典型的图形安装摘要屏幕。
 - en: Note
+  id: totrans-98
   prefs:
   - PREF_IND
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Here the installer should be configured exactly as in the normal graphical installation
     recipe, besides the following mandatory changes to the **Network & Host name**
     and **Installation source** menu items (which is shown by the red exclamation
     marks).
+  id: totrans-99
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 在这里，安装程序应该像在正常图形安装教程中一样进行配置，除了对**网络和主机名**以及**安装源**菜单项进行以下强制性更改（由红色感叹号指示）。
 - en: Before we can install CentOS over the network, we have to make sure that we
     have a working network connection. Therefore, you should first click on the **Network
     & Host name** menu entry and activate one of your network adapters to the connected
     state. Refer to the normal installation recipe for more details.
+  id: totrans-100
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在我们能够通过网络安装 CentOS 之前，我们必须确保我们有可用的网络连接。因此，您应该首先点击 **网络和主机名** 菜单项，并将您的网络适配器激活到连接状态。有关更多详细信息，请参阅正常安装食谱。
 - en: Next, click on **Installation source** to enter the settings. As we will be
     installing over HTTP (also referred to as the URL method), you should leave the
     default **On the network** selected in the **Which installation source** **would
     you like to use?** section.
+  id: totrans-101
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，点击 **安装源** 进入设置。由于我们将通过 HTTP（也称为 URL 方法）进行安装，因此您应该在 **您想使用哪种安装源？** 部分中保留默认的
+    **网络** 选项。
 - en: Now type in the following URL in the standard `http://` textfield, which we
     will use to download all the required installation packages at [http://mirror.centos.org/centos/7/os/x86_64/](http://%20http://mirror.centos.org/centos/7/os/x86_64/).
+  id: totrans-102
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在在标准的 `http://` 文本框中输入以下 URL，我们将使用它来下载所有必需的安装包：[http://mirror.centos.org/centos/7/os/x86_64/](http://%20http://mirror.centos.org/centos/7/os/x86_64/)。
 - en: Alternatively, you can also use a personal repository which you would have to
     create in advance (see [Chapter 4](part0045_split_000.html#1AT9A1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 4. Managing Packages with YUM"), *Managing Packages with YUM*)
+  id: totrans-103
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 或者，您也可以使用个人仓库，这需要您提前创建（请参阅 [第 4 章](part0045_split_000.html#1AT9A1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第 4 章。使用 YUM 管理软件包")，*使用 YUM 管理软件包*）
 - en: When you are ready, click on **Done** to start the initialization process.
+  id: totrans-104
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 准备就绪后，点击 **完成** 开始初始化过程。
 - en: On success, the installer will begin to retrieve the appropriate `install.img`
     file. This may take several minutes to complete, but once resolved, a progress
     bar will indicate all the download activity. When this process finishes successfully,
@@ -632,38 +854,53 @@
     will pop up which will tell the user that it is missing the **software selection**.
     Click on it and choose whatever fits your need. As for the purpose of this recipe,
     just select **Minimal install** under **Base environment** and then click on **Done**.
+  id: totrans-105
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 成功后，安装程序将开始检索适当的 `install.img` 文件。这可能需要几分钟才能完成，但一旦解决，进度条将指示所有下载活动。当此过程成功完成后，**安装源**
+    处的感叹号将消失，但会出现另一个感叹号，告诉用户缺少 **软件选择**。点击它并选择适合您需求的选项。对于本食谱的目的，只需在 **基本环境** 下选择 **最小安装**，然后点击
+    **完成**。
 - en: If the **Which installation source** would you like to use stays greyed out
     and cannot be changed, then there are connection problems with your network adapter.
     If this is the case, go back to configure **Network & Hostname** and change the
     network settings until the connected state can be reached.
+  id: totrans-106
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果 **您想使用哪种安装源？** 保持灰色且无法更改，则您的网络适配器存在连接问题。如果出现这种情况，请返回配置 **网络和主机名** 并更改网络设置，直到达到连接状态。
 - en: CentOS 7 will now install the operating system the usual way and will congratulate
     you when this process finishes. It may be slower than installing from a physical
     installation media since all the packages have to be retrieved from the Internet.
+  id: totrans-107
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: CentOS 7 现在将以常规方式安装操作系统，并在安装过程完成后向您表示祝贺。由于所有软件包都必须从互联网上获取，因此它可能比从物理安装介质安装要慢。
 - en: How it works...
+  id: totrans-108
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 工作原理...
 - en: The purpose of this recipe was to introduce you to the concept of the CentOS
     network installation process, in order to show you just how simple this approach
     can be. By completing this recipe you have not only saved time by limiting your
     initial download to those files that are required by the installation process,
     but you have also been able to take advantage of the full graphical installation
     method without the need for a complete DVD suite.
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 本食谱的目的是向您介绍 CentOS 网络安装过程的概念，以展示这种方法可以多么简单。通过完成本食谱，您不仅通过将初始下载限制为仅安装过程所需的文件来节省时间，而且还能够利用完整的图形安装方法，而无需完整的
+    DVD 套件。
 - en: Installing CentOS 7 using a kickstart file
+  id: totrans-110
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用 kickstart 文件安装 CentOS 7
 - en: While installing CentOS 7 manually using the graphical installer utility is
     fine on a single server, doing so on a multiple number of systems can be tedious.
     Kickstart files can automate the installation process of a server system and here
@@ -671,54 +908,74 @@
     which provide detailed and exact instructions on how the target system should
     be set up and installed (for example, which keyboard layout or additional software
     packages to install).
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然使用图形安装程序手动安装CentOS 7在一台服务器上是可以的，但在多台系统上这样做可能会很繁琐。Kickstart文件可以自动化服务器系统的安装过程，这里我们将展示如何实现这一点。它们是简单的基于文本的配置文件，提供了关于目标系统应如何设置和安装的详细和精确的指令（例如，安装哪种键盘布局或额外的软件包）。
 - en: Getting ready
+  id: totrans-112
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To successfully complete this recipe, you will need access to an already installed
     CentOS 7 system to retrieve the kickstart configuration file we want to work with
     and use for automated installation. On this pre-installed CentOS server, you also
     need a working Internet connection to download additional software.
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了成功完成此方法，您需要访问一个已安装的CentOS 7系统以获取我们要使用的kickstart配置文件并用于自动化安装。在这个预安装的CentOS服务器上，您还需要一个有效的互联网连接来下载额外的软件。
 - en: Next, we will need to download and create installation media for the DVD or
     the Everything image (download the latest `CentOS-7-x86_64-DVD-XXXX.iso` or `CentOS-7-x86_64-Everything-XXXX.iso`
     file), instead of the minimal iso file shown in another recipe in this chapter.
     Then you need another USB device which must be read and writable on Linux systems
     (formatted as FAT16, FAT32, EXT2, EXT3, EXT4, or XFS filesystem).
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们需要下载并创建DVD或Everything映像的安装介质（下载最新的`CentOS-7-x86_64-DVD-XXXX.iso`或`CentOS-7-x86_64-Everything-XXXX.iso`文件），而不是本章中另一方法中显示的最小iso文件。然后，您需要另一个在Linux系统上可读写的USB设备（格式化为FAT16、FAT32、EXT2、EXT3、EXT4或XFS文件系统）。
 - en: How to do it...
+  id: totrans-115
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: For this recipe to work, we first need physical access to an existing kickstart
     file from another finished CentOS 7 installation, which we will use as a template
     for a new CentOS 7 installation.
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了使此方法生效，我们首先需要物理访问另一个已完成CentOS 7安装的kickstart文件，我们将使用它作为新CentOS 7安装的模板。
 - en: 'Log in as root on the existing CentOS 7 system and make sure the kickstart
     configuration file exists by typing the following command and pressing the *Return*
     key to execute (this will show you the details of the file):'
+  id: totrans-117
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在现有的CentOS 7系统上以root身份登录，并通过输入以下命令并按*回车*键执行来确保kickstart配置文件存在（这将显示文件的详细信息）：
 - en: '[PRE10]'
+  id: totrans-118
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'Next, physically plug in a USB device and then type the following command,
     which will give you a list of all the hard disk devices currently connected to
     the computer:'
+  id: totrans-119
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，物理上插入一个USB设备，然后输入以下命令，这将为您提供当前连接到计算机的所有硬盘设备的列表：
 - en: '[PRE11]'
+  id: totrans-120
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'Try to identify the device name by comparing its size, partitions, and identified
     filesystems with the specifications of your USB device. The device name will be
     of kind `/dev/sdX,` where `X` is an alphabetical character, such as `b`, `c`,
@@ -727,185 +984,257 @@
     with plugged-out and then with plugged-in USB device and compare how the second
     output changed - it has one device name more than the first output: your device
     name of interest !'
+  id: totrans-121
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 尝试通过比较其大小、分区以及识别的文件系统与您的USB设备的规格来确定设备名称。设备名称将是`/dev/sdX`的形式，其中`X`是一个字母字符，如`b`、`c`、`d`、`e`等。如果您无法使用`fdisk`命令找到正确的设备名称，请尝试以下技巧：运行`fdisk
+    -l`两次 - 首先在未插入USB设备的情况下，然后在插入USB设备的情况下，比较第二次输出如何变化 - 它比第一次输出多一个设备名称：您感兴趣的设备名称！
 - en: 'If you have found the right device name in the list, create a directory to
     mount it to the current filesystem:'
+  id: totrans-122
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果您在列表中找到了正确的设备名称，请创建一个目录以将其挂载到当前文件系统：
 - en: '[PRE12]'
+  id: totrans-123
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'Next, actually mount the stick to this folder, assuming that your USB partition
     of choice is at `/dev/sdc1` (change this as required):'
+  id: totrans-124
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，实际上将USB设备挂载到此文件夹，假设您选择的USB分区位于`/dev/sdc1`（根据需要更改此设置）：
 - en: '[PRE13]'
+  id: totrans-125
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'Now we will create our working copy of the kickstart file on the USB device
     for customizing:'
+  id: totrans-126
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们将在USB设备上创建kickstart文件的工作副本以进行定制：
 - en: '[PRE14]'
+  id: totrans-127
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'Next, open the copied kickstart file on the USB device with your favorite text
     editor (here we will use the editor nano, if you have not installed it yet type
     `yum install nano`):'
+  id: totrans-128
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 然后，使用您喜欢的文本编辑器打开USB设备上的复制kickstart文件（这里我们将使用编辑器nano，如果您还没有安装它，请输入`yum install
+    nano`）：
 - en: '[PRE15]'
+  id: totrans-129
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'We will now modify the file for installing CentOS on a new target system. In
     nano, use the up and down arrow keys to go to the line which starts with (`<your_hostname>`
     will be the name of the hostname you gave during installation e.g. `minimal.home`):'
+  id: totrans-130
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们将修改文件以在新目标系统上安装CentOS。在nano中，使用上下箭头键转到以（`<your_hostname>`将是您在安装过程中给出的主机名，例如`minimal.home`）开头的行：
 - en: '[PRE16]'
+  id: totrans-131
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'Now edit the `<your_hostname>` string to give it a new unique hostname. For
     example, add a `-2` to the end of any existing name, as shown next:'
+  id: totrans-132
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，编辑`<your_hostname>`字符串，为其赋予一个新的唯一主机名。例如，在任何现有名称的末尾添加一个`-2`，如下所示：
 - en: '[PRE17]'
+  id: totrans-133
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 'Next, move the cursor down using the up and down arrow keys until it stops
     at the line which says `%packages.` Append the following lines right below it
     (you can further customize this and provide additional packages that you want
     to install automatically):'
+  id: totrans-134
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，使用上下箭头键将光标向下移动，直到它停在写着`%packages.`的行上。在其下方附加以下行（您可以进一步自定义此设置，并提供您希望自动安装的其他软件包）：
 - en: '[PRE18]'
+  id: totrans-135
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: Now save and close the file, to do this in the nano editor use the key combination
     *Ctrl*+*o* (which means, hold down the *Ctrl* key on the keyboard and then the
     *o* key without releasing the *Ctrl* key) to write the changes. Then press *Return*
     to confirm the filename and *Ctrl*+*x* to exit the editor.
+  id: totrans-136
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在保存并关闭文件，在nano编辑器中，使用*Ctrl*+*o*键组合（这意味着，按住键盘上的*Ctrl*键，然后按*o*键，不要松开*Ctrl*键）来写入更改。然后按*Return*确认文件名，并按*Ctrl*+*x*退出编辑器。
 - en: 'Next, install the following CentOS package:'
+  id: totrans-137
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，安装以下CentOS软件包：
 - en: '[PRE19]'
+  id: totrans-138
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 'Now we validate the syntax of our kickstart file using the `ksvalidator` program,
     which is included in the package we just installed:'
+  id: totrans-139
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们使用`ksvalidator`程序验证kickstart文件的语法，该程序包含在我们刚刚安装的软件包中：
 - en: '[PRE20]'
+  id: totrans-140
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'If the `config` file is error-free, unmount the USB stick now by using the
     following commands:'
+  id: totrans-141
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果`config`文件没有错误，现在使用以下命令卸载USB闪存驱动器：
 - en: '[PRE21]'
+  id: totrans-142
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: When you get a new command prompt again, unplug the USB device with the kickstart
     file for using on the target machine physically from the system.
+  id: totrans-143
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当您再次获得新的命令提示符时，从系统中物理拔出包含kickstart文件的USB设备，以便在目标机器上使用。
 - en: Now you need physical access to the target machine you want to install CentOS
     on, using the kickstart file just created. Disconnect any other external file
     storage(s) that you do not need during the installation.
+  id: totrans-144
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，您需要物理访问您想要安装CentOS的目标机器，使用刚刚创建的kickstart文件。断开任何其他不需要在安装过程中使用的外部文件存储设备。
 - en: Power on the computer and put in your prepared CentOS installation media (must
     be a CentOS DVD or Everything installation disk image prepared on a CD/DVD disc
     or a USB device installer). Also connect to the computer the USB stick containing
     the kickstart file you just created in the earlier steps (if you using a USB drive
     for installing CentOS then you will need two free USB ports in total to complete
     this recipe).
+  id: totrans-145
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 开启计算机并插入准备好的CentOS安装介质（必须是CentOS DVD或Everything安装盘镜像，准备在CD/DVD光盘或USB设备安装器上）。同时，将包含在先前步骤中创建的kickstart文件的USB闪存驱动器连接到计算机（如果使用USB驱动器安装CentOS，则总共需要两个空闲的USB端口来完成此操作）。
 - en: Next, start the server and press the correct key during the initial bootup screen,
     associated with booting the CentOS installation media you just connected.
+  id: totrans-146
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，启动服务器并在初始启动屏幕期间按下与引导您刚刚连接的CentOS安装介质相关的正确键。
 - en: After the CentOS installer starts loading, the common standard CentOS 7 installation
     welcome screen will show up and the option **Test this media & install CentOS
     7** will be pre-selected by the cursor.
+  id: totrans-147
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在CentOS安装程序开始加载后，将显示常见的标准CentOS 7安装欢迎屏幕，并且**测试此媒体并安装CentOS 7**选项将由光标预先选中。
 - en: 'Next, press the *Esc* key on your keyboard once to switch to the `boot: prompt`.'
+  id: totrans-148
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '接下来，在键盘上按一次*Esc*键，切换到`boot: prompt`。'
 - en: 'Now we are ready to start the kickstart installation. To do this, you need
     to know the exact partition name on the USB device where the kickstart file is
     located. Type the following command, assuming that your partition is at `/dev/sdc1`
     (change this as required), and press the *Return* key to start the kickstart installation
     process:'
+  id: totrans-149
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在我们准备好开始kickstart安装了。为此，您需要知道USB设备上kickstart文件所在的确切分区名称。输入以下命令，假设您的分区位于`/dev/sdc1`（根据需要更改此设置），然后按*Return*键开始kickstart安装过程：
 - en: '[PRE22]'
+  id: totrans-150
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: Note
+  id: totrans-151
   prefs:
   - PREF_IND
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: If you cannot find out the right device and partition name of the USB stick,
     you have to start the target system in rescue mode (refer to the *Troubleshooting
     the system in rescue mode* recipe) to identify the right device name and partition
     number by comparing its size, partitions, and identified filesystems with the
     specifications of your stick.
+  id: totrans-152
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 如果你无法找到USB闪存盘的正确设备和分区名称，你需要在救援模式下启动目标系统（参考*在救援模式下排除系统故障*的解决方案），通过比较其大小、分区以及识别的文件系统与你的闪存盘规格来确定正确的设备名称和分区号。
 - en: The new system now gets installed automatically using the instructions from
     the provided kickstart file. You can watch the installation output messages as
     it is showing the user detailed installation progress.
+  id: totrans-153
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，新系统将自动使用提供的kickstart文件中的指令进行安装。你可以查看安装输出消息，因为它会向用户显示详细的安装进度。
 - en: If the system has finished installing, reboot the system and log in to your
     new machine to verify that the new system has been setup the way we described
     using the kickstart file.
+  id: totrans-154
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果系统安装完成，重启系统并登录到你的新机器，以验证新系统是否按照我们使用kickstart文件描述的方式进行了设置。
 - en: How it works...
+  id: totrans-155
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: In this recipe, you have seen that every server running a CentOS 7 installation
     keeps the kickstart file in its root directory, which contains detailed information
     on how the system had been set up during the installation. The kickstart files
@@ -921,12 +1250,17 @@
     of starting out completely new. We did not use the minimal installation image
     to drive our kickstart installation because we installed some extra packages not
     included on the minimal ISO file, such as the Apache webserver.
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个解决方案中，你已经看到，每个运行CentOS 7安装的服务器都在其根目录中保留了kickstart文件，该文件包含了系统安装过程中设置的详细信息。kickstart文件可以用来自动化多个具有相同配置的系统的安装。这可以节省大量时间，因为安装过程中不需要用户交互。此外，如果目标机器的RAM不符合图形化安装的最低要求，但需要文本模式安装器不提供的其他功能（如自定义分区），我们也可以使用这种方法。kickstart配置文件是简单的纯文本文件，可以手动从头创建。由于使用kickstart语法构建系统有相当多的不同命令，我们使用了一个现有的文件作为模板，并对其进行了定制以满足我们的需求，而不是完全从头开始。我们没有使用最小化安装镜像来驱动我们的kickstart安装，因为我们安装了一些额外的软件包，这些软件包不包含在最小化ISO文件中，例如Apache
+    Web服务器。
 - en: Getting started and customising the boot loader
+  id: totrans-157
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 开始和自定义引导加载程序
 - en: When you turn on your computer, the boot loader is the first program that starts
     up and is responsible for loading and transferring control to an underlying operating
     system. Nowadays, almost any modern Linux distribution uses the **GRand Unified
@@ -935,106 +1269,153 @@
     we will show how to customize the GRUB2 boot loader by disabling the waiting time
     of the menu display and therefore improving the time it takes for booting the
     system.
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你打开计算机时，引导加载程序是第一个启动的程序，负责加载并将控制权转移到下层的操作系统。如今，几乎任何现代Linux发行版都使用**GRand Unified
+    Bootloader版本2**（**GRUB2**）来启动系统。它在配置上非常灵活，并支持许多不同的操作系统。在这个解决方案中，我们将展示如何通过禁用菜单显示的等待时间来定制GRUB2引导加载程序，从而提高系统启动时间。
 - en: Getting ready
+  id: totrans-159
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require access to an already installed CentOS
     7 operating system (minimal or any other CentOS 7 installation type will work)
     with root privileges. Also, you need to have some basic experiences with a text
     based editor, such as nano, for changing the configuration files.
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成这个解决方案，你需要访问一个已经安装了CentOS 7操作系统（最小化安装或其他类型的CentOS 7安装都可以）的系统，并具有root权限。此外，你还需要具备使用文本编辑器（如nano）修改配置文件的基本经验。
 - en: How to do it...
+  id: totrans-161
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: We begin this recipe by opening the main GRUB2 configuration file with our text
     editor of choice and modifying it.
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们通过使用我们选择的文本编辑器打开主GRUB2配置文件并对其进行修改，开始这个食谱。
 - en: 'First log in as root into your system and create a copy of the GRUB2 configuration
     file for backup and rollback, if needed. Press the *Return* key to finish:'
+  id: totrans-163
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先以root身份登录到你的系统，并为GRUB2配置文件创建一个备份副本，以备需要时回滚。按下*返回*键完成：
 - en: '[PRE23]'
+  id: totrans-164
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 'Open the main GRUB2 configuration file that we want to edit with the following
     command and press the *Return* key (here we will use the editor nano, if you have
     not installed it yet type `yum install nano`):'
+  id: totrans-165
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用以下命令打开我们要编辑的主GRUB2配置文件，并按下*返回*键（这里我们将使用编辑器nano，如果你还没有安装它，请输入`yum install nano`）：
 - en: '[PRE24]'
+  id: totrans-166
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'Press the *Return* key in the first line where the cursor is at to insert a
     new line at the top, and then insert the following line:'
+  id: totrans-167
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在光标所在的第一行按下*返回*键插入新行，然后插入以下行：
 - en: '[PRE25]'
+  id: totrans-168
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: 'Add a `#` sign to the beginning of the following line, as shown:'
+  id: totrans-169
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在以下行的开头添加一个`#`符号，如下所示：
 - en: '[PRE26]'
+  id: totrans-170
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: 'Now save the file in the nano using *Ctrl*+*o* (and *Return* to confirm the
     filename to save). Use *Ctrl*+*x* to exit the editor and then run the following
     command:'
+  id: totrans-171
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在在nano中使用*Ctrl*+*o*保存文件（并按*返回*确认保存的文件名）。使用*Ctrl*+*x*退出编辑器，然后运行以下命令：
 - en: '[PRE27]'
+  id: totrans-172
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'If the preceding command does not produce any output, run the following command:'
+  id: totrans-173
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果前面的命令没有产生任何输出，运行以下命令：
 - en: '[PRE28]'
+  id: totrans-174
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: 'Otherwise, if there is an output, run:'
+  id: totrans-175
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 否则，如果有输出，运行：
 - en: '[PRE29]'
+  id: totrans-176
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: 'If `grub2-mkconfig` is successful, it will print `Done.` Now reboot your system
     using the following command:'
+  id: totrans-177
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果`grub2-mkconfig`成功，它将打印`Done.`。现在使用以下命令重新启动你的系统：
 - en: '[PRE30]'
+  id: totrans-178
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: During the rebooting process, you will notice that the GRUB2 boot menu will
     not appear any more and the system will boot up faster.
+  id: totrans-179
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在重启过程中，你会发现GRUB2引导菜单不再出现，系统将更快地启动。
 - en: How it works...
+  id: totrans-180
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: Having completed this recipe, we now know how to customize the GRUB2 boot loader.
     In this very easy recipe, we only showed you very basic modifications to the boot
     loader but it can do much more! It supports a broad variety of filesystems and
@@ -1045,12 +1426,18 @@
     text files with less* in [Chapter 2](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 2. Configuring the System"), *Configuring the System* to learn how to
     browse this document).
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 完成这个食谱后，我们现在知道如何自定义GRUB2引导加载程序。在这个非常简单的食谱中，我们只向你展示了引导加载程序的一些基本修改，但它可以做更多！它支持广泛的文件系统，并且可以启动几乎任何兼容的操作系统。如果你计划在同一台机器上运行多个操作系统，这也是特别有用的。要了解更多关于GRUB2配置文件语法的信息，请输入`info
+    grub2` | `less`命令，并转到`6.1 简单配置处理`部分（阅读[第2章](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第2章。系统配置")，*系统配置*中的食谱*使用less浏览文本文件*，了解如何浏览此文档）。
 - en: Troubleshooting the system in rescue mode
+  id: totrans-182
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 在救援模式下排除系统故障
 - en: 'We all make mistakes and this is especially true for novice Linux system administrators.
     Linux can have a steep learning curve and sooner or later there will be a point
     in your career where your CentOS installation does not start up due to broad number
@@ -1059,114 +1446,160 @@
     order to boot an otherwise unbootable system and try to undo your mistakes or
     find out the root of the problems. In this recipe, we will show you three common
     use cases when to use this option:'
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们都会犯错，这对新手Linux系统管理员尤其如此。Linux的学习曲线可能很陡峭，迟早会在你的职业生涯中遇到CentOS安装由于各种原因无法启动的情况，包括硬件问题或人为错误，如配置错误。如果这种情况发生在你身上，那么你可以使用CentOS救援模式来启动一个无法启动的系统，并尝试撤消你的错误或找出问题的根源。在本食谱中，我们将向你展示三个常见的情况，何时使用此选项：
 - en: Accessing the filesystem for recovering important data or undoing changes to
     configuration files if CentOS is not booting up
+  id: totrans-184
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 访问文件系统以恢复重要数据或撤消对配置文件的更改，如果CentOS无法启动
 - en: Changing the root password if you forgot it
+  id: totrans-185
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更改root密码，如果你忘记了它
 - en: Re-installing the boot loader which can be damaged when installing another operating
     system on the same harddisk where CentOS is installed
+  id: totrans-186
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 重新安装引导加载程序，这可能在同一硬盘上安装另一个操作系统时损坏CentOS
 - en: Getting ready
+  id: totrans-187
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a standard installation media (CD/DVD
     or USB device) of the CentOS 7 operating system. For recovering the data from
     the system, you will need to connect some sort of external storage device to the
     system, such as an external hard disk or a working network connection to another
     computer to copy all your precious data to a different location.
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此操作，您需要一个标准的CentOS 7操作系统安装媒体（CD/DVD或USB设备）。为了从系统中恢复数据，您需要将某种外部存储设备连接到系统，例如外部硬盘或一个正常工作的网络连接到另一台计算机，以便将所有珍贵数据复制到不同位置。
 - en: How to do it...
+  id: totrans-189
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: To begin this recipe, you should boot your server from the CentOS installation
     CD/DVD or the USB device and wait until the first welcome splash screen appears
     with the cursor waiting at the **Test this media & install CentOS 7** menu option.
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: 要开始此操作，您应该从CentOS安装CD/DVD或USB设备启动服务器，并等待直到第一个欢迎屏幕出现，光标等待在**测试此媒体并安装CentOS 7**菜单选项上。
 - en: Reaching rescue mode
+  id: totrans-191
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 进入救援模式
 - en: From the main menu, use the down arrow key to select **Troubleshooting** and
     then press the *Return* key to proceed.
+  id: totrans-192
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从主菜单中，使用向下箭头键选择**故障排除**，然后按*回车*键继续。
 - en: On the **Troubleshooting** screen, use the down arrow key to highlight **Rescue
     a CentOS system**. When you are ready, press the *Return* key to proceed.
+  id: totrans-193
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在**故障排除**屏幕上，使用向下箭头键高亮显示**救援CentOS系统**。准备就绪后，按*回车*键继续。
 - en: After some loading time, we enter the rescue screen, which includes various
     confirmation sub-screens. To begin this section, use the left and right arrow
     keys to choose **Continue** and press the *Return* key to proceed.
+  id: totrans-194
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 经过一些加载时间后，我们进入救援屏幕，其中包括各种确认子屏幕。要开始此部分，使用左右箭头键选择**继续**，然后按*回车*键继续。
 - en: On the first sub-screen, choose **OK** and press the *Return* key to proceed.
+  id: totrans-195
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在第一个子屏幕上，选择**确定**并按*回车*键继续。
 - en: Again, in the following sub-screen, choose **OK** and press the *Return* key
     to proceed.
+  id: totrans-196
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 同样，在接下来的子屏幕中，选择**确定**并按*回车*键继续。
 - en: On the next screen, choose the **Start** shell and by using the *Tab* key, highlight
     **OK** and press the *Return* key to proceed.
+  id: totrans-197
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在下一个屏幕上，选择**启动**shell，并使用*Tab*键，高亮显示**确定**，然后按*回车*键继续。
 - en: 'By completing the preceding steps, you will launch a shell session. You will
     notice this at the bottom of your display. The current status of the shell session
     will read as follows:'
+  id: totrans-198
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成上述步骤后，将启动一个shell会话。您将在显示屏底部注意到这一点。shell会话的当前状态将显示如下：
 - en: '[PRE31]'
+  id: totrans-199
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: 'At the prompt, type the following instruction to change the root filesystem,
     before pressing the *Return* key to complete your request:'
+  id: totrans-200
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在提示符下，输入以下指令以更改根文件系统，然后在按*回车*键完成您的请求之前：
 - en: '[PRE32]'
+  id: totrans-201
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: 'Congratulations! You just reached the rescue mode. To exit it at any time,
     simply type the following command and then press the *Return* key to complete
     your request (don''t do this right now as this will restart the system):'
+  id: totrans-202
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 恭喜！您已进入救援模式。在任何时候退出，只需输入以下命令，然后按*回车*键以完成您的请求（现在不要这样做，因为这将重启系统）：
 - en: '[PRE33]'
+  id: totrans-203
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: After the basic rescue mode is reached, we have the following options, depending
     on the type of problem.
+  id: totrans-204
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在基本救援模式达到后，我们根据问题的类型有以下选项。
 - en: Accessing the filesystem
+  id: totrans-205
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 访问文件系统
 - en: If you are now in the rescue mode and need to backup important files from the
     filesystem, you need a destination location for the data transfer. For transferring
     the data we want to recover from the server to another computer please physically
@@ -1174,18 +1607,25 @@
     recovery. For example, you could import an NFS server share and copy data to it.
     Refer to the *Working with NFS* recipe in [Chapter 7](part0068_split_000.html#20R681-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 7. Building a Network"), *Building a Network*.
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您现在处于救援模式并需要从文件系统备份重要文件，您需要一个数据传输的目的地位置。为了将我们想要从服务器恢复的数据传输到另一台计算机，请将外部USB设备物理连接到它。您也可以使用网络存储进行恢复。例如，您可以导入NFS服务器共享并将数据复制到它。请参阅[第7章](part0068_split_000.html#20R681-4cf34a6d07944734bb93fb0cd15cce8c
+    "第7章。构建网络")，*构建网络*中的*使用NFS*操作。
 - en: 'On the rescue mode command line, type in the following command, which will
     show you all the current partitions connected to the system, and then press the
     *Return* key to complete your request:'
+  id: totrans-207
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在救援模式命令行中，输入以下命令，该命令将显示系统上所有当前连接的分区，然后按*回车*键完成您的请求：
 - en: '[PRE34]'
+  id: totrans-208
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: 'You now need to find out the right device name with the partition number of
     your connected device; comparing the total size or the filesystem output of the
     various devices with the specifications from your stick can help you in this process.
@@ -1193,230 +1633,328 @@
     with the plugged-in USB device and then again with the USB device unplugged, and
     compare the output of both the commands. It should be different by one device
     name which you are searching for!'
+  id: totrans-209
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，您需要找出连接设备的正确设备名称和分区号；比较各个设备的总大小或文件系统输出与您的USB设备的规格可以帮助您完成此过程。您还可以尝试以下技巧：运行`fdisk
+    -l`命令两次，第一次插入USB设备，然后再次拔出USB设备，并比较两个命令的输出。应该会有一个设备名称不同，这就是您正在寻找的！
 - en: 'If you have found the right device name in the list, create a directory to
     mount the stick to the filesystem:'
+  id: totrans-210
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果在列表中找到了正确的设备名称，请创建一个目录以将USB设备挂载到文件系统：
 - en: '[PRE35]'
+  id: totrans-211
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: 'Next, mount the disk partition to this folder. Here we assume that the USB
     device of interest has the device name `sdd1` (please change if different on your
     system):'
+  id: totrans-212
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，将磁盘分区挂载到此文件夹。这里我们假设感兴趣的USB设备的设备名称为`sdd1`（如果您的系统不同，请更改）：
 - en: '[PRE36]'
+  id: totrans-213
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: 'The original system''s hard disk''s root partition has been mounted under a
     specific folder by the rescue system automatically (under `/mnt/sysimage`), if
     you need to access it for example to change configuration files which caused startup
     problems or make a full or partial backup. For example, if you need to backup
     your Apache webserver configuration files, use:'
+  id: totrans-214
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 救援系统自动将原始系统的硬盘的根分区挂载在特定文件夹下（位于`/mnt/sysimage`下），如果需要访问它，例如更改导致启动问题的配置文件或进行完整或部分备份。例如，如果需要备份Apache
+    Web服务器配置文件，请使用：
 - en: '[PRE37]'
+  id: totrans-215
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: If you need to access the data that lives on partitions other than the currently
     mounted root partition, use `fdisk -l` to identify the partition of interest.
     Then create a directory and mount the partition to it and change to that directory
     to access your data similar you did when mounting the USB device.
+  id: totrans-216
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果需要访问当前挂载的根分区以外的分区上的数据，请使用`fdisk -l`来识别感兴趣的分区。然后创建一个目录，将分区挂载到该目录，并切换到该目录以访问数据，就像挂载USB设备时所做的那样。
 - en: 'To finish backing up the files, type:'
+  id: totrans-217
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要完成备份文件，请输入：
 - en: '[PRE38]'
+  id: totrans-218
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: Accessing the filesystem
+  id: totrans-219
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 访问文件系统
 - en: 'If you are in the rescue mode for changing the root password, just use the
     following command and provide a new password:'
+  id: totrans-220
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果在救援模式下更改root密码，只需使用以下命令并提供新密码：
 - en: '[PRE39]'
+  id: totrans-221
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: 'To complete changing the password, type:'
+  id: totrans-222
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要完成更改密码，请输入：
 - en: '[PRE40]'
+  id: totrans-223
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: Re-install the CentOS boot loader
+  id: totrans-224
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 重新安装CentOS引导加载程序
 - en: 'We will now use the `fdisk` command to find the name of all the current partitions.
     To do this, type the following instruction and then press the *Return* key to
     complete your request:'
+  id: totrans-225
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们将使用`fdisk`命令来查找所有当前分区的名称。为此，请输入以下指令，然后按*回车*键以完成请求：
 - en: '[PRE41]'
+  id: totrans-226
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: 'Now run the following command:'
+  id: totrans-227
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在运行以下命令：
 - en: '[PRE42]'
+  id: totrans-228
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: 'If the preceding command does not produce any output look for the `*` symbol
     in the `fdisk` listing in the boot column to find the correct start partition,
     and assuming that your boot disk is on `/dev/sda1` (change this as required),
     type the following:'
+  id: totrans-229
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果前面的命令没有产生任何输出，请在`fdisk`列表的引导列中查找`*`符号以找到正确的起始分区，并假设您的引导磁盘位于`/dev/sda1`（根据需要更改此设置），请输入以下内容：
 - en: '[PRE43]'
+  id: totrans-230
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: 'Otherwise, if there is an output, run instead:'
+  id: totrans-231
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 否则，如果有输出，请运行以下命令：
 - en: '[PRE44]'
+  id: totrans-232
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: 'If no error is reported, the console should respond as follows:'
+  id: totrans-233
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果没有错误报告，控制台应响应如下：
 - en: '[PRE45]'
+  id: totrans-234
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: The console output from the last step has confirmed that GRUB has now been successfully
     restored.
+  id: totrans-235
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后一步的控制台输出确认GRUB已成功恢复。
 - en: 'To reboot the computer, type:'
+  id: totrans-236
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要重新启动计算机，请输入：
 - en: '[PRE46]'
+  id: totrans-237
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: How it works...
+  id: totrans-238
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: There are a broad variety of problems which can be resolved by the tools provided
     through the rescue mode environment. Often these problems refer to booting problems
     but can also be from different types, such as forgetting the root password. Rescue
     mode can be a life-saver and an understanding of it is a very important skill
     to learn. It was felt that such a recipe should thus remain close at hand.
+  id: totrans-239
   prefs: []
   type: TYPE_NORMAL
+  zh: 救援模式环境提供的工具可以解决各种广泛的问题。这些问题通常涉及启动问题，但也可能来自其他类型，例如忘记root密码。救援模式可以救急，掌握它是一项非常重要的技能。因此，我们认为应该将这样的操作指南放在手边。
 - en: Tip
+  id: totrans-240
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 提示
 - en: Remember to always be careful when working with bootloader commands as improper
     use can make your operating system unbootable.
+  id: totrans-241
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，在处理引导加载程序命令时要小心，因为不当使用可能会导致操作系统无法启动。
 - en: Updating the installation and enhancing the minimal install with additional
     administration and development tools
+  id: totrans-242
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 更新安装并增强最小化安装，添加额外的管理和开发工具
 - en: In this recipe, we will learn how to enhance the minimal install with additional
     tools that will give you a variety of administrative and development options,
     which in turn will prove vital during the lifetime of your server and which are
     essential for some recipes in this book. The minimal install is probably the most
     efficient way you can install a server, but having said that, a minimal install
     does require some additional features in order to make it a more compelling model.
+  id: totrans-243
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们将学习如何通过添加额外的工具来增强最小化安装，这些工具将为你提供各种管理和开发选项，反过来，在你的服务器生命周期中证明是至关重要的，并且对于本书中的一些食谱来说是必不可少的。最小化安装可能是最有效的服务器安装方式，但即便如此，最小化安装确实需要一些额外的功能，以使其成为一个更具吸引力的模型。
 - en: Getting ready
+  id: totrans-244
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a minimal installation of the CentOS
     7 operating system with root privileges and a connection to the Internet in order
     to facilitate the download of additional packages.
+  id: totrans-245
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成这个食谱，你需要一个具有root权限的CentOS 7操作系统的最小化安装，并且需要连接到互联网，以便下载额外的包。
 - en: How to do it...
+  id: totrans-246
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何做到这一点...
 - en: We will begin this recipe by updating the system.
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将从这个食谱开始更新系统。
 - en: 'To update the system, log in as root and type:'
+  id: totrans-248
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要更新系统，请以root身份登录并输入：
 - en: '[PRE47]'
+  id: totrans-249
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: 'CentOS will now search for the relevant updates and, if available, they will
     be installed. On completion and depending on what was updated (that is, kernel
     and new security features to name but a few), you can decide to reboot your computer.
     To do this, type:'
+  id: totrans-250
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: CentOS现在将搜索相关的更新，如果可用，它们将被安装。完成后，根据更新了什么（即内核和新安全功能等），你可以决定重新启动计算机。要这样做，请输入：
 - en: '[PRE48]'
+  id: totrans-251
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: 'Your server will now reboot and return to the login screen. We will now complete
     this recipe and enhance our current installation with a series of package groups
     that will prove to be very useful in the future. To do this, log in as root and
     type:'
+  id: totrans-252
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 你的服务器现在将重新启动并返回到登录屏幕。我们现在将完成这个食谱，并通过一系列包组来增强我们当前的安装，这些包组在未来将证明非常有用。要这样做，请以root身份登录并输入：
 - en: '[PRE49]'
+  id: totrans-253
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: How it works...
+  id: totrans-254
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: The purpose of this recipe is to enhance the minimal installation of the CentOS
     7 operating system and by doing this you have not only introduced yourself to
     the **Yellowdog Updater Modified** (**YUM**) package manager (something to which
     we will return to later on in this book), but you now have a system that is capable
     of running a vast amount of applications right out-of-the-box.
+  id: totrans-255
   prefs: []
   type: TYPE_NORMAL
+  zh: 本食谱的目的是增强CentOS 7操作系统的最小化安装，通过这样做，你不仅介绍了自己给**Yellowdog Updater Modified**（**YUM**）包管理器（我们将在本书后面再次回到这一点），而且你现在拥有了一个能够运行大量应用程序的系统，开箱即用。
 - en: So what have we learned from this experience?
+  id: totrans-256
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: 'We started the recipe by updating the system in order to ensure that it is
     up to date. At this stage, it is often a good idea to reboot the system. It is
     not expected that we will do this very often but it is expected when updating
@@ -1434,5 +1972,9 @@
     we installed was `policycoreutils-python` which provides tools and programs to
     manage the security enhanced access control to Linux, which we will use quite
     often throughout the chapters of this book.'
+  id: totrans-257
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先通过更新系统来开始这个配置过程，以确保系统是最新的。在这个阶段，通常重启系统是个好主意。虽然我们不期望经常这样做，但在安装操作系统后首次更新时是必要的，因为很可能有重大的更新可用。这样做的原因通常是基于希望利用新的内核或更新的安全补丁。在下一阶段，配置过程展示了如何添加一系列可能在将来证明非常有用的软件包组。为了节省时间，我们将安装三个主要软件包组的指令打包在一起：`Base`、`Development
+    Libraries` 和 `Development Tools`。仅此一项操作就安装了超过200个单独的软件包，从而使您的服务器能够编译代码并运行大量即装即用的应用程序，这些应用程序可能在服务器的整个生命周期内都需要。要查看某个组中所有软件包的列表，例如
+    `Base` 组，可以运行 `yum groupinfo Base` 命令。我们还安装了 `policycoreutils-python` 软件包，它提供了管理Linux安全增强访问控制的工具和程序，我们将在本书的各个章节中频繁使用这些工具。

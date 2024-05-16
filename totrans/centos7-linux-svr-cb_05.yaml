@@ -1,45 +1,65 @@
 - en: Chapter 5. Administering the Filesystem
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第5章：管理文件系统
 - en: 'In this chapter, we will cover the following topics:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将涵盖以下主题：
 - en: Creating a virtual block device
+  id: totrans-2
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 创建虚拟块设备
 - en: Formatting and mounting a filesystem
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 格式化和挂载文件系统
 - en: Using disk quotas
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用磁盘配额
 - en: Maintaining a filesystem
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 维护文件系统
 - en: Extending the capacity of the filesystem
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 扩展文件系统的容量
 - en: Introduction
+  id: totrans-7
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 简介
 - en: This chapter is a collection of recipes that provides for the need to drive
     a CentOS-based server solution. From formatting and mounting disks to extending
     a logical volume and maintaining your filesystem and disk quotas, the purpose
     of this chapter is to show you how quickly and easily you can get to grips with
     the task of managing the needs of its users in today's most demanding environments.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章是一系列步骤的集合，旨在满足驱动基于CentOS的服务器解决方案的需求。从格式化和挂载磁盘到扩展逻辑卷以及维护文件系统和磁盘配额，本章的目的是向你展示如何快速轻松地掌握管理当今最苛刻环境中用户需求任务的技能。
 - en: Creating a virtual block device
+  id: totrans-9
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 创建虚拟块设备
 - en: In this recipe, we will create a virtual block device that we will use to simulate
     real devices and partitions so that we can test-drive concepts and commands used
     in all later recipes in this chapter. Working with real disks and partitions often
@@ -49,97 +69,139 @@
     and feel safe, you can easily replace it with "real" hardware devices, partitions,
     and logical volumes (which is a part of LVM; see the later recipe). All you need
     to do is substitute your virtual device with "real" block device names.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本步骤中，我们将创建一个虚拟块设备，用于模拟真实设备和分区，以便我们可以在本章后续的所有步骤中测试驱动概念和命令。使用真实磁盘和分区通常涉及丢失重要数据甚至需要重新安装整个系统的风险。虚拟块设备是学习技术和尝试操作的理想选择，然后再切换到“生产模式”。稍后，如果你获得了足够的经验并感到安全，你可以轻松地将其替换为“真实”硬件设备、分区以及逻辑卷（这是LVM的一部分；请参阅后面的步骤）。你所需要做的就是将你的虚拟设备替换为“真实”块设备名称。
 - en: Getting ready
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a minimal installation of the CentOS
     7 operating system with root access. To create a virtual block device, you should
     have at least one gigabyte of free hard disk space that we will use temporarily
     to create and make. You can delete this reserved space later (or it will be automatically
     deleted on reboot). It's just for testing.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成这个步骤，你需要一个具有root访问权限的CentOS 7操作系统的最小安装。为了创建一个虚拟块设备，你应该至少有一GB的可用硬盘空间，我们将暂时使用这些空间来创建和制作。你可以在之后删除这部分预留空间（或者在重启后它会自动删除）。这只是为了测试。
 - en: How to do it...
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'To begin, log in as `root` and create an empty file with the exact size of
     1 gigabyte:'
+  id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以`root`身份登录并创建一个精确大小为1GB的空文件：
 - en: '[PRE0]'
+  id: totrans-15
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Now, let''s create a loop device from the file we just created:'
+  id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，让我们从刚刚创建的文件中创建一个循环设备：
 - en: '[PRE1]'
+  id: totrans-17
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Next, print the generated loop device name:'
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，打印生成的循环设备名称：
 - en: '[PRE2]'
+  id: totrans-19
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'As this will be the first loop device created in the current system, the output
     will be as follows (`loop0` can be a different number if you have created a loop
     device before):'
+  id: totrans-20
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 由于这将是当前系统中创建的第一个循环设备，输出将如下所示（如果你之前创建了循环设备，`loop0`可能是一个不同的数字）：
 - en: '[PRE3]'
+  id: totrans-21
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'To get a list of all the block devices currently attached to the system, as
     well as important details, type the following:'
+  id: totrans-22
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要获取当前系统上所有已附加的块设备的列表以及重要详细信息，请键入以下内容：
 - en: '[PRE4]'
+  id: totrans-23
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Now, let''s create a new partition table of the type `gpt` on our new loop
     device (confirm the deletion of any data):'
+  id: totrans-24
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，让我们在我们的新循环设备上创建一个类型为`gpt`的新分区表（确认删除任何数据）：
 - en: '[PRE5]'
+  id: totrans-25
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Finally, create device maps from your loop device to make it more similar to
     real hard disk partitions:'
+  id: totrans-26
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，从你的循环设备创建设备映射，使其更类似于真实的硬盘分区：
 - en: '[PRE6]'
+  id: totrans-27
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: How it works...
+  id: totrans-28
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: In this recipe, we have learned how to create a virtual block device that acts
     as a starting point for testing out how to create partitions, logical volumes,
     and filesystems in later recipes in this chapter.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本步骤中，我们学习了如何创建一个虚拟块设备，作为测试如何在本章后续步骤中创建分区、逻辑卷和文件系统的起点。
 - en: So, what did we learn from this experience?
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: 'We started this recipe by creating a new empty file, which was one gigabyte
     in size, in the `/tmp` directory using the `dd` utility. `dd` is used to make
     exact copies of files (which is sometimes called cloning) and expects two parameters:
@@ -152,8 +214,11 @@
     we reach a blocksize times count data received*. In our example, we used a blocksize
     of `1` *Megabyte times 1000 = 1 Gigabyte*. This zero byte data was written to
     our output file (`of`) called `/tmp/test-image.dd`.'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们通过使用`dd`工具在`/tmp`目录中创建一个大小为1GB的新空文件来开始这个操作。`dd`用于制作文件的精确副本（有时称为克隆），并期望两个参数：输入文件（`if`参数）和输出文件（`of`参数）。我们使用`zero`设备（`/dev/zero`）作为输入文件，它返回一个包含零的无尽字节流。然后，我们通过定义块大小（`bs`）和`count`参数来限制流。`bs`定义了一次读取的数据量（以字节为单位），而`count`参数计算`bs`将允许重复多少次。因此，这些参数可以被理解为*当达到块大小乘以计数的数据量时停止复制过程*。在我们的示例中，我们使用了`1`*兆字节乘以1000
+    = 1GB*的块大小。这些零字节数据被写入到我们的输出文件（`of`），称为`/tmp/test-image.dd`。
 - en: After we created this empty file, we created a temporary **loop** device with
     it. A loop device is just a pseudo-device that makes it possible to use a file
     as a **block device**. Often, such a file is a CD ISO image, and using it as a
@@ -162,15 +227,20 @@
     in order to get a list of all available block devices in your system, we used
     the `lsblk` command, and as you can see, this includes our loop device as well.
     Standard loop device names start with the number zero, as in `/dev/loop0`.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们创建了这个空文件之后，我们用它创建了一个临时的**循环**设备。循环设备只是一个伪设备，它使得可以将文件用作**块设备**。通常，这样的文件是一个CD
+    ISO镜像，将其用作循环设备将使其可访问，就像它是一个正常的硬件驱动器一样。任何允许以块为单位读写数据的设备都可以称为块设备；为了获取系统中所有可用块设备的列表，我们使用了`lsblk`命令，正如您所见，这也包括我们的循环设备。标准的循环设备名称以数字零开头，例如`/dev/loop0`。
 - en: Afterwards, we created a new **partition table** on our loop device using the
     `parted` command. A partition table is a table maintained on a disk by the operating
     system describing the partitions on it, and it must be created before we can create
     them. We used the partition table type `gpt`, but you can also use the old msdos
     type here instead.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 之后，我们使用`parted`命令在我们的循环设备上创建了一个新的**分区表**。分区表是操作系统在磁盘上维护的一个表，描述了磁盘上的分区，我们必须先创建分区表，然后才能创建分区。我们使用了分区表类型`gpt`，但您也可以在这里使用旧的msdos类型。
 - en: Normally, when creating a partition table on a virtual block device, we cannot
     access individual partitions or make filesystems for different partitions on it,
     because the partitions cannot be addressed individually. Here we used the `kpartx`
@@ -178,28 +248,39 @@
     to access single partitions for creating filesystems using the notation, `/dev/loop0p1`,
     for partition 1 on loop device 0 and `/dev/loop0p2` for partition 2 on loop device
     0.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，在虚拟块设备上创建分区表时，我们无法访问单个分区或为其上的不同分区创建文件系统，因为分区不能单独寻址。在这里，我们使用`kpartx`命令从分区表创建设备映射，这允许我们稍后使用表示法`/dev/loop0p1`访问循环设备0上的分区1，以及`/dev/loop0p2`访问循环设备0上的分区2，以便为单个分区创建文件系统。
 - en: Congratulations, you have now created a brand new virtual block device with
     a standard partition table, which can be used and accessed as if it were a normal
     disk device.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 恭喜，您现在已经创建了一个带有标准分区表的新虚拟块设备，它可以像普通磁盘设备一样被使用和访问。
 - en: There's more...
+  id: totrans-36
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'If we want to remove a virtual block device, we first have to unmount it from
     the filesystem if it is currently mounted (for example, `umount /dev/loo0p1`).
     Next, we need to detach the virtual block device file from the loop device using
     the `-d` parameter like so: `losetup -d /dev/loop0`. Afterwards, we can delete
     the block file if we want to: `rm /tmp/test-image.dd`.'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们想要移除一个虚拟块设备，首先需要将其从文件系统中卸载，如果它当前已挂载（例如，`umount /dev/loop0p1`）。接下来，我们需要使用`-d`参数将虚拟块设备文件从循环设备中分离，如下所示：`losetup
+    -d /dev/loop0`。之后，如果我们愿意，可以删除块文件：`rm /tmp/test-image.dd`。
 - en: Formatting and mounting a filesystem
+  id: totrans-38
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 格式化和挂载文件系统
 - en: In this recipe, you will be introduced to the standard CentOS filesystems **XFS**,
     **Ext4**, and **Btrfs**. Filesystems form one of the most fundamental parts of
     any operating system and nearly everything depends on them. Here, you will learn
@@ -208,12 +289,17 @@
     and writing. These two techniques are called **formatting** and **mounting** filesystems;
     while you do not do this very often, it remains one of the most fundamental Linux
     system administrator tasks.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，您将了解标准CentOS文件系统**XFS**、**Ext4**和**Btrfs**。文件系统是任何操作系统最基本的部分之一，几乎所有东西都依赖于它们。在这里，您将学习如何在CentOS
+    7中创建不同类型的标准文件系统，以及如何将它们链接到您的系统，以便我们随后可以访问它们进行读写。这两种技术被称为**格式化**和**挂载**文件系统；虽然您不经常这样做，但它仍然是Linux系统管理员最基本的任务之一。
 - en: Getting ready
+  id: totrans-40
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a minimal installation of the CentOS
     7 operating system with root access. We will also use virtual block devices instead
     of real disk devices because it's better to demonstrate the usage of creating
@@ -221,132 +307,191 @@
     real hard disk contents. Therefore, you should have applied the *Creating a virtual
     block device* recipe and created a 1 Gigabyte virtual block device, which will
     be named `/dev/loop0` in this example.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此食谱，您需要具备具有root访问权限的CentOS 7操作系统的最小安装。我们还将使用虚拟块设备而不是实际磁盘设备，因为使用“虚拟”设备演示创建文件系统和格式化磁盘的使用情况比擦除实际硬盘内容更好。因此，您应该已经应用了*创建虚拟块设备*食谱，并创建了一个1GB的虚拟块设备，在本例中将被命名为`/dev/loop0`。
 - en: If you want to apply this recipe for real disk devices, all you have to do is
     replace `/dev/loop0` with your correct partition—for logical volumes (lv) for
     example, `/dev/mapper/myServer/data`, for a SATA device `/dev/sdX`, or for an
     IDE-based hard disk name `/dev/hdX` (where `X` is a character `a-z`).
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您想将此方法应用于实际磁盘设备，您只需将`/dev/loop0`替换为正确的分区——例如，对于逻辑卷（lv），如`/dev/mapper/myServer/data`，对于SATA设备，如`/dev/sdX`，或对于基于IDE的硬盘名称，如`/dev/hdX`（其中`X`是字符`a-z`）。
 - en: How to do it...
+  id: totrans-43
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'In our example, this block device is labeled at `/dev/loop0`. Please note that,
     if you have created more than one block device, your number could be different,
     so please change the name accordingly:'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们的示例中，此块设备被标记为`/dev/loop0`。请注意，如果您创建了多个块设备，您的编号可能会有所不同，因此请相应地更改名称：
 - en: 'First, let''s log in as `root` and show information about all currently available
     block devices:'
+  id: totrans-45
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，让我们以`root`身份登录并显示所有当前可用的块设备的信息：
 - en: '[PRE7]'
+  id: totrans-46
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Now, recheck that we have a valid partition table installed on the device:'
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，重新检查我们是否在设备上安装了有效的分区表：
 - en: '[PRE8]'
+  id: totrans-48
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'The preceding line should print out the following content: `Partition Table:
     gpt`. If this is not the case, let''s create a new partition table (confirm the
     deletion of any data):'
+  id: totrans-49
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '前面的行应该打印出以下内容：`Partition Table: gpt`。如果不是这种情况，让我们创建一个新的分区表（确认删除任何数据）：'
 - en: '[PRE9]'
+  id: totrans-50
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'Now, we will create a new partition spanning the complete disk space with an
     `ext4` filesystem label (no filesystem will be installed yet; it''s just a label):'
+  id: totrans-51
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们将创建一个覆盖整个磁盘空间的新分区，并使用`ext4`文件系统标签（尚未安装文件系统；它只是一个标签）：
 - en: '[PRE10]'
+  id: totrans-52
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'Print the partition table again to show the new partition we just created:'
+  id: totrans-53
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 再次打印分区表以显示我们刚刚创建的新分区：
 - en: '[PRE11]'
+  id: totrans-54
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'Now, let''s remove the partition:'
+  id: totrans-55
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，让我们删除分区：
 - en: '[PRE12]'
+  id: totrans-56
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'We can also create a btrfs-labeled partition:'
+  id: totrans-57
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们还可以创建一个带有btrfs标签的分区：
 - en: '[PRE13]'
+  id: totrans-58
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'Afterwards, let''s create an XFS-labeled partition spanning the whole disk:'
+  id: totrans-59
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，让我们创建一个覆盖整个磁盘的XFS标签分区：
 - en: '[PRE14]'
+  id: totrans-60
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'Now, show the block table again to see what we have changed:'
+  id: totrans-61
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，再次显示块表以查看我们更改了什么：
 - en: '[PRE15]'
+  id: totrans-62
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'As we have only defined the partition type *label*, we still don''t have a
     valid filesystem on our partition; so, in the next step, we format our disk using
     the correct type. We use XFS in our example. Please change `mkfs -t <type>` if
     you use `ext4` or `btrfs` instead:'
+  id: totrans-63
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 由于我们只定义了分区类型*标签*，我们仍然没有在分区上安装有效的文件系统；因此，在下一步中，我们使用正确的类型格式化磁盘。在我们的示例中，我们使用XFS。请根据需要更改`mkfs
+    -t <type>`，如果您使用`ext4`或`btrfs`：
 - en: '[PRE16]'
+  id: totrans-64
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'Next, let''s mount our virtual block device partition on the system, into the
     directory `/media/vbd-1`, and please change `-t <type>` if you use `ext4` or `btrfs`
     instead:'
+  id: totrans-65
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，让我们将虚拟块设备分区挂载到系统上，挂载到目录`/media/vbd-1`，并请根据需要更改`-t <type>`，如果您使用`ext4`或`btrfs`：
 - en: '[PRE17]'
+  id: totrans-66
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 'Finally, test if we can read and write to the new filesystem:'
+  id: totrans-67
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，测试我们是否可以对新文件系统进行读写：
 - en: '[PRE18]'
+  id: totrans-68
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: How it works…
+  id: totrans-69
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的…
 - en: Here, in this recipe, we showed the user how to create CentOS 7 standard partitions
     spanning the whole disk, and then we created some filesystems on them, which is
     called formatting, using different filesystem types. The standard filesystem available
@@ -363,11 +508,18 @@
     as it has a list of very promising features and enhancements, such as copy-on-write,
     which copies files each time you write to them, and which makes it possible to
     go back to former file versions.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个过程中，我们向用户展示了如何创建CentOS 7标准分区，覆盖整个磁盘，然后我们在这些分区上创建了一些文件系统，这称为格式化，使用了不同的文件系统类型。CentOS
+    7中的标准文件系统是XFS，但正如我们在本过程中所学到的，还有许多其他可用的文件系统，包括流行的ext4和btrfs。XFS是一种非常健壮且高性能的文件系统，适用于大型存储配置；它被认为非常成熟和稳定。在CentOS
+    7之前，标准文件系统是ext4，但它有一些限制，并且在处理数百万个文件时性能不佳，被认为勉强适合当今非常大的文件系统。btrfs是一个相对较新的文件系统，包含在CentOS
+    7中，但在撰写本文时仍处于开发阶段，不应在生产系统中使用。预计在后续的CentOS 7小版本中将得到全面支持，并有可能在未来取代XFS成为CentOS的标准文件系统类型，因为它具有一系列非常有前景的特性和增强功能，例如写时复制，每次写入文件时都会复制文件，这使得能够回溯到以前的文件版本。
 - en: So, what have we learned from this experience?
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: We started this recipe by using the `lsblk` command to print a list of all available
     block devices currently attached to the system. We used this command to check
     if our target block device that we want to use for installing partitions and filesystems
@@ -381,22 +533,32 @@
     recommended CentOS 7 tool for these tasks, but there are other programs that do
     the same as well, such as `fdisk` or `gdisk`. If there is no partition table available,
     we must create one of type `gpt` using parted's `mklabel gpt` parameter.
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们通过使用`lsblk`命令开始这个过程，该命令用于打印系统上当前连接的所有可用块设备的列表。我们使用这个命令来检查我们想要用于安装分区和文件系统的目标块设备是否可用。在我们的例子中，我们将使用`/dev/loop0`设备，如果您的系统上名称不同，请更改此名称（如前所述，您也可以使用“真实”磁盘块设备，例如`/dev/sda`，但始终要小心！）。确认设备准备就绪后，我们使用`parted`命令检查磁盘的分区表。分区表对于任何硬盘都是必需的，以便跟踪其上的分区信息。如您所见，我们创建分区表和分区的首选工具是*parted*，因为它是CentOS
+    7官方推荐的工具，但也有其他程序可以执行相同任务，例如`fdisk`或`gdisk`。如果没有可用的分区表，我们必须使用parted的`mklabel gpt`参数创建一个类型为`gpt`的分区表。
 - en: Next, after we created the partition table, we put some partitions on it. Therefore,
     we issued parted's `mkpart` command with the `-a optimal primary ext4 2048KiB
     100%` options.
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，在我们创建了分区表之后，我们在其上放置了一些分区。因此，我们使用parted的`mkpart`命令，并带有`-a optimal primary
+    ext4 2048KiB 100%`选项。
 - en: Note
+  id: totrans-74
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Be careful with the `parted` command all the time and recheck everything before
     executing, as most of its commands will completely destroy all the data currently
     stored on the disk.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 始终小心使用`parted`命令，并在执行前仔细检查所有内容，因为其大多数命令都会彻底销毁磁盘上当前存储的所有数据。
 - en: This will create a new partition starting at 2,048 kilobytes (kb) until the
     end of the disk. We did not start at the very beginning of the disk (0%) as 2,048
     kb is the start of the first sector on the disk to leave some space left to store
@@ -410,8 +572,11 @@
     the `-t` flag, as we did, or use a dot notation, such as `mkfs.xfs`, to specify
     the type you want to format it to. The `mkfs` command gives us a detailed output
     of what it has done, such as how many blocks have been written and so on.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将创建一个新的分区，从2,048千字节（kb）开始直到磁盘末端。我们没有从磁盘的最开始（0%）开始，因为2,048 kb是磁盘上第一个扇区的开始，留下一些空间来存储一些额外的数据。`-a
+    optimal`将分区对齐到物理块大小的倍数，这将保证最佳性能。接下来，我们使用`rm`选项和数字`1`删除了分区，这指的是我们刚刚创建的第一个分区。我们重新创建了类型为`btrfs`和最终`xfs`的新分区。在磁盘分区之后，我们需要在其上创建一个实际的文件系统，因为parted仅将分区标记为特定类型，但并不进行实际的格式化。为了创建文件系统，我们使用`mkfs`工具。你可以使用`-t`标志运行它，就像我们所做的那样，或者使用点表示法，例如`mkfs.xfs`，来指定你想要格式化的类型。`mkfs`命令为我们提供了详细的输出，例如已经写入了多少块等等。
 - en: Finally, after we have created the filesystem on our disk partition, we can
     use the `mount` command to make it available and work with it in our current system.
     `mount` either attaches or detaches a device's filesystem to our system's root
@@ -423,63 +588,92 @@
     system, you can use the `umount` command with the argument of the device you want
     to remove (you can also use the folder it's mounted to; both do work!). In our
     example, to unmount our loop device's first partition, type `umount /dev/loop0p1`.
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，在我们为磁盘分区创建了文件系统之后，我们可以使用`mount`命令使其可用并在当前系统中工作。`mount`要么将设备的文件系统附加到我们系统的根文件系统，要么将其分离。因此，我们需要首先创建一个目录来定义我们想要将其附加到哪里。我们使用目录`/media/vbd-1`作为实际`mount`命令的参数，语法为`mount
+    -t <文件系统类型> <设备> <目录>`。对于几乎所有标准文件系统，你可以跳过`-t`参数，因为它会自动检测正确的类型。要从系统中分离文件系统，你可以使用`umount`命令，参数是你想要移除的设备（你也可以使用它所挂载的文件夹；两者都有效！）。在我们的例子中，要卸载我们的循环设备的第一分区，请输入`umount
+    /dev/loop0p1`。
 - en: After mounting our formatted partition device, we can access it like any other
     component beneath the root folder.
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 在挂载我们格式化的分区设备之后，我们可以像访问根目录下的任何其他组件一样访问它。
 - en: There's more...
+  id: totrans-79
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'In this recipe, we always use one partition spanning the complete available
     disk space. Often, you have more than one partition on a disk, so let''s create
     this kind of layout instead. In this example, we create three 100 MB partitions
     on `/dev/loop0`:'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们总是使用一个分区覆盖整个可用磁盘空间。通常，你会在一个磁盘上有多个分区，所以让我们创建这种布局。在这个例子中，我们在`/dev/loop0`上创建三个100
+    MB的分区：
 - en: 'First, let''s delete our partition once again using the `rm` parameter so that
     we can add new ones:'
+  id: totrans-81
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，让我们再次使用`rm`参数删除我们的分区，以便我们可以添加新的分区：
 - en: '[PRE19]'
+  id: totrans-82
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 'Now, let''s create three equal partitions:'
+  id: totrans-83
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，让我们创建三个等分的分区：
 - en: '[PRE20]'
+  id: totrans-84
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'Let''s review our layout:'
+  id: totrans-85
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 让我们回顾一下我们的布局：
 - en: '[PRE21]'
+  id: totrans-86
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: Note
+  id: totrans-87
   prefs:
   - PREF_IND
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Using the `gpt` partition table, we can create up to 128 primary partitions
     on any disk; when using the older `msdos` partition type, there is a maximum of
     four primary partitions. If you need more, you have to create extended partitions
     out of primary ones.
+  id: totrans-88
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 使用`gpt`分区表，我们可以在任何磁盘上创建多达128个主分区；当使用较旧的`msdos`分区类型时，最多有四个主分区。如果你需要更多，你必须从主分区中创建扩展分区。
 - en: Using disk quotas
+  id: totrans-89
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用磁盘配额
 - en: When administering a Linux multiuser system with many system users, it is wise
     to set some kind of restrictions or limits to the resources shared by the system.
     On a filesystem level, you can either restrict the available hard disk space or
@@ -490,12 +684,16 @@
     directories tidy and clean. Here in this recipe, we will show you how to set up
     a **disk quota** limiting system for XFS filesystems, which puts restrictions
     on the amount of data your system's user accounts are allowed to store.
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 在管理具有多个系统用户的Linux多用户系统时，明智的做法是设置某种限制或限制系统共享资源的限制。在文件系统级别，您可以限制可用硬盘空间或总文件数到固定大小，可以是用户、组或目录级别。引入这些规则可以防止人们“滥发”系统，填满其可用空间，并且通常您的用户将更加意识到重要和不重要数据之间的区别，并且更有可能保持其主目录整洁和干净。在本食谱中，我们将向您展示如何为XFS文件系统设置**磁盘配额**限制系统，该系统对系统用户帐户允许存储的数据量施加限制。
 - en: Getting ready
+  id: totrans-91
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a minimal installation of the CentOS
     7 operating system with root access and a console-based text editor of your choice.
     For this recipe to work, and in order to set quotas, you will need at least one
@@ -507,237 +705,348 @@
     needs to have been installed on a disk with at least 64 GB space, otherwise the
     installer will not create a *separate* logical `/home` volume, which is required
     in this recipe to make quotas work.
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本食谱，您需要具有root访问权限的CentOS 7操作系统的最小安装和您选择的基于控制台的文本编辑器。为了使本食谱工作，并且为了设置配额，您至少需要一个系统用户帐户，除了您的root帐户；如果您还没有一个，请参阅[第3章](part0034_split_000.html#10DJ41-4cf34a6d07944734bb93fb0cd15cce8c
+    "第3章。管理用户和他们的组")，*管理用户和他们的组*，了解如何创建一个。此外，在本食谱的主要部分中，假设您的CentOS 7使用XFS文件系统，这是安装时的标准。最后，您的CentOS
+    7安装需要安装在至少64 GB空间的磁盘上，否则安装程序不会创建单独的逻辑`/home`卷，这是本食谱中使配额工作的要求。
 - en: How to do it...
+  id: totrans-93
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何做到这一点...
 - en: 'Here, we will learn how to set up a quota system for the XFS filesystem in
     two different ways: first, setting limits on the user and groups, and then on
     the directory (project) level. Disk quota systems have to be set on filesystem
     mount.'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，我们将学习如何为XFS文件系统设置配额系统的两种不同方式：首先，设置用户和组的限制，然后设置目录（项目）级别的限制。磁盘配额系统必须在文件系统挂载时设置。
 - en: Enabling user and group quotas
+  id: totrans-95
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 启用用户和组配额
 - en: 'To begin, log in as `root` and open the `fstab` file, which contains static
     mount information:'
+  id: totrans-96
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以`root`身份登录并打开包含静态挂载信息的`fstab`文件：
 - en: '[PRE22]'
+  id: totrans-97
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: 'Now, navigate the cursor to the line containing `/home` (with the *up* and
     *down* arrow keys) and move it to the word `defaults`, and then add the following
     text after `defaults`, separated by commas:'
+  id: totrans-98
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，将光标导航到包含`/home`的行（使用*上*和*下*箭头键），并将其移动到单词`defaults`，然后在`defaults`之后添加以下文本，用逗号分隔：
 - en: '[PRE23]'
+  id: totrans-99
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 'The complete line will look like the following (your device name will be different,
     depending on your individual LVM name; here, it is `myserver`):'
+  id: totrans-100
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完整的行将如下所示（您的设备名称将根据您的个人LVM名称而不同；在这里，它是`myserver`）：
 - en: '[PRE24]'
+  id: totrans-101
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'Save and close the file, then remount the `/home` partition to activate the
     `quota` directive:'
+  id: totrans-102
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件，然后重新挂载`/home`分区以激活`quota`指令：
 - en: '[PRE25]'
+  id: totrans-103
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: 'Next, create a user quota on the total file size for a specific user named
     `john` (change appropriately to match a user available on your system):'
+  id: totrans-104
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，为特定用户名为`john`的用户（根据您系统上可用的用户进行适当更改）创建用户配额，限制其总文件大小：
 - en: '[PRE26]'
+  id: totrans-105
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: 'Next, create a user quota for the total *amount* of files another user, `joe`,
     can have:'
+  id: totrans-106
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，为另一个用户`joe`可以拥有的总*数量*文件创建用户配额：
 - en: '[PRE27]'
+  id: totrans-107
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'Let''s create a file amount and size limit for everyone in the user group `devgrp`
     (the filesystem group `devgrp` must exist):'
+  id: totrans-108
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 让我们为`devgrp`用户组中的每个人设置文件数量和大小限制（文件系统组`devgrp`必须存在）：
 - en: '[PRE28]'
+  id: totrans-109
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: 'Finally, show the whole quota report for the `home` volume:'
+  id: totrans-110
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，显示`home`卷的整个配额报告：
 - en: '[PRE29]'
+  id: totrans-111
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: Enabling project (directory) quotas
+  id: totrans-112
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 启用项目（目录）配额
 - en: 'In order to enable disk quotas for a single directory instead of user or group
     quotas, we have to add the project quota directive called `pquota` to the volume
     containing the directory. As we will use a directory called `/srv/data` for our
     project quota, we need to take the full underlying `/` root partition under quota
     control. For the root partition, we have to set quota flags as kernel boot options:'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了启用单个目录的磁盘配额而不是用户或组配额，我们必须将名为 `pquota` 的项目配额指令添加到包含该目录的卷中。由于我们将使用名为 `/srv/data`
+    的目录进行项目配额，我们需要将完整的底层 `/` 根分区置于配额控制之下。对于根分区，我们必须设置内核引导选项的配额标志：
 - en: 'To begin with, open the following file as root after first making a backup
     of it:'
+  id: totrans-114
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，在备份该文件后，以 root 身份打开以下文件：
 - en: '[PRE30]'
+  id: totrans-115
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: 'Add the `rootflags=pquota` directive to the end of the line (add one whitespace
     character before it) starting with `GRUB_CMDLINE_LINUX=` before the closing double
     quote as shown here:'
+  id: totrans-116
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在行尾（在它之前添加一个空格字符）以 `GRUB_CMDLINE_LINUX=` 开头，在结束的双引号之前，添加 `rootflags=pquota`
+    指令，如下所示：
 - en: '[PRE31]'
+  id: totrans-117
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: 'Save and close the file, and then rebuild the `grub` configuration with our
     new `boot` option:'
+  id: totrans-118
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件，然后使用我们的新引导选项重建 `grub` 配置：
 - en: '[PRE32]'
+  id: totrans-119
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: 'Now, add the `pquota` flag to your root volume in `/etc/fstab` as well:'
+  id: totrans-120
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，在你的 `/etc/fstab` 中为根卷添加 `pquota` 标志：
 - en: '[PRE33]'
+  id: totrans-121
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: 'Navigate the cursor to the line containing the root mount point / and move
     it to the word `defaults`, and then add the following text, separated by a comma:'
+  id: totrans-122
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将光标导航到包含根挂载点 / 的行，并将其移动到单词 `defaults`，然后添加以下文本，用逗号分隔：
 - en: '[PRE34]'
+  id: totrans-123
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: 'The complete line will look similar to the following:'
+  id: totrans-124
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完整的行将类似于以下内容：
 - en: '[PRE35]'
+  id: totrans-125
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: 'Next, reboot your computer to apply your changes to the `root` volume:'
+  id: totrans-126
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，重启计算机以将更改应用到 `root` 卷：
 - en: '[PRE36]'
+  id: totrans-127
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: 'After rebooting, make sure that the `root` volume has project quota enabled,
     which is defined as the `prjquota` flag in the volume''s options (otherwise, if
     it is wrong and doesn''t work, it will show as `noquota`):'
+  id: totrans-128
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 重启后，确保 `root` 卷已启用项目配额，该配额在卷选项中定义为 `prjquota` 标志（否则，如果设置错误且不起作用，它将显示为 `noquota`）：
 - en: '[PRE37]'
+  id: totrans-129
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: 'Next, let''s create our target folder that we want to set quotas for:'
+  id: totrans-130
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，让我们创建我们想要设置配额的目标文件夹：
 - en: '[PRE38]'
+  id: totrans-131
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: 'We need to add a project name and an associated new, unique ID:'
+  id: totrans-132
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们需要添加一个项目名称和一个关联的新唯一 ID：
 - en: '[PRE39]'
+  id: totrans-133
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: 'Now, define that `/srv/data` will use quota rules from our project ID:'
+  id: totrans-134
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，定义 `/srv/data` 将使用我们项目 ID 的配额规则：
 - en: '[PRE40]'
+  id: totrans-135
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: 'Next, initialize the `project` quota for the `root` volume:'
+  id: totrans-136
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，为 `root` 卷初始化 `project` 配额：
 - en: '[PRE41]'
+  id: totrans-137
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: 'Finally, apply the following rule to create specific directory limits:'
+  id: totrans-138
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，应用以下规则来创建特定的目录限制：
 - en: '[PRE42]'
+  id: totrans-139
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: 'Print out our quota rules for this device:'
+  id: totrans-140
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 打印出我们为这个设备设定的配额规则：
 - en: '[PRE43]'
+  id: totrans-141
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: How it works...
+  id: totrans-142
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: 'In this recipe, you learned how easy it is to set up a quota system on a user,
     group, or directory (project) level. Also, you have learned that there are two
     basic ways of defining quotas: either put a restriction on the *total file size*
     (called blocks), or a limit on the *number* of files (called inodes).'
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，你学会了在用户、组或目录（项目）级别设置配额系统是多么容易。此外，你还了解到有两种基本方式来定义配额：要么对 *总文件大小*（称为块）施加限制，要么对
+    *文件数量*（称为 inode）设置限制。
 - en: So, what have we learned from this experience?
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: 'We began this recipe by setting user and group quotas. As you have seen, a
     quota system can easily be enabled by adding associated directives to the partition
     of choice in the `/etc/fstab` file. Therefore, we began this recipe by opening
@@ -763,49 +1072,75 @@
     was `''report -bi -h''`, which generates reports for used filespace (`-b` for
     blocks) and the total amount of files (`-i` for inodes). `-h` specified that we
     want the output to be human-readable in megabytes or gigabytes.'
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从这个配方开始设置用户和组配额。正如你所见，通过在`/etc/fstab`文件中选择的分区添加相关的指令，可以轻松启用配额系统。因此，我们从这个文件开始，为XFS用户和组配额向我们的`/home`分区添加了特殊的配额关键词。为了应用这些更改，我们不得不使用`mount`命令重新挂载文件系统。由于配额系统已成功启动，我们使用`xfs_quota
+    -x -c`命令行在我们的启用文件系统`/home`上设置了一些配额限制。`-x`启用专家模式，而`-c`允许我们在命令行上运行命令作为参数。当运行`xfs_quota`而不带`-c`选项时，你将进入一个交互式提示。首先，我们为用户`john`和`joe`设置了某些用户限制。我们通过定义以下参数及其数字来实现这一点：`bsoft`，`bhard`，`isoft`，`ihard`。如你所见，对于文件大小（**块**）和文件数量（**索引节点**）都有软限制和硬限制。块配额可以以典型的度量单位给出，如千字节（`k`），兆字节（`m`）和千兆字节（`g`），而索引节点是一个数字。软限制是一个阈值，当超过时，会在命令行上打印出警告消息，而硬限制将阻止用户在配额保护下的文件系统中添加更多数据或文件。之后，我们设置了一个基于组的配额。如果你使用`-g`标志，限制将为一个组而不是用户定义。根据用户应被允许拥有的文件数量或总文件大小，将用户分成不同的组，使用组规则可能非常有帮助。最后，我们为所有当前配额限制生成了一个报告。我们使用的命令是`'report
+    -bi -h'`，它为已使用的文件空间（`-b`表示块）和总文件数量（`-i`表示索引节点）生成报告。`-h`指定我们希望输出以兆字节或千兆字节为单位，便于人类阅读。
 - en: 'To test that quotas work, let''s create the following block and inode quotas
     for the user `jack`:'
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了测试配额是否有效，让我们为用户`jack`创建以下块和索引节点配额：
 - en: '[PRE44]'
+  id: totrans-147
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: 'Log in as the user `jack` (`su - jack`) and run the following command:'
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: 以用户`jack`的身份登录（`su - jack`）并运行以下命令：
 - en: '[PRE45]'
+  id: totrans-149
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: 'With this command, the user `john` will try to create a 21 megabyte size file,
     but when starting to write the twentieth megabyte, the following error message
     will appear:'
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过此命令，用户`john`将尝试创建一个21兆字节大小的文件，但在开始写入第二十兆字节时，将出现以下错误消息：
 - en: '[PRE46]'
+  id: totrans-151
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: 'Now, delete the `~/test.dd` file so that we can start another test. The same
     happens if you exceed your file amount limit. Test the following quota limit by
     trying to create 2,000 multiple files while the quota is limited to 1,000; do
     this by adding a lot of new files: `for i in {1..2000}; do touch ~/test$i.txt;
     done`. This results in the following error message:'
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，删除`~/test.dd`文件，以便我们可以开始另一个测试。如果你超过了文件数量限制，同样的情况也会发生。通过尝试创建2000个多文件来测试以下配额限制，而配额限制为1000；通过添加大量新文件来实现这一点：`for
+    i in {1..2000}; do touch ~/test$i.txt; done`。这将导致以下错误消息：
 - en: '[PRE47]'
+  id: totrans-153
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: 'To temporarily turn off user and group quota checking for a specific filesystem,
     you can run `xfs_quota -x -c ''off -u -g'' /home/` (`-u` for user, `-g` for group)
     as `root` user. This is only temporary; to re-enable it, you need to remount the
     filesystem of interest, which is `umount /home;mount -a`. To remove a specific
     quota rule, just set its limit to zero, for example:'
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: 要暂时关闭特定文件系统的用户和组配额检查，可以以`root`用户身份运行`xfs_quota -x -c 'off -u -g' /home/`（`-u`代表用户，`-g`代表组）。这只是一时的；要重新启用它，需要重新挂载感兴趣的文件系统，即`umount
+    /home;mount -a`。要删除特定的配额规则，只需将其限制设置为零，例如：
 - en: '[PRE48]'
+  id: totrans-155
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: Next, we set up quota on a *directory*, instead of the user/group level. This
     is a feature only XFS file systems are capable of; all other filesystems can only
     set quotas on a disk or partition level. Being able to control the disk usage
@@ -830,48 +1165,70 @@
     can be used for fine-grain multiple folder quota rules. For every directory, you
     can set up a new project name or reuse a specific one, making this system very
     flexible.
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们在*目录*级别而不是用户/组级别设置配额。这是XFS文件系统独有的功能；所有其他文件系统只能在磁盘或分区级别设置配额。如果您不想为特权用户或组设置配额限制，则能够控制目录层次结构的磁盘使用量非常有用。要激活目录配额，我们首先必须将其作为内核引导选项启用，因为默认情况下，根卷被标记为`noquota`。此外，我们在`/etc/fstab`中为根分区添加了`prjquota`指令以使其生效。如果您想了解更多关于内核引导选项的信息，请阅读[第1章](part0015_split_000.html#E9OE1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第1章。安装CentOS")中的引导加载程序配方，*安装CentOS*。要为根分区设置文件系统标志，我们需要重新启动系统。完成此操作后，我们通过查看`mtab`文件确保已成功设置引导选项，该文件列出了所有当前挂载的文件系统。接下来，我们在`/etc/projid`文件中设置了一个具有关联唯一项目ID（我们随机选择`1400`）的项目名称。在下一步中，我们将此新项目ID（`1400`）应用于`/etc/projects`文件中的目录`/srv/data`。该系统允许将特定的项目配额规则应用于许多不同的目录。之后，我们使用`xfs_quota`命令的`project`选项为根分区初始化项目配额，并为该项目名称创建了一个`limit`配额规则。在`/etc/projects`文件中定义的与相应项目ID对应的目录都会受到此规则的影响。这种类型的系统可用于精细的多文件夹配额规则。对于每个目录，您可以设置一个新的项目名称或重用特定的名称，使该系统非常灵活。
 - en: 'In this recipe, we have created a block size hard limit of 1,200 megabytes
     for our project name, which is `myProject`. To test this quota, type the following:'
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本例中，我们为项目名称`myProject`设置了1200兆字节的块大小硬限制。要测试此配额，请输入以下内容：
 - en: '[PRE49]'
+  id: totrans-158
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: 'This should stop `dd`, exactly after writing 1200 megabytes, with the following
     command line error message:'
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用以下命令行错误消息，应该可以在写入1200兆字节后准确停止`dd`：
 - en: '[PRE50]'
+  id: totrans-160
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE50]'
 - en: There's more...
+  id: totrans-161
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: As the name implies, the `xfs_quota` program shown in this recipe only works
     for XFS filesystems. If you want to use disk quotas on a user or group level for
     other file systems such as ext4 or btrfs, you have to install the `quota` package
     (`yum install quota`). Setting quotas works in a similar way to the steps shown
     in this recipe; please read the manual `man quota` to get you started.
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 顾名思义，本例中所示的`xfs_quota`程序仅适用于XFS文件系统。如果您想为其他文件系统（如ext4或btrfs）在用户或组级别使用磁盘配额，则必须安装`quota`软件包（`yum
+    install quota`）。设置配额的方式与本例中所示的步骤类似；请阅读手册`man quota`以开始使用。
 - en: Maintaining a filesystem
+  id: totrans-163
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 维护文件系统
 - en: In this recipe, we will learn how to check the consistency and optionally repair
     CentOS 7 filesystems. Filesystem inconsistencies are rare events and filesystem
     checks normally are running automatically at boot time. But system administrators
     should also know how to run such tests manually, if they believe there is a problem
     with the filesystem.
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将学习如何检查和可选地修复CentOS 7文件系统的完整性。文件系统不一致是罕见的事件，文件系统检查通常在启动时自动运行。但是，系统管理员也应该知道如何手动运行这些测试，如果他们认为文件系统存在问题。
 - en: Getting ready
+  id: totrans-165
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: 'To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges. We will use virtual block devices instead
     of real disk devices because we *cannot* apply any file system check on a *mounted*
@@ -879,87 +1236,123 @@
     recipe and created a 1 gigabyte virtual block device with two partitions of half
     the total size: first, a partition with an XFS, and then another one with an ext4
     filesystem. We will use the virtual block device named `/dev/loop0` in this example.'
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本教程，你需要一个具有root权限的CentOS 7操作系统的正常安装。我们将使用虚拟块设备而不是真实磁盘设备，因为我们*不能*在*已挂载*的磁盘上应用任何文件系统检查。因此，你应该已经应用了*格式化和挂载文件系统*教程，并创建了一个1GB的虚拟块设备，有两个分区，每个分区大小为总大小的一半：首先是一个带有XFS的分区，然后是另一个带有ext4文件系统的分区。在本例中，我们将使用名为`/dev/loop0`的虚拟块设备。
 - en: As said before, these can be easily exchanged with real disk names.
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: 如前所述，这些可以很容易地替换为真实的磁盘名称。
 - en: How to do it...
+  id: totrans-168
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'To begin with, log in as `root` and show information about the current block
     devices attached to the system:'
+  id: totrans-169
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以`root`身份登录，并显示当前连接到系统的块设备信息：
 - en: '[PRE51]'
+  id: totrans-170
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE51]'
 - en: 'Here, you should see two partitions on the `loop0` device: `/dev/loop0p1` and
     `/dev/loop0p2`. If you see that they are currently mounted to the system, unmount
     them now:'
+  id: totrans-171
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在这里，你应该看到`loop0`设备上有两个分区：`/dev/loop0p1`和`/dev/loop0p2`。如果你看到它们当前被挂载到系统上，请现在卸载它们：
 - en: '[PRE52]'
+  id: totrans-172
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE52]'
 - en: 'Now, let''s check the XFS filesystem which in our example is loop0p1 (change
     appropriately):'
+  id: totrans-173
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，让我们检查示例中的loop0p1（适当更改）的XFS文件系统：
 - en: '[PRE53]'
+  id: totrans-174
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE53]'
 - en: 'For the second partition on the disk that is ext4, we will use the following
     line:'
+  id: totrans-175
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于磁盘上的第二个ext4分区，我们将使用以下行：
 - en: '[PRE54]'
+  id: totrans-176
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE54]'
 - en: How it works...
+  id: totrans-177
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 工作原理...
 - en: In this recipe, we have learned how easy it is to run a filesystem check on
     a XFS or ext4 filesystem. The most important lesson you should have learned here
     is that you always have to *unmount* your disk partitions before running any filesystem
     checks!
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们学习了在XFS或ext4文件系统上运行文件系统检查是多么简单。你应该学到的最重要的一课是，在运行任何文件系统检查之前，你总是必须*卸载*你的磁盘分区！
 - en: So, what did we learn from this experience?
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: Since we cannot run any filesystem checks on any mounted device, if you want
     to check your system's disks and partitions, often you have to run such checks
     in the *rescue* mode where your filesystems are not mounted (for example, you
     cannot unmount the root partition to check because it's needed by the system all
     the time, whereas, for a separate home partition, it would be possible).
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们不能在任何已挂载的设备上运行文件系统检查，如果你想检查系统的磁盘和分区，通常你必须在*救援*模式下运行这些检查，其中你的文件系统未挂载（例如，你不能卸载根分区来检查，因为它一直需要由系统使用，而对于单独的home分区，这是可能的）。
 - en: For the XFS file system, we use the `xfs_repair` tool, and for all others we
     will use the `fsck` program with the `-f` parameter (force) to check our filesystem.
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于XFS文件系统，我们使用`xfs_repair`工具，对于其他所有文件系统，我们将使用带有`-f`参数（强制）的`fsck`程序来检查我们的文件系统。
 - en: It is important to note that we always need to run `fsck` instead of the specific
     `fsck.<file system type>` (such as `fsck.ext4`, `fsck.btrfs`), because it auto-detects
     the right tool for you. This is necessary because if you run the wrong specific
     `fsck.<file system type>` tool on the wrong filesystem (let's say running `fsck.ext4`
     on a btrfs filesystem), it can completely destroy it!
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: 重要的是要注意，我们总是需要运行`fsck`而不是特定的`fsck.<文件系统类型>`（如`fsck.ext4`，`fsck.btrfs`），因为它会自动检测正确的工具。这是必要的，因为如果你在错误的文件系统上运行错误的特定`fsck.<文件系统类型>`工具（比如在btrfs文件系统上运行`fsck.ext4`），它可能会完全破坏它！
 - en: There's more...
+  id: totrans-183
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: So far, we have only showed you how to *check* a filesystem using `xfs_repair`
     and `fsck`. If some errors occur during the "checking" run on an XFS filesystem,
     run `xfs_repair` without the `-n` option—for example, use `xfs_repair /dev/loop0p1`.
@@ -967,62 +1360,91 @@
     (`a` for auto repair)—for example, `fsck -a /dev/loop0p2`. For `fsck`, if you
     got a lot of errors, it's best to use `-y` as well so that you do not have to
     confirm every error fix.
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，我们只向你展示了如何使用`xfs_repair`和`fsck`*检查*文件系统。如果在XFS文件系统的“检查”运行期间出现错误，请在不使用`-n`选项的情况下运行`xfs_repair`——例如，使用`xfs_repair
+    /dev/loop0p1`。在非XFS分区（如ext4）上，你将使用`fsck`的`-a`选项（`a`代表自动修复）——例如，`fsck -a /dev/loop0p2`。对于`fsck`，如果你有很多错误，最好也使用`-y`，这样你就不必确认每个错误修复。
 - en: 'Now, let''s simulate what would happen if we got a corrupted XFS filesystem
     using our virtual block device (*never* do this on any real disk partition!):'
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，让我们模拟如果我们使用虚拟块设备获得了一个损坏的XFS文件系统会发生什么（*千万不要*在任何真实磁盘分区上这样做！）：
 - en: 'First, mount the `/dev/loop0p1` partition to your root filesystem:'
+  id: totrans-186
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，将`/dev/loop0p1`分区挂载到你的根文件系统上：
 - en: '[PRE55]'
+  id: totrans-187
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE55]'
 - en: 'Next, create a large number of files on this mounted filesystem—for example,
     `2000` files:'
+  id: totrans-188
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，在这个挂载的文件系统上创建大量文件——例如，`2000`个文件：
 - en: '[PRE56]'
+  id: totrans-189
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE56]'
 - en: 'Now, unmount the device and corrupt the filesystem using `dd`:'
+  id: totrans-190
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，卸载设备并使用`dd`破坏文件系统：
 - en: '[PRE57]'
+  id: totrans-191
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE57]'
 - en: 'Now, run a filesystem check:'
+  id: totrans-192
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，运行文件系统检查：
 - en: '[PRE58]'
+  id: totrans-193
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE58]'
 - en: 'This will most likely show you a list of corrupted files; in order to fix it,
     use the following line:'
+  id: totrans-194
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 这很可能会向你显示一份损坏文件的列表；为了修复它，请使用以下行：
 - en: '[PRE59]'
+  id: totrans-195
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE59]'
 - en: You can also simulate such a filesystem corruption on your ext4 virtual block
     device, and then repair it using `fsck -ay /dev/loop0p2`.
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: 你还可以在你的ext4虚拟块设备上模拟文件系统损坏，然后使用`fsck -ay /dev/loop0p2`修复它。
 - en: Extending the capacity of the filesystem
+  id: totrans-197
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 扩展文件系统的容量
 - en: CentOS 7 uses the **Logical Volume Manager** (**LVM**) to organize the structure
     and available capacity of your partitions. It is a very dynamic and flexible system
     that can be extended or rearranged over time, and which is essential in today's
@@ -1032,12 +1454,16 @@
     at the same steady pace. In this recipe, you will learn how to work with the LVM
     system and how to extend your physical drives, and also how to shrink and extend
     the capacity of your filesystems.
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: CentOS 7使用**逻辑卷管理器**（**LVM**）来组织你的分区的结构和可用容量。它是一个非常动态和灵活的系统，可以随着时间的推移进行扩展或重新排列，并且在当今最苛刻和不断变化的环境中是必不可少的。目前，到处都可以听到大数据或云计算这样的流行词。由于不断产生大量数据，存储需求和磁盘空间必须以同样的稳定速度增长，。在这个食谱中，你将学习如何使用LVM系统，以及如何扩展你的物理驱动器，以及如何缩小和扩展你的文件系统的容量。
 - en: Getting ready
+  id: totrans-199
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges. We will use virtual block devices instead
     of real disk devices to show you from scratch how to set up a LVM first, and afterwards
@@ -1045,169 +1471,243 @@
     and create three 1 gigabyte virtual block devices with the GPT partition table,
     which will be labeled as `/dev/loop0`, `/dev/loop1`, and `/dev/loop2` in this
     example.
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成这个食谱，你需要一个安装了CentOS 7操作系统并具有root权限的工作环境。我们将使用虚拟块设备而不是真实磁盘设备，从头开始教你如何设置LVM，然后如何使用它。请阅读*创建虚拟块设备*食谱，并创建三个1GB的虚拟块设备，使用GPT分区表，在本例中将被标记为`/dev/loop0`、`/dev/loop1`和`/dev/loop2`。
 - en: Again, feel free to use real disk devices if you feel ready for it.
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次，如果你准备好了，可以自由使用真实磁盘设备。
 - en: How to do it...
+  id: totrans-202
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何做到这一点...
 - en: 'First, we will start by creating an LVM test environment similar to the standard
     CentOS 7 LVM structure, which is set up during the installation of every server
     system:'
+  id: totrans-203
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，我们将开始创建一个类似于标准CentOS 7 LVM结构的LVM测试环境，该结构在每个服务器系统的安装过程中设置：
 - en: 'First, let''s log in as `root` and show information about our virtual block
     devices:'
+  id: totrans-204
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，让我们以`root`身份登录并显示有关我们的虚拟块设备的信息：
 - en: '[PRE60]'
+  id: totrans-205
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE60]'
 - en: 'Next, create new partitions spanning the whole disk on each of the three virtual
     block devices (without a filesystem label):'
+  id: totrans-206
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，在每个三个虚拟块设备上创建跨越整个磁盘的新分区（不带文件系统标签）：
 - en: '[PRE61]'
+  id: totrans-207
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE61]'
 - en: 'Now, let''s create LVM *physical volumes* on each of the loop devices (type
     `yes` to remove the `gpt` label):'
+  id: totrans-208
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，让我们在每个循环设备上创建LVM*物理卷*（输入`yes`以移除`gpt`标签）：
 - en: '[PRE62]'
+  id: totrans-209
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE62]'
 - en: 'Next, show information about our physical volumes:'
+  id: totrans-210
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，显示有关我们的物理卷的信息：
 - en: '[PRE63]'
+  id: totrans-211
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE63]'
 - en: 'Next, we will create a new LVM volume group on our first physical volume:'
+  id: totrans-212
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们将在第一个物理卷上创建一个新的LVM卷组：
 - en: '[PRE64]'
+  id: totrans-213
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE64]'
 - en: 'Now, show information about the created group:'
+  id: totrans-214
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，显示有关创建的组的信息：
 - en: '[PRE65]'
+  id: totrans-215
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE65]'
 - en: 'Afterwards, let''s create some logical volumes on our first volume group, which
     will be treated as virtual partitions in our Linux system:'
+  id: totrans-216
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，让我们在我们的第一个卷组上创建一些逻辑卷，这些逻辑卷将被视为我们Linux系统中的虚拟分区：
 - en: '[PRE66]'
+  id: totrans-217
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE66]'
 - en: 'Next, show information about the logical volumes:'
+  id: totrans-218
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，显示有关逻辑卷的信息：
 - en: '[PRE67]'
+  id: totrans-219
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE67]'
 - en: 'Now, display how much free space our underlying volume group has left, which
     becomes important if you want to expand some logical volumes (see the section
     `Free PE / Size` in the output):'
+  id: totrans-220
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，显示我们的底层卷组还剩下多少可用空间，如果你想扩展一些逻辑卷，这将变得很重要（查看输出中的`Free PE / Size`部分）：
 - en: '[PRE68]'
+  id: totrans-221
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE68]'
 - en: 'Afterwards, let''s create the filesystems on those new logical volumes:'
+  id: totrans-222
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，让我们在那些新的逻辑卷上创建文件系统：
 - en: '[PRE69]'
+  id: totrans-223
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE69]'
 - en: Now, after we have created our test LVM system (which is very similar to the
     real CentOS LVM standard layout, but with smaller sizes), let's start working
     with it.
+  id: totrans-224
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，在我们创建了测试LVM系统（它与真实的CentOS LVM标准布局非常相似，但尺寸较小）之后，让我们开始使用它。
 - en: 'First, let''s shrink the `root` partition, which is currently `400` megabytes
     (`M`) in size, by `200` megabytes, and afterwards, let''s increase the `home`
     partition by `500` megabytes (confirm the possible data loss):'
+  id: totrans-225
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，让我们将`root`分区的大小从当前的`400`兆字节(`M`)缩小`200`兆字节，然后，让我们将`home`分区的大小增加`500`兆字节（确认可能的数据丢失）：
 - en: '[PRE70]'
+  id: totrans-226
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE70]'
 - en: Use `vgdisplay myVG1` again to see how the volume group's free space changes
     by running the previous commands (see `Free PE / Size`).
+  id: totrans-227
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 再次使用`vgdisplay myVG1`来查看运行前面的命令后卷组的可用空间如何变化（查看`Free PE / Size`）。
 - en: 'Now, let''s expand the XFS filesystem on the grown logical volume:'
+  id: totrans-228
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，让我们扩展增长，逻辑卷上的XFS文件系统：
 - en: '[PRE71]'
+  id: totrans-229
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE71]'
 - en: Note
+  id: totrans-230
   prefs:
   - PREF_IND
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: It is very important not to use `resize2fs` for growing XFS filesystems, because
     it's incompatible and can corrupt them.
+  id: totrans-231
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 非常重要的一点是，不要使用`resize2fs`来扩展XFS文件系统，因为它们不兼容，可能会导致文件系统损坏。
 - en: 'Now, let''s say that after some time your data has grown again, and you need
     the home partition to be 1.5 gigabytes (`G`), but you only have 184.00 MiB left
     on the underlying volume group. First, we need to add our two prepared physical
     volumes from the beginning of this recipe to our volume group:'
+  id: totrans-232
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，假设过了一段时间你的数据再次增长，你需要将home分区扩展到1.5千兆字节(`G`)，但你的底层卷组只剩下184.00 MiB。首先，我们需要将本菜谱开始时准备的两个物理卷添加到我们的卷组中：
 - en: '[PRE72]'
+  id: totrans-233
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE72]'
 - en: 'Afterwards, we have enough free space in our volume group (see `Free PE / Size`)
     to expand our home logical volume (the volume must stay mounted):'
+  id: totrans-234
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，我们的卷组中有足够的可用空间（查看`Free PE / Size`）来扩展我们的home逻辑卷（卷必须保持挂载状态）：
 - en: '[PRE73]'
+  id: totrans-235
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE73]'
 - en: How it works...
+  id: totrans-236
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: 'Here, in this recipe, we have shown you how to work with the LVM for XFS partitions.
     It has been developed with the purpose of managing disk space on several hard
     disks dynamically. You can easily merge many physical hard disks together to make
@@ -1219,11 +1719,15 @@
     layers to a hard disk, and which will be explained in this section so as to understand
     the concepts behind it: **physical** **volume** (**pv**), **volume** **group**
     (**vg**), and **logical volume** (**lv**).'
+  id: totrans-237
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本菜谱中，我们向您展示了如何使用LVM处理XFS分区。它是为了动态管理多个硬盘上的磁盘空间而开发的。您可以轻松地将多个物理硬盘合并在一起，使它们对系统来说就像一个单一的虚拟硬盘。这使得它比使用传统的静态分区更加灵活和可扩展。传统的分区受限于它们所在的硬盘总容量，不能超过这个容量，而且它们的静态分区布局不容易改变。此外，我们还介绍了一些重要的LVM技术术语，它们为硬盘提供了不同的抽象层，本节将解释这些概念背后的内容：**物理卷**（**pv**）、**卷组**（**vg**）和**逻辑卷**（**lv**）。
 - en: So, what did we learn from this experience?
+  id: totrans-238
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: We started this recipe by creating three virtual block devices of 1 gigabyte
     (`G`) each and then one partition spanning the whole device on each of them. Afterwards,
     we defined these single-partition devices as physical volumes (pv) using the `pvcreate`
@@ -1240,8 +1744,10 @@
     one vg on your system, and you can identify them by the unique names you are giving
     to them. So, in summary, to extend the space of your vg, you have to create pv's
     out of physical drives, which you can then add to.
+  id: totrans-239
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从这个菜谱开始，创建了三个每个1千兆字节（`G`）的虚拟块设备，然后在每个设备上创建了一个跨越整个设备的分区。之后，我们使用`pvcreate`命令将这些单分区设备定义为物理卷（pv）。pv是LVM术语，定义了LVM世界中的存储单元。它必须定义在分区、全驱动器或循环设备上。pv只是对周围分区中所有可用空间的抽象，以便我们可以基于LVM进行工作。接下来，我们使用`vgcreate`命令创建了一个卷组（vg），在这里我们还必须定义一个我们选择的卷组名称，并将第一个pv作为基本存储卷放入其中。如你所见，一个vg至少包含一个pv（我们稍后会添加更多pv）。向vg添加或从vg删除pv是整个LVM系统可扩展性概念的核心。pv不必都是相同的大小，并且可以通过添加数十个新物理驱动器（全部定义为pv）来扩展vg。你的系统上可以有多个vg，并且可以通过你给它们的唯一名称来识别它们。因此，总之，要扩展vg的空间，你必须从物理驱动器创建pv，然后你可以添加它们。
 - en: Finally, we created logical volumes (lv) on our vg, which can be seen and used
     like real physical partitions within a vg. Here, we created three lv's using the
     `lvcreate` command, by which we need to define the name of the vg (remember, there
@@ -1256,29 +1762,40 @@
     to a vg, and it is not possible to create them without it or outside its spacial
     boundaries. If you need to extend an lv's space over the borders of the underlying
     vg, you have to extend the vg, as show in this recipe.
+  id: totrans-240
   prefs: []
   type: TYPE_NORMAL
+  zh: 最终，我们在我们的卷组（vg）上创建了逻辑卷（lv），这些逻辑卷在卷组内部可以像真实的物理分区一样被看到和使用。在这里，我们使用`lvcreate`命令创建了三个lv，通过这个命令我们需要定义我们想要放置目标lv的vg的名称（记住，你的系统上可以有多个vg），以及卷的大小，以及作为最后一个参数的名称。你可以将多个lv添加到一个vg中，并且不需要使用vg底层可用空间中的全部分配空间。你可以非常灵活地使用它。最好的部分是，你关于卷的大小和布局的决定不必永远固定；你可以在任何时候更改它们。这是一个非常动态的系统，可以扩展和缩小，删除和创建，而不需要事先卸载卷。但是你必须记住，所有lv都绑定到一个vg，没有vg就不可能创建它们，也不能超出其空间边界。如果你需要将lv的空间扩展到基础vg的边界之外，你必须扩展vg，如本菜谱所示。
 - en: Note
+  id: totrans-241
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: 'As you may have seen, for every LVM term, there is a "display" and "create"
     command, so it''s easy to remember: `pvdisplay`, `vgdisplay`, `lvdisplay`, `pvcreate`,
     `vgcreate`, `lvcreate`.'
+  id: totrans-242
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可能已经注意到，对于每个LVM术语，都有一个“显示”和“创建”命令，所以很容易记住：`pvdisplay`，`vgdisplay`，`lvdisplay`，`pvcreate`，`vgcreate`，`lvcreate`。
 - en: 'After you have successfully created your lv''s, you can work with them as you
     would with every other block device partition on your system. The only difference
     is that they reside in special device folders: `/dev/<vg name>/<lv name>` or `/dev/mapper/<vg
     name>/<lv name>`. For example, the home volume created in this example has the
     name `/dev/myVG1/home`. Finally, in order to use them as normal mount points,
     we created some test filesystems on them.'
+  id: totrans-243
   prefs: []
   type: TYPE_NORMAL
+  zh: 在成功创建了逻辑卷之后，您可以像处理系统上的其他块设备分区一样处理它们。唯一的区别是它们位于特殊的设备文件夹中：`/dev/<vg name>/<lv
+    name>`或`/dev/mapper/<vg name>/<lv name>`。例如，在本示例中创建的家卷的名称为`/dev/myVG1/home`。最后，为了将它们用作正常的挂载点，我们在它们上创建了一些测试文件系统。
 - en: In the second part of this recipe, we showed you how to extend our vg and how
     to shrink and expand our lv's test system.
+  id: totrans-244
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱的第二部分中，我们向您展示了如何扩展我们的卷组以及如何缩小和扩展我们的逻辑卷测试系统。
 - en: We started by using the `vgdisplay myVG1` command to show the currently available
     space on the vg. In the command output, we saw that our current volume group has
     a total of `996M` (`VG Size`), the allocated size from our lv's (`swap`, `home`,
@@ -1297,8 +1814,11 @@
     command, `xfs_growfs`, which will, without defining a limit parameter, use the
     complete unallocated area for the XFS filesystem. If you want to resize any other
     filesystem type, such as ext4, you would use the `resize2fs` command instead.
+  id: totrans-245
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先使用`vgdisplay myVG1`命令来显示卷组上当前可用的空间。在命令输出中，我们看到我们的当前卷组总共有`996M`（`VG Size`），我们的逻辑卷（`swap`，`home`，`root`）的已分配大小为`512M`（`Alloc
+    PE / Size`），空闲大小为`484M`（`Free PE /Size`）。接下来，我们使用`lvresize`命令来缩小和扩展逻辑卷的根和家。`-L`参数设置卷的新大小，使用`+`或`-`符号，值将添加到或从逻辑卷的实际大小中减去。如果没有它，该值将被视为绝对值。请记住，我们只能增加家分区，因为当前卷布局没有占用卷组的总空间。调整大小后，如果我们再次使用`vgdisplay`命令，我们会看到我们现在在卷组中占用了更多的空间；其空闲大小已减少到`184M`。由于我们将`home`卷从`100M`扩展到`500M`，因此我们需要记住也要扩展其XFS文件系统，因为扩展卷不会自动扩展其文件系统。因此，当前卷的`400M`未分配，没有任何文件系统信息。我们使用了`xfs_growfs`命令，该命令将不定义限制参数，使用完整的未分配区域用于XFS文件系统。如果您想调整任何其他文件系统类型的大小，例如ext4，则可以使用`resize2fs`命令代替。
 - en: Finally, we wanted to grow the home volume by `1.5G`, but we only have `184M`
     left on our vg to expand. This is where LVM really *shines*, because we can just
     add some more physical volumes to it (in the real world, you would just install
@@ -1308,13 +1828,17 @@
     in total size, so finally we could extend our home lv as it would now fit into
     it. As a last step, we expanded the XFS file system once again to fill up the
     whole 2G home volume size.
+  id: totrans-246
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，我们想将家卷扩展`1.5G`，但我们只有`184M`剩余的空间来扩展。这就是LVM真正*闪耀*的地方，因为我们可以简单地向其中添加更多的物理卷（在现实世界中，您只需在服务器中安装新的硬盘并将其用作pvs）。我们向您展示了如何使用`vgextend`命令将两个1G大小的pvs添加到卷组中来*扩展*卷组的容量。之后，我们使用`vgdisplay`查看我们的卷组现在已经增长了3G的总大小，所以最后我们可以扩展我们的家逻辑卷，因为它现在可以适合它。作为最后一步，我们再次扩展了XFS文件系统，以填充整个2G的家卷大小。
 - en: Please remember, all the time, that if you use vg's with several physical hard
     disks, your data will be distributed among these. An LVM is not a RAID system
     and has no redundancy, so if one hard disk fails, your complete vg will fail too
     and your data will be lost! In order to deal with this problem, a proposed solution
     could be to use a physical RAID system for your hard disks and create an LVM on
     top of that.
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
+  zh: 请始终牢记，如果你在多个物理硬盘上使用vg，你的数据将会在这些硬盘之间分布。LVM并非RAID系统，不具备冗余性，因此如果一个硬盘损坏，你的整个vg也会随之失效，数据将丢失！为了解决这个问题，一个建议的解决方案是在硬盘上使用物理RAID系统，并在其上创建LVM。
