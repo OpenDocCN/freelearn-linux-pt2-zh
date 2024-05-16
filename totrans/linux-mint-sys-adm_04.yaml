@@ -1,145 +1,211 @@
 - en: Chapter 4. Account Provisioning
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第4章 账户配置
 - en: '*Creating users and groups is one of the most important and basic tasks for
     system administrators. Before learning more advanced concepts, it''s essential
     to know how to deal with user''s accounts and groups.*'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '*创建用户和组是系统管理员最重要的基本任务之一。在学习更高级的概念之前，了解如何处理用户账户和组是至关重要的。*'
 - en: 'In this chapter we will learn the following:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将学习以下内容：
 - en: Finding out the current user
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 找出当前用户
 - en: Becoming the root user
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 成为root用户
 - en: Changing a user's password
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更改用户密码
 - en: Adding a new user
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 添加新用户
 - en: Adding a new group
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 添加新组
 - en: Adding a user to a specific group
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将用户添加到特定组
 - en: Changing user privileges
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更改用户权限
 - en: Who am I?
+  id: totrans-10
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 我是谁？
 - en: A user account is required for accessing Linux Mint. Actually, when you installed
     the operating system, you typed some data about a user, and his or her account
     was created. Sometimes the system administrator needs to become a different user
     of the system, so it's interesting to know which user is currently using the shell.
     We're going to explain how to do that.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 访问Linux Mint需要用户账户。实际上，当你安装操作系统时，你输入了有关用户的一些数据，并创建了他或她的账户。有时系统管理员需要成为系统上的另一个用户，因此了解当前使用shell的用户是谁很有趣。我们将解释如何做到这一点。
 - en: Time for action – finding out the current user
+  id: totrans-12
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 找出当前用户
 - en: Before proceeding, you should launch the **MATE Terminal** application.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 在继续之前，你应该启动**MATE终端**应用程序。
 - en: 'Type the following command in the shell:'
+  id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在shell中输入以下命令：
 - en: '[PRE0]'
+  id: totrans-15
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'As the output of the previously executed command, you''ll get the name of the
     user who is currently using the shell; in our case it will be the following:'
+  id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 作为先前执行的命令的输出，你将获得当前使用shell的用户的名称；在我们的情况下，将是以下内容：
 - en: '[PRE1]'
+  id: totrans-17
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*What just happened?*'
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚才发生了什么？*'
 - en: You have learned how to use the `whoami` command for identifying which user
     is currently logged in and using the shell. This command is pretty simple, and
     it just returns the username without additional information.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 你已经学会了如何使用`whoami`命令来识别当前登录并使用shell的用户。这个命令非常简单，它只返回用户名而不带额外信息。
 - en: Becoming the root user
+  id: totrans-20
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 成为root用户
 - en: Each GNU/Linux operating system works with a super user called **root**. This
     is a special user of the operating system that is used by the system administrator.
     The root user has all kinds of permissions over files and programs. Actually,
     some specific operations can only be executed through this user.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个GNU/Linux操作系统都有一个超级用户，称为**root**。这是系统管理员使用的操作系统的一个特殊用户。root用户对文件和程序拥有各种权限。实际上，某些特定操作只能通过此用户执行。
 - en: Linux Mint doesn't enable the root user by default. However, Mint uses special
     commands that allow users to become the root user. This means that regular users
     can execute actions that were initially reserved for the root user. Also, Mint
     configures the `sudo` command, allowing the user created during the installation
     process to become the root user.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux Mint默认不启用root用户。然而，Mint使用特殊命令允许用户成为root用户。这意味着普通用户可以执行最初为root用户保留的操作。此外，Mint配置了`sudo`命令，允许在安装过程中创建的用户成为root用户。
 - en: Time for action – using the sudo command to become the root user
+  id: totrans-23
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 使用sudo命令成为root用户
 - en: 'We''re going to use the `sudo` command for becoming the root user using the
     shell:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将使用`sudo`命令通过shell成为root用户：
 - en: Open the **MATE Terminal** application.
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 打开**MATE终端**应用程序。
 - en: 'Type the following command and press the *Enter* key when you''re ready:'
+  id: totrans-26
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 输入以下命令并在准备好时按*Enter*键：
 - en: '[PRE2]'
+  id: totrans-27
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'A new prompt message will be displayed, asking you about your password:'
+  id: totrans-28
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将显示一个新的提示消息，询问你的密码：
 - en: '[PRE3]'
+  id: totrans-29
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Type in your password and press the *Enter* key, and you''ll get a new prompt
     like the following one; the current user is root:'
+  id: totrans-30
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 输入你的密码并按*Enter*键，你将得到一个新提示，如下所示；当前用户是root：
 - en: '[PRE4]'
+  id: totrans-31
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*What just happened?*'
+  id: totrans-32
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚才发生了什么？*'
 - en: The `sudo` command allows you to execute a command as another user. Linux Mint
     is configured by default to allow the user created during the installation process
     to become the root user directly. You only need to execute the `sudo` command,
@@ -147,449 +213,640 @@
     the second one indicates that Bash initialization files for `root` should be executed.
     Keep in mind that the `sudo` command will ask you for the password of the user
     that is executing that command.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: '`sudo`命令允许您以另一个用户身份执行命令。Linux Mint默认配置允许在安装过程中创建的用户直接成为root用户。您只需执行`sudo`命令，将`su
+    -`作为参数传递。第一个参数标识root用户，第二个参数表示应执行`root`的Bash初始化文件。请记住，`sudo`命令会要求您输入执行该命令的用户的密码。'
 - en: Surely you must have realized that the prompt is different after becoming `root`.
     The `#` symbol is used for indicating that the current user is `root` instead
     of the `$` character, which is used for regular users of the system.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 您肯定已经意识到，成为`root`后提示符是不同的。`#`符号用于表示当前用户是`root`，而不是用于系统普通用户的`$`字符。
 - en: Have a go hero – executing the whoami command after becoming the root user
+  id: totrans-35
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 动手实践 – 成为root用户后执行whoami命令
 - en: Try to execute the `whoami` command after becoming `root` to check the current
     user. The output of that command will be `root`.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 尝试在成为`root`后执行`whoami`命令以检查当前用户。该命令的输出将是`root`。
 - en: Changing password
+  id: totrans-37
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 更改密码
 - en: In some cases, system administrators need to change the password of a user.
     For example, when a user forgets his password, he can ask for a new one to the
     system administrator.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 在某些情况下，系统管理员需要更改用户的密码。例如，当用户忘记自己的密码时，他可以向系统管理员请求新密码。
 - en: A password should be provided when a user is created, but each user should change
     their password when accessing the system for the first time.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 创建用户时应该提供密码，但每个用户在首次访问系统时应该更改自己的密码。
 - en: The process of changing your own password is not hard; you can do it through
     a simple application that is installed by default in Linux Mint.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 更改自己的密码并不难；您可以通过Linux Mint默认安装的一个简单应用程序来完成。
 - en: Time for action – changing the password for a user
+  id: totrans-41
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 操作时间 – 为用户更改密码
 - en: Each user of the system can change their own password using a GUI application
     provided by Linux Mint. We're going to learn how to do that.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 系统中的每个用户都可以使用Linux Mint提供的GUI应用程序更改自己的密码。我们将学习如何做到这一点。
 - en: Click on the **Menu** button and click again on the **All Applications** button
     located on the right-hand side of the **Favorites** pane.
+  id: totrans-43
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**菜单**按钮，然后在**收藏夹**窗格右侧点击**所有应用程序**按钮。
 - en: Click on the **Administration** menu option.
+  id: totrans-44
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**管理**菜单选项。
 - en: A set of new options will be displayed, so you only need to click on the **Users
     and Groups** menu option as shown in the following screenshot:![Time for action
     – changing the password for a user](img/9601_04_01.jpg)
+  id: totrans-45
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将显示一组新选项，您只需点击**用户和组**菜单选项，如下面的截图所示：![操作时间 – 为用户更改密码](img/9601_04_01.jpg)
 - en: After clicking on **Users and Groups**, a dialog box asking for your password
     will be displayed. Type your password and click on the **Authenticate** button:![Time
     for action – changing the password for a user](img/9601_04_02.jpg)
+  id: totrans-46
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**用户和组**后，将显示一个要求您输入密码的对话框。输入您的密码并点击**认证**按钮：![操作时间 – 为用户更改密码](img/9601_04_02.jpg)
 - en: A new window will be displayed if your password is correct. This is the Linux
     Mint application for dealing with users and groups:![Time for action – changing
     the password for a user](img/9601_04_03.jpg)
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果您的密码正确，将显示一个新窗口。这是Linux Mint处理用户和组的应用程序：![操作时间 – 为用户更改密码](img/9601_04_03.jpg)
 - en: 'Click on the **Change...** button close to the **Password: Asked on login**
     option.'
+  id: totrans-48
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击靠近**密码：登录时询问**选项的**更改...**按钮。
 - en: The following window allows you to change your password. First, you should type
     your current password. Then you can select the **Set password by hand** option
     and type your new password in the **New password** and **Confirmation** input
     boxes. When you're ready, click on the **OK** button:![Time for action – changing
     the password for a user](img/9601_04_04.jpg)
+  id: totrans-49
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来的窗口允许您更改密码。首先，您应该输入当前密码。然后，您可以选择**手动设置密码**选项，并在**新密码**和**确认**输入框中输入您的新密码。准备好后，点击**确定**按钮：![操作时间
+    – 为用户更改密码](img/9601_04_04.jpg)
 - en: Right now, a dialog box asking for your confirmation will be displayed; click
     on **Yes** and your password will be changed.
+  id: totrans-50
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，将显示一个要求您确认的对话框；点击**是**，您的密码将被更改。
 - en: '*What just happened?*'
+  id: totrans-51
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: Changing your password is pretty simple, thanks to the GUI application provided
     by Linux Mint. Behind the scenes, Mint calls the `passwd` command for applying
     your changes, allowing you to change your password.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 更改密码非常简单，这要归功于Linux Mint提供的GUI应用程序。在幕后，Mint调用`passwd`命令来应用您的更改，允许您更改密码。
 - en: The **Users and Groups** application allows you to perform more operations related
     to users and groups. Some of these operations only can be executed by `root`,
     so you should authenticate this user before proceeding.
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '**用户和组**应用程序允许您执行与用户和组相关的更多操作。其中一些操作只能由`root`执行，因此在继续之前您应该验证此用户。'
 - en: In the same dialog used for changing your password, you also can choose whether
     you want to be logged in with/without using a password. On the other hand, a random
     password can automatically be generated by the application. You only need to select
     the **Generate random password** option and then click on the **Generate** button.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 在更改密码的同一对话框中，您还可以选择是否希望在登录时使用/不使用密码。另一方面，应用程序可以自动生成随机密码。您只需选择**生成随机密码**选项，然后点击**生成**按钮。
 - en: Have a go hero – using passwd command
+  id: totrans-55
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 动手实践 – 使用 passwd 命令
 - en: You can change your password directly at the command line through the `passwd`
     command. Just type the command and follow the instructions on the screen.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以通过在命令行直接使用`passwd`命令来更改密码。只需输入命令并按照屏幕上的指示操作即可。
 - en: Also, you can change the password for another user. In order to do that, you
     must become the root user and execute the `passwd` command, passing the username
     of the user whose password needs to be changed as an argument.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，您还可以更改其他用户的密码。为此，您必须成为root用户并执行`passwd`命令，将需要更改密码的用户的用户名作为参数传递。
 - en: Adding a new user
+  id: totrans-58
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 添加新用户
 - en: As system administrator, one of the most common tasks is to create new users
     for the system. It's an easy task, thanks to the **Users and Groups** application
     included in Linux Mint. You're now going to discover how to create a new user.
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为系统管理员，最常见的任务之一是为系统创建新用户。多亏了Linux Mint中包含的**用户和组**应用程序，这是一项简单的任务。现在您将了解如何创建新用户。
 - en: Time for action – changing the password for a user
+  id: totrans-60
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 操作时间 – 为用户更改密码
 - en: We need to launch the **Users and Groups** application, so make sure this application
     is running. Our purpose is to create a new user called `Luke`, whose username
     will be `luke`.
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们需要启动**用户和组**应用程序，因此请确保该应用程序正在运行。我们的目的是创建一个名为`Luke`的新用户，其用户名为`luke`。
 - en: Click on the **Add** button located on the left-hand side of the main window.
+  id: totrans-62
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击主窗口左侧的**添加**按钮。
 - en: A dialog box will be displayed; type in your password and click on the **Authenticate**
     button.
+  id: totrans-63
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将显示一个对话框；输入您的密码并点击**Authenticate**按钮。
 - en: Right now you can see a new window with two different input boxes, one for the
     name and another for the username. Type `Luke` for the first one and `luke` for
     the second one. Click on the **OK** button when you are ready:![Time for action
     – changing the password for a user](img/9601_04_05.jpg)
+  id: totrans-64
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在您可以看到一个带有两个不同输入框的新窗口，一个用于姓名，另一个用于用户名。在第一个框中输入`Luke`，在第二个框中输入`luke`。准备好后点击**OK**按钮：![操作时间
+    – 为用户更改密码](img/9601_04_05.jpg)
 - en: A new window will be displayed, asking you about choosing a password for the
     new user. Type a new password or select the **Generate random password** option.
     Click on the **OK** button to continue.
+  id: totrans-65
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将显示一个新窗口，要求您为新用户选择密码。输入新密码或选择**生成随机密码**选项。点击**OK**按钮继续。
 - en: As a result, you will see that the new user is displayed on the user's list
     of the system:![Time for action – changing the password for a user](img/9601_04_06.jpg)
+  id: totrans-66
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 因此，您将看到新用户显示在系统用户列表中：![操作时间 – 为用户更改密码](img/9601_04_06.jpg)
 - en: If you observe the data of the new user, you'll discover a message informing
     you that the account for the new user is disabled, so we need to activate it by
     clicking on the **Enable Account** button.
+  id: totrans-67
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果您查看新用户的数据，您会发现一条消息，告知您新用户的帐户已被禁用，因此我们需要通过点击**启用帐户**按钮来激活它。
 - en: After clicking on the **Enable Account** button, a window for changing the password
     will be displayed. Change the password again and click on the **OK** button. Now,
     the account is enabled.
+  id: totrans-68
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**启用账户**按钮后，将显示一个更改密码的窗口。再次更改密码并点击**确定**按钮。现在，账户已启用。
 - en: '*What just happened?*'
+  id: totrans-69
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚才发生了什么？*'
 - en: We've just created a new user account by following a simple process. The GUI
     is pretty intuitive and allows us to choose a name and username for the new user.
     Each user should have a password, so we need to type one for the new user. For
     security reasons, new accounts are disabled, and you must activate each account,
     changing the password.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们刚刚通过一个简单的流程创建了一个新的用户账户。图形用户界面非常直观，允许我们为新用户选择一个名称和用户名。每个用户都应该有一个密码，因此我们需要为新用户输入一个密码。出于安全原因，新账户被禁用，您必须激活每个账户，更改密码。
 - en: Have a go hero – try to delete a user
+  id: totrans-71
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 动手试试 – 尝试删除一个用户
 - en: Also, you can delete user accounts through the **Delete** button associated
     with each listed user of the **Users and Groups** tool. If you click on that button,
     a new dialog is displayed asking for your confirmation about deleting the specified
     user.
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，您还可以通过**用户和组**工具中列出的每个用户的**删除**按钮删除用户账户。如果点击该按钮，将显示一个新的对话框，询问您是否确认删除指定的用户。
 - en: Adding a new group
+  id: totrans-73
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 添加一个新组
 - en: In GNU/Linux systems, users can be categorized into groups. Basically, a **group**
     is a set of users who share permissions. Groups allow system administrators to
     work with users in an organized way. For example, a specific group can have access
     to certain directories. This means that all users belonging to that group can
     access these specific directories.
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 在GNU/Linux系统中，用户可以被分类到组中。基本上，**组**是一组共享权限的用户。组允许系统管理员以有组织的方式处理用户。例如，一个特定的组可以访问某些目录。这意味着属于该组的所有用户都可以访问这些特定的目录。
 - en: Linux Mint uses many groups by default; some of them are **audio**, **backup**,
     **games**, **irc**, and **lp**. Also, it's possible to create additional custom
     groups. We'll learn how to do that.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux Mint默认使用许多组；其中一些是**音频**、**备份**、**游戏**、**irc**和**lp**。此外，还可以创建额外的自定义组。我们将学习如何做到这一点。
 - en: Time for action – creating a new group called develop
+  id: totrans-76
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 操作时间 – 创建一个名为develop的新组
 - en: We'll continue using the GUI application for managing users and groups, so make
     sure it's running before continuing. We'll create a new group called `develop`.
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将继续使用图形用户界面应用程序来管理用户和组，因此在继续之前请确保它正在运行。我们将创建一个名为`develop`的新组。
 - en: Click on the **Manage Groups** button.
+  id: totrans-78
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**管理组**按钮。
 - en: A new window showing all the existing groups will be displayed. Click on the
     **Add** button to continue.![Time for action – creating a new group called develop](img/9601_04_07.jpg)
+  id: totrans-79
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将显示一个显示所有现有组的新窗口。点击**添加**按钮继续。![操作时间 – 创建一个名为develop的新组](img/9601_04_07.jpg)
 - en: Type in your password and click on the **Authenticate** button. Right now you
     can see a new window called **New group**.
+  id: totrans-80
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 输入您的密码并点击**认证**按钮。现在您可以看到一个名为**新组**的新窗口。
 - en: Type `develop` in the **Group name** input box and click on the **OK** button,
     as shown in the following screenshot:![Time for action – creating a new group
     called develop](img/9601_04_08.jpg)
+  id: totrans-81
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在**组名**输入框中输入`develop`，然后点击**确定**按钮，如下面的截图所示：![操作时间 – 创建一个名为develop的新组](img/9601_04_08.jpg)
 - en: As a result, you can see how the newly developed group is displayed in the list
     of existing groups.
+  id: totrans-82
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 因此，您可以看到新开发的组如何在现有组的列表中显示。
 - en: '*What just happened?*'
+  id: totrans-83
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚才发生了什么？*'
 - en: The window for creating a new group allows us to choose a group name and group
     ID for it. This number identifies each group and must be different for each group
     created in the system. Linux Mint will choose a group ID by default for every
     new group, but you can choose a different number as well.
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 创建新组的窗口允许我们为该组选择一个组名和组ID。这个数字标识每个组，并且必须在系统中创建的每个组中都不同。Linux Mint将为每个新组默认选择一个组ID，但您也可以选择一个不同的数字。
 - en: When you're creating a new group, it's also possible to add users to it directly.
     A list of users will be displayed so you can select some of them, and Mint will
     add this user to a new group automatically.
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 在创建新组时，也可以直接向其中添加用户。将显示一个用户列表，以便您可以选择其中一些用户，Mint将自动将该用户添加到新组中。
 - en: Have a go hero – try to delete a group
+  id: totrans-86
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 动手试试 – 尝试删除一个组
 - en: Deleting a group is pretty easy; you only need to select a group and click on
     the **Delete** button. Before taking this action, you'll need to confirm the delete
     operation. Don't forget that you need to click on the **Manage Groups** button
     to access the list of groups on the system.
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 删除一个组相当容易；只需选择一个组，然后点击**删除**按钮。在执行此操作之前，你需要确认删除操作。别忘了，你需要点击**管理组**按钮才能访问系统上的组列表。
 - en: Adding a user to a group
+  id: totrans-88
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 将用户添加到组
 - en: If you need to add a user to a group, you can do it easily. You only need to
     access group properties and choose which users should belong to the specified
     group.
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果需要将用户添加到组中，你可以轻松完成。只需访问组属性，然后选择哪些用户应该属于指定的组。
 - en: Time for action – adding the user luke to the develop group
+  id: totrans-90
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时刻 – 将用户luke添加到develop组
 - en: Once more, make sure the **Users and Groups** tool is running. We're going to
     add the user **luke** to the **develop** group, which was created previously.
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次确认，**用户和组**工具正在运行。我们将把用户**luke**添加到之前创建的**develop**组中。
 - en: Click on the **Manage Groups** button.
+  id: totrans-92
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**管理组**按钮。
 - en: Select the **develop** group and click on the **Properties** button.
+  id: totrans-93
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 选择**develop**组，然后点击**属性**按钮。
 - en: A new window shows you the properties of the selected group, including a list
     of users. Select **luke** from the list and click on the **OK** button.
+  id: totrans-94
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 一个新窗口显示了所选组的属性，包括用户列表。从列表中选择**luke**，然后点击**确定**按钮。
 - en: Authenticate with your password on the modal window, and click on the **Authenticate**
     button.
+  id: totrans-95
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在模态窗口中使用密码进行身份验证，然后点击**身份验证**按钮。
 - en: The user **luke** has been added to the **develop** group.
+  id: totrans-96
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 用户**luke**已被添加到**develop**组。
 - en: '*What just happened?*'
+  id: totrans-97
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: While accessing group properties, we have the choice of adding users to a group.
     You can select one or more users from the list of existing users displayed in
     the properties window of the selected group.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 在访问组属性时，我们可以选择将用户添加到组中。你可以从所选组的属性窗口中显示的现有用户列表中选择一个或多个用户。
 - en: Changing user privileges
+  id: totrans-99
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 更改用户权限
 - en: Linux and Unix operating systems use the concept of **user privilege**, which
     is a right or authorization to execute an action. Therefore, users need **privileges**
     or **permissions** for either creating or deleting a file, accessing a printer,
     or executing a command.
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux和Unix操作系统使用**用户权限**的概念，这是一种执行操作的权利或授权。因此，用户需要**权限**或**许可**来创建或删除文件、访问打印机或执行命令。
 - en: The operating system provides a set of users and groups with some permissions
     over files, directories, and devices. However, system administrators can modify
     this default configuration. Also, it's possible to assign specific permissions
     for custom users and groups.
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 操作系统提供了一组用户和组，它们对文件、目录和设备具有某些权限。然而，系统管理员可以修改此默认配置。此外，还可以为自定义用户和组分配特定权限。
 - en: Mint provides a graphic tool for managing user privileges easily. We'll learn
     how to use it.
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: Mint提供了一个图形工具，方便管理用户权限。我们将学习如何使用它。
 - en: Time for action – granting permissions to a user for monitoring system logs
+  id: totrans-103
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时刻 – 授予用户监控系统日志的权限
 - en: 'We''re going to grant access for monitoring system logs to our user **luke**.
     This is a simple example to illustrate how to change user privileges. Obviously,
     you can apply similar steps for changing different permissions:'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将授予用户**luke**监控系统日志的访问权限。这是一个简单的例子，用以说明如何更改用户权限。显然，你可以采取类似步骤来更改不同的权限：
 - en: Launch the **Users and Groups** tool.
+  id: totrans-105
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 启动**用户和组**工具。
 - en: Select the user **luke** from the users list, and click on the **Advanced Settings**
     button.
+  id: totrans-106
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从用户列表中选择用户**luke**，然后点击**高级设置**按钮。
 - en: Type your password when the dialog box asks for it.
+  id: totrans-107
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当对话框要求输入密码时，请输入你的密码。
 - en: After clicking on the **OK** button, select the **User Privileges** tab.
+  id: totrans-108
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**确定**按钮后，选择**用户权限**选项卡。
 - en: Now you have a list of privileges that can be granted to or revoked from the
     user **luke**. Select **Monitor system logs** and click on the **OK** button,
     as shown in the following screenshot:![Time for action – granting permissions
     to a user for monitoring system logs](img/9601_04_09.jpg)
+  id: totrans-109
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在你有一份可以授予或撤销用户**luke**的权限列表。选择**监控系统日志**，然后点击**确定**按钮，如下面的截图所示：![行动时刻 – 授予用户监控系统日志的权限](img/9601_04_09.jpg)
 - en: At this point, the user **luke** is ready to read the special files used for
     monitoring the system.
+  id: totrans-110
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 此时，用户**luke**已准备好阅读用于监控系统的特殊文件。
 - en: '*What just happened?*'
+  id: totrans-111
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: The advanced settings for each user provided by the **User and Groups** tools
     allow you to manage permissions in a very easy and efficient way. You have a list
     of privileges that can be applied for each user. Natural language is used, so
     you don't need to know advanced concepts to assign permissions to users.
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过**用户和组**工具提供的高级设置，允许你以非常简单和高效的方式管理每个用户的权限。你有一系列权限可以应用于每个用户。使用自然语言，因此你不需要了解高级概念就能为用户分配权限。
 - en: Have a go hero – using command line for changing permissions
+  id: totrans-113
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 动手实践 – 使用命令行更改权限
 - en: Although Mint offers you a graphic tool for working with user privileges, you
     can use the shell for the same purpose. One of the most useful commands is `chmod`,
     which allows you to change permissions for files and directories. Also, thanks
     to the `chown` command, you can decide who the owner is of a specific file or
     directory.
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管Mint提供了图形工具来处理用户权限，但你也可以使用shell来实现相同的目的。最有用的命令之一是`chmod`，它允许你更改文件和目录的权限。此外，通过`chown`命令，你可以决定特定文件或目录的所有者是谁。
 - en: If you're interested in both commands, you should use the `man` and `info` commands
     to get more information about `chmod` and `chown` commands.
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你对这两个命令都感兴趣，你应该使用`man`和`info`命令来获取更多信息关于`chmod`和`chown`命令。
 - en: For permissions and users, Mint provides three predefined account types, namely
     **Custom** , **Administrator** , and **desktop user** . You can choose one of
     these for each user; the **Account type** option provides access to this functionality.
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于权限和用户，Mint提供了三种预定义的账户类型，即**自定义**、**管理员**和**桌面用户**。你可以为每个用户选择其中之一；**账户类型**选项提供了这一功能。
 - en: Summary
+  id: totrans-117
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 总结
 - en: In this chapter you learned the basic operations for account provisioning.
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，你学习了账户配置的基本操作。
 - en: 'Specifically, we covered:'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 具体来说，我们涵盖了：
 - en: Discovering the current user
+  id: totrans-120
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 发现当前用户
 - en: How to create users and groups
+  id: totrans-121
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何创建用户和组
 - en: Adding a user to a group
+  id: totrans-122
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将用户添加到组
 - en: Becoming the root user
+  id: totrans-123
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 成为root用户
 - en: Changing the user's password
+  id: totrans-124
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更改用户密码
 - en: Changing user privileges
+  id: totrans-125
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更改用户权限
 - en: At this point, you've learned basic concepts and ideas about how to work with
     the shell and how to provision user accounts. Now it's time to learn about something
     very important in the daily work of a system administrator—how to install and
     configure software.
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 至此，你已经学习了关于如何使用shell和如何创建用户账户的基本概念和想法。现在是时候学习系统管理员日常工作中非常重要的一项技能——如何安装和配置软件。

@@ -1,7 +1,9 @@
 - en: Chapter 3. Basic Shell
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第3章：基本Shell
 - en: '*In the previous chapter, we learned how to install Linux Mint. Once our operating
     system is installed in a computer, we''re ready to work with it. First, you need
     to learn about what a shell is, this being one of the most important concepts
@@ -9,73 +11,105 @@
     and basic usage of the shell, including some useful commands for executing applications,
     listing files, and finding files inside the file system. Also, you''ll discover
     some fundamental concepts about shell programming.*'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在上一章中，我们学习了如何安装Linux Mint。一旦我们的操作系统安装在计算机上，我们就可以开始使用它了。首先，你需要了解什么是shell，这是Unix和GNU/Linux操作系统中最重要的概念之一。然后，你将学习一些有趣的和基本的shell使用方法，包括一些执行应用程序、列出文件和在文件系统中查找文件的有用命令。此外，你还将了解一些关于shell编程的基本概念。*'
 - en: 'The following topics will be discussed in the chapter:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章将讨论以下主题：
 - en: Shell fundamental concepts
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Shell基本概念
 - en: Finding the current directory
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 查找当前目录
 - en: How to run commands and applications
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何运行命令和应用程序
 - en: Finding the absolute path for shell commands
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 查找shell命令的绝对路径
 - en: How to list, examine, and find files
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何列出、检查和查找文件
 - en: Learning about redirection and pipelines
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 学习重定向和管道
 - en: How to set environment variables
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何设置环境变量
 - en: Finding previously executed commands
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 查找之前执行过的命令
 - en: Creating a simple shell script
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 创建一个简单的shell脚本
 - en: How to get help?
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何获取帮助？
 - en: Let's start by learning what a shell is.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们先从学习什么是shell开始。
 - en: What's a shell?
+  id: totrans-14
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 什么是shell？
 - en: A shell is one of the most important components of a Unix and GNU/Linux operating
     system. Basically, a shell is software that provides an interface for users, allowing
     communication with the kernel of an operating system. Using the shell, users can
     enter commands and execute programs. From a technical point of view, a shell is
     just a program that can execute other programs on behalf of the user. Usually,
     a shell is known as a command-line interface, also called **CLI** .
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: Shell是Unix和GNU/Linux操作系统中最重要的组件之一。基本上，shell是一种软件，它为用户提供了一个接口，允许与操作系统的内核进行通信。通过shell，用户可以输入命令并执行程序。从技术角度来看，shell只是一个可以代表用户执行其他程序的程序。通常，shell被称为命令行界面，也称为**CLI**。
 - en: The first Unix operating systems separated the shell from the rest of the components
     of the operating system. This meant that the shell was a program that could be
     launched directly by a user. However, other components, such as memory manager,
     scheduler, and the input/output system worked directly through the kernel without
     user interaction.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 最初的Unix操作系统将shell与其他操作系统组件分开。这意味着shell是一个可以直接由用户启动的程序。然而，其他组件，如内存管理器、调度器和输入/输出系统，通过内核直接工作，无需用户交互。
 - en: The sixth edition of Unix included a shell as the standard command interpreter.
     Its name was **sh** and it was developed by Ken Thompson, who worked in Bell Labs.
     Some time later, in 1979, when the seventh edition of Unix was released, the previous
@@ -84,34 +118,48 @@
     it **C shell** , this is also known as **csh**. Joy worked in the University of
     California and his shell became part of a specific Unix operating system called
     **Berkeley System Distribution** (**BSD**).
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 第六版Unix包含了一个作为标准命令解释器的shell。它的名字是**sh**，由Ken Thompson在贝尔实验室开发。后来，在1979年，当第七版Unix发布时，之前的shell（sh）被一个新的shell取代，称为**Bourne
+    shell**，由Stephen Bourne开发。几年后，Bill Joy编写了一个新的shell并将其命名为**C shell**，也称为**csh**。Joy在加州大学工作，他的shell成为了一个特定的Unix操作系统的一部分，称为**伯克利软件发行版**（**BSD**）。
 - en: In the mid-1980s, the **Korn shell** (**ksh**) was developed by David Korn,
     who was then working in the popular AT&T Bell Laboratories. Despite ksh being
     compatible with the Bourne shell, it includes some additional features that are
     very useful for programmers and for those who want to apply advanced customizations.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 在20世纪80年代中期，**Korn shell**（**ksh**）由David Korn开发，当时他在流行的AT&T贝尔实验室工作。尽管ksh与Bourne
+    shell兼容，但它包含了一些对程序员和希望进行高级定制的人来说非常有用的额外功能。
 - en: Most of the GNU/Linux distributions include a different shell written as part
     of the GNU project, its name is **Bourne-Again shell** and it's popularly known
     as a **bash shell** . The GNU project developers built bash with the purpose of
     getting a shell compatible with the Bourne shell, which would be useful for users
     and programmers alike.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 大多数GNU/Linux发行版都包含一个作为GNU项目一部分编写的不同shell，它的名字是**Bourne-Again shell**，通常被称为**bash
+    shell**。GNU项目开发者构建bash的目的是为了获得一个与Bourne shell兼容的shell，这对用户和程序员都有用。
 - en: Therefore, bash provides a superset of the Bourne functionality. Due to the
     current popularity of bash, we're going to learn more about it. Also, Linux Mint
     is not an exception and it includes bash as its default shell.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，bash提供了Bourne功能的超集。由于bash目前非常流行，我们将更多地了解它。此外，Linux Mint也不例外，它将bash作为其默认shell。
 - en: Bash shell includes commands that you can enter directly. These commands help
     you to execute useful and common operations, such as changing the current directory,
     displaying content of a file, or listing the content of a specific directory.
     Some of these commands are built into the bash shell itself; others are separate
     programs included by the GNU/Linux distributions. Both kinds of commands are considered
     bash commands, and you'll learn some of them in this chapter.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: Bash shell包含可以直接输入的命令。这些命令帮助你执行有用且常见的操作，例如更改当前目录、显示文件内容或列出特定目录的内容。这些命令中的一些是内置于bash
+    shell本身的；其他则是由GNU/Linux发行版包含的单独程序。这两类命令都被视为bash命令，你将在本章中学习其中的一些。
 - en: When you open a shell, you can see some symbols, some text, and a cursor blinking,
     all of them are known as the prompt, and it's indicating that the shell is ready
     and you can start entering your commands. The type of information that prompt
@@ -119,147 +167,208 @@
     about your username, machine name, and current directory. Usually, the dollar
     symbol (`$`) acts as a separator between that data and the cursor, which is blinking
     at the place where you can type.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你打开一个shell时，你会看到一些符号、一些文本和一个闪烁的光标，所有这些都被称为提示符，它表明shell已准备好，你可以开始输入命令了。提示符显示的信息类型取决于提示符的配置方式。基本上，你会发现有关你的用户名、机器名和当前目录的数据。通常，美元符号（`$`）作为数据和光标之间的分隔符，光标在你可以输入的位置闪烁。
 - en: Where are you?
+  id: totrans-23
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 你在哪里？
 - en: We're going to start working with the shell and learn how to find out where
     the current directory is and how to change from one directory to another. Also,
     we'll discover which is the application that provides a command-line interface
     for Linux Mint.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将开始使用shell并学习如何找出当前目录的位置以及如何从一个目录切换到另一个目录。此外，我们还将发现哪个应用程序为Linux Mint提供了命令行界面。
 - en: Time for action – learning pwd and cd commands
+  id: totrans-25
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 操作时间 – 学习pwd和cd命令
 - en: 'The command-line interface used by Linux Mint is provided by an application
     called **MATE Terminal** . We''ll search it, launch it, and then we''re going
     to learn and execute `pwd` and `cd` commands by following these steps:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux Mint使用的命令行界面由一个名为**MATE Terminal**的应用程序提供。我们将搜索它，启动它，然后我们将通过以下步骤学习和执行`pwd`和`cd`命令：
 - en: Click on the **Menu** option located at the bottom of your desktop.
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击位于桌面底部的**菜单**选项。
 - en: After clicking, a new window menu is displayed with a lot of options. On the
     right-hand side pane, you'll see an area called **Favorites**; there, click on
     the **Terminal** icon for launching MATE Terminal, as shown in the following screenshot:![Time
     for action – learning pwd and cd commands](img/9601_03_01.jpg)
+  id: totrans-28
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击后，会显示一个带有许多选项的新窗口菜单。在右手边的窗格中，你会看到一个名为**收藏夹**的区域；在那里，点击**终端**图标以启动MATE Terminal，如下图所示：![操作时间
+    – 学习pwd和cd命令](img/9601_03_01.jpg)
 - en: Now that you have a shell running through MATE Terminal, you're ready to type
     and launch commands. Our first command will be `pwd`, which returns the path of
     the current directory. Enter `pwd` directly on the MATE Terminal window.![Time
     for action – learning pwd and cd commands](img/9601_03_02.jpg)
+  id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在你通过MATE Terminal运行了一个shell，你准备好输入并执行命令了。我们的第一个命令将是`pwd`，它返回当前目录的路径。直接在MATE
+    Terminal窗口中输入`pwd`。![操作时间 – 学习pwd和cd命令](img/9601_03_02.jpg)
 - en: When you launch MATE Terminal, your current directory will be your home directory;
     so the output of the **pwd** command will be that directory, which is evident
     from the following screenshot:![Time for action – learning pwd and cd commands](img/9601_03_03.jpg)
+  id: totrans-30
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当您启动MATE Terminal时，您的当前目录将是您的家目录；因此，**pwd**命令的输出将是该目录，如下面的截图所示：![行动时刻 – 学习pwd和cd命令](img/9601_03_03.jpg)
 - en: 'We''re going to change the current directory, and set `/tmp` as the new current
     directory by using this command: `arturo@han-solo ~ $ cd /tmp`.'
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们将更改当前目录，并通过使用以下命令将`/tmp`设置为新的当前目录：`arturo@han-solo ~ $ cd /tmp`。
 - en: After executing the command, we'll discover that the prompt has changed to indicate
     to us that our current directory is now `/tmp`, as can be seen by looking at `arturo@han-solo
     /tmp $`.
+  id: totrans-32
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 执行命令后，我们会发现提示符已更改，以指示我们的当前目录现在是`/tmp`，这可以通过查看`arturo@han-solo /tmp $`来看到。
 - en: '*What just happened?*'
+  id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: Because we're working with the MATE edition of Linux Mint, our default command-line
     interface is provided by MATE Terminal. However, other editions also include similar
     programs. For example, Cinnamon provides GNOME Terminal as its default CLI application.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们使用的是Linux Mint的MATE版本，我们的默认命令行界面由MATE Terminal提供。不过，其他版本也包含类似的程序。例如，Cinnamon提供GNOME
+    Terminal作为其默认CLI应用程序。
 - en: MATE Terminal gives us access to the shell, and we can launch commands and programs
     through it. In fact, MATE Terminal provides a text-based command-line interface
     using a window with a graphical user interface. We've learned our first command
     for displaying what is our current directory. This action is important, because
     the output of some other commands depend on that directory.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: MATE Terminal为我们提供了访问shell的途径，我们可以通过它启动命令和程序。实际上，MATE Terminal使用具有图形用户界面的窗口提供基于文本的命令行界面。我们已经学会了显示当前目录的第一个命令。这一操作很重要，因为某些其他命令的输出取决于该目录。
 - en: The `cd` command is useful for changing the current directory and setting some
     other directory as the new current directory inside the filesystem. The first
     argument that is passed for the `cd` command is the path of the directory that
     you want to set as the new current directory.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '`cd`命令对于更改当前目录并在文件系统中将其他目录设置为新的当前目录非常有用。传递给`cd`命令的第一个参数是您希望设置为新当前目录的目录路径。'
 - en: It's important to know that the `~` symbol indentifies your home directory,
     so you can use it as a shortcut instead of typing the full path.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 重要的是要知道`~`符号标识您的家目录，因此您可以使用它作为快捷方式，而不是输入完整路径。
 - en: Keep in mind that your prompt will look different because your username and
     machine name will be different from mine. In our examples, the username is `arturo,`
     and the machine name is `han-solo`. Yes, you guessed it, I'm a Star Wars fan!
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，您的提示符看起来会有所不同，因为您的用户名和机器名将与我的不同。在我们的示例中，用户名是`arturo`，机器名是`han-solo`。是的，您猜对了，我是一个星战迷！
 - en: Have a go hero – using a shortcut for accessing your home directory
+  id: totrans-39
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 动手实践 – 使用快捷方式访问您的家目录
 - en: 'Try to execute the `cd` command without arguments and you''ll discover how
     the current directory changes to your home directory. The following is a shortcut
     to change to that directory quickly:'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 尝试执行不带参数的`cd`命令，您会发现当前目录如何更改为您的家目录。以下是快速更改到该目录的快捷方式：
 - en: '[PRE0]'
+  id: totrans-41
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: MATE Terminal can be configured and customized in different ways. For example,
     you can change the font type and size and set a specific color scheme. You can
     take a look at the **Profile preferences** menu from the **Edit** option.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: MATE Terminal可以通过多种方式进行配置和定制。例如，您可以更改字体类型和大小，并设置特定的颜色方案。您可以从**编辑**选项中查看**配置文件首选项**菜单。
 - en: Running commands
+  id: totrans-43
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 运行命令
 - en: As you have learned, the shell allows us to communicate directly with the operating
     system of your computer. This action helps us launch commands and applications.
     Previously, you discovered how to launch commands such as `cd` and `pwd`. In order
     to do that, you just entered each command and then pressed *Enter*. However, some
     commands are used to invoke programs using a full path. Now you'll learn how to
     do that.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如您所学到的，shell允许我们直接与计算机操作系统通信。这一操作帮助我们启动命令和应用程序。之前，您了解了如何启动`cd`和`pwd`等命令。为了做到这一点，您只需输入每个命令，然后按下*Enter*键。然而，有些命令用于使用完整路径调用程序。现在您将学习如何做到这一点。
 - en: Time for action – launching a program from the command line
+  id: totrans-45
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时刻 – 从命令行启动程序
 - en: 'Assume that a program called `testme exists`, which can be found inside the
     `/tmp` directory. We can invoke this program by following these steps:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设有一个名为`testme`的程序存在于`/tmp`目录中。我们可以通过以下步骤调用这个程序：
 - en: Open a shell using the MATE Terminal application.
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用MATE Terminal应用程序打开一个shell。
 - en: Type `/tmp/testme` and hit *Enter*.
+  id: totrans-48
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 输入`/tmp/testme`并按*Enter*。
 - en: The output of the program will be displayed on the shell. If the invoked program
     has a graphical user interface, a new window will be opened.
+  id: totrans-49
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 程序的输出将在shell上显示。如果调用的程序有一个图形用户界面，将会打开一个新的窗口。
 - en: '*What just happened?*'
+  id: totrans-50
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚才发生了什么？*'
 - en: When you enter a command, it is executed directly, because there exists an environment
     variable to find all the files that can be executed. The name of that variable
     is `$PATH`, and its value indicates where the shell should look for executable
@@ -267,175 +376,249 @@
     located in the directories associated to `$PATH`. That's the reason for using
     the complete path for invoking any file. Following this rule, we invoked the `testme`
     file through its pathname.
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你输入一个命令时，它会直接执行，因为存在一个环境变量来查找所有可执行的文件。那个变量的名称是`$PATH`，它的值指示了shell应该在哪里查找可执行文件。命令和应用程序是可执行文件，但并非所有这些文件都位于与`$PATH`关联的目录中。这就是为什么需要使用完整路径来调用任何文件的原因。遵循这一规则，我们通过其路径名调用了`testme`文件。
 - en: How does the operating system know which files are executable? It's easy, executable
     files use a specific flag that indicates this property to the operating system;
     the shell knows this fact and can execute them easily.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 操作系统如何知道哪些文件是可执行的？很简单，可执行文件使用一个特定的标志来向操作系统指示这一属性；shell知道这一点，并且可以轻松地执行它们。
 - en: 'If your current directory is where an executable file is located, you can invoke
     it using a dot plus a slash (`./`), followed by the name of the file. Thanks to
     this technique, you don''t need to use the full path or modify the `$PATH` variable.
     For example, our example `testme` command can be invoked by using the following
     commands:'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你的当前目录是可执行文件所在的位置，你可以使用一个点加一个斜杠（`./`），后面跟着文件名来调用它。多亏了这个技巧，你不需要使用完整路径或修改`$PATH`变量。例如，我们的示例`testme`命令可以通过以下命令调用：
 - en: '[PRE1]'
+  id: totrans-54
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Some commands and programs allow us to pass additional parameters; each one
     must be preceded by a blank space. We'll learn about these kinds of commands (at
     least some commands) later.
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些命令和程序允许我们传递额外的参数；每个参数前面必须有一个空格。我们将在后面学习这些类型的命令（至少一些命令）。
 - en: Have a go hero – executing programs without using the full path
+  id: totrans-56
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 试试看 – 不使用完整路径执行程序
 - en: You can try and modify `$PATH` for adding the `/tmp` directory, and then you
     can directly call the `testme` command without using its full path. For more information
     about how to set environment variables, see the *Setting environment variables*
     section later in this chapter.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以尝试修改`$PATH`以添加`/tmp`目录，然后你可以直接调用`testme`命令而不使用其完整路径。关于如何设置环境变量，请参阅本章稍后的*设置环境变量*部分了解更多信息。
 - en: Search commands
+  id: totrans-58
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 搜索命令
 - en: Sometimes it is important to search for the full path of a command or an executable
     file, which can be located through the `$PATH` variable. The most useful command
     for taking that action is `which`, so we'll explain how to use it.
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时查找一个命令或可执行文件的完整路径是很重要的，这可以通过`$PATH`变量找到。执行此操作最有用的命令是`which`，因此我们将解释如何使用它。
 - en: Time for action – using the which command
+  id: totrans-60
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 使用which命令
 - en: 'Before proceeding, make sure you have launched MATE Terminal. Then perform
     these steps:'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 在继续之前，请确保你已经启动了MATE Terminal。然后执行以下步骤：
 - en: 'Enter the following command:'
+  id: totrans-62
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 输入以下命令：
 - en: '[PRE2]'
+  id: totrans-63
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'The `which` command will display the following output:'
+  id: totrans-64
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`which`命令将显示以下输出：'
 - en: '[PRE3]'
+  id: totrans-65
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*What just happened?*'
+  id: totrans-66
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚才发生了什么？*'
 - en: The `which` shell command is included in most of the GNU/Linux distributions,
     even in Linux Mint. Thanks to that command, we can get the full path of a command
     or an executable file, which can be located through the `$PATH` variable. On the
     other hand, the `find` command is a program for finding files; you'll learn more
     about it in this chapter.
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: '`which` shell命令包含在大多数GNU/Linux发行版中，甚至在Linux Mint中。多亏了这个命令，我们可以获取一个命令或可执行文件的完整路径，该路径可以通过`$PATH`变量找到。另一方面，`find`命令是一个用于查找文件的程序；你将在本章中了解更多关于它的信息。'
 - en: Listing, examining, and finding files
+  id: totrans-68
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 列出、检查和查找文件
 - en: A file is a persistent resource for storing information. Images, sounds, programs,
     and commands use files that can be managed by users. Due to that fact, it's important
     to learn how to list, examine, and find files through our shell.
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 文件是存储信息的持久资源。图像、声音、程序和命令使用文件，这些文件可以由用户管理。因此，学习如何通过我们的shell列出、检查和查找文件是很重要的。
 - en: Time for action – using the ls, locate, find, and cat commands
+  id: totrans-70
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 使用ls、locate、find和cat命令
 - en: We're going to use a few commands such as `find`, `locate`, `cat`, and `ls`.
     The last one is used for displaying the content of a directory, whereas the `find`
     and `locate` commands are used for finding files in our filesystem. The `cat`
     command is used for getting the content of a file as output. Don't forget to make
     sure that your shell is running.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将使用一些命令，如`find`、`locate`、`cat`和`ls`。最后一个用于显示目录的内容，而`find`和`locate`命令用于在我们的文件系统中查找文件。`cat`命令用于获取文件内容作为输出。不要忘记确保您的shell正在运行。
 - en: First, we'll execute `ls` directly from our home directory; we only need to
     enter `ls` in our command-line interface.
+  id: totrans-72
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，我们将直接从我们的主目录执行`ls`；我们只需要在我们的命令行界面中输入`ls`。
 - en: 'The output for the previous command will be something like this:'
+  id: totrans-73
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 前一个命令的输出将类似于这样：
 - en: '[PRE4]'
+  id: totrans-74
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Now, we''ll continue looking for all those files with a `.conf` extension (`*.conf`)
     inside the `/etc/ufw` directory by using the following command:'
+  id: totrans-75
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们将继续寻找所有带有`.conf`扩展名（`*.conf`）的文件，位于`/etc/ufw`目录中，使用以下命令：
 - en: '[PRE5]'
+  id: totrans-76
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'As an output of the `find` command, you''ll find all files with a `.conf` extension
     inside your home directory:'
+  id: totrans-77
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 作为`find`命令的输出，您将找到您的主目录中所有带有`.conf`扩展名的文件：
 - en: '[PRE6]'
+  id: totrans-78
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'The `locate` command is used when we know the name of the file that we''re
     trying to find. Imagine you want to look for the `.bash_history` file but you
     don''t remember the directory where the file resides; in this case, you can use
     the following command:'
+  id: totrans-79
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`locate`命令在我们知道要查找的文件名时使用。想象一下，您想查找`.bash_history`文件，但不记得文件所在的目录；在这种情况下，您可以使用以下命令：'
 - en: '[PRE7]'
+  id: totrans-80
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'The result of the command last executed will be the following line:'
+  id: totrans-81
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后执行的命令的结果将是以下行：
 - en: '[PRE8]'
+  id: totrans-82
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Finally, we''ll use the `cat` command for displaying the content of a text
     file. Let''s list those content of the filesystem that contains information related
     to your network interfaces, by using the following command:'
+  id: totrans-83
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，我们将使用`cat`命令来显示文本文件的内容。让我们列出文件系统中与您的网络接口相关的信息，使用以下命令：
 - en: '[PRE9]'
+  id: totrans-84
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'As a result, you''ll get the contents of the `/etc/network/interfaces` file
     displayed as:'
+  id: totrans-85
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 因此，您将得到`/etc/network/interfaces`文件的内容显示为：
 - en: '[PRE10]'
+  id: totrans-86
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '*What just happened?*'
+  id: totrans-87
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚刚发生了什么？*'
 - en: The `find` and `locate` commands are very useful when you need to find a file
     or a group of files. Different parameters can be used for each command, and we
     have learned the basic use of each of them. It's important to know that the `find`
@@ -444,134 +627,192 @@
     means `locate` can find files that aren't inside the current directory. Both commands
     use a search algorithm that is based on patterns. Remember, we used the `*.conf`
     pattern as a parameter for the `find` command.
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: '`find`和`locate`命令在您需要查找文件或一组文件时非常有用。每个命令可以使用不同的参数，我们已经学习了它们的基本用法。重要的是要知道`find`命令从当前目录开始搜索。然而，`locate`使用特定的数据库进行搜索，而不考虑当前目录。这意味着`locate`可以找到不在当前目录中的文件。两个命令都使用基于模式的搜索算法。记住，我们使用`*.conf`模式作为`find`命令的参数。'
 - en: The `ls` command is one of the most used in Linux systems, because it offers
     basic information about the content of a directory. Quite often, you need that
     information before taking actions through the shell. This command supports a lot
     of different parameters that allow you to get different kinds of information about
     the content of a directory.
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: '`ls`命令是Linux系统中最常用的命令之一，因为它提供了关于目录内容的基本信息。通常，在通过shell采取行动之前，您需要这些信息。此命令支持许多不同的参数，允许您获取关于目录内容的各类信息。'
 - en: As part of printing the contents of a text file, the `cat` command can concatenate
     the content of different files, thereby displaying all the information directly
     on the shell. Each file can be passed as an argument to the `cat` command.
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为打印文本文件内容的一部分，`cat`命令可以连接不同文件的内容，从而直接在shell上显示所有信息。每个文件都可以作为参数传递给`cat`命令。
 - en: Have a go hero – getting more information when listing files
+  id: totrans-91
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 动手实践 – 在列出文件时获取更多信息
 - en: 'If you want to get more information about each file inside a directory, you
     can try to launch the `ls` command with `-l` as an argument, as shown here:'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您想获取目录中每个文件的更多信息，可以尝试使用带有`-l`参数的`ls`命令，如下所示：
 - en: '[PRE11]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Also, it could be interesting to execute the `find` command by passing a different
     extension than JPEG as a parameter.
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，执行`find`命令并传递一个不同于JPEG的扩展名作为参数也可能会很有趣。
 - en: Two more commands can help you to display the content of a text file—`more`
     and `less`. Both commands allow you to read the content on your screen without
     the risk of some modification by accident. You only need to pass the name of the
     text file as an argument to each of these commands.
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 还有两个命令可以帮助您显示文本文件的内容——`more`和`less`。这两个命令允许您在屏幕上阅读内容，而不会意外修改。您只需将文本文件的名称作为参数传递给这些命令。
 - en: Pipelines and redirection
+  id: totrans-96
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 管道和重定向
 - en: In Unix and GNU/Linux operating systems, it is very common to take the output
     of one command and use it as an input for another command. Because of this concept,
     it's possible to create a combination of commands using only a single line in
     the shell. We're going to use a simple example for illustrating the use of pipelines.
     Specifically, we'll look for a string inside a text file.
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 在Unix和GNU/Linux操作系统中，将一个命令的输出用作另一个命令的输入是非常常见的。由于这一概念，我们可以在shell中仅用一行创建一系列命令的组合。我们将使用一个简单的示例来说明管道的使用。具体来说，我们将在文本文件中查找一个字符串。
 - en: Redirection is another powerful and common technique that allows us to append
     the output of a command to any other file available in our machine's filesystem.
     To make things easier, we'll just create a text file with the current date.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 重定向是另一种强大且常用的技术，它允许我们将命令的输出附加到机器文件系统中可用的任何其他文件。为了简化操作，我们将仅创建一个包含当前日期的文本文件。
 - en: Time for action – using pipelines and redirection by applying different commands
+  id: totrans-99
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 使用管道和重定向应用不同的命令
 - en: 'Let''s start finding out how pipelines work:'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们开始了解管道是如何工作的：
 - en: 'Enter the following command on your shell:'
+  id: totrans-101
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在您的shell中输入以下命令：
 - en: '[PRE12]'
+  id: totrans-102
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'You''ll get the following output:'
+  id: totrans-103
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 您将得到以下输出：
 - en: '[PRE13]'
+  id: totrans-104
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'Now, we''re going to use redirection for creating a new file that contains
     some content:'
+  id: totrans-105
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们将使用重定向来创建一个包含一些内容的新文件：
 - en: '[PRE14]'
+  id: totrans-106
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'Check the new file to make sure the content is valid, by using the following
     command:'
+  id: totrans-107
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用以下命令检查新文件以确保内容有效：
 - en: '[PRE15]'
+  id: totrans-108
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '*What just happened?*'
+  id: totrans-109
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚刚发生了什么？*'
 - en: Although we used simple examples for understanding pipelines and redirection,
     it's possible to create complicated commands through these techniques. It depends
     on the ability and experience of the user.
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管我们使用简单的示例来理解管道和重定向，但通过这些技术可以创建复杂的命令。这取决于用户的技能和经验。
 - en: As you must have realized, we used the `|` character for indicating that we're
     going to use a pipeline. It's possible to use that character multiple times with
     different commands.
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如您可能已经意识到的，我们使用`|`字符来表示我们将使用管道。我们可以多次使用该字符与不同的命令。
 - en: As far as redirection is concerned, the `>` character is used to store the output
     of a command in a file. On the other hand, `date` is a simple application for
     getting the current date. Finally, the `cat` command helps you to print the content
     of the new file called `current_date.txt`.
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 至于重定向，`>`字符用于将命令的输出存储在文件中。另一方面，`date`是一个简单的应用程序，用于获取当前日期。最后，`cat`命令帮助您打印名为`current_date.txt`的新文件的内容。
 - en: Have a go hero – appending content to a file using redirection
+  id: totrans-113
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 动手实践 – 使用重定向将内容追加到文件
 - en: 'Instead of creating a new file, it''s possible to append content to an existing
     file; you only need to use the `>>` character. For example, we can add more content
     to an existing file by using the following command:'
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 与其创建新文件，不如将内容追加到现有文件中；您只需使用`>>`字符。例如，我们可以通过以下命令向现有文件添加更多内容：
 - en: '[PRE16]'
+  id: totrans-115
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: Setting environment variables
+  id: totrans-116
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 设置环境变量
 - en: An environment variable defines some aspects that can affect the behavior of
     programs and commands running in an operating system. Each environment variable
     has a value that can be changed dynamically through the shell. Usually, an operating
@@ -581,135 +822,199 @@
     kind of variables to get information about a user's environment and sets this
     data to the commands and programs. We'll learn how to get and set a value to a
     specific environment variable.
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 环境变量定义了可以影响操作系统中运行的程序和命令行为的一些方面。每个环境变量都有一个可以动态地通过shell改变的值。通常，操作系统会创建并设置一些环境变量，但用户可以更改这些变量并添加新的变量。默认应用程序（如网络浏览器、文本编辑器和音乐播放器）可以使用环境变量来定义。shell使用这类变量来获取用户环境的信息，并将这些数据设置给命令和程序。我们将学习如何获取和设置特定环境变量的值。
 - en: Time for action – setting the PATH environment variable
+  id: totrans-118
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 设置PATH环境变量
 - en: 'Perform the following steps to set up the `PATH` environment variable:'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 执行以下步骤来设置`PATH`环境变量：
 - en: Launch MATE Terminal, and get ready to enter some commands.
+  id: totrans-120
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 启动MATE Terminal，准备好输入一些命令。
 - en: 'Enter the following command:'
+  id: totrans-121
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 输入以下命令：
 - en: '[PRE17]'
+  id: totrans-122
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 'Get the value of the `PATH` variable by using this command:'
+  id: totrans-123
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用以下命令获取`PATH`变量的值：
 - en: '[PRE18]'
+  id: totrans-124
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 'You''ll get something like this:'
+  id: totrans-125
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 你会得到类似这样的结果：
 - en: '[PRE19]'
+  id: totrans-126
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '*What just happened?*'
+  id: totrans-127
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: The value of an environment variable is set directly into the shell; we only
     need to use the `=` character along with a desired value for the variable. In
     our example, we used the `PATH` variable and added a new value, the `/tmp` directory.
     Obviously, we could have used only a simpler value, but in the case of `PATH`
     we want to keep its original value as well.
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: 环境变量的值是直接设置到shell中的；我们只需要使用`=`字符加上变量的期望值。在我们的例子中，我们使用了`PATH`变量并添加了一个新值，即`/tmp`目录。显然，我们本可以使用一个更简单的值，但在`PATH`的情况下，我们还想保留它的原始值。
 - en: The `echo` command accepts as argument any kind of literal and outputs that
     literal to the standard output. If you want to get the value of an environment
     variable, you should prefix it by the `$` symbol. Therefore, the `echo $PATH`
     command will output the value for the `PATH` environment variable.
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: '`echo`命令接受任何类型的字面量作为参数，并将该字面量输出到标准输出。如果你想获取一个环境变量的值，你应该在其前面加上`$`符号。因此，`echo
+    $PATH`命令将输出`PATH`环境变量的值。'
 - en: Have a go hero – learning the export command
+  id: totrans-130
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 尝试一下 – 学习export命令
 - en: You can get the values of different environment variables, such as `HOME`, `TERM`,
     and `EDITOR`. Also, you can change its value dynamically.
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以获取不同的环境变量（如`HOME`、`TERM`和`EDITOR`）的值。此外，你还可以动态地改变它们的值。
 - en: 'If you want the value of an environment variable to be available for the shell
     that is created from an original one, you should use the `export` command:'
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想让一个环境变量的值在从原始shell创建的新shell中可用，你应该使用`export`命令：
 - en: '[PRE20]'
+  id: totrans-133
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: Displaying command history
+  id: totrans-134
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 显示命令历史
 - en: Usually, people working with a shell execute a lot of commands, so it can be
     very useful to get a history of executed commands. Thanks to the `history` command,
     we can find out which commands were executed previously.
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，使用shell工作的人会执行很多命令，因此获取执行过的命令历史非常有用。多亏了`history`命令，我们可以找出之前执行过哪些命令。
 - en: Time for action – using the history command
+  id: totrans-136
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 使用history命令
 - en: 'I am very sure that you''ve been executing some shell commands, so we''re ready
     to use the `history` command directly:'
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: 我非常确定你已经执行了一些shell命令，所以我们可以直接使用`history`命令：
 - en: Enter `history` in the shell.
+  id: totrans-138
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在shell中输入`history`。
 - en: 'Based on the command that you entered in the past, you''ll get a list similar
     to the following:'
+  id: totrans-139
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 根据你过去输入的命令，你会得到一个类似下面的列表：
 - en: '[PRE21]'
+  id: totrans-140
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '*What just happened?*'
+  id: totrans-141
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*发生了什么？*'
 - en: Each command you type on the shell is stored in a file called `.bash_history`
     , which is read by the `history` command for showing you the information about
     previously executed commands. The operating system stores one `.bash_history`
     file for each user, and this file resides in the home directory of the user.
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: 你在shell中输入的每个命令都会被存储在一个名为`.bash_history`的文件中，`history`命令会读取这个文件来向你展示之前执行过的命令的信息。操作系统为每个用户存储一个`.bash_history`文件，这个文件位于用户的家目录中。
 - en: Have a go hero – checking the history of executed commands
+  id: totrans-143
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 尝试一下 – 检查执行过的命令历史
 - en: 'If you''re looking for a command that you executed previously, you can combine
     the `history` and `grep` commands along with pipelines for getting this information.
     Imagine you want to know which `cd` commands were executed previously; in this
     case you can type the following command:'
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你正在寻找之前执行过的命令，你可以结合使用 `history` 和 `grep` 命令以及管道来获取这些信息。假设你想知道之前执行过哪些 `cd`
+    命令；在这种情况下，你可以输入以下命令：
 - en: '[PRE22]'
+  id: totrans-145
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: Also, left and right cursors provides you navigation over last executed commands.
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，左右光标键可以让你在最近执行的命令之间导航。
 - en: Creating your first shell script
+  id: totrans-147
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 创建你的第一个 shell 脚本
 - en: So far, we have launched commands by directly typing into the shell and pressing
     *Enter*, but it's also possible to use a text file for writing a set of commands
     and launch this file through the shell. This technique allows us to create scripts
@@ -718,83 +1023,121 @@
     for this purpose. Although the learning curve for this specific programming language
     is not trivial, we're going to learn how to create a simple Bash script for executing
     some commands using control structures.
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，我们已经通过直接在 shell 中输入命令并按下 *Enter* 来执行命令，但也可以使用文本文件来编写一组命令并通过 shell 启动该文件。这种技术允许我们创建脚本或小型应用程序来执行命令或执行不同的
+    shell 操作。实际上，Bash shell 为我们提供了一个特定的领域特定编程语言来实现这一目的。尽管这种特定编程语言的学习曲线并不简单，但我们将学习如何创建一个简单的
+    Bash 脚本来使用控制结构执行一些命令。
 - en: In our example, we'll create a script for checking if a text file exists. If
     the answer is in the affirmative, we'll launch a message informing you about it.
     Otherwise, we'll create a new text file with a single line. Finally, whatever
     happens, we'll list the created text file.
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们的示例中，我们将创建一个脚本来检查文本文件是否存在。如果答案是肯定的，我们将显示一条消息告知你。否则，我们将创建一个只有一行的新文本文件。最后，无论发生什么，我们都将列出创建的文本文件。
 - en: Time for action – creating and executing a shell script
+  id: totrans-150
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 操作时间 – 创建和执行 shell 脚本
 - en: 'We need to use a text editor; of course, you can use your favorite one. Linux
     Mint offers us several text editors such as Vim, Emacs, and Pluma. The latter
     has a graphical user interface and is installed by default, so we''ll use it for
     our work. Here''s how to get started:'
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们需要使用文本编辑器；当然，你可以使用你喜欢的任何一款。Linux Mint 提供了几种文本编辑器，如 Vim、Emacs 和 Pluma。后者具有图形用户界面，并且默认安装，因此我们将使用它来完成我们的工作。以下是如何开始的方法：
 - en: Click on the **Menu** button, and then click on the **Text Editor** menu option,
     as shown in the following screenshot:![Time for action – creating and executing
     a shell script](img/9601_03_04.jpg)
+  id: totrans-152
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击 **菜单** 按钮，然后点击 **文本编辑器** 菜单选项，如下面的截图所示：![操作时间 – 创建和执行 shell 脚本](img/9601_03_04.jpg)
 - en: 'A new window will be displayed, and you''ll be ready to use Pluma. Enter the
     following lines, and save the file as `myscript.sh` when you''re ready:'
+  id: totrans-153
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将显示一个新窗口，你就可以开始使用 Pluma 了。输入以下行，并在准备好后将文件保存为 `myscript.sh`：
 - en: '[PRE23]'
+  id: totrans-154
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 'Give execution permissions to your new shell script:'
+  id: totrans-155
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 给你的新 shell 脚本赋予执行权限：
 - en: '[PRE24]'
+  id: totrans-156
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'Launch your script:'
+  id: totrans-157
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 启动你的脚本：
 - en: '[PRE25]'
+  id: totrans-158
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: 'The output of the last command should be something like this:'
+  id: totrans-159
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后一个命令的输出应该类似于这样：
 - en: '[PRE26]'
+  id: totrans-160
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: 'Also, you can check the content of the created file by using the `cat` command:'
+  id: totrans-161
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 此外，你可以使用 `cat` 命令来检查创建的文件内容：
 - en: '[PRE27]'
+  id: totrans-162
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: '*What just happened?*'
+  id: totrans-163
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚刚发生了什么？*'
 - en: All shell scripts are plain text files, so you can use any text editor for writing
     this kind of program. The first line of a shell script should start by indicating
     which kind of shell will be used for executing the script. The default shell in
     Linux Mint is Bash, so we'll use it for our shell scripts. This is the reason
     for using the `/bin/bash` executable file in the first line of our shell script.
     As you have may realized, two special symbols have been used in that line.
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有 shell 脚本都是纯文本文件，因此你可以使用任何文本编辑器来编写这类程序。shell 脚本的第一行应该指明将用于执行脚本的 shell 类型。Linux
+    Mint 默认的 shell 是 Bash，因此我们将使用它来编写我们的 shell 脚本。这就是在我们的 shell 脚本第一行使用 `/bin/bash`
+    可执行文件的原因。你可能已经意识到，那一行中使用了两个特殊符号。
 - en: The first one indicates that the line is a comment, and the second one is used
     for knowing what kind of shell should execute the shell script. The `if` statement
     is conditional and it checks if a certain condition is met. In our case, it checks
@@ -804,159 +1147,231 @@
     without it bothering about the conditional statement. In order to test this fact,
     you can launch the command twice; you will find that the output is different,
     because the second time the file will exist, because it was created before.
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一行表示该行是注释，第二行用于确定应该执行shell脚本的shell类型。`if`语句是条件性的，它会检查某个条件是否满足。在我们的例子中，它检查`myfile.txt`是否存在。如果答案是否定的，将执行`else`语句，在这里我们将使用`echo`命令创建一个新文件，并将输出重定向到该文件。最后，shell脚本的最后一行将被执行，而不受条件语句的影响。为了验证这一事实，你可以两次运行该命令；你会发现输出是不同的，因为第二次文件将存在，因为它之前已经被创建了。
 - en: In the third step, we used a command called `chmod` , which is very useful for
     changing permissions for a file. We'll learn more about this command in the next
     chapter, but in our shell script we only add an execution permission for it. Once
     we have this kind of permission for our shell script, we can invoke it directly
     through the command line.
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 在第三步中，我们使用了一个名为`chmod`的命令，它对于更改文件权限非常有用。我们将在下一章中了解更多关于这个命令的信息，但在我们的shell脚本中，我们只为它添加了执行权限。一旦我们的shell脚本拥有这种权限，我们就可以直接通过命令行调用它。
 - en: Have a go hero – learning advanced shell programming
+  id: totrans-167
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 动手实践 – 学习高级shell编程
 - en: 'Although our example is very simple, you can learn more about shell programming
     through the following resources:'
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管我们的例子非常简单，但你可以通过以下资源了解更多关于shell编程的知识：
 - en: '*Bash Programming – Introduction How-To*, from [http://bit.ly/x24V3](http://bit.ly/x24V3)'
+  id: totrans-169
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*Bash编程 – 入门指南*，来自[http://bit.ly/x24V3](http://bit.ly/x24V3)'
 - en: '*Advanced Bash-Scripting Guide*, from [http://tldp.org/LDP/abs/html/](http://tldp.org/LDP/abs/html/)'
+  id: totrans-170
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*高级Bash脚本指南*，来自[http://tldp.org/LDP/abs/html/](http://tldp.org/LDP/abs/html/)'
 - en: '*Debian Bash Programming Guide*, from [http://bit.ly/Qs12TQ](http://bit.ly/Qs12TQ)'
+  id: totrans-171
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*Debian Bash编程指南*，来自[http://bit.ly/Qs12TQ](http://bit.ly/Qs12TQ)'
 - en: How to get help
+  id: totrans-172
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 如何获取帮助
 - en: Getting help about shell commands and some executables files is easy thanks
     to two commands, `man` and `info`. Both of them are included in Linux Mint; let's
     discover how to use them.
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于`man`和`info`这两个命令，获取关于shell命令和一些可执行文件的帮助变得容易。它们都包含在Linux Mint中；让我们来探索如何使用它们。
 - en: Time for action – using the man and the info commands
+  id: totrans-174
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 使用man和info命令
 - en: 'Follow these steps to better understand how the `man` and the `info` commands
     can be used:'
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 按照以下步骤更好地理解如何使用`man`和`info`命令：
 - en: Again, make sure your shell is running.
+  id: totrans-176
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 再次确保你的shell正在运行。
 - en: 'Execute the following command to get information about the `ls` command:'
+  id: totrans-177
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 执行以下命令以获取有关`ls`命令的信息：
 - en: '[PRE28]'
+  id: totrans-178
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: The following screenshots show you the output of the previously executed command:![Time
     for action – using the man and the info commands](img/9601_03_05.jpg)
+  id: totrans-179
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 以下截图展示了之前执行的命令的输出：![行动时间 – 使用man和info命令](img/9601_03_05.jpg)
 - en: 'Now, it''s time to test the `info` command:'
+  id: totrans-180
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，是时候测试`info`命令了：
 - en: '[PRE29]'
+  id: totrans-181
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: After executing the `info` command, you'll get the following information:![Time
     for action – using the man and the info commands](img/9601_03_06.jpg)
+  id: totrans-182
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 执行`info`命令后，你将获得以下信息：![行动时间 – 使用man和info命令](img/9601_03_06.jpg)
 - en: '*What just happened?*'
+  id: totrans-183
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚刚发生了什么？*'
 - en: The `man` command offers you a lot of information about how the executable or
     bash commands work. As a parameter, the `man` command receives the name of the
     bash command or executable file for displaying information. This command reads
     a file or a set of files written in a specific format so developers can include
     documentation for programs using that format.
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: '`man`命令为你提供了大量关于可执行文件或bash命令如何工作的信息。作为参数，`man`命令接收bash命令或可执行文件的名称以显示信息。该命令读取一个或一组特定格式的文件，以便开发者可以使用该格式为程序包含文档。'
 - en: Also, the `info` command displays some useful information about commands. However,
     the documentation format used by `info` is different from the one used by `man`.
     As you must have noticed, even though we used the same argument for both the commands,
     their outputs were different. Some users prefer `man` and others `info`, but basically
     both offer similar information.
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，`info`命令显示了有关命令的一些有用信息。然而，`info`使用的文档格式与`man`不同。正如你可能注意到的，尽管我们为这两个命令使用了相同的参数，但它们的输出是不同的。有些用户更喜欢`man`，而其他用户则更喜欢`info`，但基本上两者都提供了类似的信息。
 - en: Summary
+  id: totrans-186
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 总结
 - en: 'We learned a lot in this chapter about the shell and basic commands, including
     how to create a simple shell script. Specifically, we dealt with the following:'
+  id: totrans-187
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们学习了很多关于shell和基本命令的知识，包括如何创建一个简单的shell脚本。具体来说，我们涉及了以下内容：
 - en: Basic usage of the shell through the MATE Terminal application
+  id: totrans-188
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 通过MATE终端应用程序使用shell的基本操作
 - en: Looking for the current directory where your shell is pointing
+  id: totrans-189
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 查找当前shell指向的目录
 - en: Running executable commands and files
+  id: totrans-190
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 运行可执行命令和文件
 - en: Getting the full path of commands and executable files referred by the `PATH`
     environment variable
+  id: totrans-191
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 获取由`PATH`环境变量引用的命令和可执行文件的完整路径
 - en: How to use the `ls` command for listing files
+  id: totrans-192
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何使用`ls`命令列出文件
 - en: How to use the `find` and `locate` commands for finding files
+  id: totrans-193
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何使用`find`和`locate`命令查找文件
 - en: How to display content for a text file through the `cat` command
+  id: totrans-194
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何通过`cat`命令显示文本文件的内容
 - en: Using pipeline and redirection techniques
+  id: totrans-195
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用管道和重定向技术
 - en: Setting the `PATH` environment variable
+  id: totrans-196
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 设置`PATH`环境变量
 - en: How to use the `history` command for finding which commands were executed previously
+  id: totrans-197
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何使用`history`命令查找之前执行过的命令
 - en: Shell programming fundamentals
+  id: totrans-198
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Shell编程基础
 - en: How to get help about shell and its commands
+  id: totrans-199
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何获取有关shell及其命令的帮助
 - en: Once you know the basic shell concepts and commands, you're ready to learn about
     one of the most important tasks for system administrators—how to provision user
     accounts.
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦你了解了基本的shell概念和命令，你就可以准备学习系统管理员最重要的任务之一——如何创建用户账户。

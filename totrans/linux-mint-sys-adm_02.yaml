@@ -3,6 +3,7 @@
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第2章. 安装Linux Mint
 - en: '*Now that we have learned the theoretical fundamentals about Linux Mint project
     and operating system, it''s time to start to do something practical. Before starting
     to use an operating system on our computer, we need to install it. This affirmation
@@ -14,40 +15,49 @@
   id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在我们已经学习了Linux Mint项目和操作系统的理论基础，是时候开始做一些实际操作了。在我们开始在计算机上使用操作系统之前，我们需要安装它。这个说法并不完全正确；一些Linux发行版提供了一个现场版，允许您在不安装的情况下测试操作系统。Mint也不例外，开发者分发ISO现场镜像。此外，操作系统可以通过提到的现场镜像进行安装。因此，我们将使用其中一个作为示例。在实践中，我们将了解如何在计算机上安装Linux
+    Mint。*'
 - en: 'In this chapter we shall learn the following topics:'
   id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将学习以下主题：
 - en: Creating a bootable USB flash drive for Linux Mint
   id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 创建Linux Mint的可启动USB闪存驱动器
 - en: Downloading a Linux Mint MATE 13 ISO image
   id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 下载Linux Mint MATE 13 ISO镜像
 - en: Booting Linux Mint from an USB drive
   id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 从USB驱动器启动Linux Mint
 - en: Installing Linux Mint in a computer
   id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在计算机上安装Linux Mint
 - en: Logging in to the system
   id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 登录系统
 - en: Creating a bootable Linux Mint USB flash drive
   id: totrans-8
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 创建可启动Linux Mint USB闪存驱动器
 - en: We're going to install Linux Mint from an ISO image. So, we'll need an external
     media for burning that image before starting the installation process itself.
     In [Chapter 1](ch01.html "Chapter 1. Introduction to Linux Mint"), *An Introduction
@@ -59,6 +69,9 @@
   id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将从ISO镜像安装Linux Mint。因此，在开始安装过程之前，我们需要一个外部媒体来刻录该镜像。在[第1章](ch01.html "第1章. Linux
+    Mint简介")，*Linux Mint简介*中，我们讨论了不同的Linux Mint版本或版本。用户可以根据经验、桌面和计算机架构选择自己的版本。为了简单起见，我们选择了32位的MATE版本，我们将使用该版本来学习如何安装操作系统。但是，创建可启动闪存驱动器和安装Linux
+    Mint的过程与其他版本非常相似。
 - en: Make sure you have a USB flash drive ready to use; you'll need one with 2 GB
     of capacity at least. Despite you can find different ways for creating bootable
     USB devices, we'll work with a program named **Universal Network Installer** (**UNetbootin**).
@@ -68,41 +81,50 @@
   id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 确保您有一个可用的USB闪存驱动器；您至少需要一个2 GB容量的。尽管有多种方法可以创建可启动USB设备，但我们将使用一个名为**通用网络安装程序**（**UNetbootin**）的程序。它是一个开源程序，您可以在Mac
+    OS X、Windows和GNU/Linux版本中找到。这三个操作系统的操作过程是相同的，因此您可以选择您喜欢的操作系统。
 - en: Time for action – downloading and burning the ISO image
   id: totrans-11
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间——下载并刻录ISO镜像
 - en: 'For creating our bootable device we''ll need to carry out two main tasks—download
     the ISO image, and burn it using a USB flash drive:'
   id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了创建我们的可启动设备，我们需要执行两个主要任务——下载ISO镜像，并使用USB闪存驱动器将其刻录：
 - en: Open a web browser and enter the URL [http://mirror.umd.edu/linuxmint/images/stable/13/linuxmint-13-mate-dvd-32bit.iso](http://mirror.umd.edu/linuxmint/images/stable/13/linuxmint-13-mate-dvd-32bit.iso).
   id: totrans-13
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 打开网络浏览器并输入网址[http://mirror.umd.edu/linuxmint/images/stable/13/linuxmint-13-mate-dvd-32bit.iso](http://mirror.umd.edu/linuxmint/images/stable/13/linuxmint-13-mate-dvd-32bit.iso)。
 - en: Save the ISO image (`linuxmint-13-mate-dvd-32b.iso`) into your hard drive.
   id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将ISO镜像（`linuxmint-13-mate-dvd-32b.iso`）保存到您的硬盘上。
 - en: Open a new tab or page into your web browser, and enter the URL [http://unetbootin.sourceforge.net.](http://unetbootin.sourceforge.net.)
   id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在您的网络浏览器中打开一个新标签或页面，并输入网址[http://unetbootin.sourceforge.net.](http://unetbootin.sourceforge.net.)
 - en: Click on the button for your operating system.
   id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击适用于您操作系统的按钮。
 - en: Save the program into your hard drive then install and launch it.
   id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将程序保存到您的硬盘上，然后安装并启动它。
 - en: When you launch `UNetbootin`, click on the **Diskimage** option and select the
     downloaded ISO image using the button with the **…** label.![Time for action –
     downloading and burning the ISO image](img/9601_02_01.jpg)
@@ -110,6 +132,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当您启动`UNetbootin`时，点击**磁盘映像**选项，并使用带有**…**标签的按钮选择下载的ISO镜像。![行动时间——下载并刻录ISO镜像](img/9601_02_01.jpg)
 - en: Enter a number greater than `256` into the **Space used to preserve file across
     reboots (Ubuntu only):** input box. We selected **512**, which is enough for our
     purpose.
@@ -117,6 +140,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在**跨重启保留文件空间（仅限Ubuntu）：**输入框中输入一个大于`256`的数字。我们选择了**512**，这对于我们的目的来说足够了。
 - en: Select the **USB Drive** option for **Type**, choose your drive unit, and click
     on the **OK** button. The process will start taking actions such as extracting
     and copying files, and installing the boot loader. When that process finishes,
@@ -125,11 +149,13 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在**类型**中选择**USB驱动器**选项，选择您的驱动器单元，然后点击**确定**按钮。该过程将开始采取行动，如提取和复制文件，以及安装引导加载程序。当该过程完成后，您的闪存驱动器将准备好使用。
 - en: '*What just happened?*'
   id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚才发生了什么？*'
 - en: As you have discovered, `UNetbootin` is a very simple and useful tool for creating
     a bootable USB drive from an ISO image. Also, it can be used for downloading a
     specific GNU/Linux ISO image from the Internet. Actually, the image can be created
@@ -142,6 +168,9 @@
   id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如您所发现的，`UNetbootin`是一个非常简单且有用的工具，用于从ISO映像创建可启动的USB驱动器。此外，它还可以用于从互联网下载特定的GNU/Linux
+    ISO映像。实际上，可以通过此选项直接创建映像，而无需从系统文件中选择ISO文件。Debian、Ubuntu、Gentoo、Fedora和Mint等都是`UNetbootin`支持的GNU/Linux发行版。然而，这个软件的最新版本不允许我们下载大于10的Mint版本。因此，我们选择从Linux
+    Mint的官方镜像之一，通过网络浏览器下载特定版本。
 - en: It's important to fill the input box for the **Space used to preserve file across
     reboots (Ubuntu only):** option, because Linux Mint is a Ubuntu derived distribution.
     The amount of chosen MB depends on the space available on your USB drive. This
@@ -151,16 +180,19 @@
   id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 填写**跨重启保留文件空间（仅限Ubuntu）：**选项的输入框很重要，因为Linux Mint是基于Ubuntu的发行版。所选的MB数量取决于您的USB驱动器上的可用空间。这部分空间用于存储一些持久数据，如配置更改、保存的图片或数据库。得益于这种存储方式——您可以在不安装操作系统的情况下启动和使用实时操作系统。
 - en: Keep in mind that the process for creating the bootable USB drive is practically
     identical on Mac OS X, Windows family, and GNU/Linux distros.
   id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，创建可启动USB驱动器的过程在Mac OS X、Windows系列和GNU/Linux发行版上几乎相同。
 - en: Installing Linux Mint from a flash drive
   id: totrans-25
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 从闪存驱动器安装Linux Mint
 - en: Now that we have our bootable USB drive, we're ready for booting and installing
     Linux Mint. Our downloaded edition is live. This means you can test and use the
     operating system in your computer without installation. No doubt, this is a very
@@ -170,37 +202,45 @@
   id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们有了可启动的USB驱动器，我们准备好启动和安装Linux Mint了。我们下载的版本是实时的。这意味着您可以在不安装的情况下在计算机上测试和使用操作系统。毫无疑问，这对于想要轻松尝试Mint的人来说是一个非常有趣的功能。然而，我们将学习如何在计算机上安装Linux
+    Mint。在继续之前，请确保您的计算机至少有5.7 GB的硬盘空间可用。
 - en: Time for action – booting and installing Linux Mint
   id: totrans-27
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 操作时间 – 启动和安装Linux Mint
 - en: Before starting, make sure you have your USB Mint bootable drive ready.
   id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 在开始之前，请确保您已准备好USB Mint可启动驱动器。
 - en: Plug your USB drive in your computer.
   id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将USB驱动器插入计算机。
 - en: Reboot your computer and select your USB as the device for booting.
   id: totrans-30
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 重新启动计算机并选择USB作为启动设备。
 - en: After booting, you'll see a message indicating that the system will boot automatically
     in 10 seconds. Before it happens, press the *Enter* key.
   id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 启动后，您将看到一条消息，指示系统将在10秒内自动启动。在它发生之前，按*Enter*键。
 - en: When the booting splash window appears, leave the default option selected and
     press *Enter*.
   id: totrans-32
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当启动闪屏窗口出现时，保留默认选项并按*Enter*键。
 - en: After finishing the booting process for Linux Mint, you can see the desktop
     with a few icons. At this point, Linux Mint live is ready to use but we continue
     to click on the **Install Linux Mint** icon.![Time for action – booting and installing
@@ -209,6 +249,8 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在完成Linux Mint的启动过程后，您会看到带有几个图标的桌面。此时，Linux Mint的实时模式已准备好使用，但我们继续点击**安装Linux
+    Mint**图标。![操作时间 – 启动和安装Linux Mint](img/9601_02_05.jpg)
 - en: Select your language for installation on the **Welcome** dialog box, and click
     on the **Continue** button.
   id: totrans-34
@@ -326,11 +368,14 @@
   id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您打算处理敏感数据，或者您只是希望保护您的个人数据免受其他用户的影响，您可以选择加密您的家目录。Linux发行版使用位于`/home`目录内的特定文件夹来存储操作系统每个用户的数据。每个用户通过用户名被调用；因此对于用户名`joe`，`home`文件夹将是`/home/joe`。所有个人信息和自定义配置都将存储在该文件夹中，因此加密它可能是有价值的。请记住，在安装过程中您选择了一个用户名，Linux
+    Mint为您创建了该用户。该用户的名称将用于您的家目录。尽管如此，加密您的`home`文件夹被视为高级功能，这就是我们没有勾选相应复选框的原因。
 - en: Booting Linux Mint
   id: totrans-48
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 启动Linux Mint
 - en: Once the installation process finishes, it's time to boot your operating system
     for the first time. You will not have to configure anything else, but you should
     learn how to boot and log in to the system before learning more things and features
@@ -338,27 +383,32 @@
   id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 安装过程完成后，是时候首次启动您的操作系统了。您不需要配置任何其他内容，但您应该学会如何启动并登录系统，然后再学习有关Linux Mint的更多内容和功能。
 - en: Time for action – booting Linux Mint for the first time
   id: totrans-50
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 行动时间 – 首次启动Linux Mint
 - en: 'Booting and logging in to Linux Mint is pretty easy as you''ll discover in
     the following steps:'
   id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 启动并登录Linux Mint相当简单，您将在以下步骤中发现这一点：
 - en: Boot your computer with Linux Mint installed. Make sure any CD, DVD, or USB
     drives are not connected.
   id: totrans-52
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用已安装Linux Mint的计算机启动。确保没有任何CD、DVD或USB驱动器连接。
 - en: Don't pulse any key; Mint will boot automatically.
   id: totrans-53
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 不要按任何键；Mint将自动启动。
 - en: After booting Linux Mint, a new dialog for logging in to the system will be
     displayed. You should enter your username and password chosen during the installation
     process:![Time for action – booting Linux Mint for the first time](img/9601_02_15.jpg)
@@ -366,17 +416,20 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 启动Linux Mint后，将显示一个新的登录系统对话框。您应该输入在安装过程中选择的用户名和密码：![行动时间 – 首次启动Linux Mint](img/9601_02_15.jpg)
 - en: Once your username and password are entered and accepted, Linux Mint will log
     you in to the system, and you can start using it!
   id: totrans-55
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 一旦输入并接受了您的用户名和密码，Linux Mint将登录到系统，您就可以开始使用它了！
 - en: '*What just happened?*'
   id: totrans-56
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚刚发生了什么？*'
 - en: The boot process is always the same and you must get authenticated before starting
     to use Linux Mint in your computer, unless you chose **Log in automatically**
     during the installation process. If you change your mind about this feature, don't
@@ -384,6 +437,7 @@
   id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 启动过程始终相同，您必须在开始在计算机上使用Linux Mint之前进行身份验证，除非您在安装过程中选择了**自动登录**。如果您改变了对此功能的看法，不用担心；您可以在操作系统安装后选择不同的选项。
 - en: To make things easier, Mint developers include an automatic process for booting.
     This one doesn't display any menu or buttons, but it's good to know that the menu
     exists, and you can select different options to execute other actions, such as
@@ -391,38 +445,46 @@
   id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了简化操作，Mint开发者包含了一个自动启动过程。这个过程不显示任何菜单或按钮，但知道菜单存在是很好的，您可以选择不同的选项来执行其他操作，例如启动内存测试或进入称为**恢复**的特殊模式。
 - en: Summary
   id: totrans-59
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 总结
 - en: In this chapter you have learned how to create a bootable Linux Mint USB drive,
     and how to install and boot the operating system.
   id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，您已经学会了如何创建可启动的Linux Mint USB驱动器，以及如何安装和启动操作系统。
 - en: 'Specifically, we covered:'
   id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 具体来说，我们涵盖了：
 - en: How to create a bootable USB drive from a downloaded Linux Mint ISO image
   id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何从下载的Linux Mint ISO镜像创建可启动USB驱动器
 - en: How to install `Linux Mint MATE 32-bit` edition and how to boot it
   id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何安装`Linux Mint MATE 32位`版并如何启动它
 - en: How to log in to the system
   id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何登录系统
 - en: Now you're ready to use Linux Mint and discover its main features. In the next
     chapter we'll focus on one of the most important aspects of a Linux distribution—the
     shell.
   id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在您准备好使用Linux Mint并发现其主要功能了。在下一章中，我们将专注于Linux发行版最重要的方面之一——shell。
