@@ -1,52 +1,76 @@
 - en: Chapter 12. Providing Web Services
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第12章：提供Web服务
 - en: 'In this chapter, we will cover the following:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将介绍以下内容：
 - en: Installing Apache and serving web pages
+  id: totrans-2
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安装Apache并提供网页服务
 - en: Enabling system users and building publishing directories
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 启用系统用户并构建发布目录
 - en: Implementing name-based hosting
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 实施基于名称的托管
 - en: Implementing CGI with Perl and Ruby
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用Perl和Ruby实现CGI
 - en: Installing, configuring, and testing PHP
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安装、配置和测试PHP
 - en: Securing Apache
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 保护Apache
 - en: Setting up HTTPS with Secure Sockets Layer (SSL)
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用安全套接字层（SSL）设置HTTPS
 - en: Introduction
+  id: totrans-9
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 引言
 - en: This chapter is a collection of recipes that provides the necessary steps to
     serve web pages. From installing a web server to delivering a dynamic page through
     SSL, this chapter provides the starting point required to implement an industry
     standard hosting solution anywhere and at any time.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章是一系列食谱的集合，提供了为网页提供服务的必要步骤。从安装Web服务器到通过SSL提供动态页面，本章提供了在任何时间和任何地点实施行业标准托管解决方案所需的起点。
 - en: Installing Apache and serving web pages
+  id: totrans-11
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 安装Apache并提供网页服务
 - en: In this recipe, we will learn how to install and configure the Apache web server
     to enable the serving of static web pages. Apache is one of the world's most popular
     open source web servers. It runs as the backend for over half of all the Internet's
@@ -55,163 +79,233 @@
     purpose of this recipe to show you how easily it can be installed using the YUM
     package manager so that you can maintain your server with the latest security
     updates. Apache 2.4 is available on CentOS 7.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们将学习如何安装和配置Apache Web服务器以启用静态网页服务。Apache是世界上最受欢迎的开源Web服务器之一。它作为后端运行着超过一半的互联网网站，并可用于提供静态和动态网页。通常被称为`httpd`，它支持广泛的功能。本食谱的目的是向您展示如何轻松地使用YUM包管理器进行安装，以便您可以保持服务器最新的安全更新。Apache
+    2.4在CentOS 7上可用。
 - en: Getting ready
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to download additional packages. It
     is expected that your server will be using a static IP address and a hostname.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本食谱，您需要一个具有root权限的CentOS 7操作系统的有效安装，您选择的基于控制台的文本编辑器，以及连接到互联网以下载其他软件包的能力。预计您的服务器将使用静态IP地址和主机名。
 - en: How to do it...
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: Apache is not installed by default and for this reason we will begin by installing
     the necessary packages using the YUM package manager.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: Apache默认未安装，因此我们将从使用YUM包管理器安装必要的软件包开始。
 - en: 'To begin, log in as root and type the following command:'
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录并输入以下命令：
 - en: '[PRE0]'
+  id: totrans-18
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Create a home page by typing:'
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 通过输入以下内容创建主页：
 - en: '[PRE1]'
+  id: totrans-20
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Now add the required HTML. You can use the following code as a starting point
     but it is expected that you will want to modify it to suit your own needs:'
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在添加所需的HTML。您可以使用以下代码作为起点，但预计您会希望对其进行修改以满足您的需求：
 - en: '[PRE2]'
+  id: totrans-22
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'You can now remove the Apache 2 test page with the following command:'
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 您现在可以使用以下命令删除Apache 2测试页面：
 - en: '[PRE3]'
+  id: totrans-24
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Having completed these steps, we will now consider the need to configure the
     `httpd` service for basic usage. To do this, open the `httpd` configuration file
     in your favorite text editor by typing (after you have made a backup of the file):'
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成这些步骤后，我们现在将考虑为基本使用配置`httpd`服务的需要。为此，打开您最喜欢的文本编辑器中的`httpd`配置文件，输入（在您已经备份文件之后）：
 - en: '[PRE4]'
+  id: totrans-26
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Now scroll down to find the line `ServerAdmin root@localhost`. The traditional
     approach to setting this value is based on the use of the webmaster identity,
     so simply modify the e-mail address to reflect something more relevant to your
     own needs. For example, if your server''s domain name was `www.centos7.home` then
     your entry will look similar to this:'
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在向下滚动找到行`ServerAdmin root@localhost`。设置此值的传统方法基于使用webmaster身份，因此只需修改电子邮件地址以反映更符合您自己需求的内容。例如，如果您的服务器的域名是`www.centos7.home`，那么您的条目将与此类似：
 - en: '[PRE5]'
+  id: totrans-28
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Now scroll down a few more lines to find the `ServerName` directive as follows:
     `#ServerName www.example.com:80`. Uncomment this line (which means remove the
     leading # sign at its beginning) and replace the value `www.example.com` with
     something more appropriate to your own needs. For example, if your server''s domain
     name was `www.centos7.home` then your entry will look as follows:'
+  id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在向下滚动几行，找到以下`ServerName`指令：`#ServerName www.example.com:80`。取消注释此行（即删除其前面的#符号），并将值`www.example.com`替换为更适合您自己需求的值。例如，如果您的服务器域名为`www.centos7.home`，则您的条目将如下所示：
 - en: '[PRE6]'
+  id: totrans-30
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Next, we will expand the `DirectoryIndex` directive a bit more. Find the line
     `DirectoryIndex index.html`, which is part of the `<IfModule dir_module>` block,
     then change it to:'
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们将稍微扩展一下`DirectoryIndex`指令。找到`DirectoryIndex index.html`这一行，它是`<IfModule
+    dir_module>`块的一部分，然后将其更改为：
 - en: '[PRE7]'
+  id: totrans-32
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Save and close the file, and then type the following command to test the config
     file:'
+  id: totrans-33
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件，然后键入以下命令以测试配置文件：
 - en: '[PRE8]'
+  id: totrans-34
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Next, let''s configure our web server''s firewall by allowing incoming `http`
     connections (this defaults to port 80) to the server:'
+  id: totrans-35
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，让我们通过允许传入的`http`连接（默认为端口80）到服务器来配置Web服务器的防火墙：
 - en: '[PRE9]'
+  id: totrans-36
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'Now proceed to set the `httpd` service to start at boot and start the service:'
+  id: totrans-37
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在继续设置`httpd`服务以在启动时启动并启动该服务：
 - en: '[PRE10]'
+  id: totrans-38
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'You can now test `httpd` from any computer in the same network as your web
     server (both systems should be able to see and ping each other), pointing your
     browser at the following URL by replacing `XXX.XXX.XXX.XXX` with the IP address
     of your server in order to see our own custom Apache test page we created:'
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，您可以从与您的Web服务器位于同一网络中的任何计算机上测试`httpd`（两个系统应该能够相互看到并进行ping操作），通过将以下URL中的`XXX.XXX.XXX.XXX`替换为您的服务器IP地址，以查看我们创建的自定义Apache测试页面：
 - en: '[PRE11]'
+  id: totrans-40
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'Alternatively, if you don''t have a web browser, you can check if Apache is
     up and running using `curl` by fetching our test page on any computer in your
     network:'
+  id: totrans-41
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 或者，如果您没有Web浏览器，可以使用`curl`从网络中的任何计算机上获取我们的测试页面，以检查Apache是否正在运行：
 - en: '[PRE12]'
+  id: totrans-42
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: How it works...
+  id: totrans-43
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: Apache is a software package that enables you to publish and serve web pages,
     and is more commonly known as `httpd`, Apache2 or simply Apache. It was the purpose
     of this recipe to show you how easily CentOS enables you to get started with your
     very first website.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: Apache是一个软件包，它使您能够发布和提供Web页面，并且更常被称为`httpd`、Apache2或简称为Apache。本食谱的目的是向您展示CentOS如何轻松地让您开始创建您的第一个网站。
 - en: So what did we learn from this experience?
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: 'We began the recipe by installing Apache via the YUM package manager and the
     package named `httpd`. Having done this, we learned that on CentOS 7 the default
     location to serve static HTML is `/var/www/html` so our first task was to create
@@ -245,17 +339,26 @@
     access and error log files can be found in `/var/log/httpd`. To get a live view
     of who is currently accessing your web server, open `/var/log/httpd/access_log`;
     to see all the errors, type `/var/log/httpd/error_log`.'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先通过YUM包管理器安装了名为`httpd`的Apache，并了解到在CentOS 7上，默认提供静态HTML的位置是`/var/www/html`。因此，我们的首要任务是创建一个合适的欢迎页面，我们将其放置在`/var/www/html/index.html`。我们使用了一个基本的HTML模板来帮助您起步，并期望您会希望自定义这个页面的外观和感觉。接着，我们删除了位于`/etc/httpd/conf.d/welcome.conf`的默认Apache
+    2欢迎页面。随后，下一步是在备份`httpd.conf`配置文件后，使用我们喜欢的文本编辑器打开它，以便在出现问题时可以恢复更改。首先，我们定义了服务器的电子邮件地址和服务器名称，这些信息通常出现在服务器生成的网页的错误消息中；因此，它应该反映您的域名。接下来，我们调整了`DirectoryIndex`指令，该指令定义了在请求目录时将首先发送给浏览器的文件。通常，人们请求的不是特定的网页而是目录。例如，如果您浏览到`www.example.com`，您请求的是一个目录，而`www.example.com/welcome.html`是一个特定的网页。默认情况下，Apache发送请求目录中的`index.html`，但我们扩展了这一点，因为许多网站使用`.htm`扩展名。最后，我们以通常的方式保存并关闭了`httpd`配置文件，然后使用`apachectl
+    configtest`命令检查Apache配置文件是否存在任何错误。这应该会打印出一条`Syntax OK`消息，然后我们可以启用`httpd`服务在启动时自动启动。我们必须在firewalld中打开标准的HTTP端口80，以允许对服务器的传入HTTP请求，最后我们启动了`httpd`服务。请记住，如果配置文件已被更改，您也可以始终在不完全重启服务的情况下重新加载Apache的配置文件，方法是使用：`systemctl
+    reload httpd`。完成这些步骤后，只需从同一网络中的另一台计算机打开浏览器，并选择一种查看我们新Apache启动页面的方法。您可以使用服务器的IP地址（例如，`http://192.168.1.100`），而那些支持主机名的人可以输入主机名（例如，`http://www.centos7.home`）。Apache的访问和错误日志文件可以在`/var/log/httpd`中找到。要实时查看谁正在访问您的Web服务器，请打开`/var/log/httpd/access_log`；要查看所有错误，请输入`/var/log/httpd/error_log`。
 - en: Apache is a big subject and we cannot cover every nuance, but over the coming
     recipes we will continue to expose additional functionalities that will enable
     you to build a web server of choice.
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管Apache是一个庞大的主题，我们无法涵盖其每一个细节，但在接下来的章节中，我们将继续揭示更多的功能，这些功能将帮助您构建一个理想的Web服务器。
 - en: Enabling system users and building publishing directories
+  id: totrans-48
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 启用系统用户和构建发布目录
 - en: In this recipe, we will learn how Apache provides you with the option to allow
     your system users to host web pages within their home directories. This approach
     has been used by ISPs since the outset of web hosting and in many respects it
@@ -263,137 +366,197 @@
     hosting. In the previous recipe you were shown how to install the Apache web server,
     and with the desire to provide hosting facilities for system users, it is the
     purpose of this recipe to show you how this can be achieved in CentOS 7.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们将学习Apache如何为您提供允许系统用户在其家目录中托管网页的选项。这种方法自Web托管开始以来就被ISP使用，并且在许多方面，由于它能够避免更复杂的虚拟托管方法，它继续蓬勃发展。在前一个食谱中，您被展示了如何安装Apache
+    Web服务器，并且出于为系统用户提供托管设施的愿望，本食谱的目的是向您展示如何在CentOS 7中实现这一点。
 - en: Getting ready
+  id: totrans-50
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges and a console-based text editor of your
     choice. It is expected that your server will be using a static IP address that
     supports a hostname or domain name and that the Apache web server is already installed
     and currently running. Also, at least one system user account should be available
     on the server.
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本食谱，您将需要一个具有root权限的工作CentOS 7操作系统安装和一个您选择的基于控制台的文本编辑器。预计您的服务器将使用支持主机名或域名的静态IP地址，并且Apache
+    Web服务器已经安装并正在运行。此外，服务器上至少应有一个系统用户帐户。
 - en: How to do it...
+  id: totrans-52
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: To provide the functionality offered by this recipe, no additional packages
     are required but we will need to make some modifications to the Apache configuration
     file.
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了提供本食谱所提供的功能，不需要额外的软件包，但我们需要对Apache配置文件进行一些修改。
 - en: 'To begin, log in as root and open the Apache userdir configuration file in
     your favorite text editor by typing the following command, after you have created
     a backup copy of it first:'
+  id: totrans-54
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录，并在您最喜欢的文本编辑器中打开Apache用户目录配置文件，首先创建其备份副本，然后输入以下命令：
 - en: '[PRE13]'
+  id: totrans-55
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'In the file, locate the directive that reads as `UserDir disabled`. Change
     it to the following:'
+  id: totrans-56
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在文件中，找到读作`UserDir disabled`的指令。将其更改为以下内容：
 - en: '[PRE14]'
+  id: totrans-57
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'Now scroll down to the `<Directory "/home/*/public_html">` section and replace
     the existing block with the one here:'
+  id: totrans-58
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在滚动到`<Directory "/home/*/public_html">`部分，并用这里的块替换现有的块：
 - en: '[PRE15]'
+  id: totrans-59
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'Save and exit the file. Now log in as any system user to work with your publishing
     web directory (`su - <username>`), and then create a web publishing web folder
     in your home directory and a new home page for your user:'
+  id: totrans-60
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并退出文件。现在以任何系统用户身份登录，以便与您的发布网页目录一起工作（`su - <username>`），然后在您的家目录中创建一个网页发布文件夹和一个新的用户主页：
 - en: '[PRE16]'
+  id: totrans-61
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'Now add the required HTML. You can use the following code as a starting point
     but it is expected that you will modify it to suit your own needs:'
+  id: totrans-62
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在添加所需的HTML。您可以使用以下代码作为起点，但预计您会对其进行修改以满足自己的需求：
 - en: '[PRE17]'
+  id: totrans-63
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 'Now modify the permissions of the Linux system user''s `<username>` home folders
     by typing:'
+  id: totrans-64
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在通过键入以下内容来修改Linux系统用户的`<username>`家目录的权限：
 - en: '[PRE18]'
+  id: totrans-65
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 'Set the read/write permissions for `public_html` `755` so Apache can execute
     it later:'
+  id: totrans-66
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将`public_html`的读/写权限设置为`755`，以便Apache稍后可以执行它：
 - en: '[PRE19]'
+  id: totrans-67
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 'Now log in as root again using `su - root` to configure SELinux appropriately
     for the use of http home directories:'
+  id: totrans-68
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在再次以root身份登录，使用`su - root`命令来适当地配置SELinux，以便使用http家目录：
 - en: '[PRE20]'
+  id: totrans-69
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'As root, change the SELinux security context for your user''s web public directory
     (this needs `policycoreutils-python` package to be installed) with the username
     `<user>`:'
+  id: totrans-70
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 作为root，更改用户网页公共目录的SELinux安全上下文（这需要安装`policycoreutils-python`软件包），用户名为`<user>`：
 - en: '[PRE21]'
+  id: totrans-71
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 'To complete this recipe, simply reload the `httpd` service configuration:'
+  id: totrans-72
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要完成本食谱，只需重新加载`httpd`服务配置：
 - en: '[PRE22]'
+  id: totrans-73
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: 'You can now test your setup by browsing to (substitute <username> appropriately):
     `http://<SERVER IP ADDRESS>/~<username>` in any browser.'
+  id: totrans-74
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 您现在可以通过在任何浏览器中浏览到（适当替换<username>）：`http://<SERVER IP ADDRESS>/~<username>`来测试您的设置。
 - en: How it works...
+  id: totrans-75
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: In this recipe, we learned how easy it is to host your own peers by enabling
     user directories on the Apache web server.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们了解到通过在Apache Web服务器上启用用户目录来托管自己的对等体是多么容易。
 - en: So what did we learn from this experience?
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从这次经历中学到了什么？
 - en: 'We began the recipe by making a few minor configuration changes to Apache''s
     `userdir.conf` in order to set up the user directory support. We activated the
     user directories by adjusting the `UserDir` directive from disabled to pointing
@@ -426,8 +589,17 @@
     and another one for your internal private network. You can add multiple `Require`
     lines within a `Directory` block. Remember to always set at least `Require local`
     which allows local access.'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先通过在Apache的`userdir.conf`中进行一些小的配置更改来开始这个配方，以便设置用户目录支持。我们通过将`UserDir`指令从禁用调整为指向每个用户主目录内的HTML网页目录的名称来激活用户目录，该目录将包含我们所有用户的网页内容，并将其称为`public_html`（您可以更改此目录名称，但`public_html`是命名它的既定标准）。然后，我们继续修改`<Directory
+    /home/*/public_html>`标签。此指令将其封闭的所有选项应用于开始标签`/home/*/public_html`定义的文件系统部分。在我们的示例中，为该目录启用了以下选项：当目录没有`index.html`时，使用`Indexes`显示目录的文件和文件夹内容作为HTML。正如我们将在配方*Securing
+    Apache*中看到的，这应该避免用于您的网络根目录，而对于提供用户目录，如果您只想让您的家庭文件夹对您的同行可访问，以便他们可以快速共享一些文件（如果您有任何安全问题，请删除此选项），这可能是一个不错的选择。`FollowSymLinks`选项允许从`public_html`目录到文件系统中任何其他目录或文件的符号链接（`man
+    ln`）。同样，避免在您的网络根目录中使用，但对于家庭目录，如果您需要在不将它们复制到其中的情况下使文件或文件夹在`public_html`文件夹中可访问，这可能很有用（用户目录通常有磁盘配额）。接下来，我们配置了对`public_html`文件夹的访问控制。我们通过设置`Require`
+    `all granted`来实现这一点，这告诉Apache，在这个`public_html`文件夹中，任何人都可以通过HTTP协议访问内容。如果您想限制对`public_html`文件夹的访问，则可以替换`all
+    granted`为不同的选项。例如，要基于主机名允许访问，请使用`Require host example.com`。使用`ip`参数，我们可以将`public_html`文件夹限制为仅内部可用的网络，例如`Require
+    ip 192.168.1.0/24`。如果您的Web服务器具有多个网络接口，并且一个IP地址用于连接到公共Internet，另一个用于您的内部专用网络，这特别有用。您可以在`Directory`块内添加多个`Require`行。请始终至少设置`Require
+    local`，这允许本地访问。
 - en: Having saved our work, we then began to make various changes to the home directories.
     First we created the actual `public_html` folder within our user's home directory,
     which will be the actual personal web publishing folder later. Next, we changed
@@ -443,8 +615,13 @@
     permissions. A normal user home directory in CentOS Linux has the permissions
     `700` which means that the home directory's owner can do anything but everyone
     else is completely locked out of the home folder and its content.
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 保存工作后，我们开始对主目录进行各种更改。首先，我们在用户的主目录中创建了实际的`public_html`文件夹，这将成为稍后个人网页发布的实际文件夹。接下来，我们将权限更改为`755`，这意味着我们的用户可以在文件夹中执行所有操作，但其他用户和组只能读取和执行其内容（并进入该文件夹）。这种权限是必需的，因为如果有人通过Apache
+    Web服务器请求其内容，`public_html`文件夹中的所有文件都将由名为`apache`的用户和组`apache`访问。如果未为`其他用户`标志设置读取或执行权限（`man
+    chmod`），我们将在浏览器中收到`访问被拒绝`的消息。如果我们不提前更改父`/home/<username>`目录的权限，也会出现这种情况，因为父目录权限可以影响其子文件夹的权限。CentOS
+    Linux中的普通用户主目录具有`700`权限，这意味着主目录的所有者可以执行任何操作，但其他所有人都完全被锁定在主文件夹及其内容之外。
 - en: 'As written before, the Apache user needs access to the subfolder `public_html`
     so we have to change the permissions to `711` for the home folder so that everyone
     else can at least change into the directory (and then access the subfolder `public_html`
@@ -456,8 +633,12 @@
     (which is enabled by default): `httpd_enable_homedirs` is `true`. Read [Chapter
     14](part0111_split_000.html#39REE1-4cf34a6d07944734bb93fb0cd15cce8c "Chapter 14. Working
     with SELinux"), *Working with SELinux* to learn more about SELinux.'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 如前所述，Apache用户需要访问子文件夹`public_html`，因此我们必须将主文件夹的权限更改为`711`，以便其他人至少可以进入目录（然后也可以访问子文件夹`public_html`，因为这被设置为可读/写访问）。接下来，我们为SELinux设置新网页文件夹的安全上下文。在运行SELinux的系统上，必须将所有Apache网页发布文件夹设置为`httpd_user_content_t`
+    SELinux标签（及其内容），以便使它们对Apache可用。此外，我们确保设置了正确的SELinux布尔值以启用Apache主目录（默认情况下已启用）：`httpd_enable_homedirs`为`true`。阅读[第14章](part0111_split_000.html#39REE1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第14章。使用SELinux")，*使用SELinux*了解更多关于SELinux的信息。
 - en: You should be aware that the previous process of managing the home directories
     should be repeated for each user. You will not have to restart Apache every time
     you enable a new system user but, having completed these steps for the first time,
@@ -465,12 +646,16 @@
     to reflect the initial changes made to the configuration file. From this point
     on, your local system users can now publish web pages using a unique URL based
     on their username.
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 您应该知道，管理主目录的过程应该为每个用户重复。您不必每次启用新系统用户时都重新启动Apache，但是，在第一次完成这些步骤后，只需重新加载`httpd`服务的配置以反映对配置文件所做的初始更改即可。从这一点开始，您的本地系统用户现在可以使用基于其用户名的唯一URL发布网页。
 - en: Implementing name-based hosting
+  id: totrans-82
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 实施基于名称的托管
 - en: Normally, if you install Apache as shown in the previous recipe, you can host
     exactly one website that is accessible as the server's IP address or the domain
     name Apache is running on, for example, `http://192.168.1.100` or `http://www.centos7.home`.
@@ -486,20 +671,28 @@
     number of sites to create from it as long as your web server can handle its traffic.
     In this recipe, we will learn how to configure name-based virtual hosting on the
     Apache web server.
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常情况下，如果您按照之前的步骤安装了Apache，您可以托管一个可以通过服务器IP地址或Apache运行的域名访问的网站，例如`http://192.168.1.100`或`http://www.centos7.home`。这种系统对于服务器资源来说非常浪费，因为您需要为每个想要托管的域名单独安装服务器。**基于名称的**或**虚拟主机**用于在同一Apache
+    Web服务器上托管多个域名。如果已经通过DNS服务器或本地`/etc/hosts`文件将多个不同的域名分配给您的Apache Web服务器的IP地址，则可以为每个可用的域名配置虚拟主机，以将用户引导至Apache服务器上包含站点信息的特定目录。任何现代的网络空间提供商都使用这种类型的虚拟主机将一个Web服务器的空间分割成多个站点。只要您的Web服务器能够处理其流量，就没有限制可以创建的站点数量。在本步骤中，我们将学习如何在Apache
+    Web服务器上配置基于名称的虚拟主机。
 - en: Getting ready
+  id: totrans-84
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges and a console-based text editor of your
     choice. It is expected that your server will be using a static IP address and
     Apache is installed and currently running, and that you have enabled system users
     publishing directories in an earlier recipe. Virtual host names cannot work without
     previously setting up one or more domains or subdomains outside Apache.
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本步骤，您需要一个具有root权限的CentOS 7操作系统的正常安装，以及您选择的基于控制台的文本编辑器。预计您的服务器将使用静态IP地址，Apache已安装并正在运行，并且您已经在之前的步骤中启用了系统用户发布目录。如果没有事先设置一个或多个域名或子域名，虚拟主机将无法工作。
 - en: For testing, you could set up your `/etc/hosts` (see the *Setting your hostname
     and resolving the network* recipe in [Chapter 2](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 2. Configuring the System"), *Configuring the System*) or configure some
@@ -507,23 +700,33 @@
     "Chapter 9. Working with Domains"), *Working with Domains*) to use different domain
     names or subdomains, such as `www.centos7.home`, all pointing to your Apache web
     server's IP address.
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了测试，您可以在`/etc/hosts`中设置（参见[第2章](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第2章。系统配置")中的“设置主机名和解决网络问题”步骤），或者在您的BIND DNS服务器中配置一些A或CNAMES（参考[第9章](part0080_split_000.html#2C9D01-4cf34a6d07944734bb93fb0cd15cce8c
+    "第9章。域名操作")），使用不同的域名或子域名，如`www.centos7.home`，全部指向您的Apache Web服务器的IP地址。
 - en: Note
+  id: totrans-87
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: A common misconception is that Apache can create domain names for your Apache
     web server on its own. This is not true. The different domain names you want to
     wire to different directories using virtual hosts need to be set up in a DNS server
     or `/etc/hosts` file to point to your Apache server's IP address before you can
     use them with virtual hosts.
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个常见的误解是，Apache可以自行为您的Apache Web服务器创建域名。这是不正确的。您希望使用虚拟主机将不同的域名连接到不同目录之前，需要在DNS服务器或`/etc/hosts`文件中设置这些域名，使其指向您的Apache服务器的IP地址。
 - en: How to do it...
+  id: totrans-89
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'For the purpose of this recipe we will be building some local virtual hosts
     with the following Apache example subdomain names: `www.centos7.home`, `web1.centos7.home`,
     `web2.centos7.home` and `<username>.centos7.home` for the corresponding web publishing
@@ -531,84 +734,119 @@
     for the domain''s network name `centos7.home`. These names are interchangeable
     and it is expected that you will want to customize this recipe based on something
     more appropriate to your own needs and circumstances.'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了本配方的目的，我们将构建一些具有以下Apache示例子域名的本地虚拟主机：`www.centos7.home`，`web1.centos7.home`，`web2.centos7.home`和`<username>.centos7.home`，对应于Web发布文件夹`/var/www/html`，`/var/www/web1`，`/var/www/web2`和`/home/<username>/public_html`，以及域的网络名称`centos7.home`。这些名称是可互换的，预计您将希望根据更适合您自己需求和情况的内容来定制此配方。
 - en: 'To begin, log in as root on your Apache server and create a new configuration
     file that will hold all our virtual host definitions:'
+  id: totrans-91
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录到您的Apache服务器，并创建一个新的配置文件，该文件将包含我们所有的虚拟主机定义：
 - en: '[PRE23]'
+  id: totrans-92
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 'Now put in the following content, customizing the `centos7.home` value and
     the username `<username>` to fit your own needs:'
+  id: totrans-93
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，请输入以下内容，将`centos7.home`的值和用户名`<username>`定制以适应您自己的需求：
 - en: '[PRE24]'
+  id: totrans-94
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'Now save and close the file in the usual way before proceeding to create the
     directories for both virtual hosts that are currently missing:'
+  id: totrans-95
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在以通常的方式保存并关闭文件，然后继续为当前缺失的两个虚拟主机创建目录：
 - en: '[PRE25]'
+  id: totrans-96
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: 'Having done this, we can now create default index pages for the missing subdomains
     `web1` and `web2` by using our favorite text editor, as follows:'
+  id: totrans-97
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成此操作后，我们现在可以使用我们喜欢的文本编辑器为缺失的子域`web1`和`web2`创建默认索引页面，如下所示：
 - en: '[PRE26]'
+  id: totrans-98
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: 'Now reload the Apache web server:'
+  id: totrans-99
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在重新加载Apache Web服务器：
 - en: '[PRE27]'
+  id: totrans-100
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'Now, for simple testing purposes, we will just configure all our new Apache
     web server''s subdomains in the `hosts` file of the client computer that wants
     to access these virtual hosts, but remember that you can also configure these
     subdomains in a BIND DNS server. Login to this client computer (it needs to be
     in the same network as our Apache server) as root and add the following lines
     to the `/etc/hosts` file, assuming our Apache server has the IP address 192.168.1.100:'
+  id: totrans-101
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，为了简单的测试目的，我们将在想要访问这些虚拟主机的客户端计算机的`hosts`文件中配置我们新的Apache Web服务器的所有子域，但请记住，您也可以在BIND
+    DNS服务器中配置这些子域。以root身份登录到此客户端计算机（它需要与我们的Apache服务器在同一网络中），并将以下行添加到`/etc/hosts`文件中，假设我们的Apache服务器具有IP地址192.168.1.100：
 - en: '[PRE28]'
+  id: totrans-102
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: 'Now on this computer, open a browser and test things out by typing the following
     addresses into the address line (replace `<username>` with the username you defined
     for the virtual host): `http://www.centos7.home`, `http://web1.centos7.home, http://web2.centos7.home`
     and `http://<username>.centos7.home`.'
+  id: totrans-103
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，在这台计算机上，打开浏览器并通过在地址栏中输入以下地址来测试（将`<username>`替换为您为虚拟主机定义的用户名）：`http://www.centos7.home`，`http://web1.centos7.home`，`http://web2.centos7.home`和`http://<username>.centos7.home`。
 - en: How it works...
+  id: totrans-104
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: The purpose of this recipe was to show you how easy it is to implement name-based
     virtual hosting. This technique will boost your productivity and using this approach
     will give you unlimited opportunities to domain-based web hosting.
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 本配方的目的是向您展示实现基于名称的虚拟主机是多么容易。这种技术将提高您的工作效率，采用这种方法将为您提供无限的机会来进行基于域名的网络托管。
 - en: So what did we learn from this experience?
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: We began by creating a new Apache configuration file to hold all our virtual
     host configuration. Remember, all files ending with the `.conf` extension in the
     `/etc/httpd/conf.d/` directory will be loaded automatically when Apache is started.
@@ -637,12 +875,17 @@
     effect. We could then directly use the subdomain names in our browser to browse
     to our virtual hosts when correctly set up in `/etc/hosts` on the client or on
     a BIND DNS server.
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先创建一个新的Apache配置文件来存放我们所有的虚拟主机配置。请记住，在`/etc/httpd/conf.d/`目录中以`.conf`扩展名结尾的所有文件将在Apache启动时自动加载。接着，我们继续添加相关的指令块，从我们的默认服务器根目录`centos7.home`和别名`www.centos7.home`开始。任何虚拟主机块中最重要的选项是`ServerName`指令，它将我们Web服务器的IP地址的现有域名映射到文件系统上的特定目录。当然，您可以包含更多的设置，但之前的解决方案提供了基本的构建块，使您能够将其作为完美的起点。接下来，我们为我们的`centos7.home`子域`web1`、`web2`和`<username>`创建了单独的条目。请记住，每个虚拟主机都支持典型的Apache指令，并且可以根据您的需要进行定制。请参考官方的Apache手册（安装YUM包`httpd-manual`，然后转到位置`/usr/share/httpd/manual/vhosts/`）以了解更多信息。在我们为每个想要的子域创建了虚拟主机块之后，我们继续创建了存放实际内容的目录，并在每个目录中创建了一个基本的`index.html`。在这个例子中，我们的`web1`和`web2`内容目录被添加到了`/var/www`。这并不是说你不能在其他地方创建这些新文件夹。实际上，大多数生产服务器通常将这些新目录放在主文件夹中，如我们的`/home/<username>/public_html`示例所示。但是，如果您确实打算采用这种方法，请记住修改这些新目录的权限和所有权，以及SELinux标签（在`/var/www`之外，您需要将Apache目录标记为`httpd_sys_content_t`），以便它们可以按预期使用。最后，我们重新加载了Apache
+    Web服务，以便我们的新设置会立即生效。然后，我们可以在客户端的`/etc/hosts`中或在BIND DNS服务器上正确设置后，直接在浏览器中使用子域名浏览到我们的虚拟主机。
 - en: Implementing CGI with Perl and Ruby
+  id: totrans-108
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用Perl和Ruby实现CGI
 - en: In the previous recipes in this chapter, our Apache service only served static
     content, which means that everything requested by a web-browser already existed
     in a constant state on the server, for example as plain HTML text files that don't
@@ -652,8 +895,10 @@
     boring and not the huge success it is today. Not even the simplest example of
     dynamic content, such as showing a web page with the web server's current local
     time would be possible.
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章之前的食谱中，我们的Apache服务仅提供静态内容，这意味着网页浏览器请求的所有内容在服务器上已经处于恒定状态，例如作为不会改变的纯HTML文本文件。Apache只是将Web服务器上特定文件的内容作为响应发送到浏览器，然后在那里进行解释和渲染。如果没有办法改变发送给客户端的内容，互联网将会非常无聊，也不会像今天这样取得巨大成功。甚至连最简单的动态内容示例，例如显示带有Web服务器当前本地时间的网页，都不可能实现。
 - en: Therefore, early in the 1990's, some smart people started inventing mechanisms
     to make communication possible between a web server and some executable programs
     installed on the server to generate web pages dynamically. This means that the
@@ -668,165 +913,239 @@
     content. Most Apache web servers use some form of CGI applications and in this
     recipe we will show you how to install and configure CGI for use with Perl and
     Ruby to generate our first dynamic content.
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，早在20世纪90年代初，一些聪明的人开始发明机制，使Web服务器和安装在服务器上的可执行程序之间的通信成为可能，以动态生成网页。这意味着发送给用户的HTML内容可以根据不同的上下文和条件改变。这些程序通常用脚本语言编写，如Perl或Ruby，但也可以用任何其他计算机语言编写，如Python、Java或PHP（见后文）。因为Apache是用纯C和C++编写的，所以它不能执行或解释任何其他编程语言，如Perl。因此，需要在服务器和程序之间建立一座桥梁，定义一些外部程序如何与服务器交互。这些方法之一被称为**通用网关接口**（**CGI**），这是一种非常古老的方式来提供动态内容。大多数Apache
+    Web服务器使用某种形式的CGI应用程序，在这个食谱中，我们将向您展示如何安装和配置CGI以与Perl和Ruby一起使用，以生成我们的第一个动态内容。
 - en: Note
+  id: totrans-111
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: There also exist some special Apache web server modules such as `mod_perl`,
     `mod_python`, `mod_ruby`, and so on which should be generally preferred as they
     directly embed the interpreter of the language into the web server process and
     therefore are a lot faster in comparison to any interface technology such as CGI.
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 还存在一些特殊的Apache Web服务器模块，如`mod_perl`、`mod_python`、`mod_ruby`等，这些模块通常应该被优先考虑，因为它们直接将语言的解释器嵌入到Web服务器进程中，因此与任何接口技术（如CGI）相比，它们要快得多。
 - en: Getting ready
+  id: totrans-113
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to facilitate the download of additional
     packages.
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了完成这个食谱，你需要一个带有root权限的CentOS 7操作系统的有效安装，你选择的基于控制台的文本编辑器，以及一个互联网连接，以便下载额外的软件包。
 - en: It is expected that your server will be using a static IP address, Apache is
     installed and currently running, and that your server supports one or more domains
     or subdomains.
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 预计你的服务器将使用静态IP地址，Apache已安装并正在运行，并且你的服务器支持一个或多个域或子域。
 - en: How to do it...
+  id: totrans-116
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: As both scripting languages Perl as well as Ruby are not installed by default
     on CentOS 7 Minimal, we will start this recipe by installing all required packages
     using YUM.
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于Perl和Ruby这两种脚本语言在CentOS 7 Minimal中默认不安装，我们将从使用YUM安装所有必需的软件包开始这个食谱。
 - en: 'To begin, log in as root and type the following command:'
+  id: totrans-118
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 开始时，以root身份登录并输入以下命令：
 - en: '[PRE29]'
+  id: totrans-119
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: 'Next, restart the Apache web server:'
+  id: totrans-120
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，重新启动Apache Web服务器：
 - en: '[PRE30]'
+  id: totrans-121
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: 'Next, we need to configure SELinux appropriately for the use of CGI scripts:'
+  id: totrans-122
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们需要为使用CGI脚本适当地配置SELinux：
 - en: '[PRE31]'
+  id: totrans-123
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: 'Then we need to change the correct security context for our `cgi-bin` directory
     for SELinux to work:'
+  id: totrans-124
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 然后，我们需要为SELinux的工作更改我们`cgi-bin`目录的正确安全上下文：
 - en: '[PRE32]'
+  id: totrans-125
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: Creating your first Perl CGI script
+  id: totrans-126
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 创建你的第一个Perl CGI脚本
 - en: 'Now create the following Perl CGI script file by opening the new file `vi /var/www/cgi-bin/perl-test.cgi`
     and putting in the following content:'
+  id: totrans-127
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在通过打开新文件`vi /var/www/cgi-bin/perl-test.cgi`并输入以下内容来创建以下Perl CGI脚本文件：
 - en: '[PRE33]'
+  id: totrans-128
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: 'Next, change the file''s permission to 755, so our `apache` user can execute
     it:'
+  id: totrans-129
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，将文件权限更改为755，以便我们的`apache`用户可以执行它：
 - en: '[PRE34]'
+  id: totrans-130
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: 'Next, to test and actually see what HTML is being generated from the preceding
     script, you can execute the `perl` script directly on the command line; just type:'
+  id: totrans-131
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，为了测试并实际看到从前面的脚本生成的HTML，你可以在命令行上直接执行`perl`脚本；只需输入：
 - en: '[PRE35]'
+  id: totrans-132
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: 'Now open a browser on a computer in your network and run your first Perl CGI
     script, which will print the local time by using the URL:'
+  id: totrans-133
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在在网络中的一台计算机上打开浏览器，运行你的第一个Perl CGI脚本，它将通过使用URL打印本地时间：
 - en: '[PRE36]'
+  id: totrans-134
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: If the script is not working, have a look at the log file `/var/log/httpd/error_log`.
+  id: totrans-135
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果脚本不工作，请查看日志文件`/var/log/httpd/error_log`。
 - en: Creating your first Ruby CGI script
+  id: totrans-136
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 创建你的第一个Ruby CGI脚本
 - en: 'Create the new Ruby CGI script file `vi /var/www/cgi-bin/ruby-test.cgi` and
     put in the following content:'
+  id: totrans-137
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 创建新的Ruby CGI脚本文件`vi /var/www/cgi-bin/ruby-test.cgi`，并放入以下内容：
 - en: '[PRE37]'
+  id: totrans-138
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: 'Now change the file''s permission to `755` so our `apache` user can execute
     it:'
+  id: totrans-139
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在将文件权限更改为`755`，以便我们的`apache`用户可以执行它：
 - en: '[PRE38]'
+  id: totrans-140
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: 'To actually see what HTML is being generated from the preceding script, you
     can execute the Ruby script directly on the command line; just type `/var/www/cgi-bin/ruby-test.cgi`.
     When the line `offline mode: enter name=value pairs on standard input` is shown,
     press *Ctrl*+*D* to see the actual HTML output.'
+  id: totrans-141
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '要实际查看从前面脚本生成的HTML，您可以在命令行上直接执行Ruby脚本；只需键入`/var/www/cgi-bin/ruby-test.cgi`。当显示行`offline
+    mode: enter name=value pairs on standard input`时，按*Ctrl*+*D*查看实际的HTML输出。'
 - en: 'Now open a browser on a computer in your network and run your first Ruby CGI
     script which will print the local time by using the following URL:'
+  id: totrans-142
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，在您的网络中的计算机上打开一个浏览器，运行您的第一个Ruby CGI脚本，该脚本将通过以下URL打印本地时间：
 - en: '[PRE39]'
+  id: totrans-143
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: If it is not working, have a look at the log file `/var/log/httpd/error.log`.
+  id: totrans-144
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果它不工作，请查看日志文件`/var/log/httpd/error.log`。
 - en: How it works...
+  id: totrans-145
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: 'Here in this recipe we showed you how easy it is to create some dynamic web
     sites using CGI. When a CGI resource is accessed, the Apache server executes that
     program on the server and sends its output back to the browser. The main advantage
@@ -839,19 +1158,27 @@
     therefore making CGI only usable for smaller websites or lower parallel user request
     numbers. As said before, there are other technologies to deal with this issue,
     for example FastCGI or Apache modules such as `mod_perl`.'
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个配方中，我们向您展示了使用CGI创建一些动态网站是多么容易。当访问CGI资源时，Apache服务器在服务器上执行该程序，并将输出发送回浏览器。这个系统的主要优点是CGI不受任何编程语言的限制，只要程序可以在Linux命令行上执行并生成某种形式的文本输出即可。CGI技术的主要缺点是它是一种非常老旧且过时的技术：对CGI资源的每个用户请求都会启动程序的新进程。例如，对Perl
+    CGI脚本的每个请求都会启动并将新的解释器实例加载到内存中，这将产生大量开销，因此使得CGI仅适用于较小的网站或较低的并行用户请求数。如前所述，还有其他技术可以解决这个问题，例如FastCGI或Apache模块，如`mod_perl`。
 - en: So what did we learn from this experience?
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: We began this recipe by logging in as root and installing the `perl` interpreter
     and the `CGI.pm` module for it as it is not included in the Perl standard library
     (we will use it in our script), as well as by installing the `ruby` interpreter
     for the Ruby programming language. Afterwards, to make sure our Apache web server
     takes notice of our new programming languages installed on the system, we restarted
     the Apache process.
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从这个配方开始，以root身份登录，并安装了`perl`解释器和`CGI.pm`模块，因为它们不包含在Perl标准库中（我们将在脚本中使用它），以及安装了Ruby编程语言的`ruby`解释器。之后，为了确保我们的Apache
+    Web服务器注意到我们系统上安装的新编程语言，我们重新启动了Apache进程。
 - en: Next, we made sure that SELinux is enabled to work with CGI scripts and then
     we provided the standard Apache `cgi-bin` directory `/var/www/cgi-bin` with the
     proper SELinux context type to allow system-wide execution. To learn more about
@@ -866,26 +1193,39 @@
     programming or scripting language it has been written in. To test our scripts,
     we then opened a web browser and went to the URL `http://<server name or IP address>/cgi-bin/`
     with the name of the `.cgi` script to follow.
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们确保SELinux已启用以与CGI脚本配合工作，然后我们为标准的Apache `cgi-bin`目录`/var/www/cgi-bin`提供了正确的SELinux上下文类型，以允许系统范围内的执行。要了解更多关于SELinux的信息，请阅读[第14章](part0111_split_000.html#39REE1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第14章 使用SELinux")，*使用SELinux*。然后，我们将Perl和Ruby CGI脚本放入此目录，并使它们对Apache用户可执行。在主Apache配置文件中，`/var/www/cgi-bin`目录默认被定义为标准CGI目录，这意味着您放入此目录的任何可执行文件，只要具有适当的访问和执行权限以及`.cgi`扩展名，都会自动定义为CGI脚本，并且可以从您的网络浏览器访问和执行，无论它使用哪种编程或脚本语言编写。为了测试我们的脚本，我们随后打开了一个网络浏览器，并访问了URL
+    `http://<服务器名称或IP地址>/cgi-bin/`，后面跟着`.cgi`脚本的名称。
 - en: There's more...
+  id: totrans-150
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'If you would like to allow execution of CGI scripts in other web directories
     as well, you need to add the following two lines (`Options` and `AddHandler`)
     to any virtual host or existing `Directive` directive, or create a new one in
     the following way (remember that you then also have to set the SELinux `httpd_sys_script_exec_t`
     label on the new CGI location as well):'
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您希望在其他网站目录中也能执行CGI脚本，您需要将以下两行（`Options`和`AddHandler`）添加到任何虚拟主机或现有的`Directive`指令中，或者按照以下方式创建一个新的（请记住，您还需要为新的CGI位置设置SELinux
+    `httpd_sys_script_exec_t`标签）：
 - en: '[PRE40]'
+  id: totrans-152
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: Installing, configuring, and testing PHP
+  id: totrans-153
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 安装、配置和测试PHP
 - en: '**Hypertext Preprocessor** (**PHP**) remains one of the most popular server-side
     scripting languages designed for web development. It already supports some nice
     features, such as connecting to relational databases like MariaDB out-of-the-box
@@ -899,101 +1239,142 @@
     feature for almost any Apache web server. Here in this recipe, we will show you
     how to get started with installing and running PHP in your Apache web server with
     the module `mod_php`.'
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: '**超文本预处理器**（**PHP**）仍然是用于Web开发的最流行的服务器端脚本语言之一。它已经支持一些很好的功能，例如开箱即用地连接到关系数据库（如MariaDB），这可以用来非常快速地实现现代Web应用程序。虽然可以看到一些大型企业倾向于放弃PHP而转向一些新技术，如Node.js（服务器端JavaScript），但它仍然是消费者市场上的主要脚本语言。世界上每家托管公司都提供某种LAMP堆栈（Linux、Apache、MySQL、PHP）来运行PHP代码。此外，许多非常流行的Web应用程序都是用PHP编写的，例如WordPress、Joomla和Drupal，因此可以说PHP几乎是任何Apache
+    Web服务器的必备功能。在本操作指南中，我们将向您展示如何在Apache Web服务器上开始安装和运行PHP，使用模块`mod_php`。'
 - en: Getting ready
+  id: totrans-155
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges and a console-based text editor of your
     choice and a Internet connection. It is expected that your server will be using
     a static IP address and Apache is installed and currently running, and that your
     server supports one or more domains or subdomains.
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此操作，您需要一个具有root权限的工作CentOS 7操作系统安装，以及您选择的基于控制台的文本编辑器和互联网连接。预计您的服务器将使用静态IP地址，Apache已安装并正在运行，并且您的服务器支持一个或多个域或子域。
 - en: How to do it...
+  id: totrans-157
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: We will begin this recipe by installing the PHP Hypertext Processor together
     with the Apache `mod_php` module, both not installed by default on CentOS 7 minimal.
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将从安装PHP超文本处理器开始，同时安装Apache的`mod_php`模块，这两者在CentOS 7最小安装中默认不安装。
 - en: 'To begin, log in as root and type the following command:'
+  id: totrans-159
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录并输入以下命令：
 - en: '[PRE41]'
+  id: totrans-160
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: 'Now let''s open the standard PHP configuration file after we have made a backup
     of the original file first:'
+  id: totrans-161
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，在我们先对原始文件进行备份之后，让我们打开标准的PHP配置文件：
 - en: '[PRE42]'
+  id: totrans-162
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: 'Find the line `; date.timezone =` and replace it with your own timezone. A
     list of all the available PHP time zones can be found at `http://php.net/manual/en/timezones.php`.
     For example (be sure to remove the leading `;` as this is disabling the interpretation
     of a command; this is called commenting out) to set the timezone to the city Berlin
     in Europe use:'
+  id: totrans-163
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 找到行`; date.timezone =`并将其替换为您自己的时区。所有可用的PHP时区列表可以在`http://php.net/manual/en/timezones.php`找到。例如（请确保删除前面的`;`，因为这会禁用命令的解释；这称为注释掉），要将时区设置为欧洲柏林市，请使用：
 - en: '[PRE43]'
+  id: totrans-164
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: 'To make sure the new module and settings have been properly loaded, restart
     the Apache web server:'
+  id: totrans-165
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为了确保新模块和设置已正确加载，请重启Apache Web服务器：
 - en: '[PRE44]'
+  id: totrans-166
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: 'To be consistent with the CGI examples from the former recipe, here we will
     create our first dynamic PHP script which will print out the current local server
     time in the script `vi /var/www/html/php-test.php`, and run the popular PHP function
     `phpinfo()` that we can use to print out important PHP information:'
+  id: totrans-167
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为了与前一个配方中的CGI示例保持一致，我们将创建我们的第一个动态PHP脚本，该脚本将打印出当前本地服务器时间，并在脚本`vi /var/www/html/php-test.php`中运行流行的PHP函数`phpinfo()`，我们可以使用它来打印出重要的PHP信息：
 - en: '[PRE45]'
+  id: totrans-168
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: 'To actually see what HTML is being generated from the preceding script, you
     can execute the PHP script directly on the command line; just type: `php /var/www/html/php-test.php`.'
+  id: totrans-169
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要实际查看从前面脚本生成的HTML，您可以直接在命令行上执行PHP脚本；只需输入：`php /var/www/html/php-test.php`。
 - en: 'Now open a browser on a computer in your network and run your first PHP script
     which will print the local time by using the following URL: `http://<server name
     or IP address>/php-test.php`.'
+  id: totrans-170
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，在您网络中的计算机上打开浏览器，运行您的第一个PHP脚本，该脚本将通过以下URL打印本地时间：`http://<服务器名称或IP地址>/php-test.php`。
 - en: How to do it...
+  id: totrans-171
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: In this recipe, we showed you how easy it is to install and incorporate PHP
     into any Apache web server by using the `mod_php` module. This module enables
     an internal PHP interpreter, which directly runs in the Apache process and is
     much more efficient than using CGI, and should always be your preferred method
     whenever is available.
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本配方中，我们向您展示了通过使用`mod_php`模块将PHP轻松安装并集成到任何Apache Web服务器中是多么容易。该模块启用了一个内部PHP解释器，该解释器直接在Apache进程中运行，比使用CGI更高效，并且应该是任何可用时的首选方法。
 - en: So what did we learn from this experience?
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: We began this recipe by installing the `mod_php` module using YUM, which will
     install PHP as a dependency as well as both are not available on any standard
     CentOS 7 minimal installations. Installing `mod_php` added the `/etc/php.ini`
@@ -1011,20 +1392,28 @@
     PHP function. This gives you a well categorized tabular overview of your current
     PHP installation, helping you diagnose server-related problems or see which modules
     are available in PHP.
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从使用YUM安装`mod_php`模块开始本节，这将安装PHP作为依赖项，因为这两者都不在任何标准的CentOS 7最小安装中。安装`mod_php`添加了`/etc/php.ini`配置文件，我们在备份原始文件后打开了它。该文件是主要的PHP配置文件，应谨慎编辑，因为许多设置可能与您的Web服务器的安全性相关。如果您刚刚开始使用PHP，请将文件中的所有内容保持原样，不要更改任何内容，除了`date.timezone`变量。我们将其设置为反映我们当前的时区，这对于PHP是必要的，因为它被许多不同的时间和日期函数使用（我们还将在我们第一个PHP脚本中使用一些日期函数，如下所示）。接下来，我们重新启动了Apache
+    Web服务器，它也会自动重新加载PHP配置。之后，我们创建了我们的第一个PHP脚本，并将其放入主Web根目录`/var/www/html/php-test.php`；这会打印出当前服务器时间以及`phpinfo()`
+    PHP函数的结果。这为您提供了一个分类良好的表格概览，显示了当前的PHP安装，帮助您诊断与服务器相关的问题或查看哪些模块在PHP中可用。
 - en: In comparison to CGI, you may ask yourself why we don't have to put the PHP
     scripts into any special folder such as `cgi-bin`. By installing `mod_php`, an
     Apache configuration file called `/etc/httpd/conf.d/php.conf` gets deployed into
     the Apache configuration folder, which exactly answers this question, it specifies
     that PHP scripts will get executed as valid PHP code whenever they get the extension
     `.php` from anywhere in every web directory.
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 与CGI相比，您可能会问自己为什么我们不需要将PHP脚本放入任何特殊文件夹，如`cgi-bin`。通过安装`mod_php`，一个名为`/etc/httpd/conf.d/php.conf`的Apache配置文件被部署到Apache配置文件夹中，这正是回答了这个问题，它指定了每当PHP脚本从Web目录中的任何位置获得`.php`扩展名时，它们将被执行为有效的PHP代码。
 - en: Securing Apache
+  id: totrans-176
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 确保Apache安全
 - en: Even though the Apache HTTP server is one of the most mature and safe server
     applications included in CentOS 7, there is always room for improvement and a
     large number of options and techniques are available to harden your web server's
@@ -1032,80 +1421,115 @@
     as it is outside of the scope this book, in this recipe, we will try to teach
     what is considered to be good practice when it comes to securing your Apache web
     server for a production system.
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管Apache HTTP服务器是CentOS 7中包含的最成熟和最安全的服务器应用程序之一，但总有余地进行改进，并且有大量选项和技术可用于进一步强化您的Web服务器的安全性。虽然我们无法向用户展示每一个安全特性，因为这超出了本书的范围，但在本节中，我们将尝试教授在为生产系统保护Apache
+    Web服务器时被认为是良好实践的内容。
 - en: Getting ready
+  id: totrans-178
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges and a console-based text editor of your
     choice. It is expected that your server will be using a static IP address and
     Apache is installed and currently running, and that your server supports one or
     more domains or subdomains.
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本节，您需要一个具有root权限的CentOS 7操作系统的有效安装，以及您选择的基于控制台的文本编辑器。预计您的服务器将使用静态IP地址，并且Apache已安装并正在运行，并且您的服务器支持一个或多个域或子域。
 - en: How to do it...
+  id: totrans-180
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: Most of the security options and techniques have to be set up in the main Apache
     configuration file, so we will begin this recipe by opening it in our favorite
     text editor.
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 大多数安全选项和技术都必须在Apache的主配置文件中设置，因此我们将从在喜欢的文本编辑器中打开它开始本节。
 - en: Configuring httpd.conf to provide better security
+  id: totrans-182
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 配置httpd.conf以提供更好的安全性
 - en: 'To begin, log in as root and open the main Apache config file:'
+  id: totrans-183
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录并打开Apache的主配置文件：
 - en: '[PRE46]'
+  id: totrans-184
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: 'Now go to your main document root. To do so, search the directive called:'
+  id: totrans-185
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在转到你的主文档根目录。为此，搜索名为：
 - en: '[PRE47]'
+  id: totrans-186
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: 'Within the beginning `<Directory "/var/www/html">` and closing `</Directory>`
     tags find the line `Options Indexes FollowSymLinks`, then disable (comment out)
     this line by putting a `#` in front of it, so it reads:'
+  id: totrans-187
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在开始`<Directory "/var/www/html">`和结束`</Directory>`标签之间找到行`Options Indexes FollowSymLinks`，然后通过在前面放置一个`#`来禁用（注释掉）该行，使其读取：
 - en: '[PRE48]'
+  id: totrans-188
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: 'Now scroll down to the end of the configuration file and insert the following
     line one line before the line `# Supplemental configuration`. We do not want our
     server to leak any detailed information through the header, so we type:'
+  id: totrans-189
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在滚动到配置文件的末尾，在`# Supplemental configuration`行之前插入以下行。我们不希望服务器通过标头泄露任何详细信息，因此我们输入：
 - en: '[PRE49]'
+  id: totrans-190
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: 'Afterwards, reload the Apache configuration to apply your changes:'
+  id: totrans-191
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，重新加载Apache配置以应用你的更改：
 - en: '[PRE50]'
+  id: totrans-192
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE50]'
 - en: Removing unneeded httpd modules
+  id: totrans-193
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 移除不需要的httpd模块
 - en: Even the most stable, mature, and well-tested programs can include bugs and
     cause vulnerabilities, as the latest news about the Heartbleed bug in OpenSSL
     or Shellshock in Bash have shown, and the Apache web server is no exception. Therefore,
@@ -1114,26 +1538,37 @@
     server, we can remove all unneeded modules to increase security (this can also
     increase performance and memory consumption). Let's start this process by reviewing
     all the currently installed Apache modules.
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: 即使是稳定性最高、成熟度最高、经过充分测试的程序也可能包含漏洞，正如最近关于OpenSSL中的Heartbleed漏洞或Bash中的Shellshock漏洞的新闻所显示的那样，Apache
+    Web服务器也不例外。因此，通常有益的是移除所有不需要的软件以限制功能，从而减少系统中出现安全问题的可能性。对于Apache Web服务器，我们可以移除所有不需要的模块以提高安全性（这也可以提高性能和内存消耗）。让我们通过审查所有当前安装的Apache模块来开始这个过程。
 - en: 'To show all currently installed and loaded Apache modules, type as user root:'
+  id: totrans-195
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示所有当前安装和加载的Apache模块，请以root用户身份输入：
 - en: '[PRE51]'
+  id: totrans-196
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE51]'
 - en: 'All the modules outputted by the preceding command are loaded into the Apache
     web server by special configuration files in the `/etc/httpd/conf.modules.d` folder
     where they are grouped together by their primary target into the following files:'
+  id: totrans-197
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 前面命令输出的所有模块都通过`/etc/httpd/conf.modules.d`文件夹中的特殊配置文件加载到Apache Web服务器中，它们根据其主要目标分组到以下文件中：
 - en: '[PRE52]'
+  id: totrans-198
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE52]'
 - en: 'So instead of going through all the modules individually, this file structure
     in the `conf.modules.d` folder can make our life much easier because we can disable/enable
     whole groups of modules. For example, if you know that you will not need any Apache
@@ -1141,43 +1576,60 @@
     DAV-related modules by renaming the extension of the `00-dav.conf` configuration
     file since only files with the ending `.conf` are read and loaded automatically
     by Apache. In order to do so, type:'
+  id: totrans-199
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 因此，与其逐一检查所有模块，`conf.modules.d`文件夹中的这种文件结构可以使我们的生活变得更加轻松，因为我们可以在整个模块组中启用/禁用。例如，如果你知道自己不需要任何Apache
+    DAV模块，因为你不会提供任何WebDAV服务器，你可以通过将`00-dav.conf`配置文件的扩展名重命名来禁用所有与DAV相关的模块，因为只有以`.conf`结尾的文件才会被Apache自动读取和加载。为此，请输入：
 - en: '[PRE53]'
+  id: totrans-200
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE53]'
 - en: 'Afterwards, reload the Apache configuration to apply your changes to the modules
     directory:'
+  id: totrans-201
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，重新加载Apache配置以将你的更改应用于模块目录：
 - en: '[PRE54]'
+  id: totrans-202
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE54]'
 - en: 'If you need more fine-grained control, you can also enable/disable single modules
     in all the configuration files in this directory as well. For example, open `00-base.conf`
     in your favorite text editor and disable a single line by adding a `#` to the
     beginning of the line of choice you want to disable. For example:'
+  id: totrans-203
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果你需要更精细的控制，你也可以在所有这些配置文件中启用/禁用单个模块。例如，在你的首选文本编辑器中打开`00-base.conf`，并通过在要禁用的行的开头添加`#`来禁用单个行。例如：
 - en: '[PRE55]'
+  id: totrans-204
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE55]'
 - en: If you decide to use some disabled modules files later, just rename the `.BAK`
     file to the original file name or remove the `#` in a specific module config file
     before reloading `httpd` once again.
+  id: totrans-205
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果你决定稍后使用一些禁用的模块文件，只需将`.BAK`文件重命名为原始文件名，或者在重新加载`httpd`之前，在特定的模块配置文件中删除`#`。
 - en: Protecting your Apache files
+  id: totrans-206
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 保护你的Apache文件
 - en: 'Another really simple way to increase the security of your Apache web server
     is to protect your server-side scripts and configurations. In our scenario, we
     have one user (root) who alone is responsible and maintains the complete Apache
@@ -1187,30 +1639,43 @@
     to serve and access all Apache related files, thus minimizing the risk that your
     Apache web server is exposing some potential security risks to other system users
     or can get compromised through HTTP hacks. Do this in two steps:'
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: 提高Apache Web服务器安全性的另一种简单方法是保护服务器端脚本和配置。在我们的场景中，有一个用户（root）单独负责并维护整个Apache Web服务器、网站（例如，将新的HTML页面上传到服务器）、服务器端脚本和配置。因此，我们将给予他/她完整的文件权限（读/写/执行）。`apache`用户仍然需要适当的读取和执行权限来服务和访问所有与Apache相关的文件，从而最小化您的Apache
+    Web服务器向其他系统用户暴露潜在安全风险或通过HTTP攻击被破坏的风险。这可以通过两个步骤完成：
 - en: 'First we will change or reset the ownership of the complete Apache configuration
     directory and the standard web root directory to owner `root` and group `apache`:'
+  id: totrans-208
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，我们将更改或重置完整的Apache配置目录和标准Web根目录的所有权，所有者为`root`，组为`apache`：
 - en: '[PRE56]'
+  id: totrans-209
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE56]'
 - en: 'Afterwards, we will change the file permissions so no one other than our dedicated
     `apache` user (and also `root`) can read those files:'
+  id: totrans-210
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，我们将更改文件权限，以便除了我们专门的`apache`用户（以及`root`）之外，任何人都无法读取这些文件：
 - en: '[PRE57]'
+  id: totrans-211
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE57]'
 - en: How it works...
+  id: totrans-212
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: We began this recipe by opening the main Apache configuration file `httpd.conf`
     to change settings for our main Apache root web content directory `/var/www/html`.
     Here we disabled the complete `Options` directive which included the `Indexes`
@@ -1235,20 +1700,30 @@
     we showed you how to disable Apache modules to reduce the general risk of bugs
     and exploitations of your system. Finally, we showed how to adjust your Apache
     file permissions which can also be a good general protection.
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从这个食谱开始，打开主Apache配置文件`httpd.conf`，以更改我们主Apache根Web内容目录`/var/www/html`的设置。在这里，我们禁用了完整的`Options`指令，包括`Indexes`和`FollowSymLinks`参数。正如我们所学，如果您从Apache服务器请求目录而不是文件，`index.html`或该目录中的`index.htm`文件将自动发送。现在，`Indexes`选项配置Apache
+    Web服务器，以便如果在请求的目录中找不到这样的文件，Apache将自动生成该目录内容的列表，就像您在命令行中输入`ls`（用于列出目录）一样，并将其作为HTML页面显示给用户。我们通常不希望这个功能，因为它可能会向未经授权的用户暴露秘密或私人数据，许多系统管理员会告诉您，索引通常被认为是一种安全威胁。`FollowSymLinks`指令也不应在生产系统中使用，因为如果您使用不当，它很容易暴露文件系统的一部分，例如完整的根目录。最后，我们添加了另一个措施来提高服务器的基本安全性，这是通过禁用服务器版本横幅信息来实现的。当Apache
+    Web服务器生成网页或错误页面时，有价值的信息（例如Apache服务器版本和激活的模块）会自动发送到浏览器，潜在的攻击者可以从中获取有关您系统的宝贵信息。我们通过简单地将`ServerTokens`设置为`Prod`来阻止这种情况发生。之后，我们向您展示了如何禁用Apache模块以减少系统中错误和利用的一般风险。最后，我们展示了如何调整您的Apache文件权限，这也是一种很好的通用保护措施。
 - en: There are lots of other things to consider when it comes to hardening your Apache
     web server but most of these techniques, such as Limiting HTTP request methods,
     `TraceEnable`, setting cookies with `HttpOnly` and secure flags, disabling the
     HTTP 1.0 protocol or SSL v2, or modifying the HTTP header with useful security-related
     HTTP or custom headers such as `X-XSS-Protection`, are much more advanced concepts
     and can restrict a general purpose Apache web server too much.
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: 在加固Apache Web服务器时，有许多其他因素需要考虑，但大多数这些技术，如限制HTTP请求方法，`TraceEnable`，设置带有`HttpOnly`和安全标志的cookie，禁用HTTP
+    1.0协议或SSL v2，或使用有用的安全相关HTTP或自定义标头（如`X-XSS-Protection`）修改HTTP标头，都是更高级的概念，并且可能会过度限制通用目的的Apache
+    Web服务器。
 - en: Setting up HTTPS with Secure Sockets Layer (SSL)
+  id: totrans-215
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用安全套接字层（SSL）设置HTTPS
 - en: In this recipe, we will learn how to add a secure connection to the Apache web
     server by creating a self-signed SSL certificate using OpenSSL. This is often
     a requirement for web servers if the sites running on them transfer sensitive
@@ -1257,12 +1732,17 @@
     with the growing demand for secure connections, it is the purpose of this recipe
     to show you how to enhance your current server configuration by teaching you how
     to extend the features of the Apache web server.
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本操作中，我们将学习如何通过使用OpenSSL创建自签名SSL证书来为Apache Web服务器添加安全连接。如果网站在服务器上运行时传输敏感数据，如信用卡或登录信息，则通常需要Web服务器。在前一个操作中，您已经了解了如何安装Apache
+    Web服务器，随着对安全连接的需求不断增长，本操作的目的是向您展示如何通过教您如何扩展Apache Web服务器的功能来增强当前服务器配置。
 - en: Getting ready
+  id: totrans-217
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to facilitate the download of additional
@@ -1273,137 +1753,193 @@
     self-signed certificates. As a correct domain name is crucial for SSL to work,
     we will continue naming our Apache web server's configured domain name `centos7.home`
     to make this recipe work (change it to fit your own needs).
+  id: totrans-218
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此操作，您需要一个具有root权限的CentOS 7操作系统的有效安装，您选择的基于控制台的文本编辑器，以及互联网连接以便于下载额外的包。预计Apache
+    Web服务器已安装并正在运行。在这里，我们将为Apache创建一个新的SSL证书。如果您想了解更多信息，请参考[第6章](part0061_split_000.html#1Q5IA1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第6章。提供安全性")，*提供安全性*，以获取有关生成自签名证书的建议。由于正确的域名对于SSL的工作至关重要，我们将继续将Apache Web服务器的配置域名命名为`centos7.home`以使此操作生效（根据您的需要进行更改）。
 - en: How to do it...
+  id: totrans-219
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: Apache does not support SSL encryption by default and for this reason we will
     begin by installing the necessary package `mod_ssl` using the yum package manager.
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: Apache默认不支持SSL加密，因此我们将首先使用yum包管理器安装必要的包`mod_ssl`。
 - en: 'To begin, log in as root and type the following command:'
+  id: totrans-221
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录并输入以下命令：
 - en: '[PRE58]'
+  id: totrans-222
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE58]'
 - en: 'During installation of the mod_ssl package, a self-signed certificate as well
     as the key pair for the Apache web server are generated automatically; these lack
     a proper common name for your web server''s domain name. Before we can re-generate
     our own required SSL files using the `Makefile` in the next steps, we need to
     delete those files:'
+  id: totrans-223
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在安装mod_ssl包的过程中，会自动生成一个自签名证书以及Apache Web服务器的密钥对；这些证书缺少您Web服务器域名的正确通用名称。在我们能够使用下一步中的`Makefile`重新生成我们自己的所需SSL文件之前，我们需要删除这些文件：
 - en: '[PRE59]'
+  id: totrans-224
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE59]'
 - en: 'We are now required to create our intended self-signed certificate and server
     key for our Apache web server. To do this, type the following command:'
+  id: totrans-225
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们现在需要为我们的Apache Web服务器创建我们打算使用的自签名证书和服务器密钥。为此，请输入以下命令：
 - en: '[PRE60]'
+  id: totrans-226
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE60]'
 - en: 'To create the self-signed Apache SSL keypair, consisting of the certificate
     and its embedded public key as well as the private key, type:'
+  id: totrans-227
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要创建自签名Apache SSL密钥对，包括证书及其嵌入的公钥以及私钥，请输入：
 - en: '[PRE61]'
+  id: totrans-228
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE61]'
 - en: 'In the process of creating the certificate, first you will be asked to enter
     a new passphrase and then to verify it. Afterwards, you need to type it in again
     for the third time. As usual, enter a secure password. You will then be asked
     a number of questions. Complete all the required details by paying special attention
     to the common name value. This value should reflect the domain name of your web
     server or the IP address the SSL certificate is for. For example, you may type:'
+  id: totrans-229
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在创建证书的过程中，首先您将被要求输入一个新的密码，然后验证它。之后，您需要第三次输入它。通常，输入一个安全的密码。然后，您将被问一系列问题。填写所有必需的详细信息，特别注意通用名称值。此值应反映您的Web服务器的域名或SSL证书所针对的IP地址。例如，您可以输入：
 - en: '[PRE62]'
+  id: totrans-230
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE62]'
 - en: 'When the process of creating your certificate is complete, we will proceed
     by opening the main Apache SSL configuration in the following way (after making
     a backup):'
+  id: totrans-231
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当您创建证书的过程完成后，我们将通过以下方式打开主要的Apache SSL配置（在备份之后）：
 - en: '[PRE63]'
+  id: totrans-232
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE63]'
 - en: 'Scroll down to the section that begins with `<VirtualHost _default_:443>` and
     locate the line `# DocumentRoot "/var/www/html"` within this block. Then activate
     it by removing the `#` character, so it reads:'
+  id: totrans-233
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 向下滚动到以`<VirtualHost _default_:443>`开头的部分，并找到该块内的行`# DocumentRoot "/var/www/html"`。然后通过删除`#`字符来激活它，使其读作：
 - en: '[PRE64]'
+  id: totrans-234
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE64]'
 - en: 'Right below, find the line that reads `#ServerName www.example.com:443`. Activate
     this line and modify the value shown to match the common name value used during
     the creation of your certificate, as follows:'
+  id: totrans-235
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在下面，找到读作`#ServerName www.example.com:443`的行。激活此行并修改显示的值以匹配创建证书时使用的通用名称值，如下所示：
 - en: '[PRE65]'
+  id: totrans-236
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE65]'
 - en: 'Save and close the file, next we need to enable the HTTPS port in our firewalld
     to allow incoming HTTP SSL connections over port `443`:'
+  id: totrans-237
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件，接下来我们需要在我们的firewalld中启用HTTPS端口，以允许通过端口`443`进行传入的HTTP SSL连接：
 - en: '[PRE66]'
+  id: totrans-238
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE66]'
 - en: 'Now restart the Apache `httpd` service to apply your changes. Note that if
     prompted you have to enter the SSL passphrase you added when you created the SSL
     test certificate:'
+  id: totrans-239
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在重新启动Apache `httpd`服务以应用您的更改。请注意，如果提示，您必须输入创建SSL测试证书时添加的SSL密码：
 - en: '[PRE67]'
+  id: totrans-240
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE67]'
 - en: Well done! You can now visit your server with a secure connection by replacing
     all the available HTTP URLs we have defined for the server using HTTPS instead.
     For example, go to `https://www.centos7.home` instead of `http://www.centos7.home`.
+  id: totrans-241
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 做得好！现在您可以通过替换我们为服务器定义的所有可用HTTP URL，使用HTTPS而不是HTTP来访问您的服务器。例如，转到`https://www.centos7.home`而不是`http://www.centos7.home`。
 - en: Note
+  id: totrans-242
   prefs:
   - PREF_IND
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: When you browse to this website, you will get a warning message that the signing
     certificate authority is not known. This exception is to be expected when using
     self-signed certificates and can be confirmed.
+  id: totrans-243
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 当您访问此网站时，您会收到一条警告消息，指出签名证书颁发机构是未知的。使用自签名证书时，这种异常是可以预料的，并且可以确认。
 - en: How it works...
+  id: totrans-244
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: We began the recipe by installing `mod_ssl` using the YUM package manager, which
     is the default Apache module to enable SSL. The next step was then to go to the
     standard location where all the system's certificates can be found in CentOS 7,
@@ -1433,41 +1969,61 @@
     However, if you are intending to use an SSL Certificate on a production server
     for members of the public, then your best option is to purchase an SSL certificate
     from a trusted Certificate Authority.
+  id: totrans-245
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们通过使用YUM包管理器安装`mod_ssl`开始了这个过程，这是默认的Apache模块，用于启用SSL。接下来，我们前往CentOS 7中所有系统证书的标准位置，即`/etc/pki/tls/certs`。在这里，我们可以找到一个`Makefile`，这是一个方便生成自签名SSL测试证书的辅助脚本，它为你隐藏了OpenSSL程序的复杂命令行参数。请记住，`Makefile`目前缺少一个`clean`选项，因此每次运行它时，我们都需要手动删除以前运行生成的任何旧版本文件，否则它将不会开始做任何事情。删除旧的Apache
+    SSL文件后，我们使用`make`命令和`testcert`参数，这将为Apache Web服务器创建自签名证书，并将它们放在标准位置，这些位置已经在`ssl.conf`文件中配置好了（`SSLCertificateFile`和`SSLCertificateKeyFile`指令），因此我们不需要在这里做任何更改。在过程中，在完成一系列问题之前，你会被要求提供一个密码。完成问题，但要特别注意通用名称。正如在主配方中提到的，这个值应该反映你的服务器域名或IP地址。在下一阶段，你需要在你的首选文本编辑器中打开Apache的SSL配置文件，该文件位于`/etc/httpd/conf.d/ssl.conf`。在其中，我们启用了`DocumentRoot`指令，将其置于SSL控制之下，并激活了`ServerName`指令，其预期域值必须与我们定义的通用名称值相同。然后，我们保存并关闭了配置文件，并在防火墙中启用了HTTPS端口，从而允许通过标准HTTPS
+    `443`端口进行传入连接。完成这些步骤后，你现在可以享受使用自签名服务器证书的安全连接的好处。只需在任何URL地址前输入`https://`而不是`http://`即可。但是，如果你打算在面向公众的生产服务器上使用SSL证书，那么最好的选择是从受信任的证书颁发机构购买SSL证书。
 - en: There's more...
+  id: totrans-246
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: We learned that since our SSL certificate is protected by a passphrase, so whenever
     we need to restart our Apache web server, we need to enter the password. This
     is impractical for server restarts as Apache will refuse to start without a password.
     To get rid of the password prompt, we will provide the passphrase in a special
     file and make sure it is only accessible by root.
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们了解到，由于我们的SSL证书受密码保护，因此每当需要重启Apache Web服务器时，都需要输入密码。这对于服务器重启来说是不切实际的，因为Apache会在没有密码的情况下拒绝启动。为了消除密码提示，我们将把密码放在一个特殊文件中，并确保只有root用户可以访问它。
 - en: 'Create a backup of the file that will contain your password:'
+  id: totrans-248
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 创建包含你密码的文件的备份：
 - en: '[PRE68]'
+  id: totrans-249
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE68]'
 - en: 'Now overwrite this password file with the following content, replacing `XXXX`
     in the following command line with your current SSL passphrase:'
+  id: totrans-250
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在用以下内容覆盖这个密码文件，将命令行中的`XXXX`替换为你的当前SSL密码：
 - en: '[PRE69]'
+  id: totrans-251
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE69]'
 - en: 'Finally, change the permissions so that only root can read and execute them:'
+  id: totrans-252
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，更改权限，使得只有root用户可以读取和执行它们：
 - en: '[PRE70]'
+  id: totrans-253
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE70]'

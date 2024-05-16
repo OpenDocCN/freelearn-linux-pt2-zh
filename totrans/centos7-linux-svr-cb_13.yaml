@@ -1,41 +1,59 @@
 - en: Chapter 13. Operating System-Level Virtualization
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第13章：操作系统级虚拟化
 - en: 'In this chapter, we will cover:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将涵盖：
 - en: Installing and configuring Docker
+  id: totrans-2
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安装和配置Docker
 - en: Downloading an image and running a container
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 下载镜像并运行容器
 - en: Creating your own images from Dockerfiles and uploading to Docker Hub
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 从Dockerfile创建自己的镜像并上传到Docker Hub
 - en: Setting up and working with a private Docker registry
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 设置和使用私有Docker仓库
 - en: Introduction
+  id: totrans-6
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 引言
 - en: This chapter is a collection of recipes that provides the essential steps to
     install, configure, and work with Docker, which is an open platform to build,
     ship, share, and run distributed applications through operating-system-level virtualization,
     a technology that has been around for many years in the Linux world and can provide
     speed and efficiency advantages over traditional virtualization technologies.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章是一系列食谱的集合，提供了安装、配置和使用Docker的基本步骤，Docker是一个开放平台，通过操作系统级虚拟化技术构建、运输、共享和运行分布式应用程序，这种技术在Linux世界中已经存在多年，并且可以提供比传统虚拟化技术更快的速度和效率优势。
 - en: Installing and configuring Docker
+  id: totrans-8
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 安装和配置Docker
 - en: Traditional virtualization technologies provide *hardware virtualization*, which
     means they create a complete hardware environment so each **virtual machine**
     (**VM**) needs a complete operating system to run it. Therefore they have some
@@ -43,64 +61,91 @@
     running. This is where the open-source Docker containerization engine offers an
     attractive alternative. It can help you build applications in Linux containers,
     thus providing application virtualization.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 传统的虚拟化技术提供*硬件虚拟化*，这意味着它们创建了一个完整的硬件环境，因此每个**虚拟机**（**VM**）都需要一个完整的操作系统来运行它。因此，它们有一些主要缺点，因为它们很重，运行时会产生大量开销。这就是开源Docker容器化引擎提供有吸引力的替代方案的地方。它可以帮助您在Linux容器中构建应用程序，从而提供应用程序虚拟化。
 - en: This means that you can bundle any Linux program of choice with all its dependencies
     and its own environment and then share it or run multiple instances of it, each
     as a completely isolated and separated process on any modern Linux kernel, thus
     providing native runtime performance, easy portability, and high scalability.
     Here, in this recipe, we will show you how to install and configure Docker on
     your CentOS 7 server.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着您可以将任何选择的Linux程序及其所有依赖项和自己的环境打包，然后共享它或运行多个实例，每个实例都是完全隔离和分离的进程，在任何现代Linux内核上运行，从而提供本机运行时性能、易于移植性和高可扩展性。在这里，在本食谱中，我们将向您展示如何在您的CentOS
+    7服务器上安装和配置Docker。
 - en: Getting ready
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to download additional `rpm` packages
     and a test Docker image.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本食谱，您需要一个具有root权限的CentOS 7操作系统的有效安装，您选择的基于控制台的文本编辑器，以及连接到互联网以便下载额外的`rpm`包和测试Docker镜像。
 - en: How to do it...
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何做到这一点...
 - en: While Docker is available as a package in the official CentOS 7 repository,
     we will use the official Docker repository to install it on our system instead.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然Docker在官方的CentOS 7仓库中作为一个包可用，但我们将在我们的系统上使用官方的Docker仓库来安装它。
 - en: 'To begin, log in as root and update your YUM packages before downloading and
     executing the official Docker Linux installation script using the following command:'
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录并更新您的YUM包，然后使用以下命令下载并执行官方的Docker Linux安装脚本：
 - en: '[PRE0]'
+  id: totrans-16
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Next, enable Docker at boot time before starting the Docker daemon (the first
     time you start, it will take a while):'
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，在启动Docker守护进程之前（第一次启动时会花费一些时间），启用Docker在启动时自动启动：
 - en: '[PRE1]'
+  id: totrans-18
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Finally, after starting Docker you can verify that it''s working by typing:'
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，启动Docker后，您可以通过输入以下内容来验证它是否正常工作：
 - en: '[PRE2]'
+  id: totrans-20
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: How it works...
+  id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: When installing any software on CentOS 7, most of the time it is a very good
     advice to use the packages available in your official CentOS repository instead
     of downloading and installing from third-party locations. Here by installing Docker
@@ -114,11 +159,16 @@
     project. So anytime you type `yum update` in the future, your package manager
     will automatically query and check the Docker repos to see if there is a new version
     of Docker available for you.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 在CentOS 7上安装任何软件时，大多数情况下，使用官方CentOS仓库中的包而不是从第三方位置下载和安装是一个非常好的建议。在这里，我们通过使用官方Docker仓库安装Docker来做出例外。我们这样做是因为Docker是一个非常年轻的项目，发展迅速，变化频繁。虽然您可以使用Docker运行任何Linux应用程序，包括关键的Web服务器或处理机密数据的程序，但Docker程序中发现的或引入的错误可能会产生严重的安全后果。通过使用官方Docker仓库，我们确保始终能够尽快从这一快速发展的项目的开发者那里获得最新的更新和补丁。因此，将来任何时候您输入`yum
+    update`，您的包管理器都会自动查询并检查Docker仓库，看看是否有新的Docker版本可供您使用。
 - en: So what did we learn from this experience?
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: 'We started this recipe by logging into our server as root and updated the YUM
     package''s database. Then we used a command to download and execute the official
     Docker installation script from [https://get.docker.com/](https://get.docker.com/)
@@ -129,18 +179,27 @@
     command `docker run hello-world`, which downloads a special image from the official
     Docker registry to test our installation. If everything went fine, you should
     see the following success message (output truncated):'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们通过以root身份登录服务器并更新YUM包的数据库开始这个操作步骤。然后，我们使用一个命令从[https://get.docker.com/](https://get.docker.com/)下载并执行官方Docker安装脚本，一步完成。该脚本的作用是将官方Docker仓库添加到YUM包管理器作为新的包源，然后自动在后台安装Docker。之后，我们通过使用`systemd`在启动时启用Docker服务并启动它。最后，为了测试我们的安装，我们发出了`docker
+    run hello-world`命令，该命令从官方Docker注册表下载一个特殊的镜像来测试我们的安装。如果一切顺利，您应该会看到以下成功消息（输出已截断）：
 - en: '[PRE3]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: This message shows that your installation appears to be working correctly.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 这条消息表明您的安装似乎运行正常。
 - en: Downloading an image and running a container
+  id: totrans-27
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 下载镜像并运行容器
 - en: 'A common misconception is that Docker is a system for running containers. Docker
     is only a build-tool to wrap up any piece of Linux based software with all its
     dependencies in a complete filesystem that contains everything it needs to run:
@@ -154,88 +213,127 @@
     up and run your own WordPress installation, in this recipe we will show you how
     to do so the fastest way possible by downloading a pre-made WordPress image from
     the official Docker hub; we will then run a container from.'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个常见的误解是Docker是一个运行容器的系统。Docker只是一个构建工具，用于将任何基于Linux的软件及其所有依赖项打包到一个包含运行所需一切的完整文件系统中：代码、运行时、系统工具和系统库。运行Linux容器的技术称为操作系统级虚拟化，它提供了在每个现代Linux内核中默认构建的多个隔离环境。这保证了它无论部署在什么环境中都将始终以相同的方式运行；从而使您的应用程序具有可移植性。因此，当涉及到将您的Docker应用程序分发到Linux容器时，必须引入两个主要的概念性术语：**Docker镜像**和**容器**。如果您曾经想设置并运行自己的WordPress安装，在本操作步骤中，我们将向您展示如何通过从官方Docker
+    Hub下载预制的WordPress镜像来以最快的方式实现这一点；然后我们将从中运行一个容器。
 - en: Getting ready
+  id: totrans-29
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to facilitate the download of additional
     Docker images. It is expected that Docker has already been installed and is running.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此教程，您需要一个具有root权限的CentOS 7操作系统的工作安装，您选择的基于控制台的文本编辑器，以及连接到互联网以便下载额外的Docker镜像。预计Docker已经安装并正在运行。
 - en: How to do it...
+  id: totrans-31
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: The official WordPress image from Docker Hub does not contain its own MySQL
     server. Instead it relies on it externally, so we will start this recipe by installing
     and running a MySQL docker container from Docker Hub.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 从Docker Hub下载的官方WordPress镜像不包含自己的MySQL服务器。相反，它依赖于外部的MySQL服务器，因此我们将从安装并运行一个从Docker
+    Hub下载的MySQL Docker容器开始这个教程。
 - en: 'To begin, log in as root and type the following command by replacing `<PASSWORD>`
     in the following command with a strong MySQL database password of your own choice
     (at the time of writing, the latest WordPress needs MySQL v.5.7; this can change
     in the future, so check out the official WordPress Docker Hub page):'
+  id: totrans-33
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录并键入以下命令，将`<PASSWORD>`替换为您自己选择的强MySQL数据库密码（在撰写本文时，最新的WordPress需要MySQL
+    v.5.7；这在未来可能会改变，因此请查看官方WordPress Docker Hub页面）：
 - en: '[PRE4]'
+  id: totrans-34
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Next, install and run the official WordPress image and run an instance of it
     as a Docker container, connecting it to the MySQL container (providing the same
     `<PASSWORD>` string from the previous step):'
+  id: totrans-35
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，安装并运行官方WordPress镜像，并将其作为Docker容器运行，将其连接到MySQL容器（提供与前一步骤相同的`<PASSWORD>`字符串）：
 - en: '[PRE5]'
+  id: totrans-36
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Now the MySQL and WordPress container should already be running. To check the
     currently running containers, type:'
+  id: totrans-37
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，MySQL和WordPress容器应该已经在运行。要检查当前正在运行的容器，请键入：
 - en: '[PRE6]'
+  id: totrans-38
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'To get all the Docker WordPress container settings, use:'
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要获取所有Docker WordPress容器设置，请使用：
 - en: '[PRE7]'
+  id: totrans-40
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'To check the container''s log file for our WordPress container, run the following
     command:'
+  id: totrans-41
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要检查我们的WordPress容器的日志文件，请运行以下命令：
 - en: '[PRE8]'
+  id: totrans-42
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Open a browser on a computer in the same network as the server running the
     Docker daemon and type in the following command to access your Wordpress installation
     (replace IP address with the one from your Docker server):'
+  id: totrans-43
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在同一网络中与运行Docker守护进程的服务器相连的计算机上打开浏览器，输入以下命令以访问您的WordPress安装（将IP地址替换为您的Docker服务器的IP地址）：
 - en: '[PRE9]'
+  id: totrans-44
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: How it works...
+  id: totrans-45
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: A Docker image is a collection of all the files that make up a software application
     and its functional dependencies, as well as information about any changes as you
     modify or improve on its content (in the form of a change log). It is a non-runnable,
@@ -254,11 +352,17 @@
     really can be a life-saver when thinking about all the endless hours trying to
     get the latest trendy programs to work with all the dependencies you need to compile
     and trying to get it to install.
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: Docker镜像是一组构成软件应用程序及其功能依赖的所有文件，以及有关您修改或改进其内容时所做的任何更改的信息（以更改日志的形式）。它是您的应用程序的不可运行、只读版本，可以与ISO文件相比较。如果您想运行这样的镜像，Linux容器将自动从它创建出来。这就是实际执行的内容。它是一个真正的可扩展系统，因为您可以从同一镜像运行多个容器。正如我们所见，Docker不仅仅是您需要与镜像和容器一起工作的工具，它还是一个完整的平台，因为它还提供了访问各种Linux服务器软件的预制镜像的工具。这整个Docker系统的美丽之处在于，大多数时候您不必重新发明轮子，试图从头开始创建自己的Docker镜像。只需访问Docker
+    Hub（[https://hub.docker.com](https://hub.docker.com)），搜索您想要作为容器运行的软件，找到它后，只需使用`docker
+    run`命令，提供Docker Hub镜像的名称，就完成了。当考虑到尝试让最新流行的程序与您需要编译的所有依赖项一起工作并尝试安装它们时，Docker真的可以成为救星。
 - en: So what did we learn from this experience?
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: 'We started our journey by using the `docker run` command which downloaded two
     images from the remote Docker Hub repos and put them into a local image store
     (called `mysql:5.7` and `wordpress`) and then run them (create containers out
@@ -286,29 +390,44 @@
     to our server at port 8080, we could then access our Wordpress installation from
     any computer in the same network using a browser. This will open the Wordpress
     installation screen.'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的旅程始于使用`docker run`命令，该命令从远程Docker Hub仓库下载了两个镜像并将其放入本地镜像存储（称为`mysql:5.7`和`wordpress`），然后运行它们（创建容器）。要获取机器上所有下载的镜像列表，请键入`docker
+    images`。正如我们所见，两个`run`命令行都提供了`-e`命令行参数，我们需要设置一些基本的环境变量，这些变量随后将在容器内可见。这些包括我们想要运行的MySQL数据库以及设置和访问它们的MySQL根密码。这里我们看到Docker的一个非常重要的特性：能够相互通信的容器！通常，您可以将应用程序从不同的Docker容器部件堆叠在一起，使整个系统非常易于使用。另一个重要参数是`-p`，它用于从我们的主机端口`8080`创建到内部HTTP端口80的端口映射，并打开防火墙以允许此端口上的传入流量。`--restart=always`对于使图像容器可重新启动很有用，因此容器会在主机机器重新启动时自动重新启动。之后，我们向您介绍了Docker的`ps`命令行参数，该参数打印出所有正在运行的Docker容器。此命令应打印出两个名为`wordpressdb`和`wordpress`的运行容器，以及它们的`CONTAINER_ID`。此ID是唯一的MD5哈希，我们将在大多数Docker命令行输入中使用它，无论何时我们需要引用特定的容器（在本食谱中，我们通过容器名称引用，这也是可能的）。之后，我们向您展示了如何使用`inspect`参数打印出容器的配置。然后，为了以开放流的形式获取Wordpress容器的日志文件，我们使用了日志`-f`参数。最后，由于`-p
+    8080:80`映射允许在端口8080上对我们的服务器进行传入访问，因此我们可以从同一网络中的任何计算机使用浏览器访问我们的Wordpress安装。这将打开Wordpress安装屏幕。
 - en: Note
+  id: totrans-49
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: 'Note that if you have any connection problems while downloading any containers
     from Docker at any time, such as `dial tcp: lookup index.docker.io: no such host`,
     restart the Docker service before trying again.'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: '请注意，如果您在任何时候从Docker下载任何容器时遇到任何连接问题，例如`dial tcp: lookup index.docker.io: no
+    such host`，请在再次尝试之前重新启动Docker服务。'
 - en: There's more...
+  id: totrans-51
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: In this section, we will show you how to start and stop a container and how
     to attach to your container.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们将向您展示如何启动和停止容器以及如何附加到您的容器。
 - en: Stopping and starting a container
+  id: totrans-53
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 停止和启动容器
 - en: 'In the main recipe, we used Docker''s `run` command which is actually a wrapper
     for two other Docker commands: `create` and `start`. As the names of these commands
     suggest, the `create` command creates (clones) a container from an existing image
@@ -320,18 +439,27 @@
     or stop a running one by providing the correct `CONTAINER_ID` such as `docker
     start CONTAINER_ID`. Examples are: `docker start 03b53947d812` or `docker stop
     a2fe12e61545` (the `CONTAINER_ID` hashes will vary on your computer).'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 在主配方中，我们使用了Docker的`run`命令，它实际上是两个其他Docker命令的包装：`create`和`start`。正如这些命令的名称所暗示的，`create`命令从现有镜像创建（克隆）一个容器，如果它不在本地镜像缓存中，则从给定的Docker注册表（如预定义的Docker
+    hub）下载它，而`start`命令实际上启动它。要获取计算机上所有容器（运行或停止）的列表，请输入：`docker ps -a`。现在识别一个停止或启动的容器，并找出其特定的`CONTAINER_ID`。然后，我们可以通过提供正确的`CONTAINER_ID`来启动一个停止的容器或停止一个运行的容器，例如`docker
+    start CONTAINER_ID`。示例包括：`docker start 03b53947d812`或`docker stop a2fe12e61545`（`CONTAINER_ID`哈希值将根据你的计算机而变化）。
 - en: 'Sometimes you need to remove a container; for example, if you want to completely
     change its command line parameters when creating from an image. For removing a
     container, use the `rm` command (but remember that it has to be stopped before):
     `docker stop b7f720fbfd23; docker rm b7f720fbfd23`'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时你可能需要删除一个容器；例如，如果你想在从镜像创建容器时完全更改其命令行参数。要删除容器，请使用`rm`命令（但请记住，它必须在停止后才能删除）：`docker
+    stop b7f720fbfd23; docker rm b7f720fbfd23`
 - en: Attaching and interacting with your container
+  id: totrans-56
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 连接并与你的容器交互
 - en: 'Linux containers are completely isolated processes running in a separated environment
     on your server and there is no way to log in to it like logging into a normal
     server using `ssh`. If you need to access your containers BASH shell then you
@@ -344,12 +472,19 @@
     you will see a slightly changed command-line prompt with the `CONTAINER_ID` as
     hostname; for example, `root@d22ddf594f0d:/var/www/html#`. If you need to exit
     your container, type `exit`.'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux容器是完全隔离的进程，在你的服务器上运行在分离的环境中，无法像使用`ssh`登录普通服务器那样登录到它。如果你需要访问容器的BASH shell，则可以运行`docker
+    exec`命令，这对于调试问题或修改容器（例如，安装新软件包或更新程序或文件）特别有用。请注意，这只适用于运行中的容器，并且你需要在运行以下命令之前知道容器的ID（输入`docker
+    ps`以查找）：`docker exec -it CONTAINER_ID /bin/bash`，例如`docker exec -it d22ddf594f0d
+    /bin/bash`。一旦成功连接到容器，你将看到一个略有变化的命令行提示符，其中`CONTAINER_ID`作为主机名；例如，`root@d22ddf594f0d:/var/www/html#`。如果你需要退出容器，请输入`exit`。
 - en: Creating your own images from Dockerfiles and uploading to Docker Hub
+  id: totrans-58
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 通过Dockerfiles创建自己的镜像并上传到Docker Hub
 - en: Besides images and containers, Docker has a third very important term called
     a **Dockerfile**. A Dockerfile is like a recipe on how to create an environment
     for a specific application, which means that it contains the blueprint and exact
@@ -367,12 +502,17 @@
     here in this recipe, we will teach you how to build your own Docker image from
     a new Dockerfile for an Express.js web application server and upload it to your
     own Docker Hub account.
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了图像和容器，Docker还有一个非常重要的术语叫做**Dockerfile**。Dockerfile就像是一个创建特定应用程序环境的食谱，意味着它包含了构建特定镜像文件的蓝图和确切描述。例如，如果我们想要容器化一个基于Web服务器的应用程序，我们会在Dockerfile中定义所有依赖项，比如提供系统依赖项的基础Linux系统，如Ubuntu、Debian、CentOS等（这并不意味着我们*虚拟化*了完整的操作系统，而只是使用了系统依赖项），以及所有应用程序、动态库和服务，如PHP、Apache和MySQL，还包括所有特殊的配置选项或环境变量。有两种方法可以构建自己的自定义镜像。一种方法是从我们之前在Wordpress食谱中下载的现有基础镜像开始，然后使用BASH附加到容器，安装额外的软件，对配置文件进行更改，然后将容器作为新镜像提交到注册表。或者，在本食谱中，我们将教您如何从新的Dockerfile为Express.js
+    Web应用程序服务器构建自己的Docker镜像，并将其上传到您自己的Docker Hub账户。
 - en: Getting ready
+  id: totrans-60
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to communicate with the Docker Hub.
@@ -381,130 +521,189 @@
     there. Just go to [https://hub.docker.com/](https://hub.docker.com/) and register
     there for free. In our example, we will use a fictitious new Docker Hub user ID
     called `johndoe`.
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本食谱，您需要一个具有root权限的CentOS 7操作系统的工作安装，您选择的基于控制台的文本编辑器，以及连接到互联网以便与Docker Hub通信。预计Docker已经安装并正在运行。此外，为了将您的新镜像上传到Docker
+    Hub，您需要在Docker Hub上创建一个新的用户账户。只需访问[https://hub.docker.com/](https://hub.docker.com/)并免费注册。在我们的示例中，我们将使用一个虚构的新Docker
+    Hub用户ID，称为`johndoe`。
 - en: How to do it...
+  id: totrans-62
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'To begin, log in as root and create a new directory structure using your Docker
     Hub user ID (substitute the `johndoe` directory name appropriately with your own
     ID), and open an empty Dockerfile where you put in your image''s building blueprint:'
+  id: totrans-63
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录，使用您的Docker Hub用户ID创建一个新的目录结构（将`johndoe`目录名称适当地替换为您自己的ID），并打开一个空的Dockerfile，您将在其中放入镜像构建的蓝图：
 - en: '[PRE10]'
+  id: totrans-64
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'Put in the following content into that file:'
+  id: totrans-65
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将以下内容放入该文件中：
 - en: '[PRE11]'
+  id: totrans-66
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'Save and close the file. Now create your first Express.js web application,
     which we will deploy on the new container. Open the following file in the current
     directory:'
+  id: totrans-67
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件。现在创建您的第一个Express.js Web应用程序，我们将在新容器上部署它。在当前目录中打开以下文件：
 - en: '[PRE12]'
+  id: totrans-68
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'Now put in the following JavaScript content:'
+  id: totrans-69
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在将以下JavaScript内容放入：
 - en: '[PRE13]'
+  id: totrans-70
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'Now to build an image from this Dockerfile, stay in the current directory and
     use the following command (don''t forget the dot at the end of this line and replace
     `johndoe` with your own Docker Hub ID):'
+  id: totrans-71
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在要从这个Dockerfile构建一个镜像，请保持在当前目录中，并使用以下命令（不要忘记此行末尾的点，并将`johndoe`替换为您自己的Docker
+    Hub ID）：
 - en: '[PRE14]'
+  id: totrans-72
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'After successfully building the image, let''s run it as a container:'
+  id: totrans-73
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 成功构建镜像后，让我们将其作为容器运行：
 - en: '[PRE15]'
+  id: totrans-74
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'Finally, test if we can make an HTTP request to our new Express.js web application
     server running in our new container:'
+  id: totrans-75
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，测试我们是否可以向我们新创建的容器中运行的Express.js Web应用程序服务器发出HTTP请求：
 - en: '[PRE16]'
+  id: totrans-76
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'If the Docker image is successfully running on the Express.js server, the following
     HTTP response should occur (truncated to the last line):'
+  id: totrans-77
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果Docker镜像成功运行在Express.js服务器上，应该会出现以下HTTP响应（截断至最后一行）：
 - en: '[PRE17]'
+  id: totrans-78
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: Uploading your image to the Docker Hub
+  id: totrans-79
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 将您的映像上传到Docker Hub
 - en: 'After creating a new Docker Hub account ID called `johndoe`, we will start
     to login to the site using the following command—stay in the directory where you
     put your Dockerfile from the last step–for example `~/johndoe/centos7-expressjs`
     (provide the username, the password, and the registration e-mail when asked):'
+  id: totrans-80
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 创建一个新的Docker Hub账号ID，名为`johndoe`后，我们将开始使用以下命令登录网站——保持在您放置Dockerfile的目录中，例如`~/johndoe/centos7-expressjs`（在提示时提供用户名、密码和注册电子邮件）：
 - en: '[PRE18]'
+  id: totrans-81
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 'Now, to push your new image created in this recipe to the Docker Hub (again
     replace `johndoe` with your own user ID), use:'
+  id: totrans-82
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，要将本教程中创建的新映像推送到Docker Hub（再次将`johndoe`替换为您自己的用户ID），请使用：
 - en: '[PRE19]'
+  id: totrans-83
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 'After uploading, you will be able to find your image on the Docker Hub web
     page search. Alternatively, you can use the command line:'
+  id: totrans-84
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 上传后，您将能够在Docker Hub网页搜索中找到您的映像。或者，您可以使用命令行：
 - en: '[PRE20]'
+  id: totrans-85
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: How it works...
+  id: totrans-86
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: Here in this short recipe, we showed you how to create your first Dockerfile
     which will create a CentOS 7 container to serve Express.js applications, which
     is a modern alternative to LAMP stacks where you program JavaScript on the client-and
     server-side.
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这篇简短的教程中，我们向您展示了如何创建您的第一个Dockerfile，该文件将创建一个用于运行Express.js应用程序的CentOS 7容器，这是一种现代的LAMP堆栈替代方案，您可以在客户端和服务器端编程JavaScript。
 - en: So what did we learn from this experience?
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: As you can see, a Dockerfile is an elegant way to describe all the instructions
     on how to create an image. The commands are straight-forward to understand and
     you use special keywords to instruct Docker what to do in order to produce an
@@ -529,20 +728,32 @@
     part of this recipe, we showed you how to push our new created image to the Docker
     Hub. In order to do so, login with your Docker user account. Then we can push
     our image to the repository.
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 如您所见，Dockerfile是一种优雅的方式来描述创建映像的所有指令。命令易于理解，您使用特殊的关键字来指示Docker如何操作以从其生成映像。`FROM`命令告诉Docker我们应该使用哪个基础映像。幸运的是，已经有人从CentOS
+    7系统依赖项创建了基础映像（这将从Docker Hub下载）。接下来，我们使用`RUN`命令，它只是在BASH命令行上执行命令。我们使用此命令在我们的系统上安装依赖项以运行Express.js应用程序（它是基于Node.js
+    rpm包的，我们首先通过安装EPEL存储库来访问它）。`COPY`命令将文件从我们的主机复制到容器上的特定位置。我们需要这个来复制我们的`index.js`文件，该文件将在稍后的步骤中创建我们所有的Express.js
+    Web服务器代码到容器上。`EXPOSE`，顾名思义，将内部容器端口暴露给外部主机系统。由于默认情况下Express.js监听8080端口，我们需要在这里这样做。虽然到目前为止显示的所有这些命令只在创建映像时执行一次，但下一个命令`CMD`将在我们每次启动容器时运行。`node
+    /src/index.js`命令将被执行，并指示系统使用`index.js`文件启动Express.js Web服务器（我们已经通过从主机复制它来提供此文件）。我们不想深入讨论程序的JavaScript部分——它只是处理HTTP
+    GET请求并返回`Hello World`字符串。在本教程的第二部分中，我们向您展示了如何将我们新创建的映像推送到Docker Hub。为此，请使用您的Docker用户账户登录。然后我们可以将我们的映像推送到存储库。
 - en: As this is a very simple Dockerfile, there is much more to learn about this
     subject. To see a list of all the commands available in the Dockerfile, use `man
     Dockerfile`. Also, you should visit the Docker Hub and browse the Dockerfiles
     (under the section *Source Repository hosted on GitHub*) of some interesting projects
     to learn how to create some highly sophisticated image files with just a handful
     of commands on your own.
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于这是一个非常简单的Dockerfile，关于这个主题还有很多要学习的内容。要查看Dockerfile中所有可用命令的列表，请使用`man Dockerfile`。此外，你应该访问Docker
+    Hub并浏览一些有趣项目的Dockerfiles（在*GitHub上托管的源代码库*部分下），以学习如何仅用几个命令就能创建一些高度复杂的镜像文件。
 - en: Setting up and working with a private Docker registry
+  id: totrans-91
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 设置和使用私有Docker Registry
 - en: While we have learned in a former recipe in this chapter how easy it is to upload
     our own images to the official Docker Hub, everything we put there will be exposed
     to the public. If you work on a private or closed-source project within a corporate
@@ -552,12 +763,17 @@
     your own Docker registry that will be available in your own private network and
     which will be protected by TLS encryption and which will use user authentication
     so you can control exactly who can use it (push and pull images to and from it).
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章的前一个配方中，我们已经了解到将自己的镜像上传到官方Docker Hub是多么容易，但我们在那里上传的所有内容都将公开。如果你在一个企业环境中处理私有或闭源项目，或者只是想在向所有人发布之前测试一些东西，那么你很可能更倾向于拥有自己的、受保护的或企业范围内的私有Docker
+    Registry。在本配方中，我们将向你展示如何设置和使用你自己的Docker Registry，该Registry将在你自己的私有网络中可用，并通过TLS加密和用户认证进行保护，这样你就可以精确控制谁可以使用它（推送和拉取镜像到和从它）。
 - en: Getting ready
+  id: totrans-93
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to facilitate the download of additional
@@ -569,217 +785,311 @@
     "Chapter 9. Working with Domains"), *Working with Domains* if you would like to
     do this instead). Also, you need an Apache web server on your Docker server running
     which must be accessible from your whole private network.
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成这个配方，你需要一个安装了CentOS 7操作系统并具有root权限的工作环境，一个你选择的基于控制台的文本编辑器，以及一个互联网连接以便下载额外的软件包。在我们的例子中，我们将在IP地址为`192.168.1.100`的服务器上安装Docker
+    Registry。根据你的需求适当调整配方的命令。你需要为这台服务器设置一个完全限定域名（FQDN），否则注册表将无法工作。为了简化，我们将使用`/etc/hosts`方法而不是设置和配置一个DNS服务器（如果你想这样做，请参阅[第9章](part0080_split_000.html#2C9D01-4cf34a6d07944734bb93fb0cd15cce8c
+    "第9章。使用域名"），*使用域名*）。此外，你需要在你的Docker服务器上运行一个Apache Web服务器，该服务器必须可以从你的整个私有网络访问。
 - en: How to do it...
+  id: totrans-95
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: Complete all the following steps in this recipe with user root on every computer
     in your network you want to connect to the Docker registry!
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本配方中，请以root用户身份在网络中每台你想要连接到Docker Registry的计算机上完成以下所有步骤！
 - en: 'On each computer you want to access your Docker registry, as well as on our
     Docker registry server itself, with the IP address `192.168.1.100`, define the
     domain name of the Docker registry, which in our example will be `dockerserver.home`
     (replace the `dockerserver.home` part appropriately if you use a different domain
     name):'
+  id: totrans-97
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在你想要访问Docker Registry的每台计算机上，以及在我们IP地址为`192.168.1.100`的Docker Registry服务器本身上，定义Docker
+    Registry的域名，在我们的例子中将是`dockerserver.home`（如果你使用不同的域名，请适当替换`dockerserver.home`部分）：
 - en: '[PRE21]'
+  id: totrans-98
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 'Now we will define the FQDN of our Docker server registry on each computer
     in our network we want to use the registry on (as well as on the Docker registry
     server itself). Log in as root on every machine and type the following command.
     Skip this step if you have already defined your Docker registry''s server''s domain
     name via a BIND DNS server (change the IP address of your Docker service `192.168.1.100`
     appropriately):'
+  id: totrans-99
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在我们将在我们网络中每个想要使用注册表的计算机上定义Docker服务器注册表的FQDN（以及在Docker注册表服务器本身上）。以root身份登录到每台机器并输入以下命令。如果您已经通过BIND
+    DNS服务器定义了Docker注册表服务器的域名，则跳过此步骤（根据需要更改Docker服务的IP地址`192.168.1.100`）：
 - en: '[PRE22]'
+  id: totrans-100
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: Steps to be done on our Docker registry server (192.168.1.100)
+  id: totrans-101
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 需要在我们的Docker注册表服务器（192.168.1.100）上执行的步骤
 - en: 'First create a TLS certificate for our Docker registry certificate (use the
     FQDN you defined in DCKREG when asked for a `Common name` (for name; for example
     your name or your server''s hostname) `[]:dockerserver.home`):'
+  id: totrans-102
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先为我们的Docker注册表证书创建一个TLS证书（使用您在DCKREG中定义的FQDN，当询问`Common name`时（例如您的名字或您的服务器的主机名）`[]:dockerserver.home`）：
 - en: '[PRE23]'
+  id: totrans-103
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 'Next, we need to copy the new certificate to the Docker trusted certificate''s
     location as well as to the system''s default trusted certificate location and
     rebuild the certificate index:'
+  id: totrans-104
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们需要将新证书复制到Docker信任证书的位置以及系统默认信任证书的位置，并重建证书索引：
 - en: '[PRE24]'
+  id: totrans-105
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'Also, copy the certificate to our Apache web server so we can easily access
     it from the Docker clients later:'
+  id: totrans-106
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 另外，将证书复制到我们的Apache Web服务器，以便稍后可以从Docker客户端轻松访问它：
 - en: '[PRE25]'
+  id: totrans-107
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: 'Next, we will finally download, create, and run our Docker registry as a container:'
+  id: totrans-108
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们将最终下载、创建并运行我们的Docker注册表作为容器：
 - en: '[PRE26]'
+  id: totrans-109
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: 'Now check if the registry is running (in the output you should find it listening
     on `[::]:5000`, `tls`):'
+  id: totrans-110
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在检查注册表是否正在运行（在输出中，您应该找到它正在监听`[::]:5000`，`tls`）：
 - en: '[PRE27]'
+  id: totrans-111
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'For setting up user authentication for our registry, use the following command
     (here we use `johndoe` as the username and `mysecretpassword` as the password
     for authentication. Change these two values to fit your needs. Repeat this command
     for every user account you want to have later for your users to login):'
+  id: totrans-112
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为了为我们的注册表设置用户身份验证，使用以下命令（这里我们使用`johndoe`作为用户名，`mysecretpassword`作为密码进行身份验证。根据需要更改这两个值。对于您希望以后为您的用户登录的每个用户帐户，重复此命令）：
 - en: '[PRE28]'
+  id: totrans-113
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: 'Next restart the registry to apply your user account changes:'
+  id: totrans-114
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来重新启动注册表以应用您的用户帐户更改：
 - en: '[PRE29]'
+  id: totrans-115
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: 'Now create a new firewalld service and activate it in our firewall to make
     incoming connections to our new Docker registry port `5000` possible:'
+  id: totrans-116
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在创建一个新的firewalld服务并在我们的防火墙中激活它，以便允许对我们的新Docker注册表端口`5000`进行传入连接：
 - en: '[PRE30]'
+  id: totrans-117
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: Steps to be done on every client needing access to our registry
+  id: totrans-118
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 需要在每个需要访问我们注册表的客户端上执行的步骤
 - en: Finally we can test connecting to our own new TLS-enhanced private Docker registry
     with user authentication by logging in on any computer in the same network as
     our Docker registry with root.
+  id: totrans-119
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，我们可以通过在同一网络中的任何计算机上以root身份登录来测试连接到我们自己的新TLS增强的私有Docker注册表的用户身份验证。
 - en: 'The first step is to install Docker on every client that wants to connect to
     the Docker registry:'
+  id: totrans-120
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 第一步是在每个想要连接到Docker注册表的客户端上安装Docker：
 - en: '[PRE31]'
+  id: totrans-121
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: 'Next, on every client wanting to connect to our new Docker registry, set up
     the server''s certificate on the client first before we are able to connect to
     it (this step has been tested on CentOS 7 clients only):'
+  id: totrans-122
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，在每个想要连接到我们新Docker注册表的客户端上，首先在客户端上设置服务器的证书，然后我们才能连接到它（此步骤仅在CentOS 7客户端上测试过）：
 - en: '[PRE32]'
+  id: totrans-123
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: 'For testing, we start by pulling a new small test image from the official Docker
     Hub. Log in to the official Docker Hub by using your Docker Hub account (see a
     previous recipe in this chapter):'
+  id: totrans-124
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为了测试，我们首先从官方Docker Hub拉取一个新的小的测试镜像。使用您的Docker Hub帐户登录到官方Docker Hub（请参阅本章中的前一个配方）：
 - en: '[PRE33]'
+  id: totrans-125
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: 'Now pull a small image called `busybox`:'
+  id: totrans-126
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在拉取一个名为`busybox`的小镜像：
 - en: '[PRE34]'
+  id: totrans-127
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: 'Afterwards, switch the Docker registry server to use our own that we set up
     in this recipe (enter the username and password, for example, `johndoe / mysecretpassword`.
     Leave the e-mail field blank):'
+  id: totrans-128
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，将Docker注册表服务器切换到我们在此配方中设置的自己的服务器（输入用户名和密码，例如，`johndoe / mysecretpassword`。电子邮件字段留空）：
 - en: '[PRE35]'
+  id: totrans-129
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: 'Next, to push a Docker image from our client to our new private Docker registry,
     we need to tag it to be in our registry''s domain:'
+  id: totrans-130
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，为了将Docker镜像从客户端推送到我们新的私有Docker注册表，我们需要将其标记为在我们的注册表域中：
 - en: '[PRE36]'
+  id: totrans-131
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: 'Finally, push the image to our own registry:'
+  id: totrans-132
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，将镜像推送到我们自己的注册表：
 - en: '[PRE37]'
+  id: totrans-133
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: 'Congratulations! You have just pushed your first image to your private Docker
     repository. You can now pull this image `$DCKREG:5000/busybox` on any other client
     set up to communicate to our repository. To get a list of all the available images,
     use (change the account information accordingly):'
+  id: totrans-134
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 恭喜！你刚刚将你的第一个镜像推送到了你的私有Docker仓库。现在，你可以在任何配置为与我们的仓库通信的其他客户端上拉取这个镜像`$DCKREG:5000/busybox`。要获取所有可用镜像的列表，请使用（根据需要更改账户信息）：
 - en: '[PRE38]'
+  id: totrans-135
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: How it works...
+  id: totrans-136
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: In this recipe we showed you how to set up your own Docker registry running
     in a Docker container on the server. It is very important to understand that you
     will need to configure a FQDN for your registry server because it is mandatory
     for the whole system to work.
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们向你展示了如何在服务器上的Docker容器中设置你自己的Docker注册表。理解这一点非常重要：你需要为你的注册表服务器配置一个FQDN，因为这是整个系统工作的必要条件。
 - en: So what did we learn from this experience?
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: We began by configuring the Docker registry's FQDN on every computer using the
     `/etc/hosts` approach. Then we created a new certificate on the Docker registry
     server which will be used to communicate securely using TLS encryption between
@@ -790,8 +1100,11 @@
     for this server. Afterwards, we used the `docker run` command to download, install,
     and run our new Docker registry in a docker container itself on this server. We
     provided a list of parameters to configure TLS encryption and user authentication.
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先在每台计算机上通过`/etc/hosts`方法配置Docker注册表的完全限定域名（FQDN）。然后，我们在Docker注册表服务器上创建了一个新证书，该证书将用于客户端和注册表之间通过TLS加密进行安全通信。接下来，我们在`httpd`服务器上安装了新生成的证书，以便稍后所有客户端都可以访问；同时，在特定的Docker目录中，以便Docker也可以访问；并且在服务器默认信任的证书位置，我们还为该服务器重建了证书缓存。之后，我们使用`docker
+    run`命令下载、安装并在该服务器上的Docker容器中运行我们的新Docker注册表。我们提供了一组参数来配置TLS加密和用户认证。
 - en: In the next step, we attached to the registry to create new `htpasswd` accounts.
     You can repeat this step whenever you need new accounts for your registry. Don't
     forget to restart the registry container afterwards. Next, on every client we
@@ -807,11 +1120,17 @@
     Docker registry. The server is now available at port 5000 in the complete network.
     Remember that, if you don't want to use your own registry any more on the clients,
     you can always switch back to the official `docker` repository using `docker login`.
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: 在下一步中，我们连接到注册表以创建新的`htpasswd`账户。每当你的注册表需要新账户时，你都可以重复此步骤。别忘了之后重启注册表容器。接下来，对于我们希望与之通信的每个客户端，我们都需要在服务器本身上的相同位置安装服务器证书；因此，我们从之前实现的HTTP源下载了它，并将其复制到各个位置。为了在客户端上测试，接下来我们连接到官方Docker
+    Hub下载我们想要在下一步推送到我们自己的注册表的随机镜像。我们将`busybox`镜像下载到我们自己的镜像缓存中，然后切换到连接到我们的新私有Docker注册表。在我们能够将镜像上传到新位置之前，我们必须给它一个适合新服务器名称的适当标签，然后我们才能够将镜像推送到我们的新Docker注册表。该服务器现在在整个网络中端口5000上可用。请记住，如果你不想在客户端上再使用自己的注册表，你可以随时切换回官方`docker`仓库，使用`docker
+    login`。
 - en: There is so much more to learn about Docker. In the recipes of this chapter
     we only scratched the surface of the Docker platform. If you want to learn more
     about it, consider going to [https://www.Packtpub.com](https://www.Packtpub.com)
     and check out one of the many titles available at this website about it.
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于Docker，还有很多东西需要学习。在本章的食谱中，我们只是触及了Docker平台的表面。如果你想了解更多关于它的信息，请考虑访问[https://www.Packtpub.com](https://www.Packtpub.com)，并查看该网站上提供的许多相关书籍。

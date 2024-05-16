@@ -1,36 +1,52 @@
 - en: Chapter 1. Introduction to Linux Mint
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第1章：Linux Mint简介
 - en: '*Welcome to Linux Mint! It''s time to discover one of the most amazing operating
     system in the World. Linux Mint is not just an operating system. It''s a complete
     open source project supported by hundreds of volunteers. Let''s start to know
     more about it!*'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '*欢迎来到Linux Mint！现在是时候去发现世界上最令人惊叹的操作系统之一了。Linux Mint不仅仅是一个操作系统。它是一个由数百名志愿者支持的完整的开源项目。让我们开始了解更多关于它的信息吧！*'
 - en: 'In this chapter, we''re going to learn the following topics:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将学习以下主题：
 - en: Discover Linux Mint distribution
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 探索Linux Mint发行版
 - en: Learn about Linux mint open source project
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 了解Linux Mint开源项目
 - en: Find out why Linux Mint is different
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 探索Linux Mint的不同之处
 - en: Learn about Linux Mint editions
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 了解Linux Mint版本
 - en: Overview
+  id: totrans-7
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 概览
 - en: What is Linux Mint? A short answer to this question is "a computer operating
     system based on Linux kernel and GNU tools and libraries". In order to understand
     what Linux Mint is, first we need to know different concepts such as Linux, kernel,
@@ -41,8 +57,10 @@
     the kernel. However, an operating system needs more components to be completed.
     At this point, we find a family of operating system based on Linux kernel, plus
     a set of tools provided by the GNU open source project.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 什么是Linux Mint？简短的回答是“基于Linux内核和GNU工具及库的计算机操作系统”。为了理解Linux Mint是什么，我们首先需要了解Linux、内核和GNU等不同概念。正式来说，Linux并不是一个操作系统。它只是一个作为应用程序和硬件数据处理之间的桥梁的软件组件。正因为如此，**内核**是操作系统的核心组件。通常，*Linux*一词用来指代基于内核的整个操作系统。然而，一个完整的操作系统需要更多的组件来完成。在这个点上，我们找到了一个基于Linux内核的家族操作系统，加上由GNU开源项目提供的一套工具。
 - en: What are GNU tools? Well, first of all we should learn about the GNU project.
     Basically, this is an open source project started by Richard Stallman with the
     goal of building a set of software components and tools to avoid the use of any
@@ -52,15 +70,20 @@
     systems, such as GNU/Linux distros, have adopted these tools as components of
     the whole operating system. Belonging to the GNU project, we can find very popular
     tools such as `bash`, `Emacs`, `gzip`, `automake`, `gcc`, and `make`.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 什么是GNU工具？首先，我们应该了解GNU项目。基本上，这是一个由理查德·斯托曼发起的开源项目，旨在构建一套软件组件和工具，以避免使用任何非自由软件。尽管GNU工具与UNIX操作系统兼容，但两者是不同的。实际上，GNU是一个递归的缩写词，意味着GNU's
+    Not Unix。由于GNU工具的质量和普及度，许多Unix和Unix-like系统，如GNU/Linux发行版，已经采用了这些工具作为整个操作系统的组件。属于GNU项目，我们可以找到非常流行的工具，如`bash`、`Emacs`、`gzip`、`automake`、`gcc`和`make`。
 - en: Despite the fact that "Linux" is an accepted term to refer to this family of
     operating systems, some people and organizations, such as Free Software Foundation,
     prefer the name GNU/Linux. Keeping this concept in mind, we're going to use GNU/Linux
     in this book while talking about the whole operating system, and just Linux while
     referring to the kernel.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管“Linux”一词被接受用来指代这一系列操作系统，但有些人或组织，如自由软件基金会，更倾向于使用GNU/Linux这个名字。记住这个概念，我们将在本书中谈论整个操作系统时使用GNU/Linux，而在指代内核时仅使用Linux。
 - en: Now that we've learned about Linux, kernel, and GNU, we can define Linux Mint
     as a Linux distribution that includes a Linux kernel plus GNU tools and other
     useful software. Hold on. We've just mentioned a new concept—**distribution**
@@ -68,19 +91,25 @@
     of Linux distributions, or **distros**. A Linux distribution can be defined as
     a whole operating system providing a kernel, a system of base tools, and a complete
     set of applications ready to use for users.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 既然我们已经了解了Linux、内核和GNU，我们可以将Linux Mint定义为一种包含Linux内核、GNU工具和其他有用软件的Linux发行版。等等。我们刚刚提到了一个新的概念——**发行版**。当然，你可能听说过Ubuntu、Fedora或Debian。这三个都是Linux发行版，或**distros**的例子。Linux发行版可以定义为提供内核、基础工具系统以及供用户使用的完整应用程序集的整个操作系统。
 - en: A bit of history
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 一点历史
 - en: Clement Lefebvre is a French developer who decided to build a new Linux distro
     in 2006\. His first goal was to experiment and find out if it was possible to
     apply some design and usability improvements using an existing Linux distro as
     a base. Before making this decision, Clement spent some time writing articles
     about other Linux distributions.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: Clement Lefebvre是一位法国开发者，他在2006年决定创建一个新的Linux发行版。他的首要目标是实验并探索是否有可能在现有的Linux发行版基础上应用一些设计和可用性改进。在做出这个决定之前，Clement花了一些时间撰写关于其他Linux发行版的文章。
 - en: Thinking about what things could be improved, Clement started to experiment
     building his own distro. Ubuntu was chosen as the starting point, and after some
     work, the first Linux Mint version was released in 2006 using **Ada** as the code
@@ -90,12 +119,17 @@
     feedback provided by them was a motivation to continue working on the new operating
     system. Linux Mint was starting to become one of the most popular operating systems
     in the world.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 思考哪些方面可以改进，Clement开始尝试构建自己的发行版。Ubuntu被选为起点，经过一些工作后，第一个Linux Mint版本于2006年发布，代号为**Ada**。这个版本从未作为稳定版发布。然而，几个月后，一个新的版本准备就绪。Barbara被选为Linux
+    Mint 2.0版本的名称，这引起了许多开发者和用户的关注和兴趣。他们提供的反馈成为继续开发新操作系统的动力。Linux Mint开始成为世界上最受欢迎的操作系统之一。
 - en: Open source project
+  id: totrans-15
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 开源项目
 - en: Linux Mint is not just a Linux distribution, it's an open source project supported
     by hundreds of volunteers and contributors. This means that people work together
     sharing ideas, writing tutorials, discussing in forums, and developing software.
@@ -104,21 +138,30 @@
     systems in the world. We cannot forget that Linux Mint operating system is open
     source, and it's released under the popular **General Public License GPL** (**GNU**)
     software license.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux Mint不仅仅是一个Linux发行版，它是一个由数百名志愿者和贡献者支持的开源项目。这意味着人们共同分享想法，编写教程，在论坛上讨论，并开发软件。最终结果不仅仅是Linux发行版，还产生了大量的文档。集体智慧使我们能够构建世界上最常用的操作系统之一。我们不能忘记Linux
+    Mint操作系统是开源的，并且它是在流行的**通用公共许可证GPL**（**GNU**）软件许可下发布的。
 - en: All people contributing to Mint project make up the **community** . In the open
     source world, a community is a set of users and developers supporting a specific
     project. The community of Linux Mint grew up very fast becoming an important and
     essential part of the project.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有为Mint项目做出贡献的人组成了**社区**。在开源世界中，社区是一组支持特定项目的用户和开发者。Linux Mint的社区迅速成长，成为项目中重要且不可或缺的一部分。
 - en: The community uses a specific website that can be found at [http://community.linuxmint.com](http://community.linuxmint.com).
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 社区使用一个特定的网站，该网站可以在[http://community.linuxmint.com](http://community.linuxmint.com)找到。
 - en: Contributing to the project
+  id: totrans-19
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 贡献于项目
 - en: Everyone can contribute to Mint project in different ways that's the magic of
     open source projects, where the job of each person matters. Usually, people wonder
     how to contribute to open source projects. Sometimes it's hard to find this kind
@@ -133,16 +176,24 @@
     local presentation for spreading the philosophy and the knowledge of the project.
     Finally, financial help is important because Linux Mint project needs to pay some
     costs such as hosting or swag stuff.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个人都可以以不同的方式为Mint项目做出贡献，这就是开源项目的魔力，每个人的工作都很重要。通常，人们想知道如何为开源项目做出贡献。有时很难找到这类信息，尤其是对于非技术人员。Linux
+    Mint网站提供了关于如何为项目做出贡献的足够信息。基本上，你可以找到三个不同的贡献领域——项目贡献者、推广和财务帮助。第一个领域适合那些想要开发软件、编写文档、制作艺术品或报告错误的人。然而，非技术人员也可以为这个领域做出贡献，例如，他们可以进行翻译，以支持越来越多的语言。项目的推广可以适合那些有兴趣帮助他人、撰写文章或组织本地演示以传播项目哲学和知识的人。最后，财务帮助很重要，因为Linux
+    Mint项目需要支付一些成本，如托管或商品费用。
 - en: For those interested in more details about how to contribute to the Linux Mint
     project, please visit [http://www.linuxmint.com/getinvolved.php](http://www.linuxmint.com/getinvolved.php).
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于那些有兴趣了解更多关于如何为Linux Mint项目做出贡献的详细信息的人，请访问[http://www.linuxmint.com/getinvolved.php](http://www.linuxmint.com/getinvolved.php)。
 - en: Why Linux Mint is different
+  id: totrans-22
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 为什么Linux Mint与众不同
 - en: Basically, we find three features that make Mint different. The most important
     is the user experience. Mint has been designed to provide a very friendly desktop
     with an elegant and sophisticated look and feel. The main menu gives access to
@@ -152,32 +203,43 @@
     `mintUpdate`, `mintBackup`, and `mintUpload`. We'll talk about these software
     tools later in different chapters of this book. The impatient user can take a
     look at the GitHub account used by Mint developers at [https://github.com/linuxmint](https://github.com/linuxmint).
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 基本上，我们发现三个特点使得Mint与众不同。最重要的是用户体验。Mint被设计成提供一个非常友好的桌面，具有优雅和精致的感觉。主菜单提供了按组组织的应用程序访问，非常直观，只需点击一下即可启动程序。关于提升用户体验，Mint开发者提供了与操作系统集成的特定工具。其中包括`mintInstall`、`mintUpdate`、`mintBackup`和`mintUpload`。我们将在本书的不同章节中讨论这些软件工具。不耐烦的用户可以查看Mint开发者使用的GitHub账户，网址是[https://github.com/linuxmint](https://github.com/linuxmint)。
 - en: The community behind Linux Mint project is another aspect that makes Mint different
     than other distros. The organizations and the way they work make Mint different.
     The feedback provided by users is one of the most valuable resources to improve
     Mint and to build a better operating system. Other distros have a commercial motivation
     or developers taking decisions without caring about users' requirements, advices,
     or ideas.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux Mint项目的社区是另一个使Mint与其他发行版不同的方面。组织及其工作方式使Mint与众不同。用户提供的反馈是改进Mint和构建更好的操作系统的最有价值的资源之一。其他发行版可能有商业动机，或者开发者在没有考虑用户需求、建议或想法的情况下做出决策。
 - en: Finally, Mint includes a lot of software ready to be used out of the box. Multimedia
     codecs, Java runtime, and Flash Player are installed by default. These feature
     are very important for novice users that need time to get familiarized with the
     operating system.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，Mint包含了许多开箱即用的软件。多媒体编解码器、Java运行时和Flash Player默认安装。这些功能对于需要时间熟悉操作系统的初学者用户来说非常重要。
 - en: Editions
+  id: totrans-26
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 版本
 - en: As other operating systems, Linux Mint has different editions or flavors. Basically,
     we can find two main editions—one based on Debian, which is called **Linux Mint
     Debian Edition** (**LMDE**), and another one based in Ubuntu. In addition to Ubuntu
     and Debian software repositories, Linux Mint uses its specific ones.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 与其他操作系统一样，Linux Mint 有不同的版本或风味。基本上，我们可以找到两个主要版本——一个基于 Debian，称为 **Linux Mint
+    Debian Edition** (**LMDE**)，另一个基于 Ubuntu。除了 Ubuntu 和 Debian 软件仓库，Linux Mint 还使用其特定的仓库。
 - en: LMDE is a rolling release. This means the distro constantly receives updates
     without generating releases. So it doesn't need to be upgraded. However, releases
     for the regular Mint edition (the one based on Ubuntu) are only generated by following
@@ -186,52 +248,78 @@
     users should think again before using it because continuous updates can bring
     some errors that they might find difficult to solve. On the other hand, Linux
     Mint is easy to maintain and was designed to offer an unbeatable user experience.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: LMDE 是一个滚动发布版本。这意味着该发行版不断接收更新，而不产生新版本。因此不需要升级。然而，常规 Mint 版本（基于 Ubuntu 的版本）的发布仅遵循特定的时间段，这个时间段比滚动发布的要长。尽管
+    LMDE 比 Linux Mint 更快、更响应，但非高级用户在使用它之前应该三思，因为持续的更新可能会带来一些他们可能难以解决的错误。另一方面，Linux
+    Mint 易于维护，并且设计为提供无与伦比的用户体验。
 - en: The Linux Mint project distributes each edition through different ISO images,
     each being ready to be burned in a DVD. For LMDE, we can find four images depending
     on the desktop environment included and the architecture of the processor (32b
     and 64b).
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux Mint 项目通过不同的 ISO 镜像分发每个版本，每个镜像都准备好刻录到 DVD 中。对于 LMDE，我们可以根据包含的桌面环境和处理器架构（32b
+    和 64b）找到四个镜像。
 - en: Regarding the regular edition of Linux Mint, we have more options for choosing
     so we need to consider that. Specifically, we can find ten different ISO images.
     Well, we only have five that are really different, because each one has its own
     equivalent in 32b and 64b. Four different desktop environments are included—MATE,
     Cinnamon, KDE, and Xfce.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于 Linux Mint 的常规版本，我们有更多的选择，因此需要考虑这一点。具体来说，我们可以找到十个不同的 ISO 镜像。实际上，我们只有五个真正不同的，因为每个都有其对应的
+    32b 和 64b 版本。包含四种不同的桌面环境——MATE、Cinnamon、KDE 和 Xfce。
 - en: Summary
+  id: totrans-31
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 总结
 - en: This chapter was a hands-on introduction to Linux Mint project and distro. We
     have learned basic concepts about Linux Mint operating system and project, including
     how to contribute to the project and discovering which editions are available.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章是对 Linux Mint 项目和发行版的实践介绍。我们已经学习了 Linux Mint 操作系统和项目的基本概念，包括如何为项目做贡献以及发现了哪些版本可用。
 - en: Now that you know the main data and information about Linux Mint distro and
     project, you are ready for installing the distro in your own computer.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在你已经了解了 Linux Mint 发行版和项目的主要数据和信息，你已经准备好将该发行版安装到你自己的电脑上了。
 - en: References
+  id: totrans-34
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 参考资料
 - en: 'Linux Mint website: [http://linuxmint.com/](http://linux)'
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Linux Mint 网站：[http://linuxmint.com/](http://linuxmint.com/)
 - en: 'The GNU project: [http://www.gnu.org/](http://www)'
+  id: totrans-36
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: GNU 项目：[http://www.gnu.org/](http://www.gnu.org/)
 - en: 'The GPL license: [http://www.gnu.org/licenses/gpl.html](http://ww)The Linux
     kernel website: [http://www.kernel.org/](http://www.kernel.org/)'
+  id: totrans-37
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: GPL 许可证：[http://www.gnu.org/licenses/gpl.html](http://www.gnu.org/licenses/gpl.html)
 - en: 'Linux Mint download web page: [http://www.linuxmint.com/download.php](http://www.linuxmint.com/download.php)'
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Linux Mint 下载网页：[http://www.linuxmint.com/download.php](http://www.linuxmint.com/download.php)

@@ -440,6 +440,8 @@
   id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们通过使用`mysql`命令以root用户身份访问MariaDB shell开始了这个操作步骤。这样，我们就可以使用简单的SQL函数`CREATE DATABASE`创建一个数据库，并为`<database-name>`字段提供一个自定义名称。我们还指定了`utf8`作为新数据库的字符集，以及`utf8_general_ci`作为排序规则。字符集是数据库中字符的编码方式，而排序规则是一组比较字符集中的字符的规则。由于历史原因，并为了保持MariaDB与旧版本服务器的向后兼容性，默认字符集是`latin1`和`latin1_swedish_ci`，但对于任何现代数据库，您应该始终倾向于使用`utf-8`，因为它是国际字符集（非英语字母）最标准和兼容的编码。但是，可以通过使用以下命令来修改此命令，以检查数据库名称是否已在使用中：`CREATE
+    DATABASE IF NOT EXISTS <database-name>`。这样，您就可以使用以下命令删除或移除数据库：
 - en: '[PRE12]'
   id: totrans-59
   prefs: []
@@ -456,6 +458,7 @@
   id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 完成这些操作后，只需通过运行我们的`GRANT ALL`命令为新数据库用户添加适当的权限。在这里，我们为本地主机上的`<username>`提供了通过定义的`<password>`获得完全权限。由于选择了特定的`<database-name>`，因此这种级别的权限将限于该特定数据库，并且使用`<database-name>.*`允许我们将这些规则指定给该数据库中的所有表（使用星号符号）。为了向选定的用户提供特定权限，一般语法是：
 - en: '[PRE13]'
   id: totrans-61
   prefs: []
@@ -469,6 +472,8 @@
   id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 出于安全考虑，在本操作步骤中，我们将`<hostname>`限制为本地主机，但如果您想授予远程用户权限，则需要更改此值（稍后会看到）。在我们的示例中，我们将`[type
+    of permission]`设置为`ALL`，但您始终可以通过提供单个或以逗号分隔的权限类型列表来决定最小化特权，如下所示：
 - en: '[PRE14]'
   id: totrans-63
   prefs: []
@@ -479,41 +484,49 @@
   id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用前面的技术，以下是可以使用的权限的总结：
 - en: '`ALL`: Allows the `<username>` value with all available privilege-types'
   id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`ALL`：允许`<username>`值拥有所有可用的权限类型'
 - en: '`CREATE`: Allows the `<username>` value to create new tables or databases'
   id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`CREATE`：允许`<username>`值创建新表或数据库'
 - en: '`DROP`: Allows the `<username>` value to delete tables or databases'
   id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`DROP`：允许`<username>`值删除表或数据库'
 - en: '`DELETE`: Allows the `<username>` value to delete rows from tables'
   id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`DELETE`：允许`<username>`值删除表行'
 - en: '`INSERT`: Allows the `<username>` value to insert rows into tables'
   id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`INSERT`：允许`<username>`值插入表行'
 - en: '`SELECT`: Allows the `<username>` value to read from tables'
   id: totrans-70
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`SELECT`：允许`<username>`值从表中读取'
 - en: '`UPDATE`: Allows the `<username>` value to update table rows'
   id: totrans-71
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`UPDATE`：允许`<username>`值更新表行'
 - en: However, once the privileges were granted, the recipe then showed you that we
     must `FLUSH` the system in order to make our new settings available to the system
     itself. It is important to note that all commands within the MariaDB shell should
@@ -522,6 +535,7 @@
   id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，一旦授予了特权，操作步骤就会向您展示我们必须`FLUSH`系统，以便使我们的新设置对系统本身可用。需要注意的是，MariaDB shell中的所有命令都应以分号（`;`）结尾。完成任务后，我们只需使用`EXIT;`语句退出控制台。
 - en: MariaDB is an excellent database system but like all services, it can be abused.
     So remain vigilant at all times, and by considering the previous advices, you
     can be confident that your MariaDB installation will remain safe and secure.
@@ -654,23 +668,27 @@
   id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此配方，您需要一个具有root权限的CentOS 7操作系统的有效安装。预计MariaDB服务器已经安装并运行，并且您已经阅读并应用了*管理MariaDB数据库*配方，以了解权限以及如何测试（本地）数据库连接。
 - en: How to do it...
   id: totrans-92
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何做到这一点...
 - en: 'In our example, we want to access a MariaDB database server with the IP address
     `192.168.1.12` from a client computer in the same network, with the IP address
     `192.168.1.33`. Please change appropriately to fit your needs:'
   id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们的示例中，我们希望从同一网络中的客户端计算机（IP地址为`192.168.1.33`）访问IP地址为`192.168.1.12`的MariaDB数据库服务器。请根据您的需求适当更改：
 - en: 'To begin, log in as root on your MariaDB database server and open the firewall
     for the incoming MariaDB connections:'
   id: totrans-94
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录到您的MariaDB数据库服务器，并为传入的MariaDB连接打开防火墙：
 - en: '[PRE20]'
   id: totrans-95
   prefs:
@@ -688,6 +706,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，我们需要创建一个可以远程连接到我们的MariaDB服务器的用户账户（因为我们已经阻止`root`这样做，以增强安全性），使用MariaDB命令行界面`mysql`以用户`root`登录数据库服务器，并输入以下MariaDB语句（将`XXXX`替换为您选择的密码，也可以根据需要调整用户名和客户端的远程IP地址——在我们的例子中，客户端的IP地址是`192.168.1.33`）：
 - en: '[PRE21]'
   id: totrans-97
   prefs:
@@ -704,6 +723,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在我们可以从我们网络中IP地址为`192.168.1.33`的客户端计算机测试连接。这台计算机需要安装MariaDB shell（在CentOS 7客户端上，安装软件包`mariadb`），并且需要能够ping通运行MariaDB服务的服務器（在我们的示例中，IP为`192.168.1.12`）。您可以通过使用以下命令测试与服务器的连接（成功的话，这将打印出`mysql`用户表的内容）：
 - en: '[PRE22]'
   id: totrans-99
   prefs:
@@ -715,6 +735,7 @@
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 工作原理...
 - en: 'We started our journey by opening the standard MariaDB firewall port 3306 using
     the firewalld predefined MariaDB service, which is disabled by default on CentOS
     7\. After this, we configured which IP addresses were allowed to access our database
@@ -733,11 +754,16 @@
   id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的旅程始于通过使用firewalld预定义的MariaDB服务打开标准的MariaDB防火墙端口3306，该服务在CentOS 7上默认是禁用的。之后，我们配置了允许访问数据库服务器的IP地址，这是在数据库级别使用MariaDB
+    shell完成的。在我们的示例中，我们使用`GRANT SELECT`命令允许用户`johndoe`在客户端IP地址`192.168.1.33`和密码`'XXXX'`访问名为`mysql`的数据库和用户表，仅进行`SELECT`查询。请记住，在这里您也可以在`<hostname>`字段中使用通配符`%`（表示任何字符）。例如，为了定义C类网络中的任何可能的主机名组合，您可以使用`%`符号，如下所示`192.168.1.%`。授予对`mysql.user`数据库和表的访问权限仅用于测试目的，您应该在完成测试后使用以下命令从该访问权限中删除用户`johndoe`：`REVOKE
+    ALL PRIVILEGES`, `GRANT OPTION FROM 'johndoe'@'192.168.1.33';`。如果您愿意，也可以删除用户`DROP
+    USER 'johndoe'@'192.168.1.33';`，因为我们不再需要它了。
 - en: Installing a PostgreSQL server and managing a database
   id: totrans-102
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 安装PostgreSQL服务器和管理数据库
 - en: In this recipe, we will not only learn how to install the PostgreSQL DBMS on
     our server, but we will also discover how to add a new user and create our first
     database. PostgreSQL is considered to be the most advanced open source database
@@ -906,6 +932,8 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们将发出一个 shell 命令来创建一个新的数据库用户，通过将 `<username>` 替换为适合您自己需求的相应用户名（在提示时输入新用户的密码，重复它，然后输入管理员用户
+    `postgres` 的密码以应用这些设置）：
 - en: '[PRE32]'
   id: totrans-127
   prefs:
@@ -919,6 +947,8 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，也在 shell 中创建您的第一个数据库，并将其分配给我们新用户，通过将 `<database-name>` 和 `<username>` 的值替换为更适合您需求的值（输入
+    `postgres` 用户的密码）：
 - en: '[PRE33]'
   id: totrans-129
   prefs:
@@ -931,6 +961,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，通过打印所有数据库名称来测试您是否可以使用新用户访问 Postgres 服务器：
 - en: '[PRE34]'
   id: totrans-131
   prefs:
@@ -942,6 +973,7 @@
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: PostgreSQL is an Object-Relational Database Management System and it is available
     to all CentOS servers. Postgres may not be as common as MariaDB, but its architecture
     and large array of features do make it an attractive solution for many companies
@@ -949,10 +981,12 @@
   id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: PostgreSQL 是一种对象关系型数据库管理系统，它适用于所有 CentOS 服务器。虽然 Postgres 可能不如 MariaDB 常见，但其架构和丰富的功能确实使其成为许多关注数据完整性的公司的吸引解决方案。
 - en: So what did we learn from this experience?
   id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: We began this recipe by installing the necessary server and client `rpm` packages
     using `yum`. Having done this, we then proceeded to make the Postgres system available
     at boot before initializing the database system using the `postgresql-setup initdb`
@@ -966,6 +1000,11 @@
   id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从这个配方开始，通过使用 `yum` 安装必要的服务器和客户端 `rpm` 包。完成此操作后，我们在启动时使 Postgres 系统可用，然后使用
+    `postgresql-setup initdb` 命令初始化数据库系统。我们通过启动数据库服务完成了这个过程。在下一阶段，我们被要求为 Postgres
+    管理员用户设置密码以加强系统安全性。默认情况下，`postgresql` 包创建一个名为 `postgres` 的新 Linux 系统用户（也用作访问我们的
+    Postgres DBMS 的管理员 Postgres 用户帐户），通过使用 `su - postgres - c`，我们能够以 `postgres` 用户身份执行
+    `psql` 命令，这在安装时是强制性的（这称为对等身份验证）。
 - en: 'Having set the admin password, to have more like a MariaDB shell-type of login
     procedure where every database user (including the administrator `postgres` user)
     can log in using the database `psql` client''s user `-U` parameter, we changed
@@ -981,11 +1020,17 @@
   id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 设置管理员密码后，为了更像 MariaDB shell 类型的登录过程，其中每个数据库用户（包括管理员 `postgres` 用户）都可以使用数据库 `psql`
+    客户端的用户 `-U` 参数登录，我们将这种 `peer` 身份验证更改为 `md5` 数据库密码身份验证，用于本地主机在 `pg_hba.conf` 文件中（请参阅下一个配方）。重新启动服务后，我们然后使用
+    Postgres 的 `createuser` 和 `createdb` 命令行工具创建一个新的 Postgres 用户并将其连接到新数据库（我们需要为 `postgres`
+    用户提供 `-U` 参数，因为只有他有权限）。最后，我们向您展示了如何使用新用户使用 `-l` 标志（列出所有可用数据库）测试与数据库的连接。此外，您可以使用
+    `-d` 参数使用以下语法连接到特定数据库：`psql -d <database-name> -U <username>`。
 - en: There's more...
   id: totrans-137
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'Instead of using the `createuser` or `createdb` Postgres command-line tools,
     as we have been showing you in this recipe, to create your databases and users,
     you can also do the same using the Postgres shell. In fact, those command-line
@@ -1001,6 +1046,10 @@
   id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了使用`createuser`或`createdb`Postgres命令行工具（正如我们在这个示例中向你展示的那样）来创建数据库和用户之外，你还可以使用Postgres
+    shell来完成相同的操作。实际上，这些命令行工具实际上只是Postgres shell命令的包装器，两者之间没有实质性的区别。`psql`是用于在Postgres服务器上输入SQL查询或其他命令的主要命令行客户端工具，类似于本章中另一个示例中向你展示的MariaDB
+    shell。在这里，我们将使用名为`template1`的模板启动`psql`，这是用于开始构建数据库的样板（或默认模板）。登录后（`psql -U postgres
+    template1`），输入管理员密码，你应该会看到交互式Postgres提示符（`template1=#`）。现在，要在`psql` shell中创建一个新用户，请输入：
 - en: '[PRE35]'
   id: totrans-139
   prefs: []
@@ -1010,6 +1059,7 @@
   id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: 要创建数据库，请输入：
 - en: '[PRE36]'
   id: totrans-141
   prefs: []
@@ -1020,6 +1070,7 @@
   id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: 将最近创建的数据库的所有权限授予新用户的选项是：
 - en: '[PRE37]'
   id: totrans-143
   prefs: []
@@ -1030,17 +1081,20 @@
   id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: 要退出交互式shell，请使用：`\q`，然后按*回车*键。
 - en: Having completed this recipe you could say that you not only know how to install
     PostgreSQL, but this process has served to highlight some simple architectural
     differences between this database system and MariaDB.
   id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: 完成这个示例后，你可以说你不仅知道如何安装PostgreSQL，而且这个过程还突显了这个数据库系统与MariaDB之间的一些简单的架构差异。
 - en: Configuring remote access to PostgreSQL
   id: totrans-146
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 配置对PostgreSQL的远程访问
 - en: In this recipe, we will learn how to configure remote access to a Postgres server
     which is disabled by default. Postgres employs a method called host-based authentication
     and it is the purpose of this recipe to introduce you to its concepts in order
@@ -1048,22 +1102,26 @@
   id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个示例中，我们将学习如何配置对默认情况下禁用的Postgres服务器的远程访问。Postgres使用一种称为基于主机的身份验证的方法，这个示例的目的是向你介绍其概念，以便为你提供运行安全可靠的数据库服务器所需的访问权限。
 - en: Getting ready
   id: totrans-148
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges and a text editor of your choice. It is
     expected that PostgreSQL is already installed and running.
   id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成这个示例，你需要一个具有root权限的CentOS 7操作系统的有效安装，以及你选择的文本编辑器。预计PostgreSQL已经安装并正在运行。
 - en: How to do it...
   id: totrans-150
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: In the previous recipe, we have already modified the host-based authentication
     configuration `pg_hba.conf` file using `sed` to manage our Postgres's client authentication
     from peer to `md5`. Here we will make changes to it to manage remote access to
@@ -1071,12 +1129,14 @@
   id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: 在前面的示例中，我们已经使用`sed`修改了基于主机的身份验证配置文件`pg_hba.conf`，以管理我们的Postgres客户端身份验证，从对等模式更改为`md5`。在这里，我们将对其进行更改，以管理对我们的Postgres服务器的远程访问。
 - en: 'To begin, log in as root and first open the firewall to allow any incoming
     PostgreSQL connections to the server:'
   id: totrans-152
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录，并打开防火墙以允许任何传入的PostgreSQL连接到服务器：
 - en: '[PRE38]'
   id: totrans-153
   prefs:
@@ -1089,6 +1149,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，在你的首选文本编辑器中打开基于主机的身份验证配置文件，方法是输入：
 - en: '[PRE39]'
   id: totrans-155
   prefs:
@@ -1103,6 +1164,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 滚动到文件末尾，并添加以下行，使这些行读作如下内容（将`XXX.XXX.XXX.XXX/XX`值替换为你想要授予访问权限的网络地址。例如，如果你的服务器IP地址是`192.168.1.12`，那么网络地址将是`192.168.1.0/24`）：
 - en: '[PRE40]'
   id: totrans-157
   prefs:
@@ -1115,6 +1177,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成后，只需以通常的方式保存并关闭文件，然后通过输入打开主Postgres配置文件：
 - en: '[PRE41]'
   id: totrans-159
   prefs:
@@ -1126,6 +1189,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将以下行添加到文件末尾：
 - en: '[PRE42]'
   id: totrans-161
   prefs:

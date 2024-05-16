@@ -1,41 +1,59 @@
 - en: Chapter 11. Providing Mail Services
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第11章。提供邮件服务
 - en: 'In this chapter, we will cover:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将涵盖：
 - en: Configuring a domain-wide mail service with Postfix
+  id: totrans-2
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用Postfix配置域内邮件服务
 - en: Working with Postfix
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用Postfix
 - en: Delivering the mail with Dovecot
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用Dovecot投递邮件
 - en: Using Fetchmail
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用Fetchmail
 - en: Introduction
+  id: totrans-6
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 简介
 - en: This chapter is a collection of recipes that deliver the necessary steps to
     implement and maintain one of the oldest and most versatile technologies on the
     Internet today. Everyone wants to send and receive e-mails and this chapter provides
     the necessary starting point required to deploy such a service in a timely and
     efficient manner.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章是一系列配方的集合，提供了实施和维护当今互联网上最古老、最多才多艺的技术之一的必要步骤。每个人都希望能够发送和接收电子邮件，本章提供了部署这种服务所需的起点，以便及时且高效地进行。
 - en: Configuring a domain-wide mail service with Postfix
+  id: totrans-8
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用Postfix配置域内邮件服务
 - en: Postfix is a **Mail Transport Agent** (**MTA**) responsible for the transfer
     of e-mails between mail servers using the SMTP protocol. Postfix is now the default
     MTA on CentOS 7\. Here, as with most other critical network services, its default
@@ -47,12 +65,16 @@
     of this recipe is to set up Postfix as a domain-wide mail service to allow e-mails
     sent from any host in your network and if the recipient is a valid e-mail address
     within your local domain, deliver them to the correct mailbox on the mail server.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: Postfix是一个**邮件传输代理**（**MTA**），负责使用SMTP协议在邮件服务器之间传输电子邮件。Postfix现在是CentOS 7上的默认MTA。在这里，与其他大多数关键网络服务一样，其默认配置允许发送邮件，但不接受来自本地主机以外的任何主机的传入网络连接。如果你只需要一个本地Linux用户邮件系统，并且从localhost发送邮件到其他外部邮件服务器，这是有道理的。但如果你想为自己的私有网络和域运行自己的集中式邮件服务器，这就相当限制了。因此，本配方的目的是将Postfix设置为域内邮件服务，允许网络中的任何主机发送电子邮件，如果收件人是本地域内的有效电子邮件地址，则将其投递到邮件服务器上的正确邮箱。
 - en: Getting ready
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet to download additional software packages. You
@@ -69,194 +91,274 @@
     that your server will be using a static IP address and that it maintains one or
     more system user accounts. It is also assumed that you are working through this
     chapter recipe by recipe in the order in which they appear.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本配方，你需要一个具有root权限的CentOS 7操作系统的安装，你选择的基于控制台的文本编辑器，以及连接到互联网以下载额外的软件包。你需要正确设置你的本地网络，并确保所有想要通过你的单域邮件服务器发送邮件的计算机都在同一个网络中，并且可以ping通这个服务器。此外，为任何邮件服务器正确设置系统时间也非常重要。在开始配置之前，请应用[第2章](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第2章。配置系统")，“配置系统”中的“使用NTP和chrony套件同步系统时钟”配方。最后，你需要为你的邮件服务器设置一个**完全限定域名**（**FQDN**）。请参考[第2章](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第2章。配置系统")，“配置系统”中的“设置你的主机名并解析网络”配方。预计你的服务器将使用静态IP地址，并且它将维护一个或多个系统用户帐户。还假设你将按照本章中出现的顺序逐个配方地工作。
 - en: How to do it...
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: Postfix is already installed by default on all CentOS 7 flavors and it should
     be in a running state. In our example, we want to build a central mail server
     for our network 192.168.1.0/24 with the local domain name called `centos7.home`.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: Postfix默认安装在所有CentOS 7版本上，并且应该处于运行状态。在我们的示例中，我们希望为我们的网络192.168.1.0/24构建一个中央邮件服务器，其本地域名为`centos7.home`。
 - en: 'First login as root and test if Postfix is already working locally and can
     send local mails to your system users. Type the following command to send a mail
     to a Linux user specified by `<username>`:'
+  id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先以root身份登录，并测试Postfix是否已经在本地工作，并且可以向您的系统用户发送本地邮件。输入以下命令向指定的Linux用户`<username>`发送邮件：
 - en: '[PRE0]'
+  id: totrans-15
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'On CentOS 7, Postfix is also already configured to send out mails to external
     e-mail addresses (but from localhost only) without any changes to the configuration
     file. For example, you could use right out-of-the-box:'
+  id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在CentOS 7上，Postfix也已经配置为无需对配置文件进行任何更改即可向外部电子邮件地址发送邮件（但仅从localhost）。例如，您可以直接使用：
 - en: '[PRE1]'
+  id: totrans-17
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Note
+  id: totrans-18
   prefs:
   - PREF_IND
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: If you don't have a trusted domain and certificate behind your Postfix server,
     in times of massive spam e-mails most external e-mail servers will reject or put
     such e-mails directly into the spam folders.
+  id: totrans-19
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 如果您没有受信任的域和证书支持您的Postfix服务器，在大量垃圾邮件的时代，大多数外部邮件服务器将拒绝或将此类邮件直接放入垃圾邮件文件夹。
 - en: 'To see if the local mail message has been delivered successfully, show the
     latest mail log (Press *Ctrl*+*C* to exit the log):'
+  id: totrans-20
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要查看本地邮件是否已成功投递，请显示最新的邮件日志（按*Ctrl*+*C*退出日志）：
 - en: '[PRE2]'
+  id: totrans-21
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Next, check if a FQDN for our server is available. This is mandatory, and if
     not set properly, refer to [Chapter 2](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 2. Configuring the System"), *Configuring the System* to set one (in
     our example, this will output the name `mailserver.centos7.home`):'
+  id: totrans-22
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，检查我们的服务器是否有可用的FQDN。这是强制性的，如果没有正确设置，请参阅[第2章](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第2章。配置系统")，*配置系统*以设置一个（在我们的示例中，这将输出名称`mailserver.centos7.home`）：
 - en: '[PRE3]'
+  id: totrans-23
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Now create a backup copy of the main Postfix configuration file before opening
     this file:'
+  id: totrans-24
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在在打开此文件之前创建主Postfix配置文件的备份副本：
 - en: '[PRE4]'
+  id: totrans-25
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'First of all, we will want Postfix to listen on all network interfaces instead
     of only the local one. Activate or uncomment the following line (which means remove
     the `#` sign at the beginning of the line) that starts with `inet_interfaces`
     to read:'
+  id: totrans-26
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，我们希望Postfix监听所有网络接口，而不仅仅是本地接口。激活或取消注释以下行（这意味着删除行首的`#`符号），该行以`inet_interfaces`开头，使其读取如下：
 - en: '[PRE5]'
+  id: totrans-27
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Now, some lines below, you will find the line that reads `inet_interfaces =
     localhost.` Deactivate it or comment it out by putting a `#` sign at the start
     of the line:'
+  id: totrans-28
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，在下面的一些行中，您会找到读取`inet_interfaces = localhost.`的行。通过在行首放置一个`#`符号来禁用它或注释掉它：
 - en: '[PRE6]'
+  id: totrans-29
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Next we need to set the local domain-name of the mail server. For example,
     if our mailserver''s FQDN is `mailserver.centos7.home` and this mailserver is
     responsible for delivering mail for the whole private `centos7.home` domain, the
     domain name will be (it''s best to put it below the line that reads `#mydomain
     = domain.tld`):'
+  id: totrans-30
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们需要设置邮件服务器的本地域名。例如，如果我们的邮件服务器的FQDN是`mailserver.centos7.home`，并且这个邮件服务器负责为整个私有`centos7.home`域投递邮件，那么域名将是（最好将其放在读取`#mydomain
+    = domain.tld`的行下方）：
 - en: '[PRE7]'
+  id: totrans-31
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'With the intention that this server may become a domain-wide mail server, you
     should now update the following line that starts with `mydestination` to read
     as follows (for example, in the `mydestination` section, comment out the first
     `mydestination` line and uncomment the second line):'
+  id: totrans-32
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 考虑到此服务器可能成为域范围内的邮件服务器，您现在应该更新以下以`mydestination`开头的行，使其读取如下（例如，在`mydestination`部分，注释掉第一行`mydestination`并取消注释第二行）：
 - en: '[PRE8]'
+  id: totrans-33
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Next, we need to specify the pathname of a mailbox file relative to a user''s
     home directory. To do this, scroll down and locate the line that begins with `home_mailbox`
     and uncomment the following option (remove the `#` sign at the line''s beginning):'
+  id: totrans-34
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们需要指定相对于用户主目录的邮箱文件路径名。为此，向下滚动并找到以`home_mailbox`开头的行，并取消注释以下选项（删除行首的`#`符号）：
 - en: '[PRE9]'
+  id: totrans-35
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'Save and close the file. Now we want to open the correct Postfix server ports
     in the firewall to allow the incoming SMTP connections to the server:'
+  id: totrans-36
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件。现在我们希望在防火墙中打开正确的Postfix服务器端口，以允许服务器接收SMTP连接：
 - en: '[PRE10]'
+  id: totrans-37
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'Next, restart the Postfix service as follows:'
+  id: totrans-38
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，如下重新启动Postfix服务：
 - en: '[PRE11]'
+  id: totrans-39
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'Afterwards, login to a different computer in the same network and install **Swiss
     Army Knife SMTP** (**swaks**) to test out our Postfix server connection remotely.
     On CentOS, type the following (it needs the EPEL repository to be installed in
     advance):'
+  id: totrans-40
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，登录到同一网络中的另一台计算机并安装**瑞士军刀SMTP**（**swaks**），以远程测试我们的Postfix服务器连接。在CentOS上，输入以下内容（需要事先安装EPEL存储库）：
 - en: '[PRE12]'
+  id: totrans-41
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'Now, to test if you can connect to our new Postfix server using the standard
     SMTP mail port 25, with our Postfix server running on the IP address `192.168.1.100`,
     we are sending a mail remotely to a Linux system user `john` which has a system
     user account on our Postfix server:'
+  id: totrans-42
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，为了测试是否可以使用标准SMTP邮件端口25连接到我们新的Postfix服务器，我们的Postfix服务器运行在IP地址`192.168.1.100`，我们远程发送一封邮件给Linux系统用户`john`，他在我们的Postfix服务器上有一个系统用户账户：
 - en: '[PRE13]'
+  id: totrans-43
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'Swaks creates output which should give us a hint if the mail transport has
     been successful. For example (the output has been truncated):'
+  id: totrans-44
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: Swaks创建的输出应该给我们一个提示，表明邮件传输是否成功。例如（输出已被截断）：
 - en: '[PRE14]'
+  id: totrans-45
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'You can also test that the last command has been successful by logging in as
     user `john` on the Postfix server, then checking and reading your local mailbox''s
     inbox, which should contain a file with the test mail sent from the swaks tool
     (the filename will be different on your computer), as follows:'
+  id: totrans-46
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 您还可以通过以用户`john`登录到Postfix服务器，然后检查并阅读您的本地邮箱收件箱，来测试最后一个命令是否成功，收件箱应该包含一个由swaks工具发送的测试邮件的文件（文件名在您的计算机上会有所不同），如下所示：
 - en: '[PRE15]'
+  id: totrans-47
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: How it works...
+  id: totrans-48
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: As we have seen, Postfix is installed and running on every CentOS 7 system by
     default and in its basic configuration the mail server is listening on the localhost
     address for incoming mails so you can already send out local mails between your
@@ -264,8 +366,10 @@
     It is already running because your system is already using it for a number of
     local services, such as the crond daemon or for sending out warnings about security
     breaches (for example, running a `sudo` command as a non-sudo user).
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经看到，Postfix默认安装并运行在每个CentOS 7系统上，在其基本配置中，邮件服务器监听本地主机地址以接收邮件，因此您已经可以在服务器本地Linux系统用户之间发送本地邮件，而无需联系外部MTA。它已经在运行，因为您的系统已经在使用它为多个本地服务，例如crond守护进程或发送关于安全漏洞的警告（例如，以非sudo用户身份运行`sudo`命令）。
 - en: Before we can explain how this recipe works, we need to review some more basics
     about the Postfix MTA system in general. The Postfix MTA service can receive incoming
     e-mails from mail clients or other remote MTA servers using the SMTP protocol.
@@ -275,16 +379,21 @@
     the mail to a local mailbox installed on the server (either in the filesystem
     or in a database system such as MariaDB). If the incoming mail is not destinated
     for this server, it will be relayed (forwarded) to another MTA.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们解释这个配方是如何工作之前，我们需要回顾一些关于Postfix MTA系统的更多基础知识。Postfix MTA服务可以接收来自邮件客户端或其他远程MTA服务器的传入电子邮件，使用SMTP协议。如果传入的电子邮件是针对MTA服务器配置的最终目的地域（例如，一封发送到收件人地址`john@centos7.home`的邮件传入到配置的`centos7.home`
+    Postfix MTA服务器），它将把邮件投递到服务器上安装的本地邮箱（无论是在文件系统中还是在数据库系统中，如MariaDB）。如果传入的邮件不是针对这个服务器，它将被转发（转发）到另一个MTA。
 - en: 'Remember that this is all a Postfix server is capable of doing and nothing
     more: receiving incoming SMTP connections from mail clients or other MTAs, delivering
     mail to local mailboxes on the server, and forwarding mail to other MTAs using
     SMTP. Contrary to common belief, Postfix cannot transfer the mails from its local
     mailboxes to the end users. Here we need another type of MTA called **delivery
     agent**, which uses different mail protocols, such as IMAP or POP3.'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，这就是Postfix服务器所能做的一切，不多也不少：接收来自邮件客户端或其他MTA的传入SMTP连接，将邮件投递到服务器上的本地邮箱，并使用SMTP将邮件转发到其他MTA。与普遍看法相反，Postfix不能将其本地邮箱中的邮件传输给最终用户。这里我们需要另一种类型的MTA，称为**投递代理**，它使用不同的邮件协议，如IMAP或POP3。
 - en: In this recipe, we configured our Postfix server so that the other computers
     and servers in the same network could also send mails to our Postfix server, which
     is blocked by default (by default only the server itself can send mails). If an
@@ -292,11 +401,15 @@
     name in the recipient's e-mail address as our Postfix server has its FQDN in,
     then it gets delivered to the appropriate local mailbox defined by the recipient's
     part of the e-mail; all external e-mail addresses get relayed to an external MTA.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个方法中，我们配置了我们的Postfix服务器，以便同一网络中的其他计算机和服务器也可以向我们的Postfix服务器发送邮件，这些邮件默认是被阻止的（默认情况下只有服务器本身可以发送邮件）。如果从我们网络中的另一台计算机发送的入站电子邮件，其收件人的电子邮件地址中的域名与我们的Postfix服务器的FQDN相同，那么它将被传递到由电子邮件的收件人部分定义的适当的本地邮箱；所有外部电子邮件地址都会被转发到一个外部MTA。
 - en: So what did we learn from this experience?
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: We began our journey by testing if we could send out local mails to system users.
     Here we logged in as our root user and sent a mail to a valid local system user
     using the sendmail program, which is included in the Postfix package. For every
@@ -307,8 +420,10 @@
     log file should contain amongst other things a `from=<root@centos7.home>`, a `to=<john@centos7.home>`
     and if delivered successfully, `a status=sent` information. If no such logging
     information shows up, check the status of the Postfix service.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先测试了是否可以向系统用户发送本地邮件。在这里，我们以root用户身份登录，并使用Postfix软件包中包含的sendmail程序向有效的本地系统用户发送邮件。每当你使用sendmail发送邮件时，你应该能够在`/var/log/maillog`文件中看到一些新行出现，该文件包含邮件的状态信息和其他重要的日志文本。如果你从`root`向用户`john`发送了一条消息，并且你的服务器的FQDN是`centos7.home`，那么追加到日志文件的新输出行应该包含一些内容，例如`from=<root@centos7.home>`，`to=<john@centos7.home>`，以及如果成功交付，则包含`status=sent`信息。如果没有出现这样的日志信息，请检查Postfix服务的运行状态。
 - en: Afterwards, we displayed the FQDN for our server. It is very important to set
     this up correctly because this information will be used to authenticate the Postfix
     server when connecting to other MTAs or mail clients. MTAs check the FQDN which
@@ -332,8 +447,11 @@
     location in the next step) instead of forwarding the mails to the other MTAs (as
     we added `$mydomain` to the list of final destinations in our example, we will
     deliver all mails sent to the `centos7.home` domain).
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 随后，我们展示了我们服务器的FQDN。正确设置这一点非常重要，因为这些信息将用于在连接到其他MTA或邮件客户端时对Postfix服务器进行身份验证。MTA会检查其合作伙伴宣布的FQDN，有些甚至会拒绝连接，如果未提供或与服务器的实际DNS域名不同。在我们的初步测试之后，我们开始编辑Postfix的主配置文件，首先对其进行了备份。如前所述，默认情况下，只有位于运行Postfix服务的同一服务器上的用户才能在它们之间发送邮件，因为服务器默认仅监听环回设备。因此，我们首先启用了Postfix以监听所有可用网络接口，使用`inet_interfaces
+    = all`参数。这确保了我们网络中的所有客户端都可以连接到此服务器。接下来，我们使用`mydomain`参数设置了我们想要的Postfix域名。为了使Postfix在我们的网络中工作，此处定义的域名变量的值必须与我们的服务器网络的域名完全相同。之后，我们通过选择添加`$mydomain`参数的行来更改`mydestination`参数。这将定义我们的Postfix邮件服务器视为最终目的地的所有域。如果Postfix邮件服务器被配置为某个域的最终目的地，它将把消息投递到接收用户的本地邮箱，可以在`/var/spool/mail/<username>`（我们将在下一步更改此位置）而不是将邮件转发到其他MTA（由于我们在示例中将`$mydomain`添加到了最终目的地的列表中，我们将投递所有发送到`centos7.home`域的邮件）。
 - en: Here, you also need to remember that, by default, Postfix *trusts* all the other
     computers (SMTP clients) in the same IP subnetwork as the Postfix server is in
     to send mails to external e-mail addresses (relay mails to external MTAs) through
@@ -355,8 +473,13 @@
     to `/home/<username>/Maildir/` instead. Afterwards, we opened the standard SMTP
     protocol port in firewalld using the SMPT service, which Postfix uses for communication
     with the other MTAs or mail clients sending incoming mails through.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，您还需要记住，默认情况下，Postfix *信任*与Postfix服务器位于同一IP子网中的所有其他计算机（SMTP客户端），以便通过我们的中央服务器向外部电子邮件地址发送邮件（转发邮件到外部MTAs），这可能对您的网络策略来说过于宽松。由于电子邮件垃圾邮件是互联网上的一个持续问题，我们不希望允许任何用户滥用我们的邮件服务器发送垃圾邮件（开放中继邮件服务器会这样做；它从任何客户端接收任何内容并将其发送到任何邮件服务器），我们可以通过设置`mynetworks_style
+    = host`来进一步提高安全性，该设置仅信任并允许本地主机向外部MTAs发送邮件。减少垃圾邮件风险的另一种方法可能是使用`mynetworks`参数，您可以在其中指定允许连接到我们的邮件服务器并通过它发送电子邮件的网络或IP地址；例如，`mynetworks
+    = 127.0.0.0/8, 192.168.1.0/24`。要了解更多关于所有可用Postfix设置的信息，请参考Postfix配置参数手册，使用命令`man
+    5 postconf`。之后，我们更改了本地邮件应该存储的位置。默认情况下，所有传入邮件都发送到位于`/var/spool/mail/<username>`的中央邮箱空间。为了使本地用户能够在自己的主目录中接收邮件，我们为`home_mailbox`选项使用了`Maildir`参数，该参数将系统更改为将所有邮件发送到`/home/<username>/Maildir/`而不是。之后，我们在firewalld中打开了标准SMTP协议端口，使用Postfix用于与其他MTAs或发送传入邮件的邮件客户端通信的SMPT服务。
 - en: Postfix is already configured to start at boot, but to complete this part of
     the recipe we restarted the Postfix service for it to accept the new configuration
     settings. At this stage, the process of configuring Postfix was complete, but
@@ -368,21 +491,29 @@
     a test message and as a result you should be happy to know that everything is
     working correctly. However, if you did happen to encounter any errors, you should
     refer to the mailserver log file located at `/var/log/maillog`.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: Postfix已经配置为在启动时启动，但为了完成本节食谱，我们重新启动了Postfix服务，以便它接受新的配置设置。在这一阶段，配置Postfix的过程已经完成，但为了测试远程访问，我们需要登录到同一网络中的另一台计算机。在这里，我们安装了一个名为`swaks`的小型基于命令行的邮件客户端，它可以用来测试本地或远程SMTP服务器连接。我们通过向我们的远程Postfix邮件服务器发送邮件并提供收件人用户和我们的SMTP服务器的IP地址来运行测试。完成此操作后，您应该已收到测试消息，并且作为结果，您应该很高兴知道一切正常工作。但是，如果您碰巧遇到任何错误，则应参考位于`/var/log/maillog`的邮件服务器日志文件。
 - en: There's more...
+  id: totrans-58
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: In this section of the recipe, we will change your e-mail sender address, encrypt
     SMTP connections, and configure your BIND DNS server to include our new mailserver's
     information.
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节食谱中，我们将更改您的电子邮件发件人地址，加密SMTP连接，并配置您的BIND DNS服务器以包含我们新邮件服务器的信息。
 - en: Changing an e-mail's appearing domain name
+  id: totrans-60
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 更改电子邮件的显示域名
 - en: If an MTA sends out an e-mail, Postfix automatically appends the hostname of
     the sender's e-mail address by default, if not provided explicitly otherwise,
     which is a great feature to track down which computer in your network sent the
@@ -390,22 +521,30 @@
     got multiple computers sending out mails by a user called **root**). Often when
     sending messages to a remote MTA, you don't want to have your local hostname appear
     in the e-mail.
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果一个MTA发送电子邮件，Postfix默认会自动在发件人的电子邮件地址后附加主机名，除非另有明确说明，这是一个很好的功能，可以帮助你在本地网络中追踪哪台计算机发送了电子邮件（否则，如果你有多台计算机通过名为**root**的用户发送邮件，那么找到邮件的原始来源将会很困难）。通常在向远程MTA发送消息时，你不希望本地主机名出现在电子邮件中。
 - en: 'Here it is better to have only the domain name alone. In order to change this,
     go to the Postfix MTA you want to send mails from, open the Postfix configuration
     file `/etc/postfix/main.cf`, and enable this feature by uncommenting (removing
     the `#` sign at the beginning of the line) the following line to determine the
     origin (restart the Postfix service afterwards):'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里最好只保留域名。为了改变这一点，转到你想要从中发送邮件的Postfix MTA，打开Postfix配置文件`/etc/postfix/main.cf`，并通过取消注释（删除行首的`#`符号）以下行来启用此功能以确定原始来源（之后重新启动Postfix服务）：
 - en: '[PRE16]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: Using TLS- (SSL) encryption for SMTP communication
+  id: totrans-64
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 使用TLS-（SSL）加密进行SMTP通信
 - en: 'Even if you are running your own Postfix server in a small or private environment,
     you should always be aware that normal SMTP traffic will be sent in clear text
     over the Internet, making it possible that anyone could sniff the communication.
@@ -422,11 +561,17 @@
     name`, for example, `mailserver.centos7.home`) to do this type `make postfix-server.pem`.
     Afterwards, open the main Postfix configuration file `/etc/postfix/main.cf` with
     your favorite text editor and put in the following lines at the end of the file:'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 即使你在一个小型或私人环境中运行自己的Postfix服务器，也应该始终意识到，正常的SMTP流量将通过互联网以明文形式发送，这使得任何人都有可能嗅探通信。TLS将允许我们在服务器和邮件客户端之间建立加密的SMTP连接，这意味着整个通信将被加密，第三方无法读取。为了做到这一点，如果你还没有购买官方SSL证书或为你的域名生成一些自签名证书，请先在这里创建一个（阅读[第6章](part0061_split_000.html#1Q5IA1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第6章。提供安全")，*提供安全*中的*生成自签名证书*配方了解更多信息）。首先以root用户登录到你的服务器，然后转到标准证书位置：`/etc/pki/tls/certs`。接下来，创建一个包含证书及其嵌入的公钥以及私钥的TLS/SSL密钥对（输入你的Postfix的FQDN作为`通用名称`，例如，`mailserver.centos7.home`），为此输入`make
+    postfix-server.pem`。之后，使用你喜欢的文本编辑器打开Postfix主配置文件`/etc/postfix/main.cf`，并在文件末尾添加以下行：
 - en: '[PRE17]'
+  id: totrans-66
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: Then save and close this file. Note that setting `smtpd_tls_security_level`
     to `may` will activate TLS encryption if available in the mail client program,
     otherwise it will use an unencrypted connection. You should only set this value
@@ -440,25 +585,37 @@
     `1` we get more verbose output so we can check if the TLS connections are working.
     Some very old mail clients use an ancient port 465 for encrypting SMTP over SSL/TLS
     instead of the standard SMTP port 25.
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后保存并关闭此文件。请注意，将`smtpd_tls_security_level`设置为`may`将激活TLS加密（如果邮件客户端程序中可用），否则将使用未加密的连接。只有在您绝对确定所有向您的邮件服务器发送邮件的用户都支持此功能时，才应将此值设置为`encrypt`（这将强制在任何情况下都使用SSL/TLS加密）。如果任何发送者（外部MTA或邮件客户端）不支持此功能，连接将被拒绝。这意味着来自这些来源的电子邮件将不会被投递到您的本地邮箱。我们还为从我们的Postfix服务器到其他MTAs的可能的出站SMTP连接指定了TLS加密，使用`smtp_tls_security_level
+    = may`。通过将Postfix的客户端和服务器模式TLS日志级别设置为`1`，我们可以获得更详细的输出，以便检查TLS连接是否正常工作。一些非常古老的邮件客户端使用古老的465端口进行SSL/TLS加密的SMTP，而不是标准的25端口。
 - en: 'In order to activate this feature, open `/etc/postfix/master.cf` and search,
     then uncomment (remove `#` at the start of each line) the following lines, so
     they read:'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了激活此功能，打开`/etc/postfix/master.cf`并搜索，然后取消注释（删除每行开头的`#`）以下行，使其读作：
 - en: '[PRE18]'
+  id: totrans-69
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 'Save and close the file, and then restart Postfix. Next, we need to open the
     SMTPS port in the firewall to allow incoming connections to our server. Since
     no SMTPS firewalld rule is available in CentOS 7, we will create our own service
     file first using the `sed` utility:'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 保存并关闭文件，然后重新启动Postfix。接下来，我们需要在防火墙中打开SMTPS端口，以允许传入连接到我们的服务器。由于CentOS 7中没有可用的SMTPS
+    firewalld规则，我们将首先使用`sed`实用程序创建我们自己的服务文件：
 - en: '[PRE19]'
+  id: totrans-71
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 'You should now be able to test if an SMTPS connection can be made by using
     our `swaks` SMTP command line tool with the `-tls` parameter from a remote computer
     to our Postfix server running on IP 192.168.1.100, for example `swaks --server
@@ -466,23 +623,34 @@
     SMTP server supports TLS encryption (`STARTTLS`) and exit with an error message
     if it is not available for any reason. A working output would look as follows
     (truncated to only show you the most important lines):'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，您应该能够测试是否可以使用我们的`swaks`SMTP命令行工具，使用`-tls`参数从远程计算机到运行在IP 192.168.1.100上的Postfix服务器建立SMTPS连接，例如`swaks
+    --server 192.168.1.100 --to john@centos7.home -tls`。此命令行将测试SMTP服务器是否支持TLS加密（`STARTTLS`），并在任何原因不可用时退出并显示错误消息。正常工作的输出将如下所示（截断以仅向您显示最重要的行）：
 - en: '[PRE20]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'You can then also recheck your TLS setup by going to the main mail log file
     on your Postfix server and watching for the following line corresponding to your
     swaks test mail from the last step (your output will be different):'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，您还可以通过转到Postfix服务器上的主邮件日志文件并查找与上一步的swaks测试邮件相对应的以下行（您的输出将不同）来重新检查您的TLS设置：
 - en: '[PRE21]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: Configure BIND to use your new mailserver
+  id: totrans-76
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 配置BIND以使用您的新邮件服务器
 - en: 'After our domain-wide Postfix server has been installed and configured, we
     should now announce this new mail service in our domain using a DNS server. Refer
     to [Chapter 8](part0075_split_000.html#27GQ61-4cf34a6d07944734bb93fb0cd15cce8c
@@ -491,21 +659,32 @@
     eXchanger** (**MX**) record if you haven''t already. Then add a new MX entry to
     your BIND forward and corresponding reverse zone file. In your forward zone file,
     add the following lines for our Postfix server with the IP `192.168.1.100`:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们的域内Postfix服务器安装和配置完成后，我们现在应该使用DNS服务器在我们的域中宣布这一新的邮件服务。请参考[第8章](part0075_split_000.html#27GQ61-4cf34a6d07944734bb93fb0cd15cce8c
+    "第8章。使用FTP")，*使用FTP*，了解如何设置和配置BIND服务器，特别是如果您还没有阅读过，请阅读有关**邮件交换器**（**MX**）记录的部分。然后在您的BIND正向和相应的反向区域文件中添加一个新的MX记录。在您的正向区域文件中，为我们的Postfix服务器添加以下行，IP为`192.168.1.100`：
 - en: '[PRE22]'
+  id: totrans-78
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: 'In your reverse zone file, you could add the following lines instead:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 在您的反向区域文件中，您可以添加以下行：
 - en: '[PRE23]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: Working with Postfix
+  id: totrans-81
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用Postfix
 - en: In a previous recipe, we learned how to install and configure Postfix as our
     domain-wide e-mail server. When it comes to working with e-mails, there are lots
     of different tools and programs available for Linux and we already showed you
@@ -513,46 +692,66 @@
     Here in this recipe, we will show you how to work with one of the most commonly
     used mail utilities in Unix and Linux, called `mailx`, which has some useful features
     missing in the sendmail package for sending mails or reading your mailbox.
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 在前面的一个教程中，我们学习了如何安装和配置Postfix作为我们的域内电子邮件服务器。在处理电子邮件时，Linux提供了许多不同的工具和程序，我们已经向您展示了如何通过`sendmail`程序以及`swaks`工具发送电子邮件。在本教程中，我们将向您展示如何使用Unix和Linux中最常用的邮件工具之一，名为`mailx`，它具有`sendmail`包中缺少的一些有用功能，用于发送邮件或阅读您的邮箱。
 - en: How to do it...
+  id: totrans-83
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: We will begin this recipe by installing the `mailx` package on our server running
     our domain-wide Postfix service, as it is not available on CentOS 7 by default.
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将从在我们的服务器上安装`mailx`包开始，该服务器运行我们的域内Postfix服务，因为默认情况下CentOS 7上不提供它。
 - en: 'Begin by logging in as root and typing the following command:'
+  id: totrans-85
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先以root身份登录并键入以下命令：
 - en: '[PRE24]'
+  id: totrans-86
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'The easiest way is to use `mailx` with its standard input mode, as follows:'
+  id: totrans-87
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最简单的方法是使用`mailx`的标准输入模式，如下所示：
 - en: '[PRE25]'
+  id: totrans-88
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: 'You can also send mails from a text file. This is useful when calling the `mailx`
     command from a shell script, using multiple recipients, or attaching some files
     to the e-mail:'
+  id: totrans-89
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 您还可以从文本文件发送邮件。这在从shell脚本调用`mailx`命令时很有用，使用多个收件人，或者向电子邮件附加一些文件：
 - en: '[PRE26]'
+  id: totrans-90
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: Connecting mailx to a remote MTA
+  id: totrans-91
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 将mailx连接到远程MTA
 - en: 'One big advantage over the `sendmail` program is that we can use `mailx` to
     directly connect to and communicate with remote MTA mail servers. In order to
     test this feature, log in to another Linux-based computer, which should be in
@@ -560,15 +759,21 @@
     a mail through our Postfix server''s IP address `192.168.1.100` (we have already
     opened the incoming SMTP firewall port in a previous recipe). In our example,
     we will send a local mail to the user `john`:'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: '`mailx`相对于`sendmail`程序的一大优势是，我们可以直接连接并与远程MTA邮件服务器通信。为了测试这一功能，请登录到另一台基于Linux的计算机，该计算机应与我们的Postfix服务器位于同一网络中，安装`mailx`包，并通过我们的Postfix服务器的IP地址`192.168.1.100`发送邮件（我们已经在之前的教程中打开了传入SMTP防火墙端口）。在我们的示例中，我们将向用户`john`发送一封本地邮件：'
 - en: '[PRE27]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: Reading your local mails from the mailbox
+  id: totrans-94
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 从邮箱中阅读本地邮件
 - en: 'Not only can the `mail` `x` program send e-mail messages to any SMTP server,
     it also provides a convenient mail reader interface for your local mailbox when
     started locally on the Postfix server. If you run the mail program with `-f` specifying
@@ -579,8 +784,11 @@
     later—with POP3 or IMAP). For example, login as Linux system user `john` on the
     Postfix server, and then, to open the mail reader with your user''s local mailbox,
     type: `mailx -f ~/Maildir`.'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 不仅`mailx`程序可以将电子邮件消息发送到任何SMTP服务器，当在Postfix服务器上本地启动时，它还提供了一个方便的邮件阅读器界面，用于您的本地邮箱。如果您使用`-f`指定用户邮箱运行邮件程序，程序将开始显示所有收件箱电子邮件。但请记住，`mailx`只能在程序在同一服务器上启动时读取本地邮箱（如果您想使用它远程访问您的邮箱，则需要安装MTA访问代理，如Dovecot—稍后介绍—使用POP3或IMAP）。例如，作为Linux系统用户`john`登录到Postfix服务器，然后，要使用您的用户的本地邮箱打开邮件阅读器，请键入：`mailx
+    -f ~/Maildir`。
 - en: You will now be presented with a list of all the mail messages in your current
     inbox. If you want to read a specific mail, you need to type in its number and
     press the *Return* key. After reading it, you can type *d* followed by *Return*
@@ -589,12 +797,17 @@
     than one screen of mail messages, type *z-* (z minus) followed by *Return* to
     go back one page. Type *x* followed by *Return* to exit the program. To learn
     more, refer to the `mailx` manual (`man mailx`).
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在你将看到当前收件箱中所有邮件消息的列表。如果你想阅读特定的邮件，你需要输入它的编号并按下*回车*键。阅读后，你可以输入*d*后跟*回车*来删除它，或者输入*r*后跟*回车*来回复它。要返回到当前邮件消息概览屏幕，输入*z*后跟*回车*。如果你有超过一屏的邮件消息，输入*z-*（z减号）后跟*回车*来返回一页。输入*x*后跟*回车*来退出程序。要了解更多信息，请参考`mailx`手册（`man
+    mailx`）。
 - en: How it works...
+  id: totrans-97
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: In this recipe, we showed you how to install and use `mailx`, a program to send
     and read your Internet mail. It is based on an old Unix mail program called Berkely
     mail and provides the functionality of the POSIX `mailx` command. It should be
@@ -603,11 +816,17 @@
     you need an even more user-friendly mail reader and sender, you can check out
     mutt. Type `yum install mutt` to install it. Then type `man mutt` to read its
     manual).
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个示例中，我们展示了如何安装和使用`mailx`，这是一个用于发送和阅读互联网邮件的程序。它基于一个名为Berkely mail的旧Unix邮件程序，并提供了POSIX
+    `mailx`命令的功能。它应该安装在每个严肃的CentOS 7服务器上，因为它比`sendmail`程序有一些优势，并且理解IMAP、POP3和SMTP协议（如果你需要一个更加用户友好的邮件阅读器和发送器，你可以查看mutt。输入`yum
+    install mutt`来安装它。然后输入`man mutt`来阅读它的手册）。
 - en: So what did we learn from this experience?
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从这次经历中学到了什么？
 - en: We started this recipe by installing the `mailx` package using the YUM package
     manager on our Postfix server. It includes the `mailx` command line program which
     can be run either with the command `mail` or `mailx`. Afterwards, we ran the program
@@ -622,8 +841,10 @@
     Here we showed you how to do this by using the `echo` command to write a string
     to the Standard Input (STDIN) of `mailx,` but you can also `cat` a file content
     into it.
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先在Postfix服务器上使用YUM包管理器安装了`mailx`包。它包含了`mailx`命令行程序，可以通过`mail`或`mailx`命令运行。之后，我们使用`-s`参数运行程序，该参数指定电子邮件主题，并且还需要一个收件人电子邮件地址作为参数，可以是外部地址或本地Linux系统用户名或邮件。如果没有其他设置，`mailx`会默认它与邮件服务器在同一台服务器上运行，因此它会隐式地将邮件发送到本地主机MTA，在我们的例子中是Postfix。此外，在最简单的形式中，`mailx`启动时进入交互模式，允许你在命令行手动输入消息正文字段。这对于快速编写测试邮件很有用，但在大多数情况下，你会通过管道将内容从另一个来源输入到`mailx`。这里我们展示了如何使用`echo`命令将字符串写入`mailx`的标准输入（STDIN），但你也可以使用`cat`命令将文件内容输入到`mailx`。
 - en: One often used example is to send some kind of file output or a log file content
     of a failing command to an administrator user or system reports at a certain scheduled
     time point using `cron`. Afterwards, we saw that we could also send mails to multiple
@@ -641,12 +862,17 @@
     filter your mails in your user's `~/Maildir` directory using command-line tools,
     such as `grep`, `less,` and so on. For example, to search all new mails for the
     case-intensive keyword `PackPub.com,` type `grep -i packtpub ~/Maildir/new`.
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个常用的例子是通过`cron`在特定预定时间点将某种文件输出或失败命令的日志文件内容发送给管理员用户或系统报告。之后，我们发现可以通过逗号分隔电子邮件地址的方式向多个收件人发送邮件，并向您展示了如何使用`-a`选项在邮件中附带附件。在下一节中，我们向您展示了如何使用`-S`选项设置内部选项（`variable=value`）向远程SMTP邮件服务器发送邮件。如果您未在DNS服务器上指定标准邮件服务器，或者需要测试远程邮件服务器，这是一个非常有用的功能。最后，在最后一节中，我们向您展示了如何使用`mailx`在您的Postfix服务器上阅读本地邮箱。它具有方便的浏览功能，可以阅读、删除和回复，并为您的本地邮箱进行高级电子邮件管理。您可以通过在`mailx`交互式会话中输入命令，然后按下*回车*键来实现这一点。请记住，如果您不喜欢这种方式浏览邮件，您还可以始终使用命令行工具（如`grep`、`less`等）在用户`~/Maildir`目录中阅读或过滤邮件。例如，要搜索所有新邮件中区分大小写的`PackPub.com`关键字，请输入`grep
+    -i packtpub ~/Maildir/new`。
 - en: Delivering the mail with Dovecot
+  id: totrans-102
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用Dovecot发送邮件
 - en: In a previous recipe, you were shown how to configure Postfix as a domain-wide
     mail transport agent. As we have learned in the first recipe of this chapter,
     Postfix only understands the SMTP protocol and does a remarkable job to transport
@@ -670,228 +896,329 @@
     to configure Postfix to work with Dovecot in order to provide a basic POP3/IMAP
     and a POP3/IMAP over SSL (POP3S/IMAPS) service for our mailboxes to provide an
     industry standard e-mail service for your users across the local network.
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 在之前的操作中，您已经了解了如何将Postfix配置为域范围的邮件传输代理。正如我们在本章第一个操作中学到的，Postfix只理解SMTP协议，并且在将消息从另一个MTA或邮件用户客户端传输到其他远程邮件服务器或将邮件存储到其本地邮箱方面做得非常出色。存储或转发邮件后，Postfix的工作就结束了。Postfix只能理解和使用SMTP协议，并且不能将消息发送到除MTA之外的任何其他地方。邮件消息的任何可能的收件人现在都需要使用ssh登录到运行Postfix服务的服务器，并查看其本地邮箱目录，或者使用`mailx`本地查看其消息，以定期检查是否有新邮件。这是非常不方便的，没有人会使用这样的系统。相反，用户选择从自己的工作站访问和阅读邮件，而不是从我们的Postfix服务器所在的位置。因此，开发了另一组MTA，有时称为**访问代理**，其主要功能是将本地邮箱消息从运行Postfix守护程序的服务器同步或传输到外部邮件程序，用户可以在其中阅读这些消息。这些MTA系统使用不同于SMTP的协议，即POP3或IMAP。其中一个MTA程序是Dovecot。大多数专业服务器管理员都认为Postfix和Dovecot是完美的合作伙伴，本操作的目的是学习如何配置Postfix与Dovecot配合工作，以便为我们的邮箱提供基本的POP3/IMAP和POP3/IMAP
+    over SSL（POP3S/IMAPS）服务，为本地网络上的用户提供行业标准的电子邮件服务。
 - en: Getting ready
+  id: totrans-104
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to download additional packages. It
     is also assumed that you are working through this chapter recipe by recipe in
     the order that they appear and for this reason it is expected that Postfix has
     been configured as a domain-wide MTA.
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此操作，您需要一个具有root权限的CentOS 7操作系统的工作安装，您选择的基于控制台的文本编辑器，以及连接到互联网以下载其他软件包。还假设您按照本章中出现的顺序逐个操作，因此预计已将Postfix配置为域范围的邮件传输代理。
 - en: Note
+  id: totrans-106
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: This recipe serves as a guide to setting up a basic POP3S/IMAPS service for
     trusted users on a local network. It is not suitable for general Internet use
     without applying additional security measures.
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 本操作作为设置本地网络上受信任用户的POP3S/IMAPS服务的指南。如果不采取额外的安全措施，则不适合在互联网上使用。
 - en: How to do it...
+  id: totrans-108
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'Dovecot is not installed by default, and for this reason we must begin by installing
     the necessary packages by following the given steps:'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: Dovecot默认不安装，因此我们必须首先按照给出的步骤安装必要的软件包：
 - en: 'To start, log in as root and type in the following command:'
+  id: totrans-110
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录并输入以下命令：
 - en: '[PRE28]'
+  id: totrans-111
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: 'Once installed, enable the Dovecot service at boot by typing:'
+  id: totrans-112
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 安装后，通过输入以下命令在启动时启用Dovecot服务：
 - en: '[PRE29]'
+  id: totrans-113
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: 'Now open the main Dovecot configuration file in your favorite text editor,
     after creating a backup copy, by typing:'
+  id: totrans-114
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，在创建备份副本后，使用您喜欢的文本编辑器打开Dovecot主配置文件，方法是输入：
 - en: '[PRE30]'
+  id: totrans-115
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: 'Begin by confirming the `protocols` we want to use by activating (removing
     the `#` sign at the beginning of the line) and modifying the following line, so
     it reads:'
+  id: totrans-116
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先通过激活（删除行首的`#`符号）并修改以下行来确认我们要使用的`协议`，使其读作：
 - en: '[PRE31]'
+  id: totrans-117
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: 'Next, enable Dovecot to listen to all network interfaces instead of only the
     loopback address. Search for the line `#listen = *`, `::`, then modify it so it
     reads:'
+  id: totrans-118
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，启用Dovecot监听所有网络接口而不仅仅是回环地址。搜索行`#listen = *`, `::`，然后将其修改为：
 - en: '[PRE32]'
+  id: totrans-119
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: 'Now save and close the file in the usual way before making a backup of the
     `10-mail.conf` file and afterwards opening it in your favorite text editor:'
+  id: totrans-120
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在以通常的方式保存并关闭文件，然后在您最喜欢的文本编辑器中打开`10-mail.conf`文件之前，先对其进行备份：
 - en: '[PRE33]'
+  id: totrans-121
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: 'Scroll down and uncomment (remove `#` character) the following line, so it
     reads:'
+  id: totrans-122
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 向下滚动并取消注释（删除`#`字符）以下行，使其读作：
 - en: '[PRE34]'
+  id: totrans-123
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: 'Again, save and close the file in the usual way before creating a backup copy
     and then opening the following file in your favorite text editor:'
+  id: totrans-124
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 再次，在创建备份副本之前，以通常的方式保存并关闭文件，然后在您最喜欢的文本编辑器中打开以下文件：
 - en: '[PRE35]'
+  id: totrans-125
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: 'Start by uncommenting the following line:'
+  id: totrans-126
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先取消注释以下行：
 - en: '[PRE36]'
+  id: totrans-127
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: 'Now scroll down and amend the following line:'
+  id: totrans-128
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在向下滚动并修改以下行：
 - en: '[PRE37]'
+  id: totrans-129
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: 'Save and close the file in the usual way. Now we will allow plain text logins.
     To do this, make a backup before opening the following file:'
+  id: totrans-130
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 以通常的方式保存并关闭文件。现在我们将允许纯文本登录。为此，在打开以下文件之前先进行备份：
 - en: '[PRE38]'
+  id: totrans-131
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: 'Change the line `#disable_plaintext_auth = yes` to state:'
+  id: totrans-132
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将行`#disable_plaintext_auth = yes`更改为：
 - en: '[PRE39]'
+  id: totrans-133
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: 'Save and close the file. In our final configuration setting, we will tell Dovecot
     to use our self-signed server certificate. Just use your Postfix certificate from
     another recipe in this chapter or create a new one (otherwise skip this step):'
+  id: totrans-134
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件。在我们的最终配置设置中，我们将告诉Dovecot使用我们的自签名服务器证书。只需使用本章另一食谱中的Postfix证书或创建一个新的（否则跳过此步骤）：
 - en: '[PRE40]'
+  id: totrans-135
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: 'Open Dovecot''s standard SSL config file after making a backup of the file:'
+  id: totrans-136
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在备份文件后打开Dovecot的标准SSL配置文件：
 - en: '[PRE41]'
+  id: totrans-137
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: 'Now change the following line (`ssl = required`) to read:'
+  id: totrans-138
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在将以下行（`ssl = required`）更改为读作：
 - en: '[PRE42]'
+  id: totrans-139
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: 'Now change the following two lines to point to your server''s own certificate
     path:'
+  id: totrans-140
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在将以下两行更改为指向您服务器自己的证书路径：
 - en: '[PRE43]'
+  id: totrans-141
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: 'Save and close this file. Next, enable IMAP, IMAPS, POP3, and POP3S ports in
     our firewall to allow incoming connections on the corresponding ports. For POP3
     and IMAP, we need to specify our own `firewalld` service files, since they are
     not available in CentOS 7 by default:'
+  id: totrans-142
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭此文件。接下来，在我们的防火墙中启用IMAP、IMAPS、POP3和POP3S端口，以允许在相应端口上的传入连接。对于POP3和IMAP，我们需要指定自己的`firewalld`服务文件，因为它们在CentOS
+    7中默认不可用：
 - en: '[PRE44]'
+  id: totrans-143
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: 'Now save and close the file before starting the Dovecot service:'
+  id: totrans-144
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在在启动Dovecot服务之前保存并关闭文件：
 - en: '[PRE45]'
+  id: totrans-145
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: 'Finally, to test our new POP3/SMTP network service, just login on another computer
     in the same network and run the following commands to use `mailx` to access the
     local mailboxes on the remote Postfix server, which is provided by Dovecot with
     the different access agent protocols. In our example, we want to access the local
     mailbox of the system user `john` on our Postfix server with the IP `192.168.1.100`
     (to login to john''s account, you need his Linux user password) remotely:'
+  id: totrans-146
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，为了测试我们的新POP3/SMTP网络服务，只需在同一网络中的另一台计算机上登录并运行以下命令，使用`mailx`访问远程Postfix服务器上的本地邮箱，该服务器由Dovecot提供，使用不同的访问代理协议。在我们的示例中，我们希望使用IP
+    `192.168.1.100`远程访问系统用户`john`在Postfix服务器上的本地邮箱（要登录到john的账户，您需要他的Linux用户密码）：
 - en: '[PRE46]'
+  id: totrans-147
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: 'Next, to test the secure connections, use the following commands and type `yes`
     to confirm that the certificate is self-signed and not trusted:'
+  id: totrans-148
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，为了测试安全连接，使用以下命令并在确认证书是自签名且不受信任时输入`yes`：
 - en: '[PRE47]'
+  id: totrans-149
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: For all four commands, you should see the normal `mailx` inbox view of your
     mailbox with all your mail messages of user `john` as you would run the `mailx`
     command locally on the Postfix server to read local mails.
+  id: totrans-150
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于所有四个命令，您应该看到用户`john`邮箱的正常`mailx`收件箱视图，其中包含所有邮件消息，就像您在Postfix服务器上本地运行`mailx`命令以阅读本地邮件一样。
 - en: How it works...
+  id: totrans-151
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 工作原理...
 - en: Having successfully completed this recipe, you have just created a basic POP3/SMTP
     service, (with or without SSL encryption) for all the valid server users in your
     network, which will deliver local mails from the Postfix server to the client's
@@ -900,20 +1227,28 @@
     more that can be done to enhance the service, but you can now enable all local
     system account holders to configure their favorite e-mail desktop software to
     send and receive e-mail messages using your server.
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: 成功完成此配方后，您刚刚为网络中的所有有效服务器用户创建了一个基本的POP3/SMTP服务（带或不带SSL加密），该服务将从Postfix服务器向客户端的电子邮件程序传递本地邮件。每个本地系统用户都可以直接进行身份验证并连接到邮件服务器，并远程获取他们的邮件。当然，还有很多可以做的事情来增强服务，但现在您可以让所有本地系统账户持有者配置他们最喜欢的电子邮件桌面软件，使用您的服务器发送和接收电子邮件消息。
 - en: Note
+  id: totrans-153
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: POP3 downloads the mails from the server on a local machine and deletes them
     afterwards, whereas IMAP synchronizes your mails with your mail server without
     deleting them.
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: 与IMAP不同，POP3将邮件从服务器下载到本地机器上，并在之后删除它们，而IMAP则与邮件服务器同步您的邮件，而不删除它们。
 - en: So what did we learn from this experience?
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: 'We started the recipe by installing Dovecot. Having done this, we then enabled
     Dovecot to run at boot before proceeding to make a few brief changes to a series
     of configuration files. Starting with the need to determine which protocol will
@@ -945,83 +1280,123 @@
     connections, we needed to supply an additional `nss-config-dir` option pointing
     to our local Network Security Services database where certificates are stored
     in CentOS 7.'
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先通过安装Dovecot来开始这个配置过程。完成这一步后，我们启用了Dovecot在启动时运行，并接着对一系列配置文件进行了一些简短的修改。首先，我们需要确定在`/etc/dovecot/dovecot.cf`文件中的Dovecot配置文件中将使用哪种协议：IMAP、POP3、IMAPS和POP3S。与其他大多数基本的网络服务一样，安装后它们仅监听回环设备，因此我们启用了Dovecot以监听服务器上安装的所有网络接口。在`10-mail.conf`文件中，我们确认了Dovecot的邮箱目录位置（使用`mail_location`指令），这是Postfix在接收邮件时将它们放入的位置，以便Dovecot可以在这里找到它们并拾取。接下来，我们在`20-pop3.conf`文件中打开了POP3协议，添加了一个与各种电子邮件客户端（例如Outlook客户端）相关的修复，使用了`pop3_uidl_format`和`pop3_client_workarounds`指令。最后，我们通过在`/etc/dovecot/conf.d/10-auth.conf`文件中进行几处更改，启用了纯文本授权。请记住，在没有SSL加密的情况下使用纯文本授权与POP3或IMAP被认为是不安全的，但由于我们专注于局域网（为一组可信的服务器用户），我们不一定将此视为风险。之后，我们通过将`10-ssl.conf`文件中的`ssl`指令指向一些现有的自签名服务器证书，启用了POP3和IMAP的SSL（POP3S和IMAPS）。在这里，我们将`ssl
+    = required`更改为`ssl=yes`，以不强制客户端连接到Dovecot服务时使用SSL加密，因为我们确实希望给用户选择启用加密认证的选项，但如果他喜欢的话，不要将其作为强制性的，特别是对于较旧的客户端。之后，为了让我们的Dovecot服务可以从网络中的其他计算机访问，我们必须启用四个端口以允许POP3、IMAP、POP3S和IMAPS，即993、995、110、143，通过使用预定义的`firewalld`服务文件并为我们自己创建缺失的IMAP和POP3文件。稍后，我们启动了Dovecot服务，并使用`mailx`命令远程测试了我们新的POP3/IMAP服务器。通过提供一个`-f`文件参数，我们能够指定我们的协议和位置。对于使用SSL连接，我们需要提供一个额外的`nss-config-dir`选项，指向我们在CentOS
+    7中存储证书的本地网络安全性服务数据库。
 - en: Remember, if you happen to encounter any errors, you should always refer to
     the log file located at `/var/log/maillog`. Using plain text authorization should
     not be used in a real corporate environment and POP3/IMAP over SSL should be preferred.
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: 记住，如果你遇到任何错误，你应该始终参考位于`/var/log/maillog`的日志文件。在真正的企业环境中不应使用纯文本授权，而应首选POP3/IMAP的SSL。
 - en: There's more...
+  id: totrans-158
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: In the main recipe, you were shown how to install Dovecot in order to enable
     trusted local system users with system accounts to send and receive e-mails. These
     users will be able to use their existing username as the basis of their e-mail
     address, but by making a few enhancements you can quickly enable aliases, which
     is a way to define alternative e-mail addresses for existing users.
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: 在主配方中，你被展示了如何安装Dovecot以允许具有系统账户的受信任本地系统用户发送和接收电子邮件。这些用户将能够使用他们现有的用户名作为电子邮件地址的基础，但通过做一些改进，你可以快速启用别名，这是一种为现有用户定义替代电子邮件地址的方式。
 - en: 'To start building a list of user aliases, you should begin by opening the following
     file in your favorite text editor:'
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: 要开始构建用户别名列表，你应该首先在你的首选文本编辑器中打开以下文件：
 - en: '[PRE48]'
+  id: totrans-161
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: 'Now add your new identities to the end of the file, where `<username>` will
     be the name of the actual system account:'
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在将你的新身份添加到文件末尾，其中`<username>`将是实际系统账户的名称：
 - en: '[PRE49]'
+  id: totrans-163
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: 'For example, if you have a user called `john` who currently (only) accepts
     e-mails at `john@centos7.home`, but you want to create a new alias for `john`
     called `johnwayne@ centos7.home,` you will write:'
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，如果你有一个名为`john`的用户，目前仅接受来自`john@centos7.home`的电子邮件，但你想为`john`创建一个名为`johnwayne@centos7.home`的新别名，你将这样写：
 - en: '[PRE50]'
+  id: totrans-165
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE50]'
 - en: 'Repeat this action for all the aliases, but when you have finished remember
     to save and close the file in the usual way before running the following command:
     `newaliases`.'
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 为所有别名重复此操作，但完成后记得以通常的方式保存并关闭文件，然后运行以下命令：`newaliases`。
 - en: Setting up e-mail software
+  id: totrans-167
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 设置电子邮件软件
 - en: There are a vast number of e-mail clients on the market and by now you will
     want to start setting up your local users to be able to send and receive e-mails.
     This isn't complicated by any means, but in order to have a good starting point
     you will want to consider the following principles. The format of the e-mail address
     will be `system_username@domain-name.home`.
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 市场上有大量的电子邮件客户端，到目前为止，你将希望开始设置你的本地用户能够发送和接收电子邮件。这并不复杂，但为了有一个良好的起点，你将希望考虑以下原则。电子邮件地址的格式将是`system_username@domain-name.home`。
 - en: 'The incoming POP3 settings will be similar to the following:'
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: 传入的POP3设置将类似于以下内容：
 - en: '[PRE51]'
+  id: totrans-170
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE51]'
 - en: 'For POP3S, just change the port to `995` and use `Connection Security`: `SSL/TLS`.
     For IMAP, just change the port to `143`, and for IMAPS use port `993` and `Connection
     Security`: `SSL/TLS`.'
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于POP3S，只需将端口更改为`995`并使用`连接安全性`：`SSL/TLS`。对于IMAP，只需将端口更改为`143`，对于IMAPS使用端口`993`和`连接安全性`：`SSL/TLS`。
 - en: 'The outgoing SMTP settings will be similar to the following:'
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: 外发的SMTP设置将类似于以下内容：
 - en: '[PRE52]'
+  id: totrans-173
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE52]'
 - en: Using Fetchmail
+  id: totrans-174
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用Fetchmail
 - en: So far in this chapter, we have shown you two different forms of MTA. First
     we introduced you to the Postfix MTA, which is a transport agent used for routing
     e-mails from a mail client to or between mail servers and delivering them to the
@@ -1041,12 +1416,18 @@
     in the usual way provided by the access agent Dovecot over POP3 or IMAP. Here
     in this recipe we will show you how to install and integrate Fetchmail into your
     server running the Postfix MTA.
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，在本章中，我们已经向您展示了两种不同形式的MTA。首先，我们向您介绍了Postfix MTA，这是一种用于将电子邮件从邮件客户端路由到邮件服务器或邮件服务器之间，并使用SMTP协议将它们传递到邮件服务器上的本地邮箱的传输代理。然后，我们向您展示了另一种有时称为访问代理的MTA，Dovecot程序可以用于此目的。这将从本地Postfix邮箱向任何远程邮件客户端程序提供邮件，使用POP3或IMAP协议。现在，我们将向您介绍第三种MTA，可以称为检索代理，并解释我们将使用Fetchmail程序的目的。如今，几乎每个人都有多个电子邮件帐户，来自一个或多个不同的邮件提供商，如果您需要登录所有这些不同的Webmail站点或使用邮件程序中的不同帐户，则可能难以维护。这就是Fetchmail发挥作用的地方。它是一个程序，在您的域内Postfix邮件服务器上运行，可以从您所有不同的邮件提供商那里检索所有不同的电子邮件，并将它们传递到Postfix
+    MTA的本地用户邮箱中。一旦它们存储在适当的位置，用户就可以通过Dovecot访问代理提供的通常方式通过POP3或IMAP访问所有这些邮件。在本操作中，我们将向您展示如何安装并将Fetchmail集成到运行Postfix
+    MTA的服务器中。
 - en: Getting ready
+  id: totrans-176
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: 'To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to download additional packages. It
@@ -1060,24 +1441,34 @@
     Frequently Asked Questions (FAQ) section on their webpage. Also, for some e-mail
     addresses you need to first enable POP3 or IMAP in your e-mail settings before
     you can use Fetchmail.'
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此操作，您需要具备CentOS 7操作系统的有效安装，拥有root权限，选择一个基于控制台的文本编辑器，以及连接到互联网以便下载额外的软件包。假设您是按照本章节中出现的顺序逐个进行操作，因此预计Postfix已配置为域内邮件传输代理（MTA），Dovecot已安装以提供POP3/IMAP邮件访问服务。为了在本操作中测试Fetchmail，我们还需要注册一些外部电子邮件地址：您需要外部电子邮件服务器地址的名称和您电子邮件提供商的端口，以及您的用户登录凭据。通常，您可以在电子邮件提供商网站的常见问题（FAQ）部分找到这些信息。此外，对于某些电子邮件地址，您需要在电子邮件设置中首先启用POP3或IMAP，然后才能使用Fetchmail。
 - en: How to do it...
+  id: totrans-178
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 操作步骤...
 - en: 'Fetchmail is not installed by default and for this reason we must begin by
     installing the necessary packages. Perform the following steps:'
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于Fetchmail并非默认安装，因此我们必须首先安装必要的软件包。请按照以下步骤操作：
 - en: 'To begin, log in your mail server running your Postfix server and type:'
+  id: totrans-180
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，登录运行Postfix服务器的邮件服务器并输入：
 - en: '[PRE53]'
+  id: totrans-181
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE53]'
 - en: 'Once installed, we will log into a system''s user account for which we want
     to enable Fetchmail to download external mail from an external mail provider into
     his local mailbox, in our example it will be the system user `john`: `su - john`.
@@ -1086,30 +1477,42 @@
     and IMAP on `imap.mailhost.com` with the `username <user-name>`, here (please
     substitute your own values) is an example command line to test connecting and
     fetching mails from this provider:'
+  id: totrans-182
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 安装完成后，我们将登录到我们希望为其实现Fetchmail下载外部邮件的系统用户账户，在我们的例子中是系统用户`john`：`su - john`。现在让我们使用外部电子邮件地址配置Fetchmail。如果您的邮件提供商名为`mailhost.com`，它在`pop.mailhost.com`上运行POP3服务器，在`imap.mailhost.com`上运行IMAP，用户名为`<user-name>`，这里（请替换您自己的值）是一个示例命令行，用于测试与该提供商的连接并从中获取邮件：
 - en: '[PRE54]'
+  id: totrans-183
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE54]'
 - en: 'If you want to use IMAP with the same provider instead:'
+  id: totrans-184
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果您想使用同一提供商的IMAP：
 - en: '[PRE55]'
+  id: totrans-185
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE55]'
 - en: If the Fetchmail command was successful, all new messages will be downloaded
     from the server into your local mailbox in your user account.
+  id: totrans-186
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果Fetchmail命令成功，所有新消息将从服务器下载到您的用户账户的本地邮箱中。
 - en: How it works...
+  id: totrans-187
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: Here in this recipe, we showed you how to install and test Fetchmail, which
     provides automated mail retrieval capabilities for any user account having a local
     mailbox on our Postfix server. As a result, for a client connecting to the mail
@@ -1119,11 +1522,15 @@
     does not have good virus or spam filter. Here you download the mails from your
     host's e-mail server, then process the mails using tools such as SpamAssassin
     or ClamAV before sending mails to your clients.
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们向您展示了如何安装和测试Fetchmail，它为我们的Postfix服务器上拥有本地邮箱的任何用户账户提供了自动邮件检索功能。因此，对于使用POP3或IMAP连接到邮件服务器的客户端，通过这种方式获取的邮件看起来就像正常的入站电子邮件。Fetchmail常用于将所有不同的邮件账户合并到一个账户中，但如果您的邮件提供商没有良好的病毒或垃圾邮件过滤器，您也可以使用它。您从主机邮件服务器下载邮件，然后使用SpamAssassin或ClamAV等工具处理邮件，再将邮件发送给客户。
 - en: So what did we learn from this experience?
+  id: totrans-189
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从这次经历中学到了什么？
 - en: We began this recipe by installing the YUM package for Fetchmail. As we wanted
     to set up Fetchmail for a system user's mailbox called `john`, next we logged
     in as this user. Afterwards, we tested the Fetchmail program by running a simple
@@ -1131,22 +1538,29 @@
     successful login to your external mail provider, you need to know the exact login
     information (server address, port, username, and password, as well as the type
     of protocol) of the server before you can use Fetchmail.
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先通过安装YUM包来开始Fetchmail的配置。由于我们希望为名为`john`的系统用户邮箱设置Fetchmail，接下来我们以该用户身份登录。之后，我们通过运行一个简单的命令行来测试Fetchmail程序，以从单个邮件提供商处获取邮件。如前所述，为了成功登录到外部邮件提供商，您需要知道服务器的准确登录信息（服务器地址、端口、用户名和密码，以及协议类型）才能使用Fetchmail。
 - en: Remember that, while some e-mail providers let the user decide if he wants to
     connect securely using SSL or not, some hosters such as [gmail.com](http://gmail.com)
     only allow secure connections. This means that the example command shown here
     in this recipe is likely to fail on every major e-mail provider if they don't
     support POP3/IMAP access without SSL connections. Proceed to the next section
     in order to learn how to use Fetchmail with SSL POP3/IMAP encryption.
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，虽然一些电子邮件提供商允许用户决定是否使用SSL进行安全连接，但像[gmail.com](http://gmail.com)这样的主机仅允许安全连接。这意味着，如果主要电子邮件提供商不支持不带SSL连接的POP3/IMAP访问，本教程中所示的示例命令可能会失败。请继续阅读下一节，了解如何使用带有SSL
+    POP3/IMAP加密的Fetchmail。
 - en: You should always prefer SSL encryption if your mail provider offers both. Also,
     some providers such as [gmail.com](http://gmail.com) only let the user use their
     services via webmail and disable POP3/IMAP service features by default; you need
     to enable them in your account's settings on your provider's website (see later).
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您的邮件提供商同时提供SSL加密，您应该始终优先选择SSL加密。此外，一些提供商如[gmail.com](http://gmail.com)默认只允许用户通过webmail使用其服务，并禁用POP3/IMAP服务功能；您需要在提供商网站上的账户设置中启用它们（稍后说明）。
 - en: We specified with the `-p` parameter which mail protocol to use with the fetchmail
     command. With the `-u` parameter, we specified the user identification to be used
     when logging in to the mailserver, which is completely dependent on our e-mail
@@ -1159,27 +1573,37 @@
     you run the previous command, Fetchmail will immediately start asking the mail
     server for any mail in the inbox on the server and download anything to your user's
     local mailbox.
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们使用`-p`参数指定使用fetchmail命令的邮件协议。使用`-u`参数，我们指定了登录邮件服务器时使用的用户标识，这完全取决于我们的电子邮件提供商。对于POP3，我们应用了`-k`标志，以确保电子邮件仅从服务器获取，但永远不会被删除（这是使用POP3协议时的默认行为）。最后，我们使用`-v`来使输出更加详细，并为我们简单的测试提供更多信息。如果您的电子邮件提供商支持SSL，您还需要在Fetchmail命令中添加一个`-ssl`标志以及邮件服务器的根证书（请参阅下一节了解更多信息）。如果您运行前面的命令，Fetchmail将立即开始询问服务器上的收件箱中的任何邮件，并将任何邮件下载到用户的本地邮箱。
 - en: There's more...
+  id: totrans-194
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: In this section, we will show you how to configure Fetchmail to download all
     your e-mails from some real-life mail providers using POP3S, IMAPS, and the POP3
     and IMAP protocols to your local mailbox on the Postfix server using a configuration
     file. Finally, we will show you how to automate the Fetchmail process.
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们将向您展示如何配置Fetchmail，以便使用POP3S、IMAPS以及POP3和IMAP协议从一些实际生活中的邮件提供商下载所有电子邮件到本地邮箱的Postfix服务器上，使用配置文件。最后，我们将向您展示如何自动化Fetchmail过程。
 - en: Configuring Fetchmail with gmail.com and outlook.com e-mail accounts
+  id: totrans-196
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 配置Fetchmail与gmail.com和outlook.com电子邮件账户
 - en: 'Here we will configure the different external mail accounts which Fetchmail
     will download from: the popular [gmail.com](http://gmail.com) and [outlook.com](http://outlook.com)
     e-mail providers and a hypothetical one at `my-email-server.com`.'
+  id: totrans-197
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，我们将配置Fetchmail将从以下不同的外部邮件账户下载：流行的[gmail.com](http://gmail.com)和[outlook.com](http://outlook.com)电子邮件提供商以及假设的`my-email-server.com`。
 - en: As we learned in the main recipe that Fetchmail processes configuration options
     on the command line by default, this should not be your preferred way of using
     Fetchmail to download your mail from different mail accounts automatically. Normally
@@ -1187,12 +1611,16 @@
     time or with a `cron` job and polls a list of mail servers defined in a special
     configuration file at specific time intervals. With this you can conveniently
     configure multiple mail servers and a long list of other options.
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们在主要配方中学到的，Fetchmail默认通过命令行处理配置选项，这不应是您首选的使用Fetchmail自动从不同邮件账户下载邮件的方式。通常情况下，Fetchmail应该作为服务在后台以守护模式运行，或者使用`cron`作业在启动时运行，并按照特定的时间间隔轮询定义在特殊配置文件中的一系列邮件服务器。通过这种方式，您可以方便地配置多个邮件服务器和一长串其他选项。
 - en: Note
+  id: totrans-199
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: At the time of writing this book, for [gmail.com](http://gmail.com) to work
     with Fetchmail you need to login to the [gmail.com](http://gmail.com) website
     with your user account and first enable IMAP by going to your accounts settings
@@ -1201,8 +1629,10 @@
     login to your mail account on the webpage, then click on **options**, again click
     on **options**, then click on **Connect devices and apps with POP**, and then
     click on **enable POP**.
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: 在撰写本书时，为了使[gmail.com](http://gmail.com)与Fetchmail协同工作，您需要使用您的用户账户登录[gmail.com](http://gmail.com)网站，并首先在**转发和POP/IMAP**中启用IMAP。此外，在**我的账户**中的**登录与安全**下启用**允许安全性较低的应用程序**。对于[outlook.com](http://outlook.com)，登录到您的邮件账户网页，然后点击**选项**，再次点击**选项**，接着点击**使用POP连接设备和应用**，然后点击**启用POP**。
 - en: 'Both [outlook.com](http://outlook.com) and [gmail.com](http://gmail.com) use
     secure POP3S and IMAPS protocols, so you need to download and install the root
     certificates they are signing their SSL certificates with on your Fetchmail server
@@ -1215,11 +1645,17 @@
     certificates to verify the validity of any other SSL certificate downloaded from
     the e-mail server. Login as root on your Postfix server and install the following
     package:'
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: 无论是[outlook.com](http://outlook.com)还是[gmail.com](http://gmail.com)都使用安全的POP3S和IMAPS协议，因此您需要首先在您的Fetchmail服务器上下载并安装他们用于签署其SSL证书的根证书，以便能够使用他们的服务。在这里，我们可以安装Mozilla
+    CA证书包，该证书包由Mozilla基金会编译，并包括所有主要网站和服务使用的最常用的根服务器证书，例如我们的邮件提供商使用的证书。对于[gmail.com](http://gmail.com)，我们需要Equifax
+    Secure Certificate Authority根证书，而对于[outlook.com](http://outlook.com)，我们需要Globalsign的根服务器证书。Fetchmail需要这些根证书来验证从电子邮件服务器下载的任何其他SSL证书的有效性。以root身份登录到您的Postfix服务器并安装以下软件包：
 - en: '[PRE56]'
+  id: totrans-202
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE56]'
 - en: 'Afterwards, login as a Linux system user, for example, `john`, who we will
     create a new Fetchmail configuration file for, and who already has a local Postfix
     mailbox directory on our server located in his home directory under `~/Maildir`.
@@ -1230,44 +1666,68 @@
     line calls. For testing if your provider is using SSL encryption, you need the
     `–ssl` flag; a typical output for a mail provider who is not allowing non-SSL
     connections could be:'
+  id: totrans-203
   prefs: []
   type: TYPE_NORMAL
+  zh: 之后，以Linux系统用户身份登录，例如，`john`，我们将为其创建一个新的Fetchmail配置文件，并且他已经在我们的服务器上拥有位于其主目录下的`~/Maildir`的本地Postfix邮箱目录。在配置Fetchmail配置文件中的任何账户之前，您应该始终首先使用Fetchmail命令行测试到特定账户的连接和身份验证是否正常，如前一个配方所示。为了测试我们不同邮件提供商的账户，我们需要三个不同的命令行调用。为了测试您的提供商是否使用SSL加密，您需要`–ssl`标志；对于不允许非SSL连接的邮件提供商，典型的输出可能是：
 - en: '[PRE57]'
+  id: totrans-204
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE57]'
 - en: 'If your google and outlook username is `johndoe` at both mail providers for
     testing google with the IMAPS protocol try (enter your e-mail user''s password
     when prompted):'
+  id: totrans-205
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您的google和outlook用户名是`johndoe`，在两个邮件提供商处进行测试，对于使用IMAPS协议尝试与google进行测试（在提示时输入您的电子邮件用户的密码）：
 - en: '[PRE58]'
+  id: totrans-206
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE58]'
 - en: 'If the login was successful, the output should be similar to (truncated):'
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果登录成功，输出应该类似于（已截断）：
 - en: '[PRE59]'
+  id: totrans-208
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE59]'
 - en: 'For testing [outlook.com](http://outlook.com) with POP3S, use:'
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于使用POP3S测试[outlook.com](http://outlook.com)，请使用：
 - en: '[PRE60]'
+  id: totrans-210
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE60]'
 - en: 'On success, the output should be similar to (it has been truncated):'
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: 成功后，输出应该类似于（已截断）：
 - en: '[PRE61]'
+  id: totrans-212
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE61]'
 - en: 'For our third hypothetical e-mail account at `my-email-server.com,` we will
     use POP3 or IMAP without SSL so test it using our account:'
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于我们在`my-email-server.com`上的第三个假设电子邮件账户，我们将使用不带SSL的POP3或IMAP来测试它，使用我们的账户：
 - en: '[PRE62]'
+  id: totrans-214
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE62]'
 - en: 'You should also check if all the fetched mails from your external providers
     have been downloaded correctly. View your system user''s local mailbox using the
     `mailx` command (`mailx -f ~/Maildir`). After we successfully verify that Fetchmail
@@ -1279,25 +1739,36 @@
     names in the configuration file (and much more). Now put in the following content
     (replace `john` with your actual Linux system user, `johndoe` with your e-mail
     user account name, and `secretpass` with your actual mail password for this account):'
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: 您还应该检查从外部提供商获取的所有邮件是否已正确下载。使用`mailx`命令查看系统用户的本地邮箱（`mailx -f ~/Maildir`）。在我们成功验证Fetchmail能够连接到服务器并获取一些邮件之后，我们现在可以在系统用户的家目录中创建一个本地Fetchmail配置文件，以便自动化此过程并为多个邮件地址进行配置。首先使用`vi
+    ~/.fetchmailrc`打开一个新文件。请记住，可以在命令行上放置的所有命令也可以在配置文件中使用，只是名称略有不同（并且更多）。现在输入以下内容（将`john`替换为您的实际Linux系统用户，`johndoe`替换为您的电子邮件用户账户名，`secretpass`替换为该账户的实际邮件密码）：
 - en: '[PRE63]'
+  id: totrans-216
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE63]'
 - en: 'Save and close this file. In this file, we used the following important commands:'
+  id: totrans-217
   prefs: []
   type: TYPE_NORMAL
+  zh: 保存并关闭此文件。在此文件中，我们使用了以下重要命令：
 - en: '`postmaster`: Defines the local Linux user which will receive all the warning
     or error mails if Fetchmail runs into problems.'
+  id: totrans-218
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`postmaster`：定义将接收Fetchmail遇到问题时的所有警告或错误邮件的本地Linux用户。'
 - en: '`logfile`: Defines a filename for a log file, which can be very helpful for
     us to supervise and debug Fetchmail output when it''s running continuously over
     a long period of time in the background.'
+  id: totrans-219
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`logfile`：定义一个日志文件名，这对于我们监督和调试Fetchmail输出非常有帮助，当它在后台长时间连续运行时。'
 - en: '`poll` section: Specifies downloading mails from a specific mail provider.
     For every mail account, you will define one such poll section. As you can see
     here, the syntax is very similar to the one used on the command line when we tested
@@ -1308,16 +1779,23 @@
     flag, and we specified the `fetchall` parameter to make sure we also download
     all the e-mail messages flagged as `read` by the e-mail provider as otherwise
     Fetchmail would not download e-mails that have already been read.'
+  id: totrans-220
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`poll`部分：指定从特定邮件提供商下载邮件。对于每个邮件账户，您将定义一个这样的轮询部分。如您所见，语法与我们测试单个连接时在命令行上使用的语法非常相似。使用`proto`定义`mail`协议，`user`是邮件账户的登录用户，`password`是账户的登录密码，使用`is
+    <username> here`参数指定此邮件账户绑定到哪个本地系统用户账户。对于SSL连接，您需要`ssl`标志，我们指定了`fetchall`参数以确保我们也下载电子邮件提供商标记为`read`的所有电子邮件消息，否则Fetchmail不会下载已读邮件。'
 - en: 'Next change the permissions of the `.fetchmailrc` file because it contains
     passwords and should therefore not be read by anyone other than our own user:'
+  id: totrans-221
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来更改`.fetchmailrc`文件的权限，因为它包含密码，因此不应被我们自己的用户以外的任何人读取：
 - en: '[PRE64]'
+  id: totrans-222
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE64]'
 - en: 'Finally, we execute Fetchmail with the settings given in our configuration
     file. For testing, we will use a very verbose parameter here: `fetchmail -vvvv`.
     All the new mails from all your different e-mail providers should now be fetched,
@@ -1326,12 +1804,17 @@
     earlier. All the new mails should have been downloaded to the local mailbox, so
     in order to read your local mails you can use the `mailx` command as usual, like:
     `mail -f ~/Maildir`.'
+  id: totrans-223
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，我们使用配置文件中的设置执行Fetchmail。为了测试，我们将使用一个非常详细的参数：`fetchmail -vvvv`。现在，来自您所有不同电子邮件提供商的所有新邮件都应该被获取，因此之后您应该检查输出，看看每个服务器是否都已准备好并且可以像我们之前在命令行测试中进行的单个测试一样被轮询。所有新邮件都应该被下载到本地邮箱，因此为了阅读本地邮件，您可以像往常一样使用`mailx`命令，例如：`mail
+    -f ~/Maildir`。
 - en: Automating Fetchmail
+  id: totrans-224
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 自动化Fetchmail
 - en: As just said, we can now manually start the polling process every time we want
     by just typing in `fetchmail` on the command line. This will poll and fetch all
     new mails from the mail servers specified in our new configuration file and then
@@ -1344,8 +1827,11 @@
     will run constantly and wake up at a given time point and start the polling until
     everything finishes processing and then go back to sleep until the next interval
     has been reached.
+  id: totrans-225
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如刚才所说，我们现在可以随时手动启动轮询过程，只需在命令行中输入`fetchmail`即可。这将轮询并从我们在新配置文件中指定的邮件服务器获取所有新邮件，然后在处理每个条目一次后退出程序。现在仍然缺少的是一个机制，以特定间隔持续查询我们的邮件服务器，每当可以获取新邮件时更新我们的邮箱。您可以使用两种方法。要么将`fetchmail`命令作为cron作业运行，要么作为替代方案，您可以以守护进程模式启动Fetchmail（在您的`.fetchmailrc`配置文件中使用参数`set
+    daemon`激活它。）并将其置于后台。这样，Fetchmail将始终运行，并在给定的时间点唤醒，开始轮询，直到处理完所有内容，然后回到睡眠状态，直到下一个间隔到达。
 - en: 'As both methods are basically the same, here we will show you how to run Fetchmail
     as a cron job, which is much easier to set up because we don''t have to create
     some custom systemd service files (currently in CentOS 7 there is no `fetchmail
@@ -1353,16 +1839,25 @@
     `john`) who has a `fetchmail` configuration file, to start the e-mail server polling
     process every 10 minutes type in the following command once to register the cron
     job:'
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于两种方法基本相同，这里我们将向您展示如何将Fetchmail作为cron作业运行，这设置起来要容易得多，因为我们不必创建一些自定义的systemd服务文件（目前在CentOS
+    7中没有现成的`fetchmail systemd`服务）。对于每个系统用户（例如，`john`），他们都有一个`fetchmail`配置文件，要每10分钟启动一次电子邮件服务器轮询过程，请输入以下命令一次以注册cron作业：
 - en: '[PRE65]'
+  id: totrans-227
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE65]'
 - en: Note
+  id: totrans-228
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Do not set the Fetchmail polling cycle shorter than every 5 minutes; otherwise,
     some mail providers may block or ban you, as it just overloads their systems.
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
+  zh: 不要将Fetchmail轮询周期设置得短于每5分钟一次，否则一些邮件提供商可能会阻止或禁止您，因为它只是使他们的系统过载。

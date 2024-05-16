@@ -1,41 +1,59 @@
 - en: Chapter 14. Working with SELinux
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第14章：使用SELinux
 - en: 'In this chapter, we will cover the following topics:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将介绍以下主题：
 - en: Installing and configuring important SELinux tools
+  id: totrans-2
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安装和配置重要的SELinux工具
 - en: Working with SELinux security contexts
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用SELinux安全上下文
 - en: Working with policies
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 处理策略
 - en: Troubleshooting SELinux
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 故障排除SELinux
 - en: Introduction
+  id: totrans-6
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 引言
 - en: This chapter is a collection of recipes that strive to demystify **Security-Enhanced
     Linux** (**SELinux**), a mature technology for hardening your Linux system using
     additional security features added to the basic security system. It has been around
     for many years in the CentOS world but nevertheless is a somewhat little-known
     and confusing topic for a lot of system administrators.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章是一系列食谱的集合，旨在揭开**安全增强型Linux**（**SELinux**）的神秘面纱，这是一种成熟的技术，用于使用基本安全系统中添加的额外安全功能来强化您的Linux系统。它在CentOS世界中已经存在多年，但对于许多系统管理员来说，它仍然是一个鲜为人知且令人困惑的话题。
 - en: Installing and configuring important SELinux tools
+  id: totrans-8
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 安装和配置重要的SELinux工具
 - en: The most significant security feature of any Linux system is providing access
     control—often called **Discretionary Access Control** (**DAC**)—which allows the
     owner of an object (such as a file) to set security attributes for it (for example,
@@ -43,8 +61,10 @@
     While this old and very simple security system was sufficient in ancient UNIX
     times, it does not meet all the modern requirements of security, where servers
     and services are constantly connected to the Internet.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 任何Linux系统最重要的安全特性是提供访问控制——通常称为**自主访问控制**（**DAC**）——它允许对象（如文件）的所有者为其设置安全属性（例如，使用`chown`和`chmod`命令决定谁可以读写文件）。虽然这种古老且非常简单的安全系统在古老的UNIX时代是足够的，但它并不能满足现代安全需求，其中服务器和服务不断连接到互联网。
 - en: Often, security breaches can be initiated by attackers exploiting buggy or misconfigured
     applications and the permissions to them. This is why the SELinux has been developed.
     Its main purpose is to enhance the security of the DAC system in Linux. It does
@@ -54,77 +74,108 @@
     7 and is absolutely recommended for any server connected directly to the Internet.
     Here in this recipe, we will install additional tools and configure them to better
     manage your SELinux system, and help in the troubleshooting and monitoring process.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，安全漏洞可以由攻击者通过利用有缺陷或配置错误的应用程序及其权限来发起。这就是为什么开发了SELinux。其主要目的是增强Linux中DAC系统的安全性。它通过在DAC之上添加一个额外的安全层来实现这一点，该层称为**强制访问控制**（**MAC**），它可以为系统中的每个单独组件提供细粒度的访问控制。SELinux已经在CentOS
+    7上启用，并且对于任何直接连接到互联网的服务器都是绝对推荐的。在本食谱中，我们将安装额外的工具并配置它们，以更好地管理您的SELinux系统，并帮助进行故障排除和监控过程。
 - en: Getting ready
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges and a connection to the Internet in order
     to download additional packages. For the best learning experience, it is also
     preferred that you work through this chapter recipe by recipe, in the order that
     they appear, because they build upon each other.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成这个食谱，您需要一个具有root权限的工作CentOS 7操作系统安装，以及一个互联网连接以下载额外的软件包。为了获得最佳学习体验，建议您按照本章中出现的顺序逐个食谱地进行，因为它们是相互构建的。
 - en: How to do it...
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'Throughout this book, we already applied programs such as `semanage` from the
     `rpm` `policecoreutils-python` package to manage our SELinux environment. If you
     missed installing it, we will begin this recipe by doing so (skip step 1 if you
     have already done this before):'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本书中，我们已经应用了诸如`semanage`之类的程序，该程序来自`rpm` `policycoreutils-python`包，以管理我们的SELinux环境。如果您错过了安装它，我们将从这个食谱开始这样做（如果您之前已经这样做过，请跳过步骤1）：
 - en: 'Log in as root and install the following basic toolkit to work with SELinux:'
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 以root身份登录并安装以下基本工具包以使用SELinux：
 - en: '[PRE0]'
+  id: totrans-16
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Now, we need some additional tools that will also be needed later in the course
     of this chapter:'
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们需要一些额外的工具，这些工具在本书的后续过程中也将需要：
 - en: '[PRE1]'
+  id: totrans-18
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Next, install and configure the SELinux manual pages as they are not available
     by default on CentOS 7, but are important for getting detailed information about
     specific policies, security contexts, and SELinux Booleans later. First, we need
     to install another package:'
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，安装并配置SELinux手册页，因为它们在CentOS 7上默认不可用，但对于获取有关特定策略、安全上下文和SELinux布尔值的详细信息非常重要。首先，我们需要安装另一个软件包：
 - en: '[PRE2]'
+  id: totrans-20
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Afterwards, let''s generate all the man pages for all SELinux security context
     policies currently available on the system, and then update the manual pages database
     afterwards:'
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，让我们为系统上当前可用的所有SELinux安全上下文策略生成所有手册页，然后更新手册页数据库：
 - en: '[PRE3]'
+  id: totrans-22
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: How it works...
+  id: totrans-23
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: By following this recipe, we installed all the tools needed for our daily work
     with SELinux. Also, we generated all available SELinux manual pages, which will
     be our primary source of information when working with SELinux, and also for troubleshooting
     SELinux services later.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过遵循这个配方，我们安装了日常工作中需要的所有SELinux工具。此外，我们生成了所有可用的SELinux手册页，这将是我们使用SELinux和解决SELinux服务问题时的主要信息来源。
 - en: 'SELinux has two primary and fundamental terms that we need to understand before
     diving into the remaining recipes in this chapter: **labels** (or more technically,
     security contexts) and **policies**. From SELinux''s perspective, a Linux system
@@ -135,11 +186,15 @@
     such an object (for example, a file read), all SELinux policies available to the
     system will be searched if there is a rule for the specific label to make access
     control decisions (allow or deny the access).'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: SELinux有两个主要和基本的术语，我们需要在深入了解本章其余部分的配方之前理解：**标签**（或更技术性地，安全上下文）和**策略**。从SELinux的角度来看，Linux系统被划分为许多不同的对象。例如，对象是系统中的所有文件、进程、用户、套接字和管道。在SELinux上下文中，每个这样的对象都获得一个特殊的标签。SELinux策略是使用定义在它们上的标签控制对这些对象的访问的规则：在每次尝试访问这样的对象（例如，文件读取）时，系统上可用的所有SELinux策略都将被搜索，以查看是否有针对特定标签的规则来做出访问控制决策（允许或拒绝访问）。
 - en: So, what did we learn from this experience?
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: A lot of system administrators seem to avoid SELinux *like the plague*, and
     a trend in a lot of instruction manuals and tutorials leans towards disabling
     it altogether right after the installation of CentOS 7 because people seem to
@@ -154,12 +209,17 @@
     have emerged, and we get more of a complete set of policies to work with all the
     major applications and services available. By installing these tools, we are now
     ready to use SELinux and work with it in the most convenient way possible.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 许多系统管理员似乎避免使用SELinux*像瘟疫一样*，并且在许多指令手册和教程中倾向于在安装CentOS 7后立即完全禁用它，因为人们似乎害怕它，不想弄乱它，或者甚至感到沮丧，如果某些网络服务没有正确地从盒子中工作。通常，他们将任何连接问题归咎于SELinux，因此看起来更容易完全禁用它，而不是通过深入了解SELinux的内部工作来找出真正的原因。如果你禁用它，你将错过CentOS
+    7最重要的安全功能之一，这可以在攻击事件中防止对你的系统造成很大伤害！在过去的几年中，SELinux项目已经发展了很多，并且比以往任何时候都更容易使用。出现了许多方便的工具来使用它，并且我们得到了一套完整的工作策略来使用所有主要应用程序和服务。通过安装这些工具，我们现在准备好使用SELinux并以最方便的方式工作。
 - en: There's more...
+  id: totrans-28
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'There are three different modes when it comes to SELinux. While **Enhanced**
     is the only true mode that really protects us and enhances our server''s security,
     there are two other modes: **Disabled** and **Permissive**. Disabled means SELinux
@@ -174,8 +234,10 @@
     logs every SELinux policy violation as it would when running for real. This is
     a great way to debug the system, or to analyze the consequences that a normal,
     enforced run would have had on the system.'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 谈到SELinux时，有三种不同的模式。**增强**模式是唯一真正保护我们并增强服务器安全的模式，还有另外两种模式：**禁用**和**宽容**。禁用意味着SELinux被关闭，这在本书中永远不会成为我们的选项，并且不再进一步讨论，因为放弃这一出色的CentOS特性没有意义。当禁用时，我们的系统没有通过SELinux得到增强，我们手头唯一的保护来源是传统的DAC系统。宽容模式意味着SELinux已开启，策略规则已加载，所有对象都带有特定的安全上下文标签，但系统并不强制执行这些策略。这就像许多基于Linux的命令行工具的干运行参数：它在SELinux增强安全保护下模拟系统，并将系统记录的每个SELinux策略违规行为记录下来，就像在实际运行时一样。这是调试系统或分析正常强制运行对系统可能产生的后果的好方法。
 - en: Often, it is used if you are unsure about the impact of using SELinux. As this
     mode does not really provide us with any additional security, we will eventually
     need to switch to **Enforcing** mode if we want enhanced security! Again, this
@@ -191,21 +253,31 @@
     not survive a reboot (take a look at the `Mode from config` file in the `sestatus`
     output). To change this permanently, open the `/etc/selinux/config` file and change
     the `SELINUX=` configuration parameter.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，如果您不确定使用SELinux的影响，就会使用这种模式。由于这种模式并没有真正为我们提供任何额外的安全性，如果我们想要增强安全性，最终需要切换到**强制**模式！再次强调，这是唯一保护我们的模式；SELinux完全运行，加载了所有策略，并在系统上强制执行这些规则。您应该始终在任何系统上追求强制模式！要查看当前模式，请使用命令`sestatus`。我们可以在输出中的`当前模式`行中看到当前的SELinux模式。在CentOS
+    7上，SELinux默认处于强制模式，这再次告诉我们系统完全受到其保护。要将此模式更改为宽容模式，请使用命令`setenforce` `宽容`。现在，再次使用`sestatus`验证您的设置。要恢复更改回强制模式，请使用`setenforce
+    enforcing`。使用`setenforce`设置SELinux模式只是暂时设置，它不会在重启后存活（查看`sestatus`输出中的`配置模式`文件）。要永久更改此设置，请打开`/etc/selinux/config`文件并更改`SELINUX=`配置参数。
 - en: Working with SELinux security contexts
+  id: totrans-31
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用SELinux安全上下文
 - en: As we have learned from the previous recipe in this chapter, SELinux is all
     about labels and policies. In this recipe, we will show you how to work with these
     labels, also known as security contexts.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们从本章前一个配方中学到的，SELinux都是关于标签和策略的。在本配方中，我们将向您展示如何使用这些标签，也称为安全上下文。
 - en: Getting ready
+  id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges. It is assumed that you are working through
     this chapter recipe by recipe, so by now you should have installed the SELinux
@@ -214,75 +286,107 @@
     recipe have already been applied in other recipes in this book. We will explain
     them here in detail. For using the `netstat` program, install the package, `net-tools`,
     with the YUM package manager.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成这个配方，您需要一个具有root权限的CentOS 7操作系统的安装。假设您是通过本章的配方一步步进行的，那么到目前为止，您应该已经从前一个配方中安装了SELinux工具，并为策略生成了所有SELinux手册页。您可能会注意到，本配方中我们将向您展示的一些命令已经在本书的其他配方中应用过。我们将在这里详细解释它们。为了使用`netstat`程序，请使用YUM包管理器安装`net-tools`包。
 - en: How to do it...
+  id: totrans-35
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何做到这一点...
 - en: As we have learned in a previous recipe, almost every component in a SELinux
     system is an object (files, directories, processes, users, and so on). We will
     begin this recipe by showing you how to print out the SELinux labels for all kinds
     of objects using the `-Z` command-line flag, which a lot of basic Linux commands
     on a SELinux system support.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们在之前的配方中学到的，SELinux系统中的几乎每个组件都是一个对象（文件、目录、进程、用户等）。我们将从这个配方开始，向您展示如何使用`-Z`命令行标志打印出所有类型的对象的SELinux标签，这是SELinux系统上的许多基本Linux命令所支持的。
 - en: 'To begin with, log in as root and type the following commands to explore SELinux
     security context information from various kinds of objects:'
+  id: totrans-37
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录并键入以下命令，以从各种类型的对象探索SELinux安全上下文信息：
 - en: '[PRE4]'
+  id: totrans-38
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Next, to list all available security context names for the files and directories
     on your system, use the following command (which we filtered for `httpd` labels
     only):'
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，要列出系统上所有文件和目录的可用安全上下文名称，请使用以下命令（我们仅过滤了`httpd`标签）：
 - en: '[PRE5]'
+  id: totrans-40
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Next, let''s create a new empty file that we can work with:'
+  id: totrans-41
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，让我们创建一个我们可以操作的新空文件：
 - en: '[PRE6]'
+  id: totrans-42
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Show the current security context of the new file (should contain the type
     `user_tmp_t`):'
+  id: totrans-43
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示新文件的当前安全上下文（应包含类型`user_tmp_t`）：
 - en: '[PRE7]'
+  id: totrans-44
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Finally, change the `user_tmp_t` type to a random `samba_share_t` label name:'
+  id: totrans-45
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，将`user_tmp_t`类型更改为随机的`samba_share_t`标签名称：
 - en: '[PRE8]'
+  id: totrans-46
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Perform a test to validate your changes:'
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 执行测试以验证您的更改：
 - en: '[PRE9]'
+  id: totrans-48
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: How it works...
+  id: totrans-49
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: Here in this recipe, we have shown you how to display labels (security contexts)
     of various SELinux object types, how to show all available label names, and how
     to modify or set them on the example of the file object. Working on a SELinux
@@ -290,11 +394,15 @@
     important objects we have to manage security contexts for are files, directories,
     and processes. Also, you need to remember that every SELinux object can have only
     one security context.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本配方中，我们向您展示了如何显示各种SELinux对象类型的标签（安全上下文），如何显示所有可用标签名称，以及如何在文件对象的示例上修改或设置它们。在日常工作中，大多数管理员都会确认，我们必须管理安全上下文的最重要对象是文件、目录和进程。此外，您需要记住，每个SELinux对象只能有一个安全上下文。
 - en: So, what did we learn from this experience?
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: 'As we have have seen, we can use the `-Z` parameter on a lot of different standard
     Linux command-line tools to print out their SELinux security context. Here, we
     have shown you examples to display labels for users, files and directories, processes,
@@ -305,8 +413,10 @@
     our access control decisions in the standard SELinux type (which is called targeted),
     so we often call the whole SELinux access control process **type enforcement**
     (**TE**).'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们所见，我们可以在许多不同的标准Linux命令行工具上使用`-Z`参数来打印出它们的SELinux安全上下文。在这里，我们向您展示了显示用户、文件和目录、进程以及网络连接标签的示例，我们可以使用`id`、`ls`、`ps`和`netstat`命令查询这些标签。在这些命令的输出中，我们看到每个此类对象的安全上下文标签都由三个值组成：用户（标记为`_u`）、角色（`_r`）和类型（`_t`）。类型字段被用作标准SELinux类型（称为目标型）中所有访问控制决策的主要机制，因此我们通常将整个SELinux访问控制过程称为**类型强制**（**TE**）。
 - en: 'The other values user and role in an object''s label are only necessary for
     very advanced SELinux configurations not discussed here. In order to show all
     the available context types for use on our system, use the command-line `seinfo
@@ -322,25 +432,34 @@
     processes in the same domain (with some exceptions, such as transitions not discussed
     here). This *isolating* of processes via domains greatly reduces security risks.
     When processes get compromised, they can only damage themselves and nothing else.'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 对象标签中的其他值用户和角色对于非常高级的SELinux配置来说不是必要的，这里不讨论。为了显示我们系统上所有可用的上下文类型，使用命令行`seinfo
+    -t`。这些SELinux类型是我们需要理解的一个非常重要的概念。对于文件和目录对象，它们用于*捆绑*相互关联的对象组，并且应该受到相同的保护或处理，以便我们可以对它们定义特定的策略规则。例如，我们可以将标准邮件假脱机目录`/var/spool/mail`中的每个文件分配为类型`mail_spool_t`，然后创建一个访问规则策略，在其中我们将使用此类型来允许特定的访问。在进程的上下文中，类型值称为域。在这里，类型用于隔离和*沙盒*进程：任何具有指定域名的进程只能与同一域中的其他进程通信和交互（有一些例外，如未讨论的转换）。通过域隔离进程大大降低了安全风险。当进程被攻陷时，它们只能损害自己，而不会影响其他任何东西。
 - en: Note
+  id: totrans-54
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: SELinux is sometimes called a sandboxing system. Starting from the assumption
     that software will always have bugs, SELinux provides ways to isolate components
     of the software such that a breach in one component doesn't compromise another.
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: SELinux有时被称为沙盒系统。从软件总是会有漏洞的假设出发，SELinux提供了隔离软件组件的方法，使得一个组件的漏洞不会影响到另一个组件。
 - en: If you type in `ps -auxZ`, you will also see that there are processes that run
     in a domain called `unconfined_t`. Processes running with this label are not protected
     by SELinux policies, which means that, if an unconfined process is compromised,
     SELinux does not prevent an attacker from gaining access to other system resources
     and data. Here, security falls back to standard DAC rules, which will be your
     only and exclusive protection instead.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你输入`ps -auxZ`，你还会发现有一些进程在一个名为`unconfined_t`的域中运行。带有此标签的进程不受SELinux策略的保护，这意味着如果一个未受限的进程被攻陷，SELinux不会阻止攻击者访问其他系统资源和数据。在这里，安全性退回到标准的DAC规则，这将成为你唯一的保护措施。
 - en: After we discussed how to display security contexts, next in the recipe we showed
     you how you can set and change them. In some older documentation as well as in
     some SELinux policy `man` pages, you will encounter examples with a tool called
@@ -362,12 +481,18 @@
     up-to-date. If you want to set labels for directories instead of single files,
     you can use regular expressions; to see some examples and further command-line
     options; type `man semanage-fcontext` and browse to the `EXAMPLES` section.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们讨论了如何显示安全上下文之后，接下来的章节中我们向您展示了如何设置和更改它们。在某些较旧的文档以及某些SELinux策略的`man`页中，您会遇到使用名为`chcon`的工具的示例，该工具用于修改对象的安全上下文。使用此工具已不再推荐，您应始终将此类命令行示例替换为较新的`semanage
+    fcontext -a -t`命令行与`restorecon`程序的组合。对于`semanage`，您提供带有`-t`的标签类型名称，然后提供要为其设置标签的文件名。然后，使用`restorecon`，您提供要应用之前由`semanage`所做更改的文件名。这是因为安全上下文可以在两个级别上设置。它可以设置为策略并在文件系统级别上设置。`chcon`命令直接在文件系统上设置新上下文，而策略上下文未更改。这可能会导致问题，例如，如果您想稍后重置或更改文件系统的安全上下文（这称为重新标记）——这意味着所有安全上下文将从策略应用到文件系统，覆盖您使用`chcon`所做的所有更改。因此，最好使用`semanage`，它将写入策略，然后使用`restorecon`，它将使策略标签与文件系统同步，保持一切最新。如果您想为目录而不是单个文件设置标签，可以使用正则表达式；要查看一些示例和进一步的命令行选项，请键入`man
+    semanage-fcontext`并浏览到`EXAMPLES`部分。
 - en: Working with policies
+  id: totrans-58
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 处理策略
 - en: At the core of every SELinux system are the policies. These are the exact rules
     that define the access rights and relationships between all our objects. As we
     have learned earlier, all our system's objects have labels, and one of them is
@@ -377,12 +502,16 @@
     show you how we can query and customize SELinux policies. As you may notice, some
     of the commands have already been applied in other recipes in this book, such
     as for the `httpd` or `ftpd` daemons. Here, you will find out how policies work.
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 在每个SELinux系统的核心是策略。这些是定义我们所有对象之间的访问权限和关系的精确规则。正如我们之前所学，我们系统的所有对象都有标签，其中一个标签是类型标识符，可用于执行策略中规定的规则。在每个启用SELinux的系统中，默认情况下，除非策略规则另有定义，否则对任何对象的所有访问都是禁止的。在本节中，我们将向您展示如何查询和自定义SELinux策略。您可能会注意到，本书中其他章节的一些命令已经应用于`httpd`或`ftpd`守护进程等。在这里，您将了解策略是如何工作的。
 - en: Getting ready
+  id: totrans-60
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges. It is assumed that you are working through
     this chapter recipe by recipe, so by now you should have installed the SELinux
@@ -391,46 +520,66 @@
     is installed and running on your system (Refer to recipe *Installing Apache and
     serving web pages* in [Chapter 12](part0098_split_000.html#2TEN41-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 12. Providing Web Services"), *Providing Web Services*).
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此操作，您需要一个具有root权限的CentOS 7操作系统的正常安装。假设您是按照本章的食谱一个接一个地操作，那么到现在为止，您应该已经从之前的食谱中安装了SELinux工具，并为策略生成了所有SELinux手册页。对于我们这里的测试，我们将使用Apache
+    Web服务器，因此请确保它已在您的系统上安装并运行（请参阅[第12章](part0098_split_000.html#2TEN41-4cf34a6d07944734bb93fb0cd15cce8c
+    "第12章. 提供Web服务"），*提供Web服务*中的食谱*安装Apache并提供网页*）。
 - en: How to do it...
+  id: totrans-62
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'To begin, log in as root and type the following command to show all SELinux
     Boolean policy settings, filtered by the `httpd` daemon only:'
+  id: totrans-63
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录，并输入以下命令以显示所有SELinux布尔策略设置，仅过滤出`httpd`守护进程的设置：
 - en: '[PRE10]'
+  id: totrans-64
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'To get more information about a specific policy and its contained Booleans,
     read the corresponding man page; for example, for `httpd` type the following:'
+  id: totrans-65
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要获取有关特定策略及其包含的布尔值的更多信息，请阅读相应的手册页；例如，对于`httpd`，请输入以下内容：
 - en: '[PRE11]'
+  id: totrans-66
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'Here, within the manual pages for the `httpd` policy, we will, among others,
     find detailed information about every `httpd` policy Boolean available. For example,
     there is a section about `httpd_use_nfso`. To toggle single policy features, use
     the `setsebool` command together with the policy Boolean name with the `on` or
     `off` parameter, as shown here:'
+  id: totrans-67
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在这里，在`httpd`策略的手册页中，我们将找到有关每个可用的`httpd`策略布尔值的详细信息。例如，有一个关于`httpd_use_nfs`的部分。要切换单个策略功能，请使用`setsebool`命令以及策略布尔名称和`on`或`off`参数，如下所示：
 - en: '[PRE12]'
+  id: totrans-68
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: How it works...
+  id: totrans-69
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: Here in this recipe, we have shown you how to work with SELinux Booleans. Remember
     that SELinux follows the model of least privilege, which means that SELinux policies
     enable only the least amount of features to any object; like a system service,
@@ -441,11 +590,15 @@
     recipes in this book, we have already worked with enabling SELinux Booleans to
     add special policy features, such as enabling Apache or FTP home directories,
     which are all disabled by default.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们向您展示了如何使用SELinux布尔值。请记住，SELinux遵循最小权限模型，这意味着SELinux策略仅启用任何对象（如系统服务）执行其任务所需的最少功能，并且不会更多。这些策略功能可以通过相应的SELinux布尔值在运行时进行控制（激活或停用），而无需了解策略编写的内部工作原理。这是一个使策略可定制且极其灵活的概念。在本书的其他食谱中，我们已经通过启用SELinux布尔值来添加特殊策略功能，例如启用Apache或FTP主目录，这些功能默认情况下都是禁用的。
 - en: What did we learn from this experience?
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从这次经历中学到了什么？
 - en: 'SELinux Booleans are like switches to enable or disable certain functionalities
     in your SELinux policy. We started this recipe using the `semanage` command to
     show all Booleans available on the system, and we filtered by `http` to get only
@@ -460,45 +613,72 @@
     feature, we will use the `setsebool` command. You should remember that setting
     Booleans in this way only works until reboot. To make those settings permanent,
     use the `-p` flag, for example, `setsebool -P httpd_use_nfs on`.'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: SELinux Booleans 就像开关一样，用于启用或禁用 SELinux 策略中的某些功能。我们从这个菜谱开始使用 `semanage` 命令来显示系统上所有可用的
+    Booleans，并通过 `http` 过滤以获取仅与该服务相关的那些。如您所见，系统上有大量的 Booleans 可用，其中大多数是禁用或关闭的（最小权限模型）；要获取有关特定策略及其
+    Boolean 值的更多信息，请使用我们在之前的菜谱中安装的 SELinux 手册页。有时，找到感兴趣的特定手册页可能会很困难。使用以下命令搜索可用的手册页名称：`man
+    -k _selinux | grep http`。在我们的示例中，`httpd_selinux` 是获取有关 `httpd` 策略详细信息的正确手册页。最后，如果我们决定切换特定的
+    SELinux Boolean 功能，我们将使用 `setsebool` 命令。您应该记住，以这种方式设置 Booleans 仅在重启之前有效。要使这些设置永久生效，请使用
+    `-p` 标志，例如，`setsebool -P httpd_use_nfs on`。
 - en: There's more...
+  id: totrans-73
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'With all our knowledge from the previous recipes so far, we are now able to
     show an example where we put everything together. Here, we will see SELinux security
     contexts and policies in action for the `httpd` service. If the Apache web server
     is running, we can get the SELinux domain name of the `httpd` process using the
     following line:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 凭借我们从之前的菜谱中获得的所有知识，我们现在能够展示一个将所有内容结合起来的示例。在这里，我们将看到 `httpd` 服务的 SELinux 安全上下文和策略在行动。如果
+    Apache 网络服务器正在运行，我们可以使用以下行获取 `httpd` 进程的 SELinux 域名：
 - en: '[PRE13]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'This will show us that the `httpd` domain (type) is called `httpd_t`. To get
     the SELinux label of our web root directory, type in the following command:'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将向我们展示 `httpd` 域（类型）称为 `httpd_t`。要获取 Web 根目录的 SELinux 标签，请输入以下命令：
 - en: '[PRE14]'
+  id: totrans-77
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'This will tell us that the security context type of our Apache web server''s
     web root directory is called `httpd_sys_content_t`. Now, with this information,
     we can get the exact rules for the Apache domain from our policy:'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将告诉我们 Apache 网络服务器的 Web 根目录的安全上下文类型称为 `httpd_sys_content_t`。现在，有了这些信息，我们可以从我们的策略中获取
+    Apache 域的确切规则：
 - en: '[PRE15]'
+  id: totrans-79
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'This will print out every `httpd` policy rule available. If we filter the output
     for the `httpd_sys_content_t` context type, the following line comes up for files
     again:'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将打印出每个 `httpd` 策略规则。如果我们过滤输出以获取 `httpd_sys_content_t` 上下文类型，以下行再次出现：
 - en: '[PRE16]'
+  id: totrans-81
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'This shows us which source target context is allowed to access, which destination
     target context, and with which access rights. In our example for the Apache web
     server, this specifies that the `httpd` process that runs as domain `httpd_t`
@@ -517,78 +697,113 @@
     the `httpd_t` policy rule for file objects, because, as said before, everything
     that is not defined in a policy rule will be blocked by default. To make the file
     accessible, we will now change its security context label to the correct type:'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 这向我们展示了哪些源目标上下文被允许访问，哪些目标目标上下文，以及使用哪些访问权限。在我们的Apache Web服务器示例中，这指定了运行在域`httpd_t`上的`httpd`进程可以访问、打开和修改文件系统上所有匹配`httpd_sys_content_t`上下文类型（所有位于`/var/www/html`目录中的文件都符合这一标准）的文件。现在，为了验证这条规则，创建一个临时文件并将其移动到Apache
+    Web根目录：`echo "CentOS7 Cookbook" > /tmp/test.txt;mv /tmp/test.txt /var/www/html`。任何文件都会继承创建它的目录的安全上下文。如果我们直接在Web根目录中创建文件，或者复制文件（复制意味着创建一个副本），它将自动处于正确的`httpd_sys_content_t`上下文，并且完全可由Apache访问。但是，由于我们将文件从`/tmp`目录移动，它将保持在Web根目录中的`user_tmp_t`类型。如果你现在尝试获取URL，例如，`curl
+    http://localhost/test.txt`，你应该会收到403禁止消息。这是因为`user_tmp_t`类型不是`httpd_t`策略规则中文件对象的一部分，因为正如之前所说，默认情况下，未在策略规则中定义的一切都将被阻止。为了使文件可访问，我们现在将更改其安全上下文标签为正确的类型：
 - en: '[PRE17]'
+  id: totrans-83
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 'Now, again fetch `curl http://localhost/test.txt`, which should be accessible,
     and print out the correct text: CentOS7 cookbook.'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在再次获取`curl http://localhost/test.txt`，它应该是可访问的，并打印出正确的文本：CentOS7 cookbook。
 - en: Remember that, if you copy a file, the security context type is inherited from
     the targeted parent directory. If you want to preserve the original context when
     copying, use `cp -preserve=context` instead.
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，如果你复制一个文件，安全上下文类型会从目标父目录继承。如果你想在复制时保留原始上下文，请使用`cp -preserve=context`命令。
 - en: Troubleshooting SELinux
+  id: totrans-86
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: SELinux故障排除
 - en: In this recipe, you will learn how to troubleshoot SELinux policies, which is
     most often needed when access to some SELinux objects has been denied and you
     need to find out the reasons for it. In this recipe, we will show you how to work
     with the `sealert` tool, which will create human-readable and understandable error
     messages to work with.
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，你将学习如何排除SELinux策略故障，这通常在你被拒绝访问某些SELinux对象时需要，并且你需要找出原因。在本节中，我们将向你展示如何使用`sealert`工具，该工具将创建易于理解和处理的人类可读错误消息。
 - en: Getting ready
+  id: totrans-88
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges. It is assumed that you are working through
     this chapter recipe by recipe, so by now you should have installed the SELinux
     tools and applied the *Working with policies* recipe in this chapter, as we will
     produce some SELinux denial events in order to show you how to use the log file
     tools.
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了完成本节，你需要一个具有root权限的CentOS 7操作系统的有效安装。假设你正在逐个阅读本章节，因此到现在为止，你应该已经安装了SELinux工具并应用了本章中的*Working
+    with policies*节，因为我们将产生一些SELinux拒绝事件，以向你展示如何使用日志文件工具。
 - en: How to do it...
+  id: totrans-90
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'To begin, login as root and provoke a SELinux denial event:'
+  id: totrans-91
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 开始之前，请以root身份登录并引发一个SELinux拒绝事件：
 - en: '[PRE18]'
+  id: totrans-92
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 'Now, let''s generate an up-to-date human readable log file:'
+  id: totrans-93
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，让我们生成一个最新的人类可读日志文件：
 - en: '[PRE19]'
+  id: totrans-94
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 'In the program''s output, you will get a detailed description of any SELinux
     problem and, at the end of each so called alert, you will even find a suggested
     solution to fix the problem; in our example, the alert of interest should read
     (the output is truncated) as shown next:'
+  id: totrans-95
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在程序输出中，你将获得任何SELinux问题的详细描述，并且在每个所谓的警报末尾，你甚至会找到一个建议的解决方案来修复问题；在我们的示例中，感兴趣的警报应该读取（输出已截断），如下所示：
 - en: '[PRE20]'
+  id: totrans-96
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: How it works...
+  id: totrans-97
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: Here in this recipe, we showed you how easily one can troubleshoot SELinux problems
     using the `sealert` program. We started by provoking a SELinux deny access problem
     by creating a new file in the web root directory and assigning it a wrong context
@@ -604,5 +819,7 @@
     format. At the end of each alert message, you will also find a suggested solution
     to the problem. Please note that those are auto-generated messages and should
     always be questioned before applying.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们向您展示了如何轻松使用`sealert`程序解决SELinux问题。我们首先通过在Web根目录中创建一个新文件并为其分配错误的上下文类型值`user_tmp_t`来引发SELinux拒绝访问问题，该值在`httpd`策略中没有定义访问规则。然后，我们使用`curl`命令尝试获取网站，并在SELinux日志中实际产生**访问向量缓存**（**AVC**）拒绝消息。当SELinux拒绝访问时，会记录拒绝消息。所有SELinux日志信息的主要存储位置是审计日志文件，该文件位于`/var/log/audit/audit.log`，并且更容易阅读的拒绝消息也将写入`/var/log/messages`。在这里，我们不是手动搜索错误消息并合并两个日志文件，而是使用`sealert`工具，这是一个方便的程序，它将解析审计和消息日志文件，并以人类可读的格式呈现有价值的AVC内容。在每个警报消息的末尾，您还将找到一个针对问题的建议解决方案。请注意，这些是自动生成的消息，应在应用之前始终进行质疑。

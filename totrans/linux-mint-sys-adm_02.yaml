@@ -1,4 +1,5 @@
 - en: Chapter 2. Installing Linux Mint
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
@@ -10,32 +11,40 @@
     and developers distribute ISO live images. Also, the operating system can be installed
     through the mentioned live images. So, we''ll use one of them as an example. In
     practice, we''ll discover how to install Linux Mint on our computer.*'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
 - en: 'In this chapter we shall learn the following topics:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
 - en: Creating a bootable USB flash drive for Linux Mint
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Downloading a Linux Mint MATE 13 ISO image
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Booting Linux Mint from an USB drive
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Installing Linux Mint in a computer
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Logging in to the system
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Creating a bootable Linux Mint USB flash drive
+  id: totrans-8
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
@@ -47,6 +56,7 @@
     For simplicity we chose MATE edition for 32-bit, and we'll use that edition for
     learning how to install the operating system. However, the process for creating
     a bootable flash drive and installing Linux Mint is very similar to other editions.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
 - en: Make sure you have a USB flash drive ready to use; you'll need one with 2 GB
@@ -55,45 +65,55 @@
     It's an open source program, and you'll find versions for Mac OS X, Windows, and
     GNU/Linux. The process is identical for those three operating systems, so you
     can choose your favorite one.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
 - en: Time for action – downloading and burning the ISO image
+  id: totrans-11
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
 - en: 'For creating our bootable device we''ll need to carry out two main tasks—download
     the ISO image, and burn it using a USB flash drive:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
 - en: Open a web browser and enter the URL [http://mirror.umd.edu/linuxmint/images/stable/13/linuxmint-13-mate-dvd-32bit.iso](http://mirror.umd.edu/linuxmint/images/stable/13/linuxmint-13-mate-dvd-32bit.iso).
+  id: totrans-13
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Save the ISO image (`linuxmint-13-mate-dvd-32b.iso`) into your hard drive.
+  id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Open a new tab or page into your web browser, and enter the URL [http://unetbootin.sourceforge.net.](http://unetbootin.sourceforge.net.)
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Click on the button for your operating system.
+  id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Save the program into your hard drive then install and launch it.
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: When you launch `UNetbootin`, click on the **Diskimage** option and select the
     downloaded ISO image using the button with the **…** label.![Time for action –
     downloading and burning the ISO image](img/9601_02_01.jpg)
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Enter a number greater than `256` into the **Space used to preserve file across
     reboots (Ubuntu only):** input box. We selected **512**, which is enough for our
     purpose.
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
@@ -101,10 +121,12 @@
     on the **OK** button. The process will start taking actions such as extracting
     and copying files, and installing the boot loader. When that process finishes,
     your flash drive will be ready to use.
+  id: totrans-20
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: '*What just happened?*'
+  id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -117,6 +139,7 @@
     allow us to download Mint editions greater than 10\. So, we chose to download
     a specific version from one of the official mirrors of Linux Mint, from a web
     browser.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
 - en: It's important to fill the input box for the **Space used to preserve file across
@@ -125,13 +148,16 @@
     space is reserved for storing some persistent data, such as configuration changes,
     saved pictures, or databases. Thanks to this kind of storage—you can boot and
     use a live operating system without installing it.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
 - en: Keep in mind that the process for creating the bootable USB drive is practically
     identical on Mac OS X, Windows family, and GNU/Linux distros.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
 - en: Installing Linux Mint from a flash drive
+  id: totrans-25
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
@@ -141,30 +167,37 @@
     interesting feature for those who want to try Mint easily. However, we're going
     to learn how to install Linux Mint in a computer. Before proceeding, make sure
     your computer has at least 5.7 GB of hard drive space available.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
 - en: Time for action – booting and installing Linux Mint
+  id: totrans-27
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
 - en: Before starting, make sure you have your USB Mint bootable drive ready.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
 - en: Plug your USB drive in your computer.
+  id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Reboot your computer and select your USB as the device for booting.
+  id: totrans-30
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: After booting, you'll see a message indicating that the system will boot automatically
     in 10 seconds. Before it happens, press the *Enter* key.
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: When the booting splash window appears, leave the default option selected and
     press *Enter*.
+  id: totrans-32
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
@@ -172,67 +205,91 @@
     with a few icons. At this point, Linux Mint live is ready to use but we continue
     to click on the **Install Linux Mint** icon.![Time for action – booting and installing
     Linux Mint](img/9601_02_05.jpg)
+  id: totrans-33
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Select your language for installation on the **Welcome** dialog box, and click
     on the **Continue** button.
+  id: totrans-34
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在**欢迎**对话框中选择您的安装语言，然后点击**继续**按钮。
 - en: Now, a new window appears and it informs us about the amount of hard drive that
     is required. Click on the **Continue** button.
+  id: totrans-35
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，一个新窗口出现，它告诉我们所需的硬盘空间。点击**继续**按钮。
 - en: Linux Mint can be installed in the same computer with other operating systems.
     You can select the default option or your own partition schema. For simplicity,
     we'll erase the main hard drive choosing the default option.
+  id: totrans-36
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: Linux Mint可以与其他操作系统安装在同一台计算机上。您可以选择默认选项或您自己的分区方案。为了简单起见，我们将选择默认选项擦除主硬盘。
 - en: In the next dialog box, **Erase disk and install Linux Mint**, select the default
     hard drive, and the installation software will ask you about starting to format
     the hard drive.
+  id: totrans-37
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在下一个对话框中，**擦除磁盘并安装Linux Mint**，选择默认硬盘，安装软件将询问您是否开始格式化硬盘。
 - en: Click on the **Install Now** button and a new dialog box will be displayed for
     choosing your time zone. Click on the **Continue** button when you're ready.
+  id: totrans-38
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 点击**立即安装**按钮，将显示一个新的对话框，供您选择时区。准备好后，点击**继续**按钮。
 - en: Select your keyboard layout, and click on the **Continue** button.
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 选择您的键盘布局，然后点击**继续**按钮。
 - en: Select your username, password, and a name for your computer, then click on
     **Continue**:![Time for action – booting and installing Linux Mint](img/9601_02_12.jpg)
+  id: totrans-40
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 选择您的用户名、密码和计算机名称，然后点击**继续**：![开始行动 - 启动和安装Linux Mint](img/9601_02_12.jpg)
 - en: Now, Linux Mint will install the required files on your computer. When this
     process is completed, a dialog box will inform you about it. Finally, remove your
     USB drive and click on the **Restart Now** button.
+  id: totrans-41
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，Linux Mint将在您的计算机上安装所需的文件。当这个过程完成后，一个对话框会通知您。最后，拔出您的USB驱动器并点击**立即重启**按钮。
 - en: '*What just happened?*'
+  id: totrans-42
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*刚才发生了什么？*'
 - en: Linux Mint offers a complete and easy-to-use wizard for installing the operating
     system in a computer. A lot of tasks are executed behind the scenes, and they
     are transparent to the user.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux Mint提供了一个完整且易于使用的向导，用于在计算机上安装操作系统。许多任务在幕后执行，对用户来说是透明的。
 - en: Although the wizard asks you some information for configuring the system, Mint
     copies the files to the hard drive, detects hardware, configures `bootloader`
     and installs all the required software. The process is simple and straightforward,
     so users don't require any experience with Linux distributions for installing
     Linux Mint.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管向导会询问您一些配置系统的信息，但Mint会将文件复制到硬盘，检测硬件，配置`引导加载程序`并安装所有必需的软件。这个过程简单直接，因此用户不需要任何Linux发行版的经验来安装Linux
+    Mint。
 - en: However, the most complicated step is when you try to install Linux Mint in
     a computer with different operating systems. Despite that, the wizard will take
     decisions for you; it could be interesting to make sure what you are doing before
@@ -241,14 +298,20 @@
     not sure about this kind of data, it's better to leave that to the Linux Mint's
     installation wizard, which makes decisions for you. In that case, you can select
     the default options.
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，最复杂的步骤是在具有不同操作系统的计算机上尝试安装Linux Mint。尽管如此，向导会为您做出决策；在开始格式化硬盘之前，确保您知道自己正在做什么可能会很有趣。此外，您可以选择自定义硬盘分区方案，这对高级用户非常有用。如果您不确定这类数据，最好将决策留给Linux
+    Mint安装向导。在这种情况下，您可以选择默认选项。
 - en: Usually, Linux Mint will detect all your hardware, but sometimes computers use
     modern hardware non-compatible with Linux. Some users will find problems related
     to this fact, and solving it requires advanced knowledge about Linux kernel. However,
     in most cases, Linux Mint will detect and configure your hardware properly.
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，Linux Mint会检测到您的所有硬件，但有时计算机使用与Linux不兼容的现代硬件。一些用户会遇到与此相关的问题，解决这些问题需要对Linux内核有高级知识。然而，在大多数情况下，Linux
+    Mint会正确检测和配置您的硬件。
 - en: If you are going to work with sensible data or you simply prefer to protect
     your personal data against other users, you can choose to encrypt your home folder.
     Linux distributions use a specific folder inside the `/home` directory to store
@@ -260,9 +323,11 @@
     be used for your home folder. Nevertheless, encrypting your `home` folder is considered
     as an advanced feature, and that's the reason we didn't mark the corresponding
     checkbox.
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
 - en: Booting Linux Mint
+  id: totrans-48
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
@@ -270,37 +335,45 @@
     for the first time. You will not have to configure anything else, but you should
     learn how to boot and log in to the system before learning more things and features
     about Linux Mint.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
 - en: Time for action – booting Linux Mint for the first time
+  id: totrans-50
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
 - en: 'Booting and logging in to Linux Mint is pretty easy as you''ll discover in
     the following steps:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
 - en: Boot your computer with Linux Mint installed. Make sure any CD, DVD, or USB
     drives are not connected.
+  id: totrans-52
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Don't pulse any key; Mint will boot automatically.
+  id: totrans-53
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: After booting Linux Mint, a new dialog for logging in to the system will be
     displayed. You should enter your username and password chosen during the installation
     process:![Time for action – booting Linux Mint for the first time](img/9601_02_15.jpg)
+  id: totrans-54
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Once your username and password are entered and accepted, Linux Mint will log
     you in to the system, and you can start using it!
+  id: totrans-55
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: '*What just happened?*'
+  id: totrans-56
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -308,39 +381,48 @@
     to use Linux Mint in your computer, unless you chose **Log in automatically**
     during the installation process. If you change your mind about this feature, don't
     worry; you can select a different option after the operating system is installed.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
 - en: To make things easier, Mint developers include an automatic process for booting.
     This one doesn't display any menu or buttons, but it's good to know that the menu
     exists, and you can select different options to execute other actions, such as
     launching a memory test or booting in a special mode called **recovery** .
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
 - en: Summary
+  id: totrans-59
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
 - en: In this chapter you have learned how to create a bootable Linux Mint USB drive,
     and how to install and boot the operating system.
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
 - en: 'Specifically, we covered:'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
 - en: How to create a bootable USB drive from a downloaded Linux Mint ISO image
+  id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: How to install `Linux Mint MATE 32-bit` edition and how to boot it
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: How to log in to the system
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Now you're ready to use Linux Mint and discover its main features. In the next
     chapter we'll focus on one of the most important aspects of a Linux distribution—the
     shell.
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL

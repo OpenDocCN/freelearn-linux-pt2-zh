@@ -1,35 +1,51 @@
 - en: Chapter 15. Monitoring IT Infrastructure
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第15章。监控IT基础设施
 - en: 'In this chapter, we will cover the following topics:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将涵盖以下主题：
 - en: Installing and configuring Nagios Core
+  id: totrans-2
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安装和配置Nagios Core
 - en: Setting up NRPE on remote client hosts
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在远程客户端主机上设置NRPE
 - en: Monitoring important remote system metrics
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 监控重要的远程系统指标
 - en: Introduction
+  id: totrans-5
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 引言
 - en: 'This chapter is a collection of recipes that provide the necessary steps to
     set up the de-facto industry standard, open source network monitoring framework:
     Nagios Core.'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章是一系列食谱的集合，提供了设置行业标准的开源网络监控框架：Nagios Core的必要步骤。
 - en: Installing and configuring Nagios Core
+  id: totrans-7
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 安装和配置Nagios Core
 - en: In this recipe, we will learn how to install Nagios Core version 4, an open-source
     network monitoring system that checks whether hosts and services are working and
     notifies users when problems occur or services become unavailable. Nagios provides
@@ -38,12 +54,17 @@
     to monitor your services. (Refer to the *Monitoring important server infrastructure*
     recipe in [Chapter 3](part0034_split_000.html#10DJ41-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 3. Managing the System"), *Managing the System*.)
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们将学习如何安装Nagios Core版本4，这是一个开源网络监控系统，用于检查主机和服务是否正常工作，并在出现问题或服务不可用时通知用户。Nagios提供了监控您完整IT基础设施的解决方案，并设计了一个高度可扩展和可定制的架构，远远超出了简单的bash脚本来监控您的服务。（请参阅[第3章](part0034_split_000.html#10DJ41-4cf34a6d07944734bb93fb0cd15cce8c
+    "第3章。管理系统")，*管理系统*中的*监控重要服务器基础设施*食谱。）
 - en: Getting ready
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to facilitate the download of additional
@@ -57,84 +78,123 @@
     your Nagios server. In our example, the Nagios server has the IP address 192.168.1.7,
     and it will be able to monitor all IT infrastructure in the complete 192.168.1.0/24
     subnet.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本食谱，您需要一个具有root权限的CentOS 7操作系统的有效安装，您选择的基于控制台的文本编辑器，以及连接到互联网以便于下载额外软件包的能力。Nagios
+    Core 4在官方源中不可用，而是来自EPEL仓库；请确保在安装之前已安装它（请参阅[第4章](part0045_split_000.html#1AT9A1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第4章。使用YUM管理软件包")，*使用YUM管理软件包*中的*使用第三方仓库*食谱）。对于Nagios Web前端，您还需要一个运行的Apache2 Web服务器以及PHP（请参阅[第12章](part0098_split_000.html#2TEN41-4cf34a6d07944734bb93fb0cd15cce8c
+    "第12章。提供Web服务")，*提供Web服务*中的食谱）安装在您的Nagios服务器上。在我们的示例中，Nagios服务器的IP地址为192.168.1.7，它将能够监控整个192.168.1.0/24子网中的所有IT基础设施。
 - en: How to do it...
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'Nagios Core 4 is not available by default, so let''s begin by installing all
     the required packages:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: Nagios Core 4 默认不可用，因此让我们从安装所有必需的软件包开始：
 - en: 'To do so, log in as root and type the following command:'
+  id: totrans-13
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为此，以root身份登录并键入以下命令：
 - en: '[PRE0]'
+  id: totrans-14
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'First, create a new user account called `nagiosadmin`, which is needed for
     authentication to the web frontend (enter a secure password when prompted), then
     reload the Apache configuration:'
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，创建一个名为 `nagiosadmin` 的新用户账户，该账户用于对Web前端进行身份验证（在提示时输入一个安全的密码），然后重新加载Apache配置：
 - en: '[PRE1]'
+  id: totrans-16
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Now, add an e-mail address for the `nagiosadmin` web user to the Nagios configuration,
     open the following file, and search and replace the string, `nagios@localhost`,
     with an appropriate e-mail address you want to use here (it can be a domain-wide
     or external e-mail address):'
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，为 `nagiosadmin` 网络用户添加一个电子邮件地址到Nagios配置中，打开以下文件，并搜索并替换字符串 `nagios@localhost`，将其替换为您想要使用的适当电子邮件地址（可以是域内或外部电子邮件地址）：
 - en: '[PRE2]'
+  id: totrans-18
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Now, we need to adjust the main configuration file to activate `/etc/nagios/servers`
     as our server''s definition configuration directory, where we will put all our
     server config files later, but first, make a backup:'
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们需要调整主配置文件以激活 `/etc/nagios/servers` 作为我们服务器的定义配置目录，我们将在稍后放置所有服务器配置文件，但首先，请备份：
 - en: '[PRE3]'
+  id: totrans-20
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'We will have to create the server''s config directory that we just defined
     in the last step:'
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们需要创建在上一步中刚刚定义的服务器配置目录：
 - en: '[PRE4]'
+  id: totrans-22
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Afterwards, to check the correctness of the `nagios.cfg` syntax, run the following:'
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，要检查 `nagios.cfg` 语法的正确性，请运行以下命令：
 - en: '[PRE5]'
+  id: totrans-24
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Finally, enable the Nagios daemon on boot and start the service:'
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，在启动时启用 Nagios 守护进程并启动服务：
 - en: '[PRE6]'
+  id: totrans-26
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: How it works...
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: Here in this recipe, we have shown you how to install the Nagios Core v4 server
     (Core is the open-source version of the Nagios project) on CentOS 7\. Besides
     the main Nagios package, we also required the NRPE package and all the Nagios
@@ -148,12 +208,21 @@
     following URL (in our example, the Nagios server has the IP 192.168.1.7, so change
     accordingly), and then log in with your newly created `nagiosadmin` user account
     to `http://192.168.1.7/nagios`.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本方法中，我们向您展示了如何在 CentOS 7 上安装 Nagios Core v4 服务器（Core 是 Nagios 项目的开源版本）。除了主要的
+    Nagios 软件包外，我们还需要在我们的 Nagios 服务器上安装 NRPE 软件包和所有 Nagios 插件。安装后，我们创建了一个用户帐户，该帐户能够登录到
+    Web 前端，并在主 Nagios 配置文件中设置了该用户的电子邮件地址。接下来，我们使用 `sed` 激活了 `/etc/nagios/servers`
+    目录，我们将在本章后面的方法中将所有服务器定义文件放入该目录。然后，我们创建了目录并更改了权限以允许 Nagios 用户访问。要测试 Nagios 服务器安装，请在同一子网
+    192.168.1.0/24 中的计算机上打开 Web 浏览器，打开以下 URL（在我们的示例中，Nagios 服务器的 IP 地址为 192.168.1.7，因此请相应更改），然后使用新创建的
+    `nagiosadmin` 用户帐户登录到 `http://192.168.1.7/nagios`。
 - en: Setting up NRPE on remote client hosts
+  id: totrans-29
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 在远程客户端主机上设置 NRPE
 - en: The **Nagios Remote Plugin Executor** (**NRPE**) is a system daemon that uses
     a special client-server protocol and should be installed on all client hosts that
     you want to monitor via your Nagios server remotely. It allows the central Nagios
@@ -161,12 +230,18 @@
     overhead. Here, we will show you how to set up and configure any CentOS 7 client
     to use NRPE; if you've got more than one computer in your network that you want
     to monitor, you need to apply this recipe for every instance.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Nagios 远程插件执行器**（**NRPE**）是一个系统守护进程，使用特殊的客户端-服务器协议，并且应该安装在您希望通过远程 Nagios
+    服务器监控的所有客户端主机上。它允许中央 Nagios 服务器在这些客户端主机上安全地触发任何 Nagios 检查，并且开销很低。在这里，我们将向您展示如何设置和配置任何
+    CentOS 7 客户端以使用 NRPE；如果您在网络中有多个计算机需要监控，则需要为每个实例应用此方法。'
 - en: Getting ready
+  id: totrans-31
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a computer other than your Nagios
     server with an installation of the CentOS 7 operating system and root privileges,
     which you want to monitor, and which needs a console-based text editor of your
@@ -174,75 +249,108 @@
     the download of additional packages. This computer needs to have access to our
     Nagios server over the network. In our example, the Nagios server has the IP address
     `192.168.1.7`, and our client system will have the IP address `192.168.1.8`.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此方法，您需要一台除 Nagios 服务器之外的计算机，该计算机安装了 CentOS 7 操作系统，并具有 root 权限，您希望监控该计算机，并且需要在计算机上安装您选择的基于控制台的文本编辑器，以及连接到互联网以便下载额外的软件包。该计算机需要能够通过网络访问我们的
+    Nagios 服务器。在我们的示例中，Nagios 服务器的 IP 地址为 `192.168.1.7`，我们的客户端系统的 IP 地址为 `192.168.1.8`。
 - en: How to do it...
+  id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'Log in as root on your CentOS 7 client system and install all Nagios plugins
     as well as NRPE on it:'
+  id: totrans-34
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 以 root 用户身份登录到 CentOS 7 客户端系统，并安装所有 Nagios 插件以及 NRPE：
 - en: '[PRE7]'
+  id: totrans-35
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Afterwards, open the main NRPE config file (after making a backup first):'
+  id: totrans-36
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，打开主 NRPE 配置文件（首先进行备份）：
 - en: '[PRE8]'
+  id: totrans-37
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Find the line that starts with `allowed_hosts`, and add the IP address of your
     Nagios server separated by a comma so that we can communicate with it (in our
     example ,`192.168.1.7`, so change it accordingly); it should read as follows:'
+  id: totrans-38
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 找到以 `allowed_hosts` 开头的行，并添加 Nagios 服务器的 IP 地址，用逗号分隔，以便我们可以与之通信（在我们的示例中，`192.168.1.7`，因此请相应更改）；它应该如下所示：
 - en: '[PRE9]'
+  id: totrans-39
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'Save and close the file, then enable NRPE at boot and start it:'
+  id: totrans-40
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件，然后在启动时启用 NRPE 并启动它：
 - en: '[PRE10]'
+  id: totrans-41
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'Then enable the NRPE port in firewalld. To do this, create a new firewalld
     service file for NRPE:'
+  id: totrans-42
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 然后在firewalld中启用NRPE端口。为此，为NRPE创建一个新的firewalld服务文件：
 - en: '[PRE11]'
+  id: totrans-43
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'Finally, test the NRPE connection. To do this, log in as root on your Nagios
     server (for example, at `192.168.1.7`) and execute the following command to check
     NRPE on our client (`192.168.1.8`):'
+  id: totrans-44
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，测试NRPE连接。为此，以root用户身份登录到您的Nagios服务器（例如，在`192.168.1.7`）并执行以下命令以在我们的客户端（`192.168.1.8`）上检查NRPE：
 - en: '[PRE12]'
+  id: totrans-45
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: If the output prints out an `OK - load average` message with some numbers, you
     have successfully configured NRPE on the client!
+  id: totrans-46
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果输出显示带有数字的`OK - load average`消息，那么您已成功在客户端配置了NRPE！
 - en: How it works...
+  id: totrans-47
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 工作原理...
 - en: Here in this recipe, we have shown you how to install NRPE on your CentOS 7
     clients that you want to monitor with your Nagios servers. If you want to monitor
     other Linux systems running other distributions such as Debian or BSD, you should
@@ -260,22 +368,31 @@
     installation from our Nagios server by running a `check_nrpe` command using the
     client's IP address and a random check command (`check_load` returns the system's
     load).
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们向您展示了如何在您希望使用Nagios服务器监控的CentOS 7客户端上安装NRPE。如果您想监控运行其他发行版（如Debian或BSD）的其他Linux系统，您应该能够使用它们自己的包管理器找到适当的包，或者从源代码编译NRPE。除了NRPE包之外，我们还在这台机器上安装了所有Nagios插件，因为NRPE只是在客户端计算机上运行监控命令的守护进程，但它不包括这些插件。安装后，NRPE默认只监听本地主机（`127.0.0.1`）连接，因此我们随后不得不将其更改为也监听来自我们的Nagios服务器的连接，该服务器使用IP
+    `192.168.1.7`，在主NRPE配置文件中使用`allowed_hosts`指令。NRPE端口`5666`需要来自Nagios服务器的传入连接，因此我们还需要在防火墙中打开它。由于默认情况下没有firewalld规则可用，我们创建了自己的新服务文件并将其添加到当前的firewalld配置中。之后，我们可以通过在我们的Nagios服务器上运行一个`check_nrpe`命令来测试我们的NRPE安装，使用客户端的IP地址和一个随机检查命令（`check_load`返回系统的负载）。
 - en: Monitoring important remote system metrics
+  id: totrans-49
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 监控重要的远程系统指标
 - en: The Nagios plugin `check_multi` is a convenient tool to execute multiple checks
     within a single check command that generates an overall returned state and output
     from it. Here in this recipe, we will show you how to set it up and use it to
     quickly monitor a list of important system metrics on your clients.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: Nagios插件`check_multi`是一个便捷的工具，可以在单个检查命令中执行多个检查，并生成一个总体返回状态和输出。在本食谱中，我们将向您展示如何设置它并使用它快速监控客户端上的一系列重要系统指标。
 - en: Getting ready
+  id: totrans-51
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: It is assumed that you've gone through this chapter recipe by recipe, therefore
     by now, you should have a Nagios server running and another client computer that
     you want to monitor, which can already be accessed via its NRPE service externally
@@ -284,177 +401,254 @@
     editor of your choice installed on it, as well as a connection to the Internet
     in order to facilitate the download of additional packages. The client computer
     will have the IP address `192.168.1.8`.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设您已经按照本章的食谱逐一操作，因此到现在为止，您应该已经有一个运行的Nagios服务器和另一个您想要监控的客户端计算机，该计算机已经可以通过其NRPE服务从外部被我们的Nagios服务器访问。您想要监控的这台客户端计算机需要安装CentOS
+    7操作系统，具有root权限，并在其上安装了您选择的基于控制台的文本编辑器，以及连接到互联网以便下载额外的软件包。客户端计算机将具有IP地址`192.168.1.8`。
 - en: How to do it...
+  id: totrans-53
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'The `check_multi` Nagios plugin is available from Github, so we will begin
     this recipe to install the `git` program by downloading it:'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '`check_multi` Nagios插件可在Github上获得，因此我们将开始本食谱以安装`git`程序，方法是下载它：'
 - en: 'Log in as root on your client computer and install Git if not done already:'
+  id: totrans-55
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 以root用户身份登录到客户端计算机，如果尚未安装Git，请进行安装：
 - en: '[PRE13]'
+  id: totrans-56
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'Now, download and install the `check_multi` plugin by compiling it from the
     source:'
+  id: totrans-57
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，通过从源代码编译来下载并安装`check_multi`插件：
 - en: '[PRE14]'
+  id: totrans-58
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'Next, we install another very useful plugin called `check_mem`, which is not
     available in the CentOS 7 Nagios plugin `rpms`:'
+  id: totrans-59
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们安装另一个非常有用的插件，名为`check_mem`，该插件在CentOS 7 Nagios插件`rpms`中不可用。
 - en: '[PRE15]'
+  id: totrans-60
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'Next, let''s create a `check_multi` command file that will contain all your
     desired client checks that you want to combine in a single run; open the following
     file:'
+  id: totrans-61
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，让我们创建一个`check_multi`命令文件，该文件将包含您希望在单次运行中组合的所有客户端检查；打开以下文件：
 - en: '[PRE16]'
+  id: totrans-62
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'Put in the following content:'
+  id: totrans-63
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 插入以下内容：
 - en: '[PRE17]'
+  id: totrans-64
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 'Next, test out the command file that we just created in the last step using
     the following commandline:'
+  id: totrans-65
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，使用以下命令行测试我们上一步创建的命令文件：
 - en: '[PRE18]'
+  id: totrans-66
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 'If everything is correct, it should print out the results of your five plugin
     checks and an overall result, for example, `OK - 5 plugins checked`. Next, we
     will install this new command in the NRPE service on our client so that the Nagios
     server is able to execute it remotely by calling its name. Open the NRPE configuration
     file:'
+  id: totrans-67
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果一切正确，它应该打印出您的五个插件检查的结果和一个总体结果，例如，`OK - 5 plugins checked`。接下来，我们将在客户端的NRPE服务上安装这个新命令，以便Nagios服务器能够通过调用其名称远程执行它。打开NRPE配置文件：
 - en: '[PRE19]'
+  id: totrans-68
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 'Add the following line to the end of the file right below the last `# command`
     line to expose a new command called `check_multicmd` to our Nagios server:'
+  id: totrans-69
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在文件的末尾，紧接在最后一个`# command`行下面添加以下行，以便向我们的Nagios服务器公开一个名为`check_multicmd`的新命令。
 - en: '[PRE20]'
+  id: totrans-70
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'Finally, let''s reload NRPE:'
+  id: totrans-71
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，让我们重新加载NRPE：
 - en: '[PRE21]'
+  id: totrans-72
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 'Now, let''s check whether we can execute our new `check_multicmd` command that
     we defined in the last step from our Nagios server. Log in as root and type the
     following command (change the IP address of your client, `192.168.1.8`, appropriately):'
+  id: totrans-73
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，让我们检查是否可以从我们的Nagios服务器执行我们在上一步中定义的新的`check_multicmd`命令。以root身份登录并输入以下命令（根据您的客户端适当更改IP地址`192.168.1.8`）：
 - en: '[PRE22]'
+  id: totrans-74
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: 'If the output is the same as running it locally on the client itself (take
     a look at the former step), we can successfully execute remote NRPE commands on
     our client through our server, so let''s define the command on our Nagios server
     system for real so that we can start using it within the Nagios system. Open the
     following file:'
+  id: totrans-75
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果输出与在客户端本地运行它（查看前一步）相同，我们可以成功地通过我们的服务器在客户端上执行远程NRPE命令，因此让我们在我们的Nagios服务器系统上定义该命令，以便我们可以在Nagios系统中开始使用它。打开以下文件：
 - en: '[PRE23]'
+  id: totrans-76
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 'Put in the following content at the end of the file to define a new command
     called `check_nrpe_multi`, which we can use in any service definition:'
+  id: totrans-77
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在文件末尾插入以下内容，以定义一个名为`check_nrpe_multi`的新命令，我们可以在任何服务定义中使用它：
 - en: '[PRE24]'
+  id: totrans-78
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'Next, we will define a new server definition for the client that we want to
     monitor on our Nagios server (give the config file an appropriate name, for example,
     its domain name or IP address):'
+  id: totrans-79
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们将在Nagios服务器上为我们要监控的客户端定义一个新的服务器定义（为配置文件指定一个合适的名称，例如，其域名或IP地址）：
 - en: '[PRE25]'
+  id: totrans-80
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: 'Put in the following content, which will define a new host with its service,
     using our new Nagios command that we just created:'
+  id: totrans-81
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 插入以下内容，这将定义一个带有其服务的新主机，使用我们刚刚创建的新Nagios命令：
 - en: '[PRE26]'
+  id: totrans-82
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: 'Finally, we need to configure all persons who should get notification e-mails
     for our new service in case of errors. Open the following file:'
+  id: totrans-83
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，我们需要配置所有应该在出现错误时为我们的新服务接收通知电子邮件的人员。打开以下文件：
 - en: '[PRE27]'
+  id: totrans-84
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'Put in the following content at the end of the file:'
+  id: totrans-85
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在文件末尾插入以下内容：
 - en: '[PRE28]'
+  id: totrans-86
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: 'Now, restart the Nagios service:'
+  id: totrans-87
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，重新启动Nagios服务：
 - en: '[PRE29]'
+  id: totrans-88
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: How it works...
+  id: totrans-89
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 工作原理...
 - en: 'We started this recipe by installing the `check_multi` and `check_mem` plugins
     from their author''s Github repositories; they are plain command-line tools. Nagios
     performs checks by running such external commands, and it uses the return code
@@ -477,8 +671,11 @@
     like. There are also a number of command file examples shipped with the `check_multi`
     plugin, which are very useful for learning, so please have a look at the directory:
     `/usr/local/nagios/etc/check_multi/*.cmd`.'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先从作者的Github仓库安装了`check_multi`和`check_mem`插件，它们是简单的命令行工具。Nagios通过运行这些外部命令来执行检查，并使用返回代码以及命令的输出来判断检查是否成功。Nagios拥有一个非常灵活的架构，可以通过插件、附加组件和扩展轻松扩展。所有类型的扩展都可以在[https://exchange.nagios.org/](https://exchange.nagios.org/)找到一个中心位置进行搜索。接下来，我们为`check_multi`添加了一个新的命令文件，其中我们放置了五个不同的系统`check_`命令。这些检查作为定制监控需求的一个起点，将检查系统负载、内存消耗、系统用户、可用空间和进程。所有可用的`check_`命令都可以在`/usr/lib64/nagios/plugins/check_*`找到。正如您在我们的命令文件中看到的，这些`check_`命令的参数可能非常不同，解释它们所有超出了本食谱的范围。它们中的大多数用于设置阈值以达到某个状态，例如`CRITICAL`状态。要获取有关特定命令的更多信息，请使用命令的`--help`参数。例如，要了解`check_load
+    -w 5,4,3 -c 10,8,6`命令中的所有参数的作用，请使用`run /usr/lib64/nagios/plugins/check_load --help`。您可以轻松地从现有插件中添加任意数量的新检查命令到我们的命令文件，或者如果您愿意，可以下载并安装任何新命令。`check_multi`插件还附带了许多命令文件示例，对于学习非常有用，因此请查看目录：`/usr/local/nagios/etc/check_multi/*.cmd`。
 - en: 'Afterwards, we checked the correctness of our new command file that we just
     created by dry-running it as an `-f` parameter from the `check_multi` command
     locally on the client. In its output, you will find all the single outputs as
@@ -495,8 +692,10 @@
     `192.168.1.8.cfg`. It contains exactly one host definition and one or multiple
     service definitions, which are linked by the value of `host_name` of the host
     with the `host_name` value in your service definitions.'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 之后，我们通过在客户端本地以`-f`参数从`check_multi`命令干运行来检查我们刚刚创建的新命令文件的正确性。在其输出中，您将找到所有单个输出的信息，就像您单独运行这五个命令一样。如果单个检查失败，整个`check_multi`也会失败。接下来，我们在NRPE配置文件中定义了一个新的NRPE命令`check_multicmd`，然后可以从Nagios服务器执行，我们在下一步从Nagios服务器进行了测试。为了测试成功，我们期望得到与从客户端本身调用命令时相同的结果。之后，我们在Nagios服务器上的`commands.cfg`中定义了这个命令，以便我们可以在任何服务定义中通过引用命令名称`check_nrpe_multi`来重复使用它。接下来，我们创建了一个以IP地址命名的新服务器文件（只要它在目录中具有`.cfg`扩展名，您可以将其命名为任何您喜欢的名称），我们想要监控的客户端的IP地址为：`192.168.1.8.cfg`。它包含恰好一个主机定义和一个或多个服务定义，这些定义通过主机定义中的`host_name`值与服务定义中的`host_name`值相关联。
 - en: In the host definition, we defined a `contact_groups` contact that links to
     the `contacts.cfg` file's contact group and contact entry. These will be used
     to send notification e-mails if the checked service has any errors. The most important
@@ -505,8 +704,11 @@
     the `normal_check_interval` is important as it defines how often the service will
     be checked under normal conditions. Here, it gets checked every 15 minutes. You
     can add as many service definitions to a host as you like.
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 在主机定义中，我们定义了一个`contact_groups`联系人，该联系人与`contacts.cfg`文件中的联系人组和联系人条目相关联。如果检查的服务出现任何错误，这些将用于发送通知电子邮件。服务定义中最重要的值是`check_command
+    check_nrpe_multi`行，它执行我们之前创建的唯一检查命令。此外，`normal_check_interval`也很重要，因为它定义了在正常情况下服务检查的频率。在这里，它每15分钟检查一次。您可以向主机添加任意数量的服务定义。
 - en: Now, go to your Nagios web frontend to inspect your new host and service. Here,
     go to the **Hosts** tab, where you will see the new host, **host1**, that you
     defined in this recipe, and it should give you information about its status. If
@@ -514,11 +716,16 @@
     It should show the **Status** as **Pending**, **OK,** or **CRITICAL**, depending
     on the success of the single checks. If you click on its **check_nrpe_multi**
     link, you will see details about the checks.
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，请前往您的Nagios网页前端检查您新添加的主机和服务。在这里，点击**主机**标签，您将看到在本教程中定义的新主机**host1**，它应该会提供有关其状态的信息。如果您点击**服务**标签，您将看到**check_nrpe_multi**服务。它应该显示**状态**为**待定**、**正常**或**关键**，这取决于单个检查的成功与否。如果您点击其**check_nrpe_multi**链接，您将看到有关检查的详细信息。
 - en: Here in this chapter, we could only show you the very basics of Nagios, and
     there is always more to learn, so please read the official Nagios Core documentation
     at [https://www.nagios.org](https://www.nagios.org), or check out the book *Learning
     Nagios 4*, *Packt Publishing*, by Wojciech Kocjan.
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们只能向您展示Nagios的基础知识，但总有更多需要学习的内容，因此请阅读官方Nagios Core文档，网址为[https://www.nagios.org](https://www.nagios.org)，或者查看书籍《Learning
+    Nagios 4》，*Packt Publishing*，作者Wojciech Kocjan。
