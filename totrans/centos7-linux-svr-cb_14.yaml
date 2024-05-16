@@ -1,0 +1,608 @@
+- en: Chapter 14. Working with SELinux
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'In this chapter, we will cover the following topics:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing and configuring important SELinux tools
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Working with SELinux security contexts
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Working with policies
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Troubleshooting SELinux
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Introduction
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This chapter is a collection of recipes that strive to demystify **Security-Enhanced
+    Linux** (**SELinux**), a mature technology for hardening your Linux system using
+    additional security features added to the basic security system. It has been around
+    for many years in the CentOS world but nevertheless is a somewhat little-known
+    and confusing topic for a lot of system administrators.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing and configuring important SELinux tools
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The most significant security feature of any Linux system is providing access
+    control—often called **Discretionary Access Control** (**DAC**)—which allows the
+    owner of an object (such as a file) to set security attributes for it (for example,
+    deciding who can read or write to a file using the `chown` and `chmod` commands).
+    While this old and very simple security system was sufficient in ancient UNIX
+    times, it does not meet all the modern requirements of security, where servers
+    and services are constantly connected to the Internet.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Often, security breaches can be initiated by attackers exploiting buggy or misconfigured
+    applications and the permissions to them. This is why the SELinux has been developed.
+    Its main purpose is to enhance the security of the DAC system in Linux. It does
+    so by adding an additional security layer on top of DAC, which is called **Mandatory
+    Access Control** (**MAC**), and which can provide fine-grain access control to
+    every single component of your system. SELinux has already been enabled on CentOS
+    7 and is absolutely recommended for any server connected directly to the Internet.
+    Here in this recipe, we will install additional tools and configure them to better
+    manage your SELinux system, and help in the troubleshooting and monitoring process.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges and a connection to the Internet in order
+    to download additional packages. For the best learning experience, it is also
+    preferred that you work through this chapter recipe by recipe, in the order that
+    they appear, because they build upon each other.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Throughout this book, we already applied programs such as `semanage` from the
+    `rpm` `policecoreutils-python` package to manage our SELinux environment. If you
+    missed installing it, we will begin this recipe by doing so (skip step 1 if you
+    have already done this before):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Log in as root and install the following basic toolkit to work with SELinux:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, we need some additional tools that will also be needed later in the course
+    of this chapter:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, install and configure the SELinux manual pages as they are not available
+    by default on CentOS 7, but are important for getting detailed information about
+    specific policies, security contexts, and SELinux Booleans later. First, we need
+    to install another package:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Afterwards, let''s generate all the man pages for all SELinux security context
+    policies currently available on the system, and then update the manual pages database
+    afterwards:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: By following this recipe, we installed all the tools needed for our daily work
+    with SELinux. Also, we generated all available SELinux manual pages, which will
+    be our primary source of information when working with SELinux, and also for troubleshooting
+    SELinux services later.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'SELinux has two primary and fundamental terms that we need to understand before
+    diving into the remaining recipes in this chapter: **labels** (or more technically,
+    security contexts) and **policies**. From SELinux''s perspective, a Linux system
+    is divided into a number of different objects. Objects, for example, are all files,
+    processes, users, sockets, and pipes in a system. In a SELinux context, every
+    such object gets a special label. SELinux policies are the rules to control access
+    to these objects using the labels defined on them: On every access attempt to
+    such an object (for example, a file read), all SELinux policies available to the
+    system will be searched if there is a rule for the specific label to make access
+    control decisions (allow or deny the access).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: So, what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: A lot of system administrators seem to avoid SELinux *like the plague*, and
+    a trend in a lot of instruction manuals and tutorials leans towards disabling
+    it altogether right after the installation of CentOS 7 because people seem to
+    fear it and don't want to mess with it, or are even frustrated if some networking
+    service is not working correctly out-of-the-box. Often, they blame SELinux for
+    any connection problems, so it often looks easier to disable it altogether rather
+    than find out the true reasons by delving into the inner workings of SELinux.
+    If you are disabling it, you are missing out one of the most critical security
+    features of CentOS 7 that can prevent a lot of harm to your system in the event
+    of an attack! In the last few years, the SELinux project has evolved very much
+    and is easier to use than ever. A lot of convenient tools for working with it
+    have emerged, and we get more of a complete set of policies to work with all the
+    major applications and services available. By installing these tools, we are now
+    ready to use SELinux and work with it in the most convenient way possible.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'There are three different modes when it comes to SELinux. While **Enhanced**
+    is the only true mode that really protects us and enhances our server''s security,
+    there are two other modes: **Disabled** and **Permissive**. Disabled means SELinux
+    is turned off, which will never be an option for us in this book and is not discussed
+    any further as it does not make sense to get rid of this fantastic CentOS feature.
+    When disabled, our system is not enhanced by SELinux and the good old DAC system
+    is the only source of protection we have at hand. Permissive mode means SELinux
+    is turned on, the policy rules are loaded, and all objects are labeled with a
+    specific security context, but the system is not enforcing these policies. This
+    is like a dry-run parameter that a lot of Linux based command-line tools have:
+    it simulates the system under SELinux enhanced security protection, and the system
+    logs every SELinux policy violation as it would when running for real. This is
+    a great way to debug the system, or to analyze the consequences that a normal,
+    enforced run would have had on the system.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Often, it is used if you are unsure about the impact of using SELinux. As this
+    mode does not really provide us with any additional security, we will eventually
+    need to switch to **Enforcing** mode if we want enhanced security! Again, this
+    is the only mode that protects us; SELinux is fully running with all the policies
+    loaded and is enforcing these rules on the system. You should always aim for Enforcing
+    mode on any system! To view the current mode, use the command `sestatus`. We can
+    see the current SELinux mode in the `Current mode` line in the output. On CentOS
+    7, SELinux is in Enforcing mode by default, which again tells us that the system
+    is fully protected by it. To change this mode to permissive mode, use the command
+    `setenforce` `permissive`. Now, validate your setting using `sestatus` again.
+    To revert your changes back to Enforcing mode, use `setenforce enforcing`. Setting
+    the SELinux mode using `setenforce` is only setting it temporarily, and it will
+    not survive a reboot (take a look at the `Mode from config` file in the `sestatus`
+    output). To change this permanently, open the `/etc/selinux/config` file and change
+    the `SELINUX=` configuration parameter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Working with SELinux security contexts
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: As we have learned from the previous recipe in this chapter, SELinux is all
+    about labels and policies. In this recipe, we will show you how to work with these
+    labels, also known as security contexts.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges. It is assumed that you are working through
+    this chapter recipe by recipe, so by now you should have installed the SELinux
+    tools from the previous recipe and generated all the SELinux man pages for the
+    policies. As you may notice, some of the commands that we will show you in this
+    recipe have already been applied in other recipes in this book. We will explain
+    them here in detail. For using the `netstat` program, install the package, `net-tools`,
+    with the YUM package manager.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: As we have learned in a previous recipe, almost every component in a SELinux
+    system is an object (files, directories, processes, users, and so on). We will
+    begin this recipe by showing you how to print out the SELinux labels for all kinds
+    of objects using the `-Z` command-line flag, which a lot of basic Linux commands
+    on a SELinux system support.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To begin with, log in as root and type the following commands to explore SELinux
+    security context information from various kinds of objects:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, to list all available security context names for the files and directories
+    on your system, use the following command (which we filtered for `httpd` labels
+    only):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, let''s create a new empty file that we can work with:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Show the current security context of the new file (should contain the type
+    `user_tmp_t`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, change the `user_tmp_t` type to a random `samba_share_t` label name:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Perform a test to validate your changes:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here in this recipe, we have shown you how to display labels (security contexts)
+    of various SELinux object types, how to show all available label names, and how
+    to modify or set them on the example of the file object. Working on a SELinux
+    enhanced system on a daily basis, most administrators would confirm that the most
+    important objects we have to manage security contexts for are files, directories,
+    and processes. Also, you need to remember that every SELinux object can have only
+    one security context.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So, what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'As we have have seen, we can use the `-Z` parameter on a lot of different standard
+    Linux command-line tools to print out their SELinux security context. Here, we
+    have shown you examples to display labels for users, files and directories, processes,
+    and network connections, which we could query with the `id`, `ls`, `ps`, and `netstat`
+    commands. In the output of these commands, we see that every security context
+    label of every such object consists of three values: user (flagged by `_u`), role
+    (`_r`), and type (`_t`). The type field is used as the main mechanism to do all
+    our access control decisions in the standard SELinux type (which is called targeted),
+    so we often call the whole SELinux access control process **type enforcement**
+    (**TE**).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The other values user and role in an object''s label are only necessary for
+    very advanced SELinux configurations not discussed here. In order to show all
+    the available context types for use on our system, use the command-line `seinfo
+    -t`. These SELinux types are a very important concept that we need to understand.
+    For file and directory objects, they are used to *bundle* together groups of objects
+    related to each other, and that should be protected or treated the same so that
+    we can define specific policy rules on them. For example, we can assign each file
+    in the standard mail spool directory, `/var/spool/mail`, of the type `mail_spool_t`,
+    and then create an access rule policy in which we will use this type to allow
+    specific access. In the context of processes, type values are called domains.
+    Here, types are used as a way to isolate and *sandbox* processes: any process
+    that has a specified domain name can only communicate and interact with other
+    processes in the same domain (with some exceptions, such as transitions not discussed
+    here). This *isolating* of processes via domains greatly reduces security risks.
+    When processes get compromised, they can only damage themselves and nothing else.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: SELinux is sometimes called a sandboxing system. Starting from the assumption
+    that software will always have bugs, SELinux provides ways to isolate components
+    of the software such that a breach in one component doesn't compromise another.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If you type in `ps -auxZ`, you will also see that there are processes that run
+    in a domain called `unconfined_t`. Processes running with this label are not protected
+    by SELinux policies, which means that, if an unconfined process is compromised,
+    SELinux does not prevent an attacker from gaining access to other system resources
+    and data. Here, security falls back to standard DAC rules, which will be your
+    only and exclusive protection instead.
+  prefs: []
+  type: TYPE_NORMAL
+- en: After we discussed how to display security contexts, next in the recipe we showed
+    you how you can set and change them. In some older documentation as well as in
+    some SELinux policy `man` pages, you will encounter examples with a tool called
+    `chcon`, which is used to modify the security context of your objects. The usage
+    of this tool is not the recommended approach any more, and you should always replace
+    such command line examples with the newer `semanage fcontext -a -t` command-line
+    in combination with the `restorecon` program. For `semanage`, you provide the
+    label type name with `-t`, and then provide the filename you want to set it for.
+    Then, with `restorecon`, you provide the filename to which you want to apply the
+    change made by `semanage` earlier. This is needed because security context can
+    be set on two levels. It can be set to the policy and on a filesystem level. The
+    `chcon` command sets the new context directly on the filesystem, while the policy
+    context does not get altered. This can be a problem, for example, if you want
+    to reset or change the security context of your filesystem later (this is called
+    relabeling)—which means that all the security context will be applied from the
+    policy to the filesystem, overwriting all your changes made with `chcon`. So it
+    is better to use `semanage`, which will write to the policy, and then use `restorecon`,
+    which will synchronize the policy labels to the filesystem, keeping everything
+    up-to-date. If you want to set labels for directories instead of single files,
+    you can use regular expressions; to see some examples and further command-line
+    options; type `man semanage-fcontext` and browse to the `EXAMPLES` section.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Working with policies
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: At the core of every SELinux system are the policies. These are the exact rules
+    that define the access rights and relationships between all our objects. As we
+    have learned earlier, all our system's objects have labels, and one of them is
+    a type identifier that can then be used to enforce rules laid down by policies.
+    In every SELinux enabled system, by default, all access to any object is prohibited
+    unless a policy rule has been defined otherwise. Here, in this recipe, we will
+    show you how we can query and customize SELinux policies. As you may notice, some
+    of the commands have already been applied in other recipes in this book, such
+    as for the `httpd` or `ftpd` daemons. Here, you will find out how policies work.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges. It is assumed that you are working through
+    this chapter recipe by recipe, so by now you should have installed the SELinux
+    tools from the previous recipe and generated all SELinux man pages for the policies.
+    For our tests here, we will use the Apache web server, so please make sure it
+    is installed and running on your system (Refer to recipe *Installing Apache and
+    serving web pages* in [Chapter 12](part0098_split_000.html#2TEN41-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 12. Providing Web Services"), *Providing Web Services*).
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To begin, log in as root and type the following command to show all SELinux
+    Boolean policy settings, filtered by the `httpd` daemon only:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'To get more information about a specific policy and its contained Booleans,
+    read the corresponding man page; for example, for `httpd` type the following:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Here, within the manual pages for the `httpd` policy, we will, among others,
+    find detailed information about every `httpd` policy Boolean available. For example,
+    there is a section about `httpd_use_nfso`. To toggle single policy features, use
+    the `setsebool` command together with the policy Boolean name with the `on` or
+    `off` parameter, as shown here:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here in this recipe, we have shown you how to work with SELinux Booleans. Remember
+    that SELinux follows the model of least privilege, which means that SELinux policies
+    enable only the least amount of features to any object; like a system service,
+    they need to perform their task and nothing more. These features of a policy can
+    be controlled (activated or deactivated) using corresponding SELinux Booleans
+    at runtime without the need to understand the inner workings of policy writing.
+    It is a concept to make policies customizable and extremely flexible. In other
+    recipes in this book, we have already worked with enabling SELinux Booleans to
+    add special policy features, such as enabling Apache or FTP home directories,
+    which are all disabled by default.
+  prefs: []
+  type: TYPE_NORMAL
+- en: What did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'SELinux Booleans are like switches to enable or disable certain functionalities
+    in your SELinux policy. We started this recipe using the `semanage` command to
+    show all Booleans available on the system, and we filtered by `http` to get only
+    those related to this service. As you can see, there are a huge number of Booleans
+    available in your system, and most of them are disabled or off (the model of least
+    privilege); to get more information about a specific policy and its Boolean values,
+    use the SELinux man pages that we installed in a previous recipe. Sometimes, it
+    can be difficult to find a specific man page of interest. Use the following command
+    to search for man page names that are available: `man -k _selinux | grep http`.
+    In our example, `httpd_selinux` is the correct man page to get detailed information
+    about the `httpd` policy. Finally, if we decide to switch a specific SELinux Boolean
+    feature, we will use the `setsebool` command. You should remember that setting
+    Booleans in this way only works until reboot. To make those settings permanent,
+    use the `-p` flag, for example, `setsebool -P httpd_use_nfs on`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'With all our knowledge from the previous recipes so far, we are now able to
+    show an example where we put everything together. Here, we will see SELinux security
+    contexts and policies in action for the `httpd` service. If the Apache web server
+    is running, we can get the SELinux domain name of the `httpd` process using the
+    following line:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'This will show us that the `httpd` domain (type) is called `httpd_t`. To get
+    the SELinux label of our web root directory, type in the following command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'This will tell us that the security context type of our Apache web server''s
+    web root directory is called `httpd_sys_content_t`. Now, with this information,
+    we can get the exact rules for the Apache domain from our policy:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'This will print out every `httpd` policy rule available. If we filter the output
+    for the `httpd_sys_content_t` context type, the following line comes up for files
+    again:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'This shows us which source target context is allowed to access, which destination
+    target context, and with which access rights. In our example for the Apache web
+    server, this specifies that the `httpd` process that runs as domain `httpd_t`
+    can access, open, and modify all the files on the filesystem that match the `httpd_sys_content_t`
+    context type (all files in the `/var/www/html` directory match this criterion).
+    Now, to validate this rule, create a temporary file and move it to the Apache
+    web root directory: `echo "CentOS7 Cookbook" > /tmp/test.txt;mv /tmp/test.txt
+    /var/www/html`. Any file inherits the security context of the directory in which
+    it is created. If we had created the file directly in the web root directory,
+    or had copied the file instead of moving it (copying means creating a copy), it
+    would automatically be in the correct `httpd_sys_content_t` context and fully
+    accessible by Apache. But, as we moved the file from the `/tmp` directory, it
+    will stay as the `user_tmp_t` type in the web root directory. If you now try to
+    fetch the URL, for example,, `curl http://localhost/test.txt`, you should get
+    a 403 forbidden message. This is because the `user_tmp_t` type is not part of
+    the `httpd_t` policy rule for file objects, because, as said before, everything
+    that is not defined in a policy rule will be blocked by default. To make the file
+    accessible, we will now change its security context label to the correct type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Now, again fetch `curl http://localhost/test.txt`, which should be accessible,
+    and print out the correct text: CentOS7 cookbook.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Remember that, if you copy a file, the security context type is inherited from
+    the targeted parent directory. If you want to preserve the original context when
+    copying, use `cp -preserve=context` instead.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Troubleshooting SELinux
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this recipe, you will learn how to troubleshoot SELinux policies, which is
+    most often needed when access to some SELinux objects has been denied and you
+    need to find out the reasons for it. In this recipe, we will show you how to work
+    with the `sealert` tool, which will create human-readable and understandable error
+    messages to work with.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges. It is assumed that you are working through
+    this chapter recipe by recipe, so by now you should have installed the SELinux
+    tools and applied the *Working with policies* recipe in this chapter, as we will
+    produce some SELinux denial events in order to show you how to use the log file
+    tools.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To begin, login as root and provoke a SELinux denial event:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, let''s generate an up-to-date human readable log file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'In the program''s output, you will get a detailed description of any SELinux
+    problem and, at the end of each so called alert, you will even find a suggested
+    solution to fix the problem; in our example, the alert of interest should read
+    (the output is truncated) as shown next:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here in this recipe, we showed you how easily one can troubleshoot SELinux problems
+    using the `sealert` program. We started by provoking a SELinux deny access problem
+    by creating a new file in the web root directory and assigning it a wrong context
+    type of value `user_tmp_t`, which has no access rule defined in the `httpd` policy.
+    Then, we used the `curl` command to try and fetch the website and actually produce
+    the **Access Vector Cache** (**AVC**) denial message in the SELinux logs. Denial
+    messages are logged when SELinux denies access. The primary source where all SELinux
+    logging information is stored is the audit log file, which can be found at `/var/log/audit/audit.log`,
+    and easier-to-read denial messages will also be written to `/var/log/messages`.
+    Here, instead of manually grepping for error messages and combining both log files,
+    we use the `sealert` tool, which is a convenience program that will parse the
+    audit and messages log file and present valuable AVC content in a human-readable
+    format. At the end of each alert message, you will also find a suggested solution
+    to the problem. Please note that those are auto-generated messages and should
+    always be questioned before applying.
+  prefs: []
+  type: TYPE_NORMAL

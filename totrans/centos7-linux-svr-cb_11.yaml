@@ -1,0 +1,1368 @@
+- en: Chapter 11. Providing Mail Services
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'In this chapter, we will cover:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Configuring a domain-wide mail service with Postfix
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Working with Postfix
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Delivering the mail with Dovecot
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Using Fetchmail
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Introduction
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This chapter is a collection of recipes that deliver the necessary steps to
+    implement and maintain one of the oldest and most versatile technologies on the
+    Internet today. Everyone wants to send and receive e-mails and this chapter provides
+    the necessary starting point required to deploy such a service in a timely and
+    efficient manner.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Configuring a domain-wide mail service with Postfix
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Postfix is a **Mail Transport Agent** (**MTA**) responsible for the transfer
+    of e-mails between mail servers using the SMTP protocol. Postfix is now the default
+    MTA on CentOS 7\. Here, as with most other critical network services, its default
+    configuration allows outgoing but does not accept incoming network connections
+    from any host other than the local one. This makes sense if all you need is a
+    local Linux user mailing system and for sending out mails to other external mail
+    servers from localhost too. But if you want to run your own centralized mail server
+    for your own private network and domain, this is quite restrictive. So the purpose
+    of this recipe is to set up Postfix as a domain-wide mail service to allow e-mails
+    sent from any host in your network and if the recipient is a valid e-mail address
+    within your local domain, deliver them to the correct mailbox on the mail server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet to download additional software packages. You
+    need to set up your local network properly and make sure that all the computers
+    that want to send mails through your single-domain mailserver are in the same
+    network and can ping this server. Also, setting your system time correctly is
+    very important for any mail server. Apply the *Synchronizing the system clock
+    with NTP and the chrony suite* recipe in [Chapter 2](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 2. Configuring the System"), *Configuring the System* before beginning
+    your configuration. Finally, you need to set a **Fully Qualified Domain Name**
+    (**FQDN**) for your mail server. Refer to the *Setting your hostname and resolving
+    the network* recipe in [Chapter 2](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 2. Configuring the System"), *Configuring the System*. It is expected
+    that your server will be using a static IP address and that it maintains one or
+    more system user accounts. It is also assumed that you are working through this
+    chapter recipe by recipe in the order in which they appear.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Postfix is already installed by default on all CentOS 7 flavors and it should
+    be in a running state. In our example, we want to build a central mail server
+    for our network 192.168.1.0/24 with the local domain name called `centos7.home`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'First login as root and test if Postfix is already working locally and can
+    send local mails to your system users. Type the following command to send a mail
+    to a Linux user specified by `<username>`:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'On CentOS 7, Postfix is also already configured to send out mails to external
+    e-mail addresses (but from localhost only) without any changes to the configuration
+    file. For example, you could use right out-of-the-box:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Note
+  prefs:
+  - PREF_IND
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: If you don't have a trusted domain and certificate behind your Postfix server,
+    in times of massive spam e-mails most external e-mail servers will reject or put
+    such e-mails directly into the spam folders.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: 'To see if the local mail message has been delivered successfully, show the
+    latest mail log (Press *Ctrl*+*C* to exit the log):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, check if a FQDN for our server is available. This is mandatory, and if
+    not set properly, refer to [Chapter 2](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 2. Configuring the System"), *Configuring the System* to set one (in
+    our example, this will output the name `mailserver.centos7.home`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now create a backup copy of the main Postfix configuration file before opening
+    this file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'First of all, we will want Postfix to listen on all network interfaces instead
+    of only the local one. Activate or uncomment the following line (which means remove
+    the `#` sign at the beginning of the line) that starts with `inet_interfaces`
+    to read:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, some lines below, you will find the line that reads `inet_interfaces =
+    localhost.` Deactivate it or comment it out by putting a `#` sign at the start
+    of the line:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next we need to set the local domain-name of the mail server. For example,
+    if our mailserver''s FQDN is `mailserver.centos7.home` and this mailserver is
+    responsible for delivering mail for the whole private `centos7.home` domain, the
+    domain name will be (it''s best to put it below the line that reads `#mydomain
+    = domain.tld`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'With the intention that this server may become a domain-wide mail server, you
+    should now update the following line that starts with `mydestination` to read
+    as follows (for example, in the `mydestination` section, comment out the first
+    `mydestination` line and uncomment the second line):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, we need to specify the pathname of a mailbox file relative to a user''s
+    home directory. To do this, scroll down and locate the line that begins with `home_mailbox`
+    and uncomment the following option (remove the `#` sign at the line''s beginning):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Save and close the file. Now we want to open the correct Postfix server ports
+    in the firewall to allow the incoming SMTP connections to the server:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, restart the Postfix service as follows:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Afterwards, login to a different computer in the same network and install **Swiss
+    Army Knife SMTP** (**swaks**) to test out our Postfix server connection remotely.
+    On CentOS, type the following (it needs the EPEL repository to be installed in
+    advance):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, to test if you can connect to our new Postfix server using the standard
+    SMTP mail port 25, with our Postfix server running on the IP address `192.168.1.100`,
+    we are sending a mail remotely to a Linux system user `john` which has a system
+    user account on our Postfix server:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Swaks creates output which should give us a hint if the mail transport has
+    been successful. For example (the output has been truncated):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'You can also test that the last command has been successful by logging in as
+    user `john` on the Postfix server, then checking and reading your local mailbox''s
+    inbox, which should contain a file with the test mail sent from the swaks tool
+    (the filename will be different on your computer), as follows:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: As we have seen, Postfix is installed and running on every CentOS 7 system by
+    default and in its basic configuration the mail server is listening on the localhost
+    address for incoming mails so you can already send out local mails between your
+    server's local Linux system users without the need to contact an external MTA.
+    It is already running because your system is already using it for a number of
+    local services, such as the crond daemon or for sending out warnings about security
+    breaches (for example, running a `sudo` command as a non-sudo user).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Before we can explain how this recipe works, we need to review some more basics
+    about the Postfix MTA system in general. The Postfix MTA service can receive incoming
+    e-mails from mail clients or other remote MTA servers using the SMTP protocol.
+    If an incoming e-mail is destinated for the MTA server's configured final destination
+    domain (for example, a mail sent with the recipient address `john@centos7.home`
+    is incoming to the `centos7.home` configured Postfix MTA server), it will deliver
+    the mail to a local mailbox installed on the server (either in the filesystem
+    or in a database system such as MariaDB). If the incoming mail is not destinated
+    for this server, it will be relayed (forwarded) to another MTA.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Remember that this is all a Postfix server is capable of doing and nothing
+    more: receiving incoming SMTP connections from mail clients or other MTAs, delivering
+    mail to local mailboxes on the server, and forwarding mail to other MTAs using
+    SMTP. Contrary to common belief, Postfix cannot transfer the mails from its local
+    mailboxes to the end users. Here we need another type of MTA called **delivery
+    agent**, which uses different mail protocols, such as IMAP or POP3.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this recipe, we configured our Postfix server so that the other computers
+    and servers in the same network could also send mails to our Postfix server, which
+    is blocked by default (by default only the server itself can send mails). If an
+    incoming e-mail, sent from another computer in our network, has the same domain
+    name in the recipient's e-mail address as our Postfix server has its FQDN in,
+    then it gets delivered to the appropriate local mailbox defined by the recipient's
+    part of the e-mail; all external e-mail addresses get relayed to an external MTA.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: We began our journey by testing if we could send out local mails to system users.
+    Here we logged in as our root user and sent a mail to a valid local system user
+    using the sendmail program, which is included in the Postfix package. For every
+    mail you send using sendmail, you should be able to see some new lines appearing
+    in the `/var/log/maillog` file, which contains status information and other important
+    logging text for the mail. If you sent a message from `root` to the user `john`
+    and the FQDN of your server is `centos7.home,` new output lines appended to the
+    log file should contain amongst other things a `from=<root@centos7.home>`, a `to=<john@centos7.home>`
+    and if delivered successfully, `a status=sent` information. If no such logging
+    information shows up, check the status of the Postfix service.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Afterwards, we displayed the FQDN for our server. It is very important to set
+    this up correctly because this information will be used to authenticate the Postfix
+    server when connecting to other MTAs or mail clients. MTAs check the FQDN which
+    has been announced by their partner and some even refuse to connect if it is not
+    provided or if it differs from the real DNS domain name of the server. After our
+    initial test, we then started editing the main Postfix configuration file after
+    we made a backup copy of it first. As said before, by default only the users sitting
+    on the same server the Postfix service is running on can send mails between them
+    as the server defaults to listening on the loopback device only. So first we enabled
+    Postfix to listen to all the available network interfaces instead, using the `inet_interfaces
+    = all` parameter. This ensured that all our clients in our network could connect
+    to this server. Next, we set the domain name using the `mydomain` parameter we
+    wanted to have for Postfix. In order for Postfix to work in our network, the domain
+    name defined here in this variable must be the exact same value as the domain
+    name for our server's network. Afterwards, we changed the `mydestination` parameter
+    by choosing the line which adds the `$mydomain` parameter to the list of allowed
+    domains. This will define all domains our Postfix mail server considers as the
+    final destination. If a Postfix mail server is configured as the final destination
+    for a domain, it will deliver the messages to the local mailboxes of the recipient
+    users, which can be found in `/var/spool/mail/<username>` (we will change this
+    location in the next step) instead of forwarding the mails to the other MTAs (as
+    we added `$mydomain` to the list of final destinations in our example, we will
+    deliver all mails sent to the `centos7.home` domain).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here, you also need to remember that, by default, Postfix *trusts* all the other
+    computers (SMTP clients) in the same IP subnetwork as the Postfix server is in
+    to send mails to external e-mail addresses (relay mails to external MTAs) through
+    our centralized server, which could be too relaxed for your network policy. Since
+    e-mail spam is an ongoing problem on the Internet and we don't want to allow any
+    user to abuse our mail server from sending spam (which an open relay mail server
+    does; it this takes anything from any client and sends it to any mail server),
+    we can further increase security by setting `mynetworks_style = host`, which only
+    trusts and allows the localhost to send mails to external MTAs. Another way to
+    reduce the spam risk might be to use the `mynetworks` parameter where you can
+    specify which network or IP address is allowed to connect to our mail server and
+    send e-mails through it; for example, `mynetworks = 127.0.0.0/8, 192.168.1.0/24`.
+    To learn more about all the available Postfix settings, refer to the Postfix configuration
+    parameter manual using the command `man 5 postconf`. Afterwards, we changed where
+    the local mail should be stored. By default, all the incoming mails go to a centralized
+    mailbox space located at `/var/spool/mail/<username>`. In order for local users
+    to receive their mail in their own home directory, we used the `Maildir` parameter
+    for the `home_mailbox` option, which changes this system to deliver all the mails
+    to `/home/<username>/Maildir/` instead. Afterwards, we opened the standard SMTP
+    protocol port in firewalld using the SMPT service, which Postfix uses for communication
+    with the other MTAs or mail clients sending incoming mails through.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Postfix is already configured to start at boot, but to complete this part of
+    the recipe we restarted the Postfix service for it to accept the new configuration
+    settings. At this stage, the process of configuring Postfix was complete, but
+    to test remote access we needed to log into another computer in the same network.
+    Here we installed a small command line-based mail client called `swaks`, which
+    can be used to test local or remote SMTP server connections. We ran our test by
+    sending a mail to our remote Postfix mail server and supplied a recipient user
+    and the IP address of our SMTP server. Having done this, you should have received
+    a test message and as a result you should be happy to know that everything is
+    working correctly. However, if you did happen to encounter any errors, you should
+    refer to the mailserver log file located at `/var/log/maillog`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In this section of the recipe, we will change your e-mail sender address, encrypt
+    SMTP connections, and configure your BIND DNS server to include our new mailserver's
+    information.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Changing an e-mail's appearing domain name
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: If an MTA sends out an e-mail, Postfix automatically appends the hostname of
+    the sender's e-mail address by default, if not provided explicitly otherwise,
+    which is a great feature to track down which computer in your network sent the
+    e-mail locally (otherwise it would be hard to find the origin of a mail if you
+    got multiple computers sending out mails by a user called **root**). Often when
+    sending messages to a remote MTA, you don't want to have your local hostname appear
+    in the e-mail.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here it is better to have only the domain name alone. In order to change this,
+    go to the Postfix MTA you want to send mails from, open the Postfix configuration
+    file `/etc/postfix/main.cf`, and enable this feature by uncommenting (removing
+    the `#` sign at the beginning of the line) the following line to determine the
+    origin (restart the Postfix service afterwards):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: Using TLS- (SSL) encryption for SMTP communication
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Even if you are running your own Postfix server in a small or private environment,
+    you should always be aware that normal SMTP traffic will be sent in clear text
+    over the Internet, making it possible that anyone could sniff the communication.
+    TLS will allow us to set up an encrypted SMTP connection between the server and
+    the mail client, meaning that the complete communication will be made enciphered
+    and impossible to be read by a third-party. In order to do this, if you have not
+    already bought an official SSL certificate or generated some self-signed certificates
+    for your domain, start by creating one here (read the *Generating self-signed
+    certificates* recipe in [Chapter 6](part0061_split_000.html#1Q5IA1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 6. Providing Security"), *Providing Security* to learn more). First login
+    as root on your server and go to the standard certificate location: `/etc/pki/tls/certs`.
+    Next, create a TLS/SSL keypair consisting of the certificate and its embedded
+    public key as well as the private key (enter your Postfix''s FQDN as the `Common
+    name`, for example, `mailserver.centos7.home`) to do this type `make postfix-server.pem`.
+    Afterwards, open the main Postfix configuration file `/etc/postfix/main.cf` with
+    your favorite text editor and put in the following lines at the end of the file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: Then save and close this file. Note that setting `smtpd_tls_security_level`
+    to `may` will activate TLS encryption if available in the mail client program,
+    otherwise it will use an unencrypted connection. You should only set this value
+    to `encrypt` (which will enforce SSL/TLS encryption in any case) if you are absolutely
+    sure that all your senders to your mail server are supporting this feature. If
+    any sender (external MTA or mail client) does not support this feature, the connection
+    will be refused. This means that e-mails from such sources will not be delivered
+    into your local mailboxes. We also specified TLS encryption for outgoing SMTP
+    connections from our Postfix server to other MTAs where possible using `smtp_tls_security_level
+    = may`. By setting both the Postfix's client and server mode TLS log level to
+    `1` we get more verbose output so we can check if the TLS connections are working.
+    Some very old mail clients use an ancient port 465 for encrypting SMTP over SSL/TLS
+    instead of the standard SMTP port 25.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In order to activate this feature, open `/etc/postfix/master.cf` and search,
+    then uncomment (remove `#` at the start of each line) the following lines, so
+    they read:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Save and close the file, and then restart Postfix. Next, we need to open the
+    SMTPS port in the firewall to allow incoming connections to our server. Since
+    no SMTPS firewalld rule is available in CentOS 7, we will create our own service
+    file first using the `sed` utility:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You should now be able to test if an SMTPS connection can be made by using
+    our `swaks` SMTP command line tool with the `-tls` parameter from a remote computer
+    to our Postfix server running on IP 192.168.1.100, for example `swaks --server
+    192.168.1.100 --to john@centos7.home -tls`. This command line will test if the
+    SMTP server supports TLS encryption (`STARTTLS`) and exit with an error message
+    if it is not available for any reason. A working output would look as follows
+    (truncated to only show you the most important lines):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can then also recheck your TLS setup by going to the main mail log file
+    on your Postfix server and watching for the following line corresponding to your
+    swaks test mail from the last step (your output will be different):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: Configure BIND to use your new mailserver
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'After our domain-wide Postfix server has been installed and configured, we
+    should now announce this new mail service in our domain using a DNS server. Refer
+    to [Chapter 8](part0075_split_000.html#27GQ61-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 8. Working with FTP"), *Working with FTP* for details on how to set up
+    and configure a BIND server, and especially read the section about the **Mail
+    eXchanger** (**MX**) record if you haven''t already. Then add a new MX entry to
+    your BIND forward and corresponding reverse zone file. In your forward zone file,
+    add the following lines for our Postfix server with the IP `192.168.1.100`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'In your reverse zone file, you could add the following lines instead:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: Working with Postfix
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In a previous recipe, we learned how to install and configure Postfix as our
+    domain-wide e-mail server. When it comes to working with e-mails, there are lots
+    of different tools and programs available for Linux and we already showed you
+    how to send e-mails through the `sendmail` program as well as the `swaks` utility.
+    Here in this recipe, we will show you how to work with one of the most commonly
+    used mail utilities in Unix and Linux, called `mailx`, which has some useful features
+    missing in the sendmail package for sending mails or reading your mailbox.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We will begin this recipe by installing the `mailx` package on our server running
+    our domain-wide Postfix service, as it is not available on CentOS 7 by default.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Begin by logging in as root and typing the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'The easiest way is to use `mailx` with its standard input mode, as follows:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'You can also send mails from a text file. This is useful when calling the `mailx`
+    command from a shell script, using multiple recipients, or attaching some files
+    to the e-mail:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Connecting mailx to a remote MTA
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'One big advantage over the `sendmail` program is that we can use `mailx` to
+    directly connect to and communicate with remote MTA mail servers. In order to
+    test this feature, log in to another Linux-based computer, which should be in
+    the same network as our Postfix server, install the `mailx` package, and send
+    a mail through our Postfix server''s IP address `192.168.1.100` (we have already
+    opened the incoming SMTP firewall port in a previous recipe). In our example,
+    we will send a local mail to the user `john`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: Reading your local mails from the mailbox
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Not only can the `mail` `x` program send e-mail messages to any SMTP server,
+    it also provides a convenient mail reader interface for your local mailbox when
+    started locally on the Postfix server. If you run the mail program with `-f` specifying
+    a user mailbox, the program will start by showing you all the inbox e-mails. But
+    remember that `mailx` can only read local mailboxes when the program is started
+    on the same server your mailboxes are located at (if you want to use it to access
+    your mailbox remotely you need to install an MTA access agent such as Dovecot—see
+    later—with POP3 or IMAP). For example, login as Linux system user `john` on the
+    Postfix server, and then, to open the mail reader with your user''s local mailbox,
+    type: `mailx -f ~/Maildir`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: You will now be presented with a list of all the mail messages in your current
+    inbox. If you want to read a specific mail, you need to type in its number and
+    press the *Return* key. After reading it, you can type *d* followed by *Return*
+    to delete it or *r* followed by *Return* to reply to it. To go back to your current
+    mail message overview screen, type *z* followed by *Return*. If you have more
+    than one screen of mail messages, type *z-* (z minus) followed by *Return* to
+    go back one page. Type *x* followed by *Return* to exit the program. To learn
+    more, refer to the `mailx` manual (`man mailx`).
+  prefs: []
+  type: TYPE_NORMAL
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In this recipe, we showed you how to install and use `mailx`, a program to send
+    and read your Internet mail. It is based on an old Unix mail program called Berkely
+    mail and provides the functionality of the POSIX `mailx` command. It should be
+    installed on every serious CentOS 7 server because it has some advantages over
+    the `sendmail` program and understands the protocols IMAP, POP3, and SMTP (If
+    you need an even more user-friendly mail reader and sender, you can check out
+    mutt. Type `yum install mutt` to install it. Then type `man mutt` to read its
+    manual).
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: We started this recipe by installing the `mailx` package using the YUM package
+    manager on our Postfix server. It includes the `mailx` command line program which
+    can be run either with the command `mail` or `mailx`. Afterwards, we ran the program
+    with the `-s` parameter, which specifies an e-mail subject and; also you need
+    a recipient e-mail address as argument, either an external address or a local
+    Linux system user name or mail. Without anything else, `mailx` suspects it's running
+    on the same server as the mail server is on, so it implicitly sends the mail to
+    the localhost MTA, which is Postfix in our example. Also, in its most simple form,
+    `mailx` starts in interactive mode, which lets you type in the message body fields
+    manually at the command line. This is good for quickly writing a mail for testing,
+    but in most cases you will use `mailx` by piping in content from another source.
+    Here we showed you how to do this by using the `echo` command to write a string
+    to the Standard Input (STDIN) of `mailx,` but you can also `cat` a file content
+    into it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: One often used example is to send some kind of file output or a log file content
+    of a failing command to an administrator user or system reports at a certain scheduled
+    time point using `cron`. Afterwards, we saw that we could also send mails to multiple
+    recipients by comma-separating their e-mail addresses, and showed you how to send
+    attachments along with your mail messages by using the `-a` option. In the next
+    section, we then showed you how to send mails to a remote SMTP mail server using
+    the `-S` option to set internal options (`variable=value`). This is a very useful
+    feature if you haven't specified your standard mail server on your DNS server
+    or for testing a remote mail server. Finally, in the last section we showed you
+    how you could read your local mailbox on your Postfix server using `mailx`. It
+    has a convenient browsing functionality to read, delete, and reply, and do advanced
+    e-mail management for your local mailbox. You do this by typing in commands into
+    the `mailx` interactive sessions followed by pressing the *Return* key. Remember,
+    if you don't like this way of browsing your mails, you can also always read or
+    filter your mails in your user's `~/Maildir` directory using command-line tools,
+    such as `grep`, `less,` and so on. For example, to search all new mails for the
+    case-intensive keyword `PackPub.com,` type `grep -i packtpub ~/Maildir/new`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Delivering the mail with Dovecot
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In a previous recipe, you were shown how to configure Postfix as a domain-wide
+    mail transport agent. As we have learned in the first recipe of this chapter,
+    Postfix only understands the SMTP protocol and does a remarkable job to transport
+    messages from another MTA or mail user client to other remote mail servers or
+    storing mails which are destinated to itself into its local mailboxes. After storing
+    or relaying mails, Postfix jobs end. Postfix can only understand and speak the
+    SMTP protocol and is not capable of sending messages to anything other than MTAs.
+    Any possible recipient user for a mail message who wants to read his mails would
+    now need to log in to the server running the Postfix service using ssh and look
+    into his local mailbox directory, or alternatively use `mailx` locally to view
+    his messages on a regular basis to see if there are any new mails. This is highly
+    inconvenient and nobody would use such a system. Instead, the users choose to
+    access and read their mail from their own workstations other than where our Postfix
+    server is located. Therefore, another group of MTAs has been developed, sometimes
+    are called **access agents** and which have the main functionality to synchronize
+    or transfer those local mailbox messages from the server running the Postfix daemon
+    over to external mailing programs where users can read them. These MTA systems
+    use different protocols than SMTP, namely POP3 or IMAP. One such MTA program is
+    Dovecot. Most professional server administrators would agree that Postfix and
+    Dovecot are perfect partners and it is the purpose of this recipe to learn how
+    to configure Postfix to work with Dovecot in order to provide a basic POP3/IMAP
+    and a POP3/IMAP over SSL (POP3S/IMAPS) service for our mailboxes to provide an
+    industry standard e-mail service for your users across the local network.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to download additional packages. It
+    is also assumed that you are working through this chapter recipe by recipe in
+    the order that they appear and for this reason it is expected that Postfix has
+    been configured as a domain-wide MTA.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This recipe serves as a guide to setting up a basic POP3S/IMAPS service for
+    trusted users on a local network. It is not suitable for general Internet use
+    without applying additional security measures.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Dovecot is not installed by default, and for this reason we must begin by installing
+    the necessary packages by following the given steps:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To start, log in as root and type in the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Once installed, enable the Dovecot service at boot by typing:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now open the main Dovecot configuration file in your favorite text editor,
+    after creating a backup copy, by typing:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Begin by confirming the `protocols` we want to use by activating (removing
+    the `#` sign at the beginning of the line) and modifying the following line, so
+    it reads:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, enable Dovecot to listen to all network interfaces instead of only the
+    loopback address. Search for the line `#listen = *`, `::`, then modify it so it
+    reads:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now save and close the file in the usual way before making a backup of the
+    `10-mail.conf` file and afterwards opening it in your favorite text editor:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Scroll down and uncomment (remove `#` character) the following line, so it
+    reads:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Again, save and close the file in the usual way before creating a backup copy
+    and then opening the following file in your favorite text editor:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Start by uncommenting the following line:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now scroll down and amend the following line:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Save and close the file in the usual way. Now we will allow plain text logins.
+    To do this, make a backup before opening the following file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Change the line `#disable_plaintext_auth = yes` to state:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Save and close the file. In our final configuration setting, we will tell Dovecot
+    to use our self-signed server certificate. Just use your Postfix certificate from
+    another recipe in this chapter or create a new one (otherwise skip this step):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Open Dovecot''s standard SSL config file after making a backup of the file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now change the following line (`ssl = required`) to read:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now change the following two lines to point to your server''s own certificate
+    path:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Save and close this file. Next, enable IMAP, IMAPS, POP3, and POP3S ports in
+    our firewall to allow incoming connections on the corresponding ports. For POP3
+    and IMAP, we need to specify our own `firewalld` service files, since they are
+    not available in CentOS 7 by default:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now save and close the file before starting the Dovecot service:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, to test our new POP3/SMTP network service, just login on another computer
+    in the same network and run the following commands to use `mailx` to access the
+    local mailboxes on the remote Postfix server, which is provided by Dovecot with
+    the different access agent protocols. In our example, we want to access the local
+    mailbox of the system user `john` on our Postfix server with the IP `192.168.1.100`
+    (to login to john''s account, you need his Linux user password) remotely:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, to test the secure connections, use the following commands and type `yes`
+    to confirm that the certificate is self-signed and not trusted:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: For all four commands, you should see the normal `mailx` inbox view of your
+    mailbox with all your mail messages of user `john` as you would run the `mailx`
+    command locally on the Postfix server to read local mails.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Having successfully completed this recipe, you have just created a basic POP3/SMTP
+    service, (with or without SSL encryption) for all the valid server users in your
+    network, which will deliver local mails from the Postfix server to the client's
+    e-mail program. Every local system user can directly authenticate and connect
+    to the mail server and fetch their mail remotely. Of course, there is still much
+    more that can be done to enhance the service, but you can now enable all local
+    system account holders to configure their favorite e-mail desktop software to
+    send and receive e-mail messages using your server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: POP3 downloads the mails from the server on a local machine and deletes them
+    afterwards, whereas IMAP synchronizes your mails with your mail server without
+    deleting them.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We started the recipe by installing Dovecot. Having done this, we then enabled
+    Dovecot to run at boot before proceeding to make a few brief changes to a series
+    of configuration files. Starting with the need to determine which protocol will
+    be used in the Dovecot configuration file at `/etc/dovecot/dovecot.cf` here we
+    will use: IMAP, POP3, IMAPS, and POP3S. As with most other essential networking
+    services, after installation they only listen on the loopback device, so we enabled
+    Dovecot to listen to all network interfaces installed in the server. In the `10-mail.conf`
+    file we then confirmed the mailbox directory location for Dovecot (with the `mail_location`
+    directive) as the location Postfix will put them into on receiving mails so Dovecot
+    can find them here and pick them up. Following this, we then opened the POP3 protocol
+    in `20-pop3.conf` by adding a fix relating to various e-mail clients (for example,
+    for the Outlook client) using the `pop3_uidl_format` and `pop3_client_workarounds`
+    directives. Finally, we enabled plain text authorization by making several changes
+    to `/etc/dovecot/conf.d/10-auth.conf`. Remember that using plain text authorization
+    with POP3 or IMAP without SSL encryption is considered insecure but because we
+    were concentrating on a local area network (for a group of trusted server users)
+    we should not necessarily see this as a risk. Afterwards, we enabled POP3 and
+    IMAP over SSL (POP3S and IMAPS) by pointing the `ssl` directives in the `10-ssl.conf`
+    file to some existing self-signed server certificates. Here we changed `ssl =
+    required` to `ssl=yes` to not force the client connecting to the Dovecot service
+    to use SSL encryption, as we do want to give the user the choice to enable encrypted
+    authentication if he likes to but not make it mandatory for older clients. Afterwards,
+    to make our Dovecot service available from the other computers in our network,
+    we had to enable the four ports to allow POP3, IMAP, POP3S, and IMAPS, 993, 995,
+    110, 143, by using the predefined `firewalld` service files and creating the missing
+    ones for IMAP and POP3 ourselves. Later, we started the Dovecot service and tested
+    our new POP3/IMAP server using the `mailx` command remotely. By supplying an `-f`
+    file parameter, we were able to specify our protocol and location. For using SSL
+    connections, we needed to supply an additional `nss-config-dir` option pointing
+    to our local Network Security Services database where certificates are stored
+    in CentOS 7.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Remember, if you happen to encounter any errors, you should always refer to
+    the log file located at `/var/log/maillog`. Using plain text authorization should
+    not be used in a real corporate environment and POP3/IMAP over SSL should be preferred.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In the main recipe, you were shown how to install Dovecot in order to enable
+    trusted local system users with system accounts to send and receive e-mails. These
+    users will be able to use their existing username as the basis of their e-mail
+    address, but by making a few enhancements you can quickly enable aliases, which
+    is a way to define alternative e-mail addresses for existing users.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To start building a list of user aliases, you should begin by opening the following
+    file in your favorite text editor:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Now add your new identities to the end of the file, where `<username>` will
+    be the name of the actual system account:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE49]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'For example, if you have a user called `john` who currently (only) accepts
+    e-mails at `john@centos7.home`, but you want to create a new alias for `john`
+    called `johnwayne@ centos7.home,` you will write:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Repeat this action for all the aliases, but when you have finished remember
+    to save and close the file in the usual way before running the following command:
+    `newaliases`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Setting up e-mail software
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: There are a vast number of e-mail clients on the market and by now you will
+    want to start setting up your local users to be able to send and receive e-mails.
+    This isn't complicated by any means, but in order to have a good starting point
+    you will want to consider the following principles. The format of the e-mail address
+    will be `system_username@domain-name.home`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The incoming POP3 settings will be similar to the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE51]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'For POP3S, just change the port to `995` and use `Connection Security`: `SSL/TLS`.
+    For IMAP, just change the port to `143`, and for IMAPS use port `993` and `Connection
+    Security`: `SSL/TLS`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The outgoing SMTP settings will be similar to the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE52]'
+  prefs: []
+  type: TYPE_PRE
+- en: Using Fetchmail
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: So far in this chapter, we have shown you two different forms of MTA. First
+    we introduced you to the Postfix MTA, which is a transport agent used for routing
+    e-mails from a mail client to or between mail servers and delivering them to the
+    local mailboxes on the mail server using the SMTP protocol. Then we showed you
+    another type of MTA which sometimes called an access agent and which the Dovecot
+    program can be used for. This delivers mails from the local Postfix mailboxes
+    to any remote mail client programs using the POP3 or IMAP protocol. Now we will
+    introduce you to a third type of MTA, which can be termed a retrieval agent, and
+    explain what we will use the program Fetchmail for. Nowadays, almost everybody
+    has more than one e-mail account, from one or more different mail providers, which
+    can be hard to maintain if you need to login to all those different webmail sites
+    or use different accounts in your mail program. This is where Fetchmail comes
+    into play. It is a program, running on the same server as your domain-wide Postfix
+    mail server and which can retrieve all your different e-mails from all your different
+    mail providers and pass them into the local user mailboxes of your Postfix MTA.
+    Once they are stored in their appropriate place, users can access all these mails
+    in the usual way provided by the access agent Dovecot over POP3 or IMAP. Here
+    in this recipe we will show you how to install and integrate Fetchmail into your
+    server running the Postfix MTA.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to download additional packages. It
+    is assumed that you are working through this chapter recipe by recipe in the order
+    that they appear and for this reason it is expected that Postfix has been configured
+    as a domain-wide MTA and Dovecot has been installed to provide a POP3/IMAP mail
+    access service. In order to test Fetchmail in this recipe, we also need to have
+    registered some external e-mail addresses: you need the name of the external e-mail
+    server address and the port of your e-mail provider, as well as your user login
+    credentials at hand. Often you can find this information from your mail provider''s
+    Frequently Asked Questions (FAQ) section on their webpage. Also, for some e-mail
+    addresses you need to first enable POP3 or IMAP in your e-mail settings before
+    you can use Fetchmail.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Fetchmail is not installed by default and for this reason we must begin by
+    installing the necessary packages. Perform the following steps:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To begin, log in your mail server running your Postfix server and type:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE53]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Once installed, we will log into a system''s user account for which we want
+    to enable Fetchmail to download external mail from an external mail provider into
+    his local mailbox, in our example it will be the system user `john`: `su - john`.
+    Now let''s configure Fetchmail with an external e-mail address. If your e-mail
+    provider is called `mailhost.com` and it runs a POP3 server at `pop.mailhost.com`
+    and IMAP on `imap.mailhost.com` with the `username <user-name>`, here (please
+    substitute your own values) is an example command line to test connecting and
+    fetching mails from this provider:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE54]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'If you want to use IMAP with the same provider instead:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE55]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: If the Fetchmail command was successful, all new messages will be downloaded
+    from the server into your local mailbox in your user account.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here in this recipe, we showed you how to install and test Fetchmail, which
+    provides automated mail retrieval capabilities for any user account having a local
+    mailbox on our Postfix server. As a result, for a client connecting to the mail
+    server using POP3 or IMAP, the mails fetched this way look like normal incoming
+    e-mails. Fetchmail is often used to combine and bundle all your different mail
+    accounts into one single account, but you can also use it if your mail provider
+    does not have good virus or spam filter. Here you download the mails from your
+    host's e-mail server, then process the mails using tools such as SpamAssassin
+    or ClamAV before sending mails to your clients.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: We began this recipe by installing the YUM package for Fetchmail. As we wanted
+    to set up Fetchmail for a system user's mailbox called `john`, next we logged
+    in as this user. Afterwards, we tested the Fetchmail program by running a simple
+    command line to fetch mail from a single mail provider. As said before, for a
+    successful login to your external mail provider, you need to know the exact login
+    information (server address, port, username, and password, as well as the type
+    of protocol) of the server before you can use Fetchmail.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Remember that, while some e-mail providers let the user decide if he wants to
+    connect securely using SSL or not, some hosters such as [gmail.com](http://gmail.com)
+    only allow secure connections. This means that the example command shown here
+    in this recipe is likely to fail on every major e-mail provider if they don't
+    support POP3/IMAP access without SSL connections. Proceed to the next section
+    in order to learn how to use Fetchmail with SSL POP3/IMAP encryption.
+  prefs: []
+  type: TYPE_NORMAL
+- en: You should always prefer SSL encryption if your mail provider offers both. Also,
+    some providers such as [gmail.com](http://gmail.com) only let the user use their
+    services via webmail and disable POP3/IMAP service features by default; you need
+    to enable them in your account's settings on your provider's website (see later).
+  prefs: []
+  type: TYPE_NORMAL
+- en: We specified with the `-p` parameter which mail protocol to use with the fetchmail
+    command. With the `-u` parameter, we specified the user identification to be used
+    when logging in to the mailserver, which is completely dependent on our e-mail
+    provider. For POP3, we applied the `-k` flag to ensure that the e-mails only get
+    fetched from the server but never deleted (which is the default when using the
+    POP3 protocol). Finally, we used `-v` to make the output more verbose and give
+    us more information for our simple test. If your e-mail provider supports SSL,
+    you also need to add a `-ssl` flag to the Fetchmail command as well as the root
+    certificate of the mail server (see the next section for more information). If
+    you run the previous command, Fetchmail will immediately start asking the mail
+    server for any mail in the inbox on the server and download anything to your user's
+    local mailbox.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In this section, we will show you how to configure Fetchmail to download all
+    your e-mails from some real-life mail providers using POP3S, IMAPS, and the POP3
+    and IMAP protocols to your local mailbox on the Postfix server using a configuration
+    file. Finally, we will show you how to automate the Fetchmail process.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Configuring Fetchmail with gmail.com and outlook.com e-mail accounts
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Here we will configure the different external mail accounts which Fetchmail
+    will download from: the popular [gmail.com](http://gmail.com) and [outlook.com](http://outlook.com)
+    e-mail providers and a hypothetical one at `my-email-server.com`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: As we learned in the main recipe that Fetchmail processes configuration options
+    on the command line by default, this should not be your preferred way of using
+    Fetchmail to download your mail from different mail accounts automatically. Normally
+    Fetchmail should be running as a service in daemon mode in the background at boot
+    time or with a `cron` job and polls a list of mail servers defined in a special
+    configuration file at specific time intervals. With this you can conveniently
+    configure multiple mail servers and a long list of other options.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: At the time of writing this book, for [gmail.com](http://gmail.com) to work
+    with Fetchmail you need to login to the [gmail.com](http://gmail.com) website
+    with your user account and first enable IMAP by going to your accounts settings
+    in **Forwarding and POP/IMAP**. Also, enable **Allow less secure apps** under
+    **Sign-in & security** in **My account**. For [outlook.com](http://outlook.com),
+    login to your mail account on the webpage, then click on **options**, again click
+    on **options**, then click on **Connect devices and apps with POP**, and then
+    click on **enable POP**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Both [outlook.com](http://outlook.com) and [gmail.com](http://gmail.com) use
+    secure POP3S and IMAPS protocols, so you need to download and install the root
+    certificates they are signing their SSL certificates with on your Fetchmail server
+    first in order to be able to use their services. Here we can install the Mozilla
+    CA certification bundle, which has been compiled by the Mozilla foundation and
+    includes the most commonly used root server certificates used by all major websites
+    and services, such as those used by our mail providers. For [gmail.com](http://gmail.com)
+    we need the Equifax Secure Certificate Authority root certificate and for [outlook.com](http://outlook.com)
+    we need the root server certificate from Globalsign. Fetchmail needs these root
+    certificates to verify the validity of any other SSL certificate downloaded from
+    the e-mail server. Login as root on your Postfix server and install the following
+    package:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE56]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Afterwards, login as a Linux system user, for example, `john`, who we will
+    create a new Fetchmail configuration file for, and who already has a local Postfix
+    mailbox directory on our server located in his home directory under `~/Maildir`.
+    Now before configuring any account in the Fetchmail configuration file, you should
+    always first test if the connection and authentication to the specific account
+    are working with the Fetchmail command line, as shown in the previous recipe.
+    For testing our different mail providers'' accounts, we need three different command
+    line calls. For testing if your provider is using SSL encryption, you need the
+    `–ssl` flag; a typical output for a mail provider who is not allowing non-SSL
+    connections could be:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE57]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If your google and outlook username is `johndoe` at both mail providers for
+    testing google with the IMAPS protocol try (enter your e-mail user''s password
+    when prompted):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE58]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If the login was successful, the output should be similar to (truncated):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE59]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'For testing [outlook.com](http://outlook.com) with POP3S, use:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE60]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'On success, the output should be similar to (it has been truncated):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE61]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'For our third hypothetical e-mail account at `my-email-server.com,` we will
+    use POP3 or IMAP without SSL so test it using our account:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE62]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You should also check if all the fetched mails from your external providers
+    have been downloaded correctly. View your system user''s local mailbox using the
+    `mailx` command (`mailx -f ~/Maildir`). After we successfully verify that Fetchmail
+    is able to connect to the servers and fetch some mails, we now can proceed to
+    create a local Fetchmail configuration file in our system user''s home directory
+    in order to automate this process and configure multiple mail addresses. Start
+    by opening a new empty file using `vi ~/.fetchmailrc`. Remember that all the commands
+    which can be put on the command line can also be used with slightly different
+    names in the configuration file (and much more). Now put in the following content
+    (replace `john` with your actual Linux system user, `johndoe` with your e-mail
+    user account name, and `secretpass` with your actual mail password for this account):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE63]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Save and close this file. In this file, we used the following important commands:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`postmaster`: Defines the local Linux user which will receive all the warning
+    or error mails if Fetchmail runs into problems.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`logfile`: Defines a filename for a log file, which can be very helpful for
+    us to supervise and debug Fetchmail output when it''s running continuously over
+    a long period of time in the background.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`poll` section: Specifies downloading mails from a specific mail provider.
+    For every mail account, you will define one such poll section. As you can see
+    here, the syntax is very similar to the one used on the command line when we tested
+    the single connections. With `proto` we define the `mail` protocol, `user` is
+    the login user for the mail account, `password` is the login password of your
+    account, and with the `is <username> here` parameter you specify which local system
+    user account this mail account is tied to. For SSL connections you need the `ssl`
+    flag, and we specified the `fetchall` parameter to make sure we also download
+    all the e-mail messages flagged as `read` by the e-mail provider as otherwise
+    Fetchmail would not download e-mails that have already been read.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Next change the permissions of the `.fetchmailrc` file because it contains
+    passwords and should therefore not be read by anyone other than our own user:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE64]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Finally, we execute Fetchmail with the settings given in our configuration
+    file. For testing, we will use a very verbose parameter here: `fetchmail -vvvv`.
+    All the new mails from all your different e-mail providers should now be fetched,
+    so afterwards you should go through the output and see if every server was ready
+    and could be polled just as the single tests we did on the command line tests
+    earlier. All the new mails should have been downloaded to the local mailbox, so
+    in order to read your local mails you can use the `mailx` command as usual, like:
+    `mail -f ~/Maildir`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Automating Fetchmail
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: As just said, we can now manually start the polling process every time we want
+    by just typing in `fetchmail` on the command line. This will poll and fetch all
+    new mails from the mail servers specified in our new configuration file and then
+    after processing each entry once it will exit the program. Now what's still missing
+    is a mechanism to continuously query our mail servers at a specific interval updating
+    our mailbox whenever new mails can be fetched. Here you can use two approaches.
+    Either run the `fetchmail` command as a cron job or as an alternative you can
+    start Fetchmail in daemon mode (use the parameter `set daemon` in your `.fetchmailrc`
+    config file to activate it.) and put it in the background. This way Fetchmail
+    will run constantly and wake up at a given time point and start the polling until
+    everything finishes processing and then go back to sleep until the next interval
+    has been reached.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'As both methods are basically the same, here we will show you how to run Fetchmail
+    as a cron job, which is much easier to set up because we don''t have to create
+    some custom systemd service files (currently in CentOS 7 there is no `fetchmail
+    systemd` service available out-of-the box). For every system user (for example,
+    `john`) who has a `fetchmail` configuration file, to start the e-mail server polling
+    process every 10 minutes type in the following command once to register the cron
+    job:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE65]'
+  prefs: []
+  type: TYPE_PRE
+- en: Note
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Do not set the Fetchmail polling cycle shorter than every 5 minutes; otherwise,
+    some mail providers may block or ban you, as it just overloads their systems.
+  prefs: []
+  type: TYPE_NORMAL

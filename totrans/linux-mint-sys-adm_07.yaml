@@ -1,0 +1,386 @@
+- en: Chapter 7. Networking
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '*Nowadays, computers work together through network-sharing resources such as
+    files, folders, and printers. In fact, the Internet is a huge network where computers
+    are working to exchange data. In this chapter, you''ll learn how to carry out
+    some basic system administrator tasks related to networking.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In this chapter, we will learn about the following topics:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Configuring wired and wireless networks
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Accessing Window's shared folders
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Connecting to servers through the FTP protocol
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Configuring a wired network
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Although wireless networks are very extended, a lot of companies and universities
+    still use a wired computer network. We're going to learn how to configure our
+    computer to access a local network, and also access the Internet. Keep in mind
+    that before accessing the Internet from a local network, you need to access the
+    network itself.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – configuring your connection
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'Let''s say we want to connect our computer to a local network using a static
+    IP of `192.168.1.45`. We know that the DNS server is using `8.8.8.8` as an IP
+    address. Also, our gateway can be reached at `192.168.1.125`. Perform the following
+    steps to configure your connection:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Launch the **Control Center** tool from the main menu.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Click on the **Network** button inside the **Internet and Network** group.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Now you have access to a window called **Network Settings**.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Click on the **Click to make changes** button.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Before continuing to the next step, you should be authenticated. So, you need
+    to enter your password and click on the **Authenticate** button when you're ready.
+    The first tab, called **Connections**, has an option named **Wired** **connection**;
+    click on it, as shown in the following screenshot:![Time for action – configuring
+    your connection](img/9601_07_01.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Click on the **Properties** button of the **Network Settings** window.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Select **Static IP address** from the **Configuration** drop-down menu and enter
+    **192.168.1.45** on the **IP address** input box. After that, the input box loses
+    focus and the **Subnet mask** input box will be filled automatically. Enter **192.168.1.125**
+    in the **Gateway address** input box. All these settings are shown in the following
+    screenshot:![Time for action – configuring your connection](img/9601_07_02.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Click on the **OK** button when you're done.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Click on the **DNS** tab, and click on the **Add** button. Now, you can enter
+    `8.8.8.8` in the first input box. Click on the **Close** button when you're ready;
+    your network is now configured.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We have learned how to connect to a local network through a simple GUI application
+    included in Linux Mint. Although some system administrators prefer to use the
+    command-line interface, it's pretty easy and intuitive to use this graphical interface.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In our example, we configured our network card, assigning it a static IP address
+    and setting a gateway and a specific server as **Domain Name Server** (**DNS**).
+    The functionality of this kind of server is very important, because it resolves
+    domain names into IP address.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Although the **Network Settings** application automatically configures the subnet
+    mask, you can also add your own data. Note that the subnet mask is calculated
+    based on the IP address that you have entered.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Some networks use automatic configuration based on **Dynamic Host Configuration
+    Protocol** (**DHCP**) instead of using static IP addresses. In that case, you
+    can configure your network access by selecting **Automatic configuration (DHCP)
+    for Configuration** from the drop-down menu.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Have a go hero – changing the hostname
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: If you want, it's possible to change your hostname. You need to use the same
+    application that you used for configuring your network. Simply access the **General**
+    tab and enter your new hostname in the **Host name** input box.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Configuring the wireless network
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Nowadays, wireless networks are very popular; companies, universities, airports,
+    and coffee shops use this kind of network to establish connections to the Internet.
+    We will learn how to configure your Linux Mint computer to use a wireless network.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – how to connect your computer to a wireless network
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Imagine we need to connect our computer to a wireless network that is using
+    **Testing** as **SSID** and the **WEP-128** method for security. Also, we're going
+    to use the same data for the **IP address**, **Subnet mask**, and **Gateway address**
+    input boxes as we used when we configured our network in the previous section.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Launch the **Control Center** tool from the main menu.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Click on the **Network Connections** option from the **Other** group.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Click on the **Wireless** tab, and then click on the **Add** button.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Now you have a new window where you can add your configuration data. Choose
+    a name for your connection, add **Testing** to the **SSID** input box, and click
+    on the **Save...** button when you're ready, as shown in the following screenshot:![Time
+    for action – how to connect your computer to a wireless network](img/9601_07_03.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Click on the **Wireless Security** tab and choose **WEP 128-bit Passphrase**
+    from the **Security** drop-down menu. Inside the **Key** textbox, enter `MyKey`.
+    If you want to make sure what you are entering is correct, check the **Show key**
+    checkbox:![Time for action – how to connect your computer to a wireless network](img/9601_07_04.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Now it's time for setting your IP properties. Click on the **Add** button and
+    enter `192.168.1.45` for the **IP address** input box, `255.255.255.0` for the
+    **Subnet mask** input box, and `192.168.1.125` for the **Gateway address** input
+    box.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Click on the **Save...** button. Your wireless network is now configured.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Mint offers us a simple but effective graphic tool to configure our wireless
+    connection. You've learned how to do that using manual configuration for your
+    IP address, subnet mask, and gateway. Also, our example used the **WEP 128-bit**
+    method for security. This method needs a key, which we need to type. If the network
+    that you are trying to configure is using a different security method, you can
+    select it accordingly. Other available methods for security are **WEP 40/128-bit**,
+    **LEAP**, **dynamic WEP**, and **WPA**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: On the other hand, similar to a wired network, you can use DHCP instead of a
+    manual configuration. It depends on your wireless network.
+  prefs: []
+  type: TYPE_NORMAL
+- en: By now, you must have noticed that inside the configuration window there exists
+    a marked option that allows you to connect automatically to the wireless network.
+    Thanks to this option, your computer will be connected to the wireless network
+    every time it boots.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If your computer has a wireless card, Mint will try to autodetect, by default,
+    which wireless networks are available. You can configure your connection by choosing
+    any one of them.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Accessing a Windows-shared folder
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: It is very useful to share resources such as folders, files, and printers inside
+    a computer network. Usually, computers in the same network may be using different
+    operating systems. Because Windows is one of the most widely used operating system,
+    more than one computer inside your network can use it. Keeping this fact in mind,
+    it could be very interesting to know how to access a Windows-shared folder from
+    Linux.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – how to access a specific shared folder
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'We''re going to access a shared folder called `windows_shared`, which exists
+    in a Windows 7 computer and is accessible from your Linux Mint computer over the
+    network. This is how we can access a specific shared folder:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In your Linux Mint desktop, you can see an icon depicted as a labeled folder,
+    indicating that this icon represents your home folder. This icon gives you access
+    to **Caja**, the Linux Mint file manager. For example, if your username is **john**,
+    the icon label would be **john's Home**.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Caja is now opened and you can see an icon with the **Network** label; click
+    on it.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: At this point, you should see an icon that represents a Windows PC. This icon
+    will use a label with the name of the Windows hostname's computer. Click on it
+    to access the shared folders. For example, in the following screenshot, it is
+    named **AL-PC**:![Time for action – how to access a specific shared folder](img/9601_07_05.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: A new dialog window, asking you about your username, password, and domain, will
+    be now displayed. Enter your data and click on the **Connect** button when you're
+    ready.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Now, the **windows_shared** folder will be available in the Windows manager.
+    You can now double-click on it to access the files inside it.![Time for action
+    – how to access a specific shared folder](img/9601_07_07.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Thanks to Samba, it is now possible to access shared folders in Windows from
+    Linux. From the technical point of view, Samba is a free reimplementation of the
+    **SMB/CIFS** networking protocol. This protocol operates as an application-layer
+    network and is used by Windows for sharing files, printers, and other resources.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Obviously, before accessing the Windows-shared folders from Linux, you need
+    to know some important information, such as workgroup, username, and password.
+    This data should be provided by the Windows system administrator.
+  prefs: []
+  type: TYPE_NORMAL
+- en: By default, Linux Mint explores your network for discovering which computers
+    are accessible. This happens when you click on the **Network** button of Caja.
+    When your Windows computer is detected and you click on its icon, you can enter
+    your data to access these shared folders. Then, you can work with the files inside
+    this folder as if they were locally inside your computer.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Remember that, by default, all shared folders will be displayed on Caja after
+    authentication. However, you can only access those folders with permissions from
+    a user who is connected to a Windows PC.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Connecting to servers
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: It's very common for servers on the Internet to provide access to other servers
+    and computers by using different network protocols. **FTP** , **SSH** , and **WebDAV**
+    are common protocols to access remote servers, and hence it would be very interesting
+    to know how to connect with other computers from Linux Mint using these protocols.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – connecting to an FTP server
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: We're going to connect to a public FTP server, which provides access to Linux
+    kernel resources. It can be reached at [ftp.kernel.org](http://ftp.kernel.org);
+    we don't need any username or password to access it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Open the Caja file manager by clicking on the **Home Folder** option, which
+    is accessible through the main menu, in the **Places** group.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Go to the **File** menu, and click on **Connect to server**.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: A new dialog will be displayed. Choose **Public FTP** from the **Service** drop-down
+    menu. Enter **ftp.kernel.org** in the **Server** textbox as shown in the following
+    screenshot:![Time for action – connecting to an FTP server](img/9601_07_08.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: You can see all the available folders through the FTP server in your file manager
+    window, as shown here:![Time for action – connecting to an FTP server](img/9601_07_09.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The Caja file manager helps us connect to servers using different network protocols.
+    In our example, we've learned how to connect to a public FTP server. This kind
+    of server doesn't need a username and password combination. If you need to connect
+    to one of these servers, you can choose the **FTP (with login)** option from the
+    **Service** drop-down menu. Once the connection is established, you can access
+    the files and folders through Caja as if they were in your computer. This means
+    you can copy content directly from another file manager window using the drag-and-drop
+    technique.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Inside the connection dialog, you can see that an option called **Add bookmark
+    exists**. By selecting that option, a shortcut will be created in your file manager.
+    Thanks to this functionality, you can quickly access your most common server connections.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Have a go hero – connecting to a server using the secure WebDAV protocol
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Try connecting to a server through the secure WebDAV protocol. You can follow
+    the same steps as explained before for connecting to a public FTP server. We only
+    need to select **Secure WebDAV (HTTPS)** from the **Security** drop-down menu.
+    Also, you can enter your username for the server, and the default folder name
+    where the connection will be established.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Summary
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: We learned a lot in this chapter about how to perform some basic networking
+    operations.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Specifically, we covered the following topics:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Connecting to wired and wireless networks
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Accessing remote computers using the FTP and WebDAV protocols
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Connecting to a Windows-shared folder
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Now that you know how to deal with networks, it's time to learn about the different
+    types of available filesystems and how to make and restore backups.
+  prefs: []
+  type: TYPE_NORMAL

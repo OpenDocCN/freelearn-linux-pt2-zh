@@ -1,0 +1,817 @@
+- en: Chapter 13. Operating System-Level Virtualization
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'In this chapter, we will cover:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing and configuring Docker
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Downloading an image and running a container
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Creating your own images from Dockerfiles and uploading to Docker Hub
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Setting up and working with a private Docker registry
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Introduction
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This chapter is a collection of recipes that provides the essential steps to
+    install, configure, and work with Docker, which is an open platform to build,
+    ship, share, and run distributed applications through operating-system-level virtualization,
+    a technology that has been around for many years in the Linux world and can provide
+    speed and efficiency advantages over traditional virtualization technologies.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing and configuring Docker
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Traditional virtualization technologies provide *hardware virtualization*, which
+    means they create a complete hardware environment so each **virtual machine**
+    (**VM**) needs a complete operating system to run it. Therefore they have some
+    major drawbacks because they are heavyweight and produce a lot of overhead while
+    running. This is where the open-source Docker containerization engine offers an
+    attractive alternative. It can help you build applications in Linux containers,
+    thus providing application virtualization.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This means that you can bundle any Linux program of choice with all its dependencies
+    and its own environment and then share it or run multiple instances of it, each
+    as a completely isolated and separated process on any modern Linux kernel, thus
+    providing native runtime performance, easy portability, and high scalability.
+    Here, in this recipe, we will show you how to install and configure Docker on
+    your CentOS 7 server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to download additional `rpm` packages
+    and a test Docker image.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: While Docker is available as a package in the official CentOS 7 repository,
+    we will use the official Docker repository to install it on our system instead.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To begin, log in as root and update your YUM packages before downloading and
+    executing the official Docker Linux installation script using the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, enable Docker at boot time before starting the Docker daemon (the first
+    time you start, it will take a while):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, after starting Docker you can verify that it''s working by typing:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: When installing any software on CentOS 7, most of the time it is a very good
+    advice to use the packages available in your official CentOS repository instead
+    of downloading and installing from third-party locations. Here by installing Docker
+    using the official Docker repository instead we made an exception. We did this
+    because Docker is a very young project and is evolving fast, and it keeps changing
+    a lot. While you can use Docker for running every Linux application, including
+    critical web servers or programs dealing with confidential data, bugs found or
+    introduced into the Docker program can have severe security consequences. By using
+    the official Docker repository, we make sure we always get the latest updates
+    and patches available as fast as possible right from the developers of this fast-moving
+    project. So anytime you type `yum update` in the future, your package manager
+    will automatically query and check the Docker repos to see if there is a new version
+    of Docker available for you.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We started this recipe by logging into our server as root and updated the YUM
+    package''s database. Then we used a command to download and execute the official
+    Docker installation script from [https://get.docker.com/](https://get.docker.com/)
+    in one step. What this script does is add the official Docker repository to the
+    YUM package manager as a new package source and then automatically install Docker
+    in the background. Afterwards, we enabled the Docker service at boot-time and
+    started it by using `systemd`. Finally, to test our installation, we issued the
+    command `docker run hello-world`, which downloads a special image from the official
+    Docker registry to test our installation. If everything went fine, you should
+    see the following success message (output truncated):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: This message shows that your installation appears to be working correctly.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Downloading an image and running a container
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'A common misconception is that Docker is a system for running containers. Docker
+    is only a build-tool to wrap up any piece of Linux based software with all its
+    dependencies in a complete filesystem that contains everything it needs to run:
+    code, runtime, system tools, and system libraries. The technology to run Linux
+    containers is called operating-system-level virtualization and provides multiple
+    isolated environments built in every modern Linux kernel by default. This guarantees
+    that it will always run the same, regardless of the environment it is deployed
+    in; thus making your application portable. Therefore, when it comes to distributing
+    your Docker applications into Linux containers, two major conceptional terms must
+    be introduced: **Docker images** and **containers**. If you ever wanted to set
+    up and run your own WordPress installation, in this recipe we will show you how
+    to do so the fastest way possible by downloading a pre-made WordPress image from
+    the official Docker hub; we will then run a container from.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to facilitate the download of additional
+    Docker images. It is expected that Docker has already been installed and is running.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The official WordPress image from Docker Hub does not contain its own MySQL
+    server. Instead it relies on it externally, so we will start this recipe by installing
+    and running a MySQL docker container from Docker Hub.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To begin, log in as root and type the following command by replacing `<PASSWORD>`
+    in the following command with a strong MySQL database password of your own choice
+    (at the time of writing, the latest WordPress needs MySQL v.5.7; this can change
+    in the future, so check out the official WordPress Docker Hub page):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, install and run the official WordPress image and run an instance of it
+    as a Docker container, connecting it to the MySQL container (providing the same
+    `<PASSWORD>` string from the previous step):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now the MySQL and WordPress container should already be running. To check the
+    currently running containers, type:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'To get all the Docker WordPress container settings, use:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'To check the container''s log file for our WordPress container, run the following
+    command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Open a browser on a computer in the same network as the server running the
+    Docker daemon and type in the following command to access your Wordpress installation
+    (replace IP address with the one from your Docker server):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A Docker image is a collection of all the files that make up a software application
+    and its functional dependencies, as well as information about any changes as you
+    modify or improve on its content (in the form of a change log). It is a non-runnable,
+    read-only version of your application and can be compared to an ISO file. If you
+    want to run such an image, a Linux container will be created out of it automatically
+    by cloning the image. This is what then actually executes. It's a real scalable
+    system because you can run multiple containers from the same image. As we have
+    seen, Docker is really not only the tools you need to work with images and containers
+    but a complete platform as it also provides tools to access already pre-made images
+    of all kinds of Linux server software. This is really the beauty of the whole
+    Docker system because most of the time you don't have to reinvent the wheel twice
+    trying to create your own docker image from scratch. Just go to the Docker Hub
+    ([https://hub.docker.com](https://hub.docker.com)), search for a software you
+    want to run as a container, and when you find it then just use the `docker run`
+    command, providing the Docker Hub name of the image, and you are done. Docker
+    really can be a life-saver when thinking about all the endless hours trying to
+    get the latest trendy programs to work with all the dependencies you need to compile
+    and trying to get it to install.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We started our journey by using the `docker run` command which downloaded two
+    images from the remote Docker Hub repos and put them into a local image store
+    (called `mysql:5.7` and `wordpress`) and then run them (create containers out
+    of them). To get a list of all the images downloaded on our machine, type `docker
+    images`. As we have seen, both `run` command lines provided the `-e` command line
+    parameter, which we need to set some essential environment variables that will
+    then be visible within the container. These include the MySQL database we want
+    to run and the MySQL root password to set and access them. Here we see a very
+    important feature of Docker: containers that can communicate which each other!
+    Often you can just stack your application together from different Docker container
+    pieces and make the whole system very easy to use. Another important parameter
+    was `-p` which is used to create a port mapping from our host port `8080` to the
+    internal HTTP port 80 and opens the firewall to allow incoming traffic on this
+    port as well. `--restart=always` is useful to make the image container restartable,
+    so the containers automatically get restarted on reboot of the host machine. Afterwards,
+    we introduced you to Docker''s `ps` command line parameter which prints out all
+    running Docker containers. Here the command should print out two running containers
+    called `wordpressdb` and `wordpress`, together with their `CONTAINER_ID`. This
+    ID is a unique MD5 hash we will use all the time in most of the Docker command
+    line inputs whenever we need to reference a specific container (in this recipe
+    we referenced by container name which is also possible). Afterwards, we showed
+    you how to print out a container''s configuration by using the `inspect` parameter.
+    Then, to get the Wordpress container''s log file in an open stream, we used the
+    log `-f` parameter. Finally, since the `-p 8080:80` mapping allows incoming access
+    to our server at port 8080, we could then access our Wordpress installation from
+    any computer in the same network using a browser. This will open the Wordpress
+    installation screen.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Note that if you have any connection problems while downloading any containers
+    from Docker at any time, such as `dial tcp: lookup index.docker.io: no such host`,
+    restart the Docker service before trying again.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In this section, we will show you how to start and stop a container and how
+    to attach to your container.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Stopping and starting a container
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'In the main recipe, we used Docker''s `run` command which is actually a wrapper
+    for two other Docker commands: `create` and `start`. As the names of these commands
+    suggest, the `create` command creates (clones) a container from an existing image
+    and if it does not exist in the local image cache then it downloads it from a
+    given Docker registry (such as the predefined Docker hub), while the `start` command
+    actually starts it. To get a list of all the containers (running or stopped) on
+    your computer, type: `docker ps -a`. Now identify a stopped or a started container,
+    and find out its specific `CONTAINER_ID`. Then we can start a stopped container
+    or stop a running one by providing the correct `CONTAINER_ID` such as `docker
+    start CONTAINER_ID`. Examples are: `docker start 03b53947d812` or `docker stop
+    a2fe12e61545` (the `CONTAINER_ID` hashes will vary on your computer).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Sometimes you need to remove a container; for example, if you want to completely
+    change its command line parameters when creating from an image. For removing a
+    container, use the `rm` command (but remember that it has to be stopped before):
+    `docker stop b7f720fbfd23; docker rm b7f720fbfd23`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Attaching and interacting with your container
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Linux containers are completely isolated processes running in a separated environment
+    on your server and there is no way to log in to it like logging into a normal
+    server using `ssh`. If you need to access your containers BASH shell then you
+    can run the `docker exec` command, which is particularly useful for debugging
+    problems or modifying your container (for example, installing new packages or
+    updating programs or files in it). Note that this only works on running containers
+    and you need to know your container''s ID before (type `docker ps` to find out)
+    you run the following command: `docker exec -it CONTAINER_ID /bin/bash,` for example
+    `docker exec -it d22ddf594f0d /bin/bash`. Once successfully attached to the container,
+    you will see a slightly changed command-line prompt with the `CONTAINER_ID` as
+    hostname; for example, `root@d22ddf594f0d:/var/www/html#`. If you need to exit
+    your container, type `exit`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Creating your own images from Dockerfiles and uploading to Docker Hub
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Besides images and containers, Docker has a third very important term called
+    a **Dockerfile**. A Dockerfile is like a recipe on how to create an environment
+    for a specific application, which means that it contains the blueprint and exact
+    description on how to build a specific image file. For example, if we would like
+    to containerize a webserver-based application, we would define all the dependencies
+    for it, such as the base Linux system that provides the system dependencies such
+    as Ubuntu, Debian, CentOS, and so on (this does not mean we *virtualize* the complete
+    operating system but just use the system dependencies), as well as all applications,
+    dynamic libraries, and services such as PHP, Apache, and MySQL in the Dockerfile
+    and also all special configuration options or environment variables. There are
+    two ways to build your own custom images. One, you could download an existing
+    base image as we did in the previous Wordpress recipe and then attach to the container
+    using BASH, install your additional software, make the changes to your configuration
+    files, and then commit the container as a new image to the registry. Alternatively,
+    here in this recipe, we will teach you how to build your own Docker image from
+    a new Dockerfile for an Express.js web application server and upload it to your
+    own Docker Hub account.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to communicate with the Docker Hub.
+    It is expected that Docker is already installed and is running. Also, for uploading
+    your new image to the Docker Hub, you need to create a new Docker Hub user account
+    there. Just go to [https://hub.docker.com/](https://hub.docker.com/) and register
+    there for free. In our example, we will use a fictitious new Docker Hub user ID
+    called `johndoe`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To begin, log in as root and create a new directory structure using your Docker
+    Hub user ID (substitute the `johndoe` directory name appropriately with your own
+    ID), and open an empty Dockerfile where you put in your image''s building blueprint:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Put in the following content into that file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Save and close the file. Now create your first Express.js web application,
+    which we will deploy on the new container. Open the following file in the current
+    directory:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now put in the following JavaScript content:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now to build an image from this Dockerfile, stay in the current directory and
+    use the following command (don''t forget the dot at the end of this line and replace
+    `johndoe` with your own Docker Hub ID):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'After successfully building the image, let''s run it as a container:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, test if we can make an HTTP request to our new Express.js web application
+    server running in our new container:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'If the Docker image is successfully running on the Express.js server, the following
+    HTTP response should occur (truncated to the last line):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Uploading your image to the Docker Hub
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'After creating a new Docker Hub account ID called `johndoe`, we will start
+    to login to the site using the following command—stay in the directory where you
+    put your Dockerfile from the last step–for example `~/johndoe/centos7-expressjs`
+    (provide the username, the password, and the registration e-mail when asked):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, to push your new image created in this recipe to the Docker Hub (again
+    replace `johndoe` with your own user ID), use:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'After uploading, you will be able to find your image on the Docker Hub web
+    page search. Alternatively, you can use the command line:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here in this short recipe, we showed you how to create your first Dockerfile
+    which will create a CentOS 7 container to serve Express.js applications, which
+    is a modern alternative to LAMP stacks where you program JavaScript on the client-and
+    server-side.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: As you can see, a Dockerfile is an elegant way to describe all the instructions
+    on how to create an image. The commands are straight-forward to understand and
+    you use special keywords to instruct Docker what to do in order to produce an
+    image out of it. The `FROM` command tells Docker which base image we should use.
+    Fortunately, someone has already created a base image from the CentOS 7 system
+    dependencies (this will be downloaded from Docker Hub). Next, we used the `RUN`
+    command, which just executes commands as on a BASH command-line. We use this command
+    to install dependencies on our system in order to run Express.js applications
+    (it's based on the Node.js rpm package which we access by installing the EPEL
+    repository first). The `COPY` command copies files from our host machine to a
+    specific location on the container. We need this to copy our `index.js` file which
+    will create all our Express.js web server code in a later step on to the container.
+    `EXPOSE`, as the name implies, exposes an internal container port to the outside
+    host system. Since by default Express.js is listening on 8080, we need to do this
+    here. While all these commands shown up to this point will only be executed once
+    when creating the image, the next command `CMD` will be run every time we start
+    the container. The command `node /src/index.js` will be executed and instructs
+    the system to start the Express.js web server with the `index.js` file (which
+    we already provided in this directory by copying it from the host machine). We
+    don't want to go into any details about the JavaScript part of the program—it
+    just handles HTTP GET requests and returns the `Hello World` string. In the second
+    part of this recipe, we showed you how to push our new created image to the Docker
+    Hub. In order to do so, login with your Docker user account. Then we can push
+    our image to the repository.
+  prefs: []
+  type: TYPE_NORMAL
+- en: As this is a very simple Dockerfile, there is much more to learn about this
+    subject. To see a list of all the commands available in the Dockerfile, use `man
+    Dockerfile`. Also, you should visit the Docker Hub and browse the Dockerfiles
+    (under the section *Source Repository hosted on GitHub*) of some interesting projects
+    to learn how to create some highly sophisticated image files with just a handful
+    of commands on your own.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Setting up and working with a private Docker registry
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: While we have learned in a former recipe in this chapter how easy it is to upload
+    our own images to the official Docker Hub, everything we put there will be exposed
+    to the public. If you work on a private or closed-source project within a corporate
+    environment or just want to test things out before publishing to everyone, chances
+    are high that you would prefer your own, protected or cooperate-wide private Docker
+    registry. Here in this recipe we will show you how you can set up and work with
+    your own Docker registry that will be available in your own private network and
+    which will be protected by TLS encryption and which will use user authentication
+    so you can control exactly who can use it (push and pull images to and from it).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to facilitate the download of additional
+    packages. In our example, we will install the Docker Registry on a server with
+    the IP address `192.168.1.100`. Change the recipe's commands appropriately to
+    fit your needs. You need to have set a FQDN for this server, otherwise the registry
+    will not work. For simplicity, we will use the `/etc/hosts` approach instead of
+    setting up and configuring a DNS server (see [Chapter 9](part0080_split_000.html#2C9D01-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 9. Working with Domains"), *Working with Domains* if you would like to
+    do this instead). Also, you need an Apache web server on your Docker server running
+    which must be accessible from your whole private network.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Complete all the following steps in this recipe with user root on every computer
+    in your network you want to connect to the Docker registry!
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'On each computer you want to access your Docker registry, as well as on our
+    Docker registry server itself, with the IP address `192.168.1.100`, define the
+    domain name of the Docker registry, which in our example will be `dockerserver.home`
+    (replace the `dockerserver.home` part appropriately if you use a different domain
+    name):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now we will define the FQDN of our Docker server registry on each computer
+    in our network we want to use the registry on (as well as on the Docker registry
+    server itself). Log in as root on every machine and type the following command.
+    Skip this step if you have already defined your Docker registry''s server''s domain
+    name via a BIND DNS server (change the IP address of your Docker service `192.168.1.100`
+    appropriately):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Steps to be done on our Docker registry server (192.168.1.100)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'First create a TLS certificate for our Docker registry certificate (use the
+    FQDN you defined in DCKREG when asked for a `Common name` (for name; for example
+    your name or your server''s hostname) `[]:dockerserver.home`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, we need to copy the new certificate to the Docker trusted certificate''s
+    location as well as to the system''s default trusted certificate location and
+    rebuild the certificate index:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Also, copy the certificate to our Apache web server so we can easily access
+    it from the Docker clients later:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, we will finally download, create, and run our Docker registry as a container:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now check if the registry is running (in the output you should find it listening
+    on `[::]:5000`, `tls`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'For setting up user authentication for our registry, use the following command
+    (here we use `johndoe` as the username and `mysecretpassword` as the password
+    for authentication. Change these two values to fit your needs. Repeat this command
+    for every user account you want to have later for your users to login):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next restart the registry to apply your user account changes:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now create a new firewalld service and activate it in our firewall to make
+    incoming connections to our new Docker registry port `5000` possible:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Steps to be done on every client needing access to our registry
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Finally we can test connecting to our own new TLS-enhanced private Docker registry
+    with user authentication by logging in on any computer in the same network as
+    our Docker registry with root.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'The first step is to install Docker on every client that wants to connect to
+    the Docker registry:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, on every client wanting to connect to our new Docker registry, set up
+    the server''s certificate on the client first before we are able to connect to
+    it (this step has been tested on CentOS 7 clients only):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'For testing, we start by pulling a new small test image from the official Docker
+    Hub. Log in to the official Docker Hub by using your Docker Hub account (see a
+    previous recipe in this chapter):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now pull a small image called `busybox`:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Afterwards, switch the Docker registry server to use our own that we set up
+    in this recipe (enter the username and password, for example, `johndoe / mysecretpassword`.
+    Leave the e-mail field blank):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, to push a Docker image from our client to our new private Docker registry,
+    we need to tag it to be in our registry''s domain:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, push the image to our own registry:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Congratulations! You have just pushed your first image to your private Docker
+    repository. You can now pull this image `$DCKREG:5000/busybox` on any other client
+    set up to communicate to our repository. To get a list of all the available images,
+    use (change the account information accordingly):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In this recipe we showed you how to set up your own Docker registry running
+    in a Docker container on the server. It is very important to understand that you
+    will need to configure a FQDN for your registry server because it is mandatory
+    for the whole system to work.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: We began by configuring the Docker registry's FQDN on every computer using the
+    `/etc/hosts` approach. Then we created a new certificate on the Docker registry
+    server which will be used to communicate securely using TLS encryption between
+    clients and registry. Next we installed the new generated certificate on the `httpd`
+    server, so it is accessible to all the clients later; also in a specific Docker
+    directory to make it accessible for Docker as well; and in the default trusted
+    certificate location of the server where we also rebuilt the certificate cache
+    for this server. Afterwards, we used the `docker run` command to download, install,
+    and run our new Docker registry in a docker container itself on this server. We
+    provided a list of parameters to configure TLS encryption and user authentication.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the next step, we attached to the registry to create new `htpasswd` accounts.
+    You can repeat this step whenever you need new accounts for your registry. Don't
+    forget to restart the registry container afterwards. Next, on every client we
+    want to make communications to our new Docker registry, we need to install the
+    server's certificate also in the same places as on the server itself; thus we
+    downloaded it from the HTTP source implemented previously and copied it to the
+    various locations. To test things out on the client, next we connected to the
+    official Docker Hub to download a random image we wanted to push to our own registry
+    in the next step. We downloaded the `busybox` image to our own image cache and
+    afterwards switched to connecting to our new private Docker registry. Before we
+    could upload the image to the new location, we had to give it a proper tag that
+    fitted the new server name and then we were able to push the image to our new
+    Docker registry. The server is now available at port 5000 in the complete network.
+    Remember that, if you don't want to use your own registry any more on the clients,
+    you can always switch back to the official `docker` repository using `docker login`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There is so much more to learn about Docker. In the recipes of this chapter
+    we only scratched the surface of the Docker platform. If you want to learn more
+    about it, consider going to [https://www.Packtpub.com](https://www.Packtpub.com)
+    and check out one of the many titles available at this website about it.
+  prefs: []
+  type: TYPE_NORMAL

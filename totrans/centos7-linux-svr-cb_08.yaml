@@ -1,0 +1,717 @@
+- en: Chapter 8. Working with FTP
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'In this chapter, we will cover the following topics:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing and configuring the FTP service
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Working with virtual FTP users
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Customizing the FTP service
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Troubleshooting users and file transfers
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Introduction
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This chapter is a collection of recipes that provides the steps to unmask one
+    of the most fundamental services in the Linux world and also provides the necessary
+    starting point required to install, configure, and deliver the file transfer protocol
+    without hesitation.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing and configuring the FTP service
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: While there are several modern and very secure network file sharing technologies,
+    the good old **File Transfer Protocol** (**FTP**) remains one of the most widely
+    used and popular protocols to share and transfer files between computers. There
+    are a number of different FTP servers available in the Linux world. In this recipe,
+    you will learn how to install and configure **very** **secure FTP daemon** (**vsftpd**),
+    which is a well-known FTP server solution that supports a wide range of features
+    and enables you to upload and distribute large files across a local network and
+    the Internet. Here, we will show how to install the vsftpd daemon and provide
+    some basic settings with the main goal being to increase the security of the daemon.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: After working on this recipe, you are advised to use SSL/TLS encryption to further
+    strengthen your FTP server (refer [Chapter 6](part0061_split_000.html#1Q5IA1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 6. Providing Security"), *Providing Security*).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to facilitate the downloading of additional
+    packages. It is expected that your server will be using a static IP address and
+    that it maintains one or more system user accounts.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'vsftpd is not installed by default. For this reason, we must begin this recipe
+    by installing the relevant packages and associated dependencies:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To do this, log in as root and type the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'After we have created a backup copy of it, open the main configuration file
+    in your favorite text editor as follows:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'To disable anonymous users, scroll down and find the following line: `anonymous_enable=YES,`
+    and then change this as follows:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Uncomment (remove `#` at beginning of the line) the following lines to enable
+    the `chroot` environment for more security:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, scroll down to the bottom of the file and add the following line:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, add the following line to enable local users to write to their home
+    directories:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Save and close the file. Then create the following empty file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, configure the firewall to allow incoming FTP connections to the server
+    on port 21:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, we allow SELinux to use the FTP home directory feature:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Enable `vsftpd` at boot:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'To complete this recipe, type the following command to start the FTP service:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, we can test the connection from any client computer in the same network
+    that our FTP server is in. This computer needs a FTP client installed (if its
+    a CentOS computer, install one using `yum install ftp`). Log in to this computer
+    with any account and by typing in the following command that replaces `<IPADDRESS>`
+    with the IP address of the server running your `vsftpd` service:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'On successful connection to the server, the FTP client program will ask you
+    for a username and password. Here, enter a known system user (other than root)
+    from the FTP server. If the login was successful, you will get a `230 login successful`
+    message and a `ftp>` prompt. Now to end our test, type the following FTP command
+    to show all the files in your current `ftp` directory and check whether you have
+    write-access on the remote server:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Type the following command to end your FTP session:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: vsftpd is widely recognized as a fast, lightweight, and reliable FTP server.
+    The purpose of this recipe was to show you how to build a basic FTP service that
+    is optimized to provide excellent performance for any number of valid system users.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: We began the recipe by installing the necessary YUM package called `vsftpd`.
+    We then opened the main configuration file located at `/etc/vsftpd/vsftpd.conf`,
+    after we made a backup copy of it. Next, we disabled anonymous FTP access and
+    thereby secured our FTP service against unknown users. We then restricted users
+    to their home directory by enabling a `chroot` jail.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The `chroot` jail represents an essential security feature; once this is done,
+    all the users will be restricted to access the files in their own home directory
+    only.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We then required `vsftpd` to use local time for our server. Afterwards, we fixed
+    the write permissions for our chrooted FTP users by enabling the `allow_writeable_chroot`
+    option. Having saved our work, we created a new empty `/etc/vsftpd/chroot_list`
+    file, which will hold all the user names that can leave their chroot jails. We
+    have to create this file; otherwise, `vsftpd` will not let us log in to the system.
+    However, you should remember that you must leave it empty all the time because
+    chroot jails are an important protection mechanism for your FTP server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Next, we added the standard FTP protocol's port 21 to our firewall configuration
+    to allow incoming connections. Then, we reloaded the firewall to apply these changes.
+    After this, we activated our FTP home directories by setting the appropriate SELinux
+    boolean variable `ftp_home_dir` to `true`. This will make the directories valid
+    for SELinux. Please read [Chapter 14](part0111_split_000.html#39REE1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 14. Working with SELinux"), *Working with SELinux* to learn more about
+    SELinux. Next, we enabled `vsftpd` on boot and started the service within `systemd`.
+    At this point, `vsftpd` will now be operational and it can be tested with any
+    regular FTP-based desktop software. Users can log in using a valid system username
+    and password by connecting to the server's name, domain, or IP address (depending
+    on the server's configuration).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The purpose of this recipe was to show you that `vsftpd` is not a difficult
+    package to install and configure. There is always more to do but, by following
+    this simple introduction, we have quickly enabled our server to run a standard
+    FTP service.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Having installed and configured a basic FTP service, you may wonder how to direct
+    users to a specific folder within their home directory. To do this, open the main
+    configuration file in an editor of your choice using `/etc/vsftpd/vsftpd.conf`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Scroll down to the bottom of the file and add the following line by replacing
+    the `<users_local_folder_name>` value with something more applicable to your own
+    needs:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'For example, if this FTP server is mainly for accessing and uploading content
+    for an user''s private web pages hosted on the same server, you may configure
+    Apache to use the user''s home directories in a folder called /`home/<username>/public_html`.
+    For this reason, you may add the following reference at the bottom of your `vsftpd`
+    configuration file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: When finished, save and close the configuration file before restarting the `vsftpd`
+    service. When testing this new feature make sure that the `local_root` location
+    exists in the home directory of the user you want to login (for example, `~/public_html`).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Working with virtual FTP users
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this recipe, you will learn how to implement virtual users in order to break
+    away from the restriction of using local system user accounts. During the lifetime
+    of your server, there may be occasions when you wish to enable FTP authentication
+    for a user that does not have a local system account. You may also want to consider
+    implementing a solution that allows a particular individual to maintain more than
+    one account in order to allow access to different locations on your server. This
+    type of configuration implies a certain degree of flexibility afforded by the
+    use of virtual users. Since you are not using a local system account, it can be
+    argued that this approach gives improved security.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges and a console-based text editor of your
+    choice. It is expected that your server will be using a static IP address and
+    that `vsftpd` is already installed with a chroot jail and is currently running.
+    This recipe needs the `policycoreutils-python` package installed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The first step is to login as root on our `vsftpd` server and create a plain
+    text file called `virtual-users.txt` that maintains a list of usernames and passwords
+    of the virtual users. To do this, type the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now add your usernames and corresponding passwords in the following way:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Note
+  prefs:
+  - PREF_IND
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Repeat this process as required for every user you need but, for obvious reasons,
+    maintain a good password policy and do not use the same virtual-username more
+    than once.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: 'When you have finished, simply save and close the file in the usual way. Then,
+    proceed to build the database file by typing the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Having done this, we will now create the PAM file that will use this database
+    to validate the virtual users. To do this, type the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now add the following lines:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'When you have finished, save and close the file in the usual way. Open the
+    main `vsftpd` configuration file in your favorite text editor as follows:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, in the opened file, search for the line `pam_service_name=vsftpd` and
+    disable it by adding a `#` sign at the beginning of the line so that it reads
+    as follows:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Scroll down to the bottom of the file and add the following lines by customizing
+    the value for `local_root` to suit your own specific needs—this will be the base
+    directory in which all your virtual users will *live* in (for example, we will
+    use `/srv/virtualusers/$USER` as shown here):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now create a subfolder for each virtual user you defined in a previous step
+    in your `/tmp/virtual-users.txt` file within the directory that you stated with
+    the `local_root` directive. Remember to delegate the ownership of this folder
+    to the FTP user. To keep up with our `/srv/virtualusers` example, we will use
+    the following commands to do this in an automatic way (again, customize the `/srv/virtualusers`
+    directory if needed):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now we need to inform SELinux to allow read/write access to our custom `local_root`
+    directory outside of the typical `/home` directory:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, restart the FTP service as follows:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'For security reasons, remove the plain text file now and protect the generated
+    database file with this:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Having followed the previous recipe, you will be now able to invite an unlimited
+    number of virtual users to access your FTP service. The configuration of this
+    feature was very simple; your overall security has been improved and all access
+    is restricted to a defined `local_root` directory of your choice. Please note
+    that this usage of virtual users will disable your system users' login to the
+    FTP server from the first recipe.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: We began this recipe by creating a new temporary text file that will contain
+    all our usernames with the corresponding passwords in plain text. We then added
+    all the required usernames and passwords one after another sequentially separated
+    by newlines. Having done this for each of our virtual users, we then saved and
+    closed the file before proceeding to run the `db_load` command that is installed
+    on CentOS 7 by default. This can be used to generate a BerkeleyDB database out
+    of our text file, which will be used for the FTP user authentication later in
+    this process. Having completed this step, our next task was to create a Pluggable
+    Authentication Modules (PAM) file at `/etc/pam.d/vsftpd-virtual`. This reads the
+    previous database file to provide authentication from it for our `vsftpd` service
+    using a typical PAM configuration file syntax (for more, see `man pam.d`). Then,
+    we opened, modified, and added new configuration directives to the main `vsftpd`
+    configuration file at `/etc/vsftpd/vsftpd.conf` in order to make `vsftpd` aware
+    of our virtual users' authentication via PAM.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The most important setting was the `local_root` directive that defines the base
+    location where all your user directories will be placed for your virtual users.
+    Don't forget to put the `$USER` string at the end of your path. You were then
+    prompted to create the relevant virtual hosting folder for every virtual user
+    you have defined in the text file before.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Since virtual users are not real system users, we had to assign the FTP system
+    user to take full ownership of the files for our new FTP users. We used a bash
+    `for` loop to automate the process for all our users defined in the temporary
+    `/tmp/virtual-users.txt` file. Next, we set the proper SELinux boolean to allow
+    virtual users access to the system and also the right context on our `/srv/virtualusers`
+    directory. Applying all these changes was simply a matter of restarting the `vsftpd`
+    service using the `systemctl` command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Afterwards, we removed the temporary user text file because it contains our
+    passwords in plain text. We protected the access to the BerkleyDB database file
+    by removing all access other than root. If you update, add, or remove FTP users
+    on a regular basis, it's better to not delete this temporary plain text `/tmp/virtual-users.txt`
+    file but rather put it in a safe place such as the `/root` directory. Then, you
+    should also protect this using `chmod 600`. Then, you can rerun the `db_load`
+    command whenever you make a change to this file to keep your users up-to-date.
+    If you need to add new users at a later point, you have to create new virtual
+    user folders for them as well (Please rerun the commands from step 9). Run the
+    `restorecon -R -v /srv/virtualusers` command afterwards.
+  prefs: []
+  type: TYPE_NORMAL
+- en: You can now test your new virtual user accounts by logging in to the FTP server
+    using your newly created accounts from this recipe.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Customizing the FTP service
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this recipe, you will learn how to customize your `vsftpd` installation.
+    `vsftpd` has a lot of configuration parameters, and here we will show how to create
+    a custom welcome banner, change the server's default-time out, limit user connections,
+    and ban users from the service.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges and a console-based text editor of your
+    choice. It is expected that your server will be using a static IP address and
+    that `vsftpd` is already installed with a chroot jail and is currently running.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To begin with, log in as root and open the main `vsftpd` configuration file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'First provide an alternative welcome message, uncomment the following line,
+    and alter the message as required. For example, you could use this:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'To change the default FTP time-outs, uncomment these lines and substitute the
+    numeric values as required:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, we will limit the connections: the data transfer rate in bytes per second,
+    the number of clients, and the maximum parallel connections per IP address. Add
+    the following lines to the end of the file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, save and close the file. To ban a specific user, you can use the following
+    commands while replacing the username with an appropriate system user value that
+    fits your needs:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now to apply the changes, restart the FTP service:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In this recipe, we have shown some of the most important `vsftpd` settings.
+    Covering all the configuration parameters here is outside the scope of this recipe.
+    To learn more about it, read through the entire main `vsftpd` configuration file
+    at `/etc/vsftpd/vsftpd.conf,` as it contains a lot of useful comments; alternatively,
+    you can read the `man vsftpd.conf` manual.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: We began by opening the main `vsftpd` configuration file and then activated
+    and customized the welcome banner using the `ftpd_banner` directive. On the next
+    successful login, your users should see your new message. Next, when dealing with
+    a large number of users, you may want to consider changing the values for a default
+    timeout and limit the connections in order to improve the efficiency of your FTP
+    service.
+  prefs: []
+  type: TYPE_NORMAL
+- en: First, we changed our server's timeout numbers. An `idle_session_timeout` of
+    `600` seconds will logout the user if he is inactive (not executing FTP commands)
+    for 10 minutes, while a `data_connection_timeout` of `120` seconds will kill the
+    connections when a client data transfer is stalled (not progressing) for 20 minutes.
+    Then we changed the connection limits. A `local_max_rate` of `1000000` bytes per
+    second will limit the data transfer rate of a single user to roughly one megabyte
+    per second. A `max_clients` value of `50` will tell the FTP server to only allow
+    50 parallel users to the system, while a `max_per_ip` of `2` allows only two connections
+    per IP address.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Then we saved and closed the file. Finally, we showed how to ban users from
+    using our FTP service. If you wanted to ban a specific user from using the FTP
+    service as a whole, the user's name should be added to the `/etc/vsftpd/user_list`
+    file. If you ever need to re-enable the user at any time, simply reverse the previous
+    process by removing the user concerned from `/etc/vsftpd/user_list`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Troubleshooting users and file transfers
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Analyzing log files is the most important technique for troubleshooting all
+    kinds of problems or improving services on Linux. In this recipe, you will learn
+    how to configure and enable vsftpd's extensive logging features in order to help
+    system administrators when problems arise, or simply to monitor usage with this
+    service.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges and a console-based text editor of your
+    choice. It is expected that your server will be using a static IP address and
+    that `vsftpd` is already installed with a chroot jail and is currently running.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To do this, log in as root and type the following command to open the main
+    configuration file in your favorite text editor:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, add the following lines to the end of the configuration file to enable
+    verbose logging features:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, restart the `vsftpd` daemon to apply the changes:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'In this recipe, we have shown how to enable two separate logging mechanism:
+    first, the `xferlog` log file that will log detailed information about user uploads
+    and downloads, then the `vsftpd` log file that contains every FTP protocol transaction
+    between the client and the server outputting the most detailed logging information
+    possible for `vsftpd`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this recipe, we opened the main `vsftpd` configuration file and added two
+    directives to the end of the file. First, `dual_log_enable` will make sure both
+    the `xferlog` and `vsftpd` log files will be used for logging. Afterwards, we
+    increased the verbosity of the `vsftpd` log file by enabling `log_ftp_protocol`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'After restarting the service, the two log files, `/var/log/xferlog` and `/var/log/vsftdp.log,`
+    will be created and filled with useful FTP activity information. Now, before we
+    open the files, let''s create some FTP user activity. Log in with any FTP user
+    on the server using the `ftp` command-line tool and issue the following FTP command
+    at the `ftp>` prompt to upload a random file from the client to the server:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: Now, back on the server, inspect the `/var/log/xferlog` file to see detailed
+    information about the uploaded file and open `/var/log/vsftpd.log` for all other
+    user activities (such as login time or other FTP commands that users issued).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Please note that both the log files only keep track of user and FTP activity
+    and are not meant to debug problems with the `vsftpd` service such as configuration
+    file errors. Use the `systemctl status vsftpd -l` or `journalctl -xn`, to debug
+    general problems with the service.
+  prefs: []
+  type: TYPE_NORMAL

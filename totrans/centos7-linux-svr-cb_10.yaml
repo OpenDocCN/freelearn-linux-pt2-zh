@@ -1,0 +1,1120 @@
+- en: Chapter 10. Working with Databases
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'In this chapter, we will cover:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing a MariaDB database server
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Managing a MariaDB database
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Allowing remote access to a MariaDB server
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Installing a PostgreSQL server and managing a database
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Configuring remote access to a PostgresSQL
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Installing phpMyAdmin and phpPgAdmin
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Introduction
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This chapter is a collection of recipes that deliver the necessary steps to
+    implement and maintain two of the most popular database management systems in
+    the Linux world. The need for data is everywhere and is a *must have service*
+    for almost any server, and this chapter provides the starting point required to
+    deploy these database systems in any environment.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing a MariaDB database server
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Supporting over 70 collations, more than 30 character sets, multiple storage
+    engines, and deployment in virtualized environment, MySQL is a mission-critical
+    database server that is used by production servers all over the world. It is capable
+    of hosting a vast number of individual databases and it can provide support for
+    various roles across your entire network. MySQL server has become synonymous with
+    the **World Wide Web** (**WWW**), is used by desktop software, extends local services,
+    and is one of the world's most popular relational database systems. The purpose
+    of this recipe is to show you how to download, install, and lockdown MariaDB,
+    which is the default implementation of MySQL in CentOS 7\. MariaDB is open source
+    and fully compatible with MySQL and adds several new features; for example, a
+    non-blocking client API library, new storage engines with better performance,
+    enhanced server status variables, and replication.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to download additional packages. It
+    is expected that your server will be using a static IP address.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: As the MariaDB **Database Management System** (**DBMS**) is not installed by
+    default on CentOS 7, we will start this recipe by installing the required packages.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To begin, log in as root and type the following command to install the required
+    packages:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'When complete, ensure the service starts at boot before starting the service:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, begin the secure installation process with the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: When you first run the previous command, you will be asked to provide a password
+    but as this value has not been set, press the *Enter* key to represent the value
+    (blank) none.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Now you will be asked a number of simple questions which will help you in the
+    process of hardening your MariaDB DBMS system. It is a good advice to choose Yes
+    (`Y`) to every question for maximum security unless you are already a MariaDB
+    expert and really require a certain feature.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Finally, test if you can connect and login to the MariaDB service locally using
+    the MariaDB command-line client called `mysql`. The test passes if the following
+    command outputs all the MariaDB user names together with their associated hosts
+    known to the MariaDB server (enter the administrator root password you set in
+    the last step when prompted):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: MariaDB is a fast, efficient, multithreaded, and robust SQL database server.
+    It supports multiple users and provides access to a number of storage engines,
+    and by following a few short steps, you now know how to install, secure, and login
+    to your MariaDB server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: We started the recipe by installing the necessary package for the MariaDB server
+    (`mariadb-server`) and also the client shell interface (`mariadb`) for controlling
+    and querying the server. Having done this, we then proceeded to ensure that the
+    MariaDB daemon (`mariadb.service`) would start during the boot process before
+    we actually started it. At this point we had a working installation, but in order
+    to ensure that our installation was safe we then invoked the secure installation
+    script in order to guide us through a few simple steps to harden our basic installation.
+    As the basic installation process does not enable us to set a default password
+    for the root user, we did it here as a first step in the script, so we could be
+    certain that no one could access the MariaDB root user account without the required
+    authorization. We then discovered that a typical MariaDB installation maintains
+    an anonymous user. The purpose of this is to allow anyone to login to our database
+    server without having to have a valid user account. It is typically used for testing
+    purposes only, and unless you are in unique circumstances that require this facility,
+    it is always advisable to remove this feature. Following this, and to ensure that
+    the root user could not access our MariaDB server installation, we then opted
+    to disallow remote root access before removing the test database and performing
+    a reload of the privilege tables. Finally, we ran a small test to see if we could
+    connect to the database with the root user and query some data from the `user`
+    table (which is part of the standard `mysql` database).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Having completed the steps of the recipe, we have learned that the process of
+    installing and securing the MariaDB server is very simple. Of course, there are
+    always more things that can be done in order to make the installation useful but
+    the purpose of this recipe was to show you that the most important part of installing
+    your new database system was to make it secure. Remember, the act of running `mysql_secure_installation`
+    is recommended for all MariaDB servers and it is advisable regardless of whether
+    you are building a development server or one that is used in a production environment.
+    As a server administrator, security should always remain your top priority.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Managing a MariaDB database
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this recipe, we will learn how to create a new database and database user
+    for the MariaDB server. MariaDB can be used in conjunction with a wide variety
+    of graphical tools (for example, the free MySQL Workbench), but in situations
+    where you simply need to create a database, provide an associated user, and assign
+    the correct permissions, it is often useful to perform this task from the command
+    line. Known as the MariaDB shell, this simple interactive and text based-command
+    line facility supports the full range of SQL commands and affords both local and
+    remote access to your database server. The shell provides you with complete control
+    over your database server, and for this reason it represents the perfect tool
+    for you to start your MariaDB work.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system. It is expected that a MariaDB server is already installed
+    and running on your server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The MariaDB command-line tool supports executing commands in both the batch
+    mode (reading from a file or standard input) and interactively (typing in statements
+    and waiting for the results). We will use the latter in this recipe.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To begin, log in on your CentOS 7 server with any system user you like and
+    type the following command in order to access the MariaDB server using the MariaDB
+    shell with the main MariaDB administration user called `root` (use the password
+    created in the previous recipe):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'On successful login, you will be greeted with the MariaDB command-line interface.
+    This feature is signified by the MariaDB shell prompt:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'In this first step, we will create a new database. To do this, simply customize
+    the following command by substituting an appropriate value for the new `<database-name>`
+    value using:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Note
+  prefs:
+  - PREF_IND
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: If this is your first introduction to the MariaDB shell, remember to end each
+    line with a semi-colon (`;`) and press the *Enter* key after typing each command.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: 'Having created our database, we will now create a MariaDB user. Each user will
+    consist of a username and a password that is completely independent of the operating
+    system''s user. For reasons of security, we will ensure that access to the database
+    is restricted to localhost only. To proceed, simply customize the following command
+    by changing the values `<username>`, `<password>`, and `<database-name>` to reflect
+    your needs:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, make the MariaDB DBMS aware of your new user:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now simply type the following command to exit the MariaDB shell:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, you can test the accessibility of your new `<username>` by accessing
+    the MariaDB shell from the command-line in the following way:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now back at the MariaDB shell (`MariaDB [(none)]>`), type the following commands:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: During the course of this recipe you were shown not only how to create a database,
+    but also how to create a database user.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We started the recipe by accessing the MariaDB shell as the root user with
+    the `mysql` command. By doing this, we were then able to create a database with
+    a simple SQL function called `CREATE DATABASE`, providing a custom name for the
+    `<database-name>` field. We also specified `utf8` as the character set of our
+    new database together with a `utf8_general_ci` collation. A character set is how
+    the characters are encoded in the database and a collation is a set of rules for
+    comparing the characters in a character set. For historic reasons and to keep
+    MariaDB backward-compatible with the older server versions, the default character
+    set is `latin1` and `latin1_swedish_ci`, but for any modern databases you should
+    always prefer to use `utf-8` instead as it is the most standard and compatible
+    encoding for international character sets (non-English alphabets). However, this
+    command can be modified to invoke the need to check if a database name is already
+    in use by using: `CREATE DATABASE IF NOT EXISTS <database-name>`. In this way,
+    you can then drop or remove a database by using the following command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Having done this, it is simply a matter of adding a new database user with
+    the appropriate permissions by running our `GRANT ALL` command. Here we provided
+    `<username>` with full privileges via a defined `<password>` for localhost. As
+    a specific `<database-name>` was elected, then this level of permission will be
+    restricted to that particular database and using `<database-name>.*` allows us
+    to specify these rules to all the tables (using the asterisks symbol) in this
+    database. The general syntax in order to provide a chosen user with specific permission
+    is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'For security reasons, here in this recipe we limit `<hostname>` to localhost
+    but if you want to grant permissions to remote users you will need to change this
+    value (see later). In our example, we set `[type of permission]` to `ALL` but
+    you can always decide to minimize the privileges by providing a single or a comma-separated
+    list of privilege-types offered in the following way:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Using the previous technique, here is a summary of the permissions that can
+    be employed:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`ALL`: Allows the `<username>` value with all available privilege-types'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`CREATE`: Allows the `<username>` value to create new tables or databases'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`DROP`: Allows the `<username>` value to delete tables or databases'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`DELETE`: Allows the `<username>` value to delete rows from tables'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`INSERT`: Allows the `<username>` value to insert rows into tables'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`SELECT`: Allows the `<username>` value to read from tables'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`UPDATE`: Allows the `<username>` value to update table rows'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: However, once the privileges were granted, the recipe then showed you that we
+    must `FLUSH` the system in order to make our new settings available to the system
+    itself. It is important to note that all commands within the MariaDB shell should
+    end in a semicolon (`;`). Having completed our task, we simply exit the console
+    using the `EXIT;` statement.
+  prefs: []
+  type: TYPE_NORMAL
+- en: MariaDB is an excellent database system but like all services, it can be abused.
+    So remain vigilant at all times, and by considering the previous advices, you
+    can be confident that your MariaDB installation will remain safe and secure.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Creating a restricted user is one way of providing database access but if you
+    have a team of developers who require constant access to a development server,
+    you may wish to consider providing a universal user who maintains superuser privilege.
+    To do this, simply login to the MariaDB shell with your administrator user root,
+    then create a new user in the following way:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: By doing this, you will enable `<username>` to add, delete, and manage databases
+    across your entire MariaDB server (the asterisks in `*.*` tell MariaDB to apply
+    the privileges to all the databases and all their associated tables found on the
+    database server), but given the range of administrative features, this new user
+    account will restrict all activities to localhost only. So in simple terms, if
+    you want to provide `<username>` with access to any database or to any table,
+    always use an asterisk (`*`) in place of the database name or table name. Finally,
+    every time you update or change a user permission, always be sure to use the `FLUSH
+    PRIVILEGES` command before exiting the MariaDB shell with the `EXIT;` command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Reviewing and revoking permissions or dropping a user
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'It is never a good idea to keep user accounts active unless they are used,
+    so your first consideration within the MariaDB shell (login with your administrator
+    user root) will be to review their current status by typing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Having done this, if you intend to `REVOKE` permission(s) or remove a user
+    listed here, you can do this with the `DROP` command. First of all, you should
+    review what privileges the user of interest has by running:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You now have two options, starting with the ability to revoke the user''s privileges
+    as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Then you may either reallocate the privilege using the formula provided in
+    the main recipe or alternatively, you can decide to remove the user by typing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: Finally, update all your privileges the usual way using `FLUSH PRIVILEGES;`
+    before exiting the shell `EXIT;` command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Allowing remote access to a MariaDB server
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Unless you are running your MariaDB database server to drive some local web
+    applications on the same server hardware, most working environments would be pretty
+    useless if remote access to a database server were forbidden. In many IT surroundings
+    you will find high-available, centralized dedicated database servers optimized
+    in hardware (for example, huge amounts of RAM) and hosting multiple databases
+    allowing hundreds of parallel connections from the outside to the server. Here
+    in this recipe, we will show you how to make remote connections to the server
+    possible.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges. It is expected that a MariaDB server
+    is already installed and running and you have read and applied the *Managing a
+    MariaDB database* recipe for an understanding of permissions and how to test (local)
+    database connections.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'In our example, we want to access a MariaDB database server with the IP address
+    `192.168.1.12` from a client computer in the same network, with the IP address
+    `192.168.1.33`. Please change appropriately to fit your needs:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To begin, log in as root on your MariaDB database server and open the firewall
+    for the incoming MariaDB connections:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Afterwards, we need to create a user account which can connect to our MariaDB
+    server remotely (as we have prevented `root` from doing this in a further step
+    for security reasons), login your database server using the MariaDB command line
+    interface `mysql` as user `root` and type the following MariaDB statement (replacing
+    the `XXXX` with a password of your choice, also feel free to adjust the username
+    and remote IP of the client who wants to connect to the server—in our case the
+    client has the IP `192.168.1.33`—accordingly):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now we can test the connection from our client computer with the IP address
+    of `192.168.1.33` in our network. This computer needs the MariaDB shell installed
+    (on a CentOS 7 client, install the package `mariadb`) and needs to be able to
+    ping the server running the MariaDB service (in our example, the IP `192.168.1.12`).
+    You can test connecting to the server by using the following command (on success,
+    this will print out the content of the `mysql` user table):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'We started our journey by opening the standard MariaDB firewall port 3306 using
+    the firewalld predefined MariaDB service, which is disabled by default on CentOS
+    7\. After this, we configured which IP addresses were allowed to access our database
+    server, which is done on a database level using the MariaDB shell. In our example,
+    we used the `GRANT SELECT` command to allow the user `johndoe` at the client IP
+    address `192.168.1.33` and with the password in quotes `''XXXX''` to access the
+    database with the name `mysql` and the table user to make `SELECT` queries only.
+    Remember, here you can also apply wildcards in the `<hostname>` field using the
+    `%` sign (which means any characters). For example, for defining any possible
+    hostname combination in a Class C network, you can use the `%` sign like so `192.168.1.%`.
+    Granting access to the `mysql.user` database and table was just for testing purposes
+    only and you should remove the user `johndoe` from this access permission whenever
+    you have finished your tests, using: `REVOKE ALL PRIVILEGES`, `GRANT OPTION FROM
+    ''johndoe''@''192.168.1.33'';`. If you want you can also delete the user `DROP
+    USER ''johndoe''@''192.168.1.33'';` because we don''t need it anymore.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing a PostgreSQL server and managing a database
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this recipe, we will not only learn how to install the PostgreSQL DBMS on
+    our server, but we will also discover how to add a new user and create our first
+    database. PostgreSQL is considered to be the most advanced open source database
+    system in the world. It is known for being a solid, reliable, and well-engineered
+    system that is fully capable of supporting high-transaction and mission-critical
+    applications. PostgreSQL is a descendant of the Ingres database. It is community-driven
+    and maintained by a large collection of contributors from all over the world.
+    It may not be as flexible or as pervasive as MariaDB, but because PostgreSQL is
+    a very secure database system that excels in data integrity, it is the purpose
+    of this recipe to show you how to begin exploring this forgotten friend.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to facilitate the download of additional
+    packages. It is expected that your server will be using a static IP address.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'PostgreSQL (also known as Postgres) is an object-relational database management
+    system. It supports a large part of the SQL standard and it can be extended by
+    the server administrator in many ways. However, in order to begin, we must start
+    by installing the necessary packages:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Start by logging in your server as root and type:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Having installed the database system, we must now enable the database server
+    at boot by typing:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'When you have finished, initialize the database system as follows:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now complete this process by starting the database server:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now set a new initial password for our `postgres` administrator of your choice.
+    As the default `postgres` user is currently using peer authentication, we need
+    to execute any Postgres-related command with user `postgres`:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'To get rid of the requirement, that the `postgres` user has to be logged in
+    on a system user basis before he can execute Postgres-related commands such as
+    `psql`, and to allow login with database user accounts in general, we need to
+    change the authentication method for `localhost` from `peer` to `md5` in the Postgres
+    client authentication configuration file. You can do this manually or use the
+    `sed` tool as shown next, after you have made a backup of the file first:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, we have to restart the `postgresql` service in order to apply our changes:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now you will be able to login to your Postgres server with user `postgres`
+    without the need to login the `postgres` Linux system user first:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'To exit the shell (`postgres=#)`, type the following command (followed by the
+    *Return* key):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'We will now issue a shell command to create a new database user, by substituting
+    `<username>` with a relevant user name to fit your own needs (type in a new password
+    for the user when prompted, repeat it, and afterwards enter the password for the
+    administrator user `postgres` to apply these settings):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, also on the shell create your first database and assign it to our new
+    user by replacing the `<database-name>` and `<username>` values with something
+    more appropriate to your needs (enter the password for the `postgres` user):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, test if you can access the Postgres server with your new user by printing
+    all the database names:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: PostgreSQL is an Object-Relational Database Management System and it is available
+    to all CentOS servers. Postgres may not be as common as MariaDB, but its architecture
+    and large array of features do make it an attractive solution for many companies
+    concerned with data integrity.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: We began this recipe by installing the necessary server and client `rpm` packages
+    using `yum`. Having done this, we then proceeded to make the Postgres system available
+    at boot before initializing the database system using the `postgresql-setup initdb`
+    command. We completed this process by starting the database service. In the next
+    stage, we were then required to set the password for the Postgres administrator
+    user to harden the system. By default, the `postgresql` package creates a new
+    Linux system user called `postgres` (which is also used as an administrative Postgres
+    user account to access our Postgres DBMS), and by using `su - postgres - c` we
+    were able to execute the `psql` commands as the `postgres` user, which is mandatory
+    upon installation (this is called peer authentication).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Having set the admin password, to have more like a MariaDB shell-type of login
+    procedure where every database user (including the administrator `postgres` user)
+    can log in using the database `psql` client''s user `-U` parameter, we changed
+    this `peer` authentication to `md5` database password-based authentication for
+    the localhost in the `pg_hba.conf` file (see the next recipe). After restarting
+    the service, we then used Postgres''s `createuser` and `createdb` command line
+    tools to create a new Postgres user and connect it to a new database (we needed
+    to provide the `postgres` user with the `-U` parameter because only he has the
+    privileges for it). Finally, we showed you how to make a test connection to the
+    database with your new user using the `-l` flag (which lists all the available
+    databases). Also, you can use the `-d` parameter to connect to a specific database
+    using the syntax: `psql -d <database-name> -U <username>`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Instead of using the `createuser` or `createdb` Postgres command-line tools,
+    as we have been showing you in this recipe, to create your databases and users,
+    you can also do the same using the Postgres shell. In fact, those command-line
+    tools are actually just wrappers around the Postgres shell commands, and there
+    is no effective difference between the two. `psql` is the primary command-line
+    client tool for entering SQL queries or other commands on a Postgres server, similar
+    to the MariaDB shell shown to you in another recipe in this chapter. Here, we
+    will launch `psql` with a template called `template1`, the boilerplate (or default
+    template) that is used to start building databases. After login (`psql -U postgres
+    template1`), and typing in the administrator password you should be presented
+    with the interactive Postgres prompt (`template1=#`). Now to create a new user
+    in the `psql` shell, type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To create a database, type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The option to grant all privileges on the recently created database to the
+    new user is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To exit the interactive shell, use: `\q` followed by pressing the *Return*
+    key.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Having completed this recipe you could say that you not only know how to install
+    PostgreSQL, but this process has served to highlight some simple architectural
+    differences between this database system and MariaDB.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Configuring remote access to PostgreSQL
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this recipe, we will learn how to configure remote access to a Postgres server
+    which is disabled by default. Postgres employs a method called host-based authentication
+    and it is the purpose of this recipe to introduce you to its concepts in order
+    to provide the access rights you need to run a safe and secure database server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges and a text editor of your choice. It is
+    expected that PostgreSQL is already installed and running.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In the previous recipe, we have already modified the host-based authentication
+    configuration `pg_hba.conf` file using `sed` to manage our Postgres's client authentication
+    from peer to `md5`. Here we will make changes to it to manage remote access to
+    our Postgres server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To begin, log in as root and first open the firewall to allow any incoming
+    PostgreSQL connections to the server:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now open the host-based authentication configuration file in your favorite
+    text editor by typing:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Scroll down to the end of the file and append the following line, to make these
+    lines read as follows (substitute the `XXX.XXX.XXX.XXX/XX` value with a network
+    address you want to grant access to. For example, if the IP address of your server
+    was `192.168.1.12` then the network address would be `192.168.1.0/24`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'When you have finished, simply save and close the file in the usual way before
+    opening the main Postgres configuration file by typing:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Add the following lines to the end of the file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'When you have finished, save the file in the usual way before restarting the
+    database server by typing the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: On any other computer which is in the same network (defined by the `XXX.XXX.XXX.XXX/XX`
+    value set previously), you can now test if the remote connection to your Postgres
+    server is working using the `psql` shell (if your client computer is CentOS, you
+    need to install it using `yum install postgresql`) by logging in on the server
+    remotely and printing out some test data. In our example, the Postgres server
+    is running with the IP address `192.168.1.12.`
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: PostgreSQL is a safe and secure database system but where we access it (either
+    remotely or locally) can often become a cause of confusion. It was the purpose
+    of this recipe to lift the lid on host-based authentication and provide an easy-to-use
+    solution that will enable you to get your system up-and-running.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We began the recipe by opening the Postgres service''s standard ports in firewalld
+    in order to make a connection from any remote computer possible in the first place.
+    Then we opened Postgres''s host-based authentication configuration file called
+    `pg_hba.conf` with our favorite text editor. Remember, we already changed from
+    `peer` to `md5` authentication for all local connections to provide user based
+    authentication in a former recipe. The inserted host record line specifies a connection
+    type, database name, a user name, a client IP address range, and the authentication
+    method. Many of the previous commands may already be understood but it is important
+    to realize that there are several different methods of authentication:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**trust**: Allows the connection unconditionally and enables anyone to connect
+    with the database server without the need for a password.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**reject**: Allows the database server to reject a connection unconditionally,
+    a feature that remains useful when filtering certain IP addresses or certain hosts
+    from a group.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**md5**: Implies that the client needs to supply an MD5-encrypted password
+    for authentication.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**peer and ident**: Access is granted if the client''s logged in Linux user
+    name from the operating system can be found as a database user in the system.
+    ident is used for remote connections and peer for local connections.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Having completed this task, we then saved and closed the file before opening
+    the main PostgreSQL configuration file located at `/var/lib/pgsql/data/postgresql.conf`.
+    As you may or may not be aware, remote connections will not be possible unless
+    the server is started with an appropriate value for `listen_addresses`, and where
+    the default setting placed this on a local loopback address it was necessary to
+    allow the database server to listen to all network interfaces (signified by the
+    use of a star symbol or `*`) for incoming Postgres connections on the 5432 port.
+    When finished, we simply saved the file and restarted the database server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There is always much more to learn, but as a result of completing this recipe,
+    you not only have a better understanding of host-based authentication but you
+    have the ability to access your PostgreSQL database server both locally and remotely.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing phpMyAdmin and phpPgAdmin
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Working with the MariaDB or Postgres command-line shell is sufficient for performing
+    basic database administration tasks, such as user permission settings or creating
+    simple databases as we have shown you in this chapter. The more complex your schemas
+    and relationships between tables get and the more your data grows, the more you
+    should consider using some graphical database user interfaces for better control
+    and work performance. This is also true for novice database administrators as
+    such tools provide you with syntax highlightning and validation and some tools
+    even have graphical representations of your databases (for example, showing Entity
+    Relationship Models). In this recipe, we will show you how to install two of the
+    most popular graphical open-source database management software for MariaDB and
+    PostgreSQL on the market, namely `phpMyadmin` and `phpPgAdmin,` which are web-based
+    browser applications written in PHP.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to facilitate the download of additional
+    packages. It is expected that your MariaDB or PostgreSQL server is already running
+    using the recipes found in this chapter. Also, you will need a running Apache
+    web server with PHP installed, which must be accessible from all the computers
+    in your private network to deploy these applications (refer to [Chapter 12](part0098_split_000.html#2TEN41-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 12. Providing Web Services"), *Providing Web Services* for instructions).
+    In addition, you need to have enabled the EPEL repositories for installing the
+    correct software packages (refer to recipe *Using a third-party repository* in
+    [Chapter 4](part0045_split_000.html#1AT9A1-4cf34a6d07944734bb93fb0cd15cce8c "Chapter 4. Managing
+    Packages with YUM"), *Managing Packages with YUM)*. Finally, you will need one
+    computer in your network with a graphical window manager and a modern web-browser
+    to access these web applications.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In this recipe, we will first show you how to install and configure `phpMyAdmin`
+    for remote access and afterwards how to do the same for `phpPgAdmin`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing and configuring phpMyAdmin
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'To install and configure phpMyAdmin, perform the following steps:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Type in the following command to install the required package:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now create a copy of the main `phpMyadmin` configuration file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Next, open the main `phpMyAdmin.conf` configuration file and add the line `Require
+    ip XXX.XXX.XXX.XXX/XX` with your defined subnet's network address you want to
+    grant access to the web application—for example, `Require ip 192.168.1.0/24` below
+    the line `Require ip 127.0.0.1`. You have to do this twice in the file or you
+    can use `sed` to do this automatically, as shown here. On the command-line define
+    the environment variable `NET=` accordingly to fit it to your own subnet's network
+    address.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Then type the following line to apply your changes to the configuration file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Afterwards, reload your Apache server and now you should be able to browse
+    to the `phpMyAdmin` website from any other computer in your subnet using the server''s
+    IP running the web application, for example `192.168.1.12` (log in with your MariaDB
+    administrator user called root or any other database user):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE49]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Installing and configuring phpPgAdmin
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Following are the steps to install and configure phpPgAdmin:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Type in the following command to install the required package:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Before editing the `phpPgAdmin` main configuration, make a backup of it first:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE51]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Allowing remote access to `phpPgAdmin` is very similar to `phpMyAdmin.` Here
+    you can also add a `Require ip XXX.XXX.XXX.XXX/XX` line with your defined subnet''s
+    network address below the line `Require local` in the `phpPgAdmin.conf` file,
+    or use the `sed` utility to do this automatically for you:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE52]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Restart Apache and browse to the `phpPgAdmin` main page:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE53]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In this fairly simple recipe, we have shown you how to install two of the most
+    popular graphical administration tools for MariaDB and Postgres, running as web
+    applications in your browser (and written in PHP) on the same server where your
+    database service is running, and enabled remote access to them.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing `phpMyAdmin` for administering MariaDB databases and `phpPgAdmin`
+    for Postgres databases was as easy as installing the corresponding `rpm` packages
+    using the `yum` package manager. As both the tools are not to be found in the
+    official CentOS 7 repositories, you need to enable the third-party repository
+    EPEL before you can access and install these packages. By default, when installing
+    both the web applications, access is denied to any connection not being made from
+    the server itself (local only). Since we want to have access to it from different
+    computers in our network, having installed a web browser you need to allow remote
+    connections first. For both the web applications, this can be achieved using the
+    Apache `Require ip` directive which is part of the Apache `mod_authz_core` module.
+    In both the configuration files for `phpMyAdmin` and `phpPgAdmin,` we defined
+    a whole subnet, such as `192.168.1.0/24,` to allow connecting to the server, but
+    you can also use a single IP address here which you want to allow access to. The
+    `sed` commands inserted these important `Require` lines into the configuration
+    file, but as said earlier you can also do this manually if you like by editing
+    these files with your text editor of choice. After reloading the Apache configuration,
+    you were then able to browse to the web pages using the two URLs shown in the
+    recipe. On the start page of both the web sites, you can use any database user
+    to log in without the need to enable remote privileges for them; any user with
+    local permissions is sufficient.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In summary, we can say that we only showed you the basic configuration of both
+    administration tools. There is always more to learn; for example, you should consider
+    securing both PHP websites with SSL encryption or configuring your instances to
+    connect to different database servers. Also, if you prefer desktop software for
+    managing your databases, have a look at the open-source MySQL Workbench Community
+    Edition, which can be downloaded from the official MySQL website for all major
+    operating systems (Windows, OS X, Linux).
+  prefs: []
+  type: TYPE_NORMAL

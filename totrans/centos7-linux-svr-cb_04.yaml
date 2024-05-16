@@ -1,0 +1,1427 @@
+- en: Chapter 4. Managing Packages with YUM
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'In this chapter, we will cover the following topics:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using YUM to update the system
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Using YUM to search for packages
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Using YUM to install packages
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Using YUM to remove packages
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Keeping YUM clean and tidy
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Knowing your priorities
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Using a third-party repository
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Creating a YUM repository
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Working with the RPM package manager
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Introduction
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This chapter is a collection of recipes that provides a review of the tools
+    required to grow your server. Package management is at the heart of any Linux-based
+    system and the purpose of this chapter highlights the critical tools needed to
+    manage software packages on a CentOS based server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using YUM to update the system
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this recipe, we will investigate the role of the **Yellowdog Updater**, **Modified**
+    (**YUM**) package manager with regard to running a system update. Every once in
+    a while, you may become aware of an update or may simply wish to discover if one
+    exists. Applying patches and updates is a regular task for every server administrator,
+    and an up-to-date system can help increase or ensure the security of your server
+    as software bugs and vulnerabilities are found all the time and must be fixed
+    promptly. In this recipe, you will learn how to achieve this with the help of
+    YUM.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to facilitate the download of additional
+    packages.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'You can run this recipe, as often as required but it should be done frequently,
+    based on a schedule of your own choosing in the full knowledge that on occasion,
+    some updates may require a full system reboot:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Log in as root and check whether there are any updates for your installed packages.
+    To do this, log in and type the following:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'If no updates are available, then the update process will end and no further
+    work will need to be done. However, if updates are available, YUM will now return
+    a list of all package updates from the repositories known to your system. To complete
+    the update process, type the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: By using the `-y` flag, the preceding command will now bypass the need to confirm
+    the transaction summary, and your system will now undergo an immediate update
+    process. When complete, you will be provided with a final report that identifies
+    what dependencies have been installed and what packages have been updated.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Generally speaking, no further work is required and you may resume typical
+    operations. However, if a new kernel has been installed, or an important security
+    update has taken place, it may be necessary to reboot the system for the new changes
+    to take effect. To do this, type the following:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Note
+  prefs:
+  - PREF_IND
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: While there is much debate as to whether an update will require a full system
+    restart in practice, this is only to be considered after a kernel update, which
+    is an update to `glibc` and particular security-based features that are activated
+    during the boot process.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: YUM is the default package management system for CentOS and part of its role
+    is to automatically calculate what packages may require updating, what dependencies
+    are required, and to manage the entire process of updating your system in a very
+    simple way.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So, what have we learned from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: We started the recipe by checking to see if any updates were available to our
+    system using the `yum` command with the `check-update` option. In this way, YUM
+    will now check a central repository to confirm if an update is applicable to our
+    system. A repository is a remote directory or website that contains prepared software
+    packages and utilities. YUM will use this facility to automatically locate and
+    obtain the correct **Red Hat Package Manager** (**RPM**) and dependencies, and
+    if an update is available, then YUM will respond accordingly with a full summary
+    of what packages and dependencies are available. For this reason, YUM is a very
+    useful tool, and without doubt its mechanism does serve to simplify the processes
+    associated with package management, because it can talk to repositories and this
+    saves us from having to find and install new applications or updates manually.
+    If there are updates available, the output will show us exactly which packages
+    are affected, then we can proceed to update the system by using YUM's `update`
+    parameter. In this instance, the preceding command includes the `-y` flag. This
+    is done in order to circumvent the need to agree with the transaction summary
+    given, and to confirm that we have already agreed to make these updates after
+    running the previous check. Otherwise, you would simply confirm the requests by
+    using the *Y* key.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'You can also use the update parameter to update single packages instead of
+    the whole system by providing the package name like so: `yum update package_name`.
+    YUM will serve to ensure that all of the requirements for an application are met
+    during installation, and it will automatically install the packages for any dependencies
+    that are not already present on your system. However, and I am sure you will be
+    pleased to hear this, if a new application has requirements that conflict with
+    existing software, YUM will abort the process without making any changes to your
+    system. If you want to automate the updating of your system using a specific time
+    interval, you can install the `yum-cron` package, which can be highly customized
+    but is outside the scope of this book. To start after installation, use `man yum-cron`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using YUM to search for packages
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this recipe, we will investigate the role of using YUM to find a package.
+    YUM was developed to improve the installation of RPM software packages, and it
+    is used to access a growing list of packages that provide a full range of services
+    offered by your server. YUM is simple to use, but if you are not sure what a package
+    is called, then your duties as the server administrator can become that much harder.
+    To overcome this, YUM maintains an extensive range of discovery tools and it is
+    the purpose of this recipe to show you how to use this functionality in order
+    to search through the various repositories and find the package you need.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'This recipe will show you how to find one or more packages by invoking YUM''s
+    searching options. To do this, you will need to log in as the root user and complete
+    the following process:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To search for a single package, replace the `keyword` value with the appropriate
+    phrase, string, or parameter, and type the following:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Wait for a summary of the search results, and when a list is generated, you
+    can query any package shown by simply replacing `package_name` with the appropriate
+    value:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'If the preceding results prove satisfactory, and you want to view a list of
+    dependencies associated with the package in question, type the following:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Searching for packages with YUM can be achieved in the same way as you would
+    search for anything on the **World Wide Web** (**WWW**). The types of words you
+    can search for can be as specific or as general as you like. They can even consist
+    of full or partial words; having found a package that you may be interested in,
+    you will have noticed that this recipe has also served to show you how to discover
+    additional information about the package in question.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So, what have we learned from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: YUM maintains extensive search features and it allows you to query packages
+    by keyword, package name, and pathname. For example, if you want to locate the
+    correct package for compiling C, Objective-C, and C++ code, you can use the `yum
+    search compiler` query. When using these search terms on the command line, there
+    are a number of related results, and each package carries a brief description
+    that enables us to use a simple process of elimination in order to select the
+    most obvious or the most relevant value. With this in mind, you can then query
+    YUM using the `info` parameter to find out more about certain packages. This option
+    reveals the full package details together with a detailed description of what
+    functionality the package is intended to provide. Generally speaking, you may
+    not need to know any further details.
+  prefs: []
+  type: TYPE_NORMAL
+- en: However, there may be circumstances in which you want to know how this package
+    interacts with the server as a whole (especially if you are working with source
+    installations or troubleshooting broken packages), so we can use YUM's `deplist`
+    parameter that can give quite a detailed report; if you do happen to have any
+    broken packages, you could simply use this output to detail what dependencies
+    you may or may not need to install in order to fix an underlying issue. This command
+    is particularly useful when debugging dependencies or when working with source-based
+    installations.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Sometimes, you may not want to search for a specific package, and instead you
+    may prefer to display the contents of your repositories in a catalog-style format.
+    Again, this is easy to do and YUM provides for this functionality with the following
+    commands. If you would like to simply list all the packages available to you from
+    the current repositories used by your system, type `yum list all`. However, because
+    this list may be quite exhaustive, you may prefer to page through the results
+    by using `yum list all | less`. In a similar fashion, if you would simply like
+    to list all the software currently installed on your system, type `yum list installed
+    | less`. If you would like to determine which packages provide for a specific
+    file or feature, simply run the following command at any time by substituting
+    `your_filename_here` with something more relevant to your own needs: `yum provides
+    your_filename_here`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using YUM to install packages
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this recipe, we will investigate the role of YUM in installing new packages
+    on your server. An important task for every server administrator is the installation
+    of applications and services. There are several different ways to achieve this,
+    but the most effective method involves the YUM package manager. YUM is able to
+    search through any number of repositories, automatically resolve package dependencies,
+    and specify the installation of one or more packages. YUM is a modern and definitive
+    way to install your packages on your server, and it is the purpose of this recipe
+    to show you how it is done.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to facilitate the download of additional
+    packages. It's also good if you have already found some interesting packages to
+    install, which can be learned by using the instructions from the *Using YUM to
+    search for packages* recipe.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'This recipe will show you how to install one or more packages by invoking the
+    YUM installation option. To do this, you will need to log in as the root user
+    and complete the following process:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To install a single package, replace the `package_name` value with the appropriate
+    value and type the following:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Your system will now provide a transaction report that will require your approval.
+    So, when prompted, simply respond by using the *Y* or *N* key and press the *Return*
+    key to either accept or decline the transaction, as shown as follows:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: If you have declined the transaction, then no further work is required and you
+    will exit the package management routine. However, if you have confirmed the transaction,
+    then watch the progress of your installation, and in the end it will show you
+    a `Complete!` message.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Congratulations! You now have successfully installed your package of choice.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: All packages are stored in the RPM package file format, and it is the role of
+    YUM to provide access to those files that are stored in various repositories on
+    the Internet. YUM is the power behind the package management for CentOS and it
+    really does make the installation process very easy, but what have we learned
+    from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Having invoked the `install` command, YUM will conduct a search of the various
+    repositories in order to find the relevant headers and metadata associated with
+    the package in question. For example, if you wanted to install a package called
+    `wget`, you would begin by issuing the `install` command like so: `yum install
+    wget`. YUM will then locate the package and generate a transaction summary that
+    will not only indicate the required disk size and expected installation size,
+    but will also indicate any necessary dependencies required by the requested package.
+    YUM will then check several different repositories (`base`, `extras`, and `updates`)
+    and, having resolved the need for any necessary dependencies, YUM will be asking
+    us to confirm the request before continuing with the installation process. So,
+    as you can see, by using the *Y* key, we will be providing YUM with the permission
+    to fulfill the request, which in turn will result in the download, verification,
+    and installation of the package(s) concerned.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'There are times when you may wish to install more than one package at a time.
+    To do this, simply invoke the same `install` command, but instead of naming a
+    single package, simply identify the full list of packages you may require in such
+    a way that it forms a long shopping list:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: The number of packages you can install in this way is unlimited, but always
+    leave a single space between each package name and keep the command on a single
+    line. For very long installation instructions, line-wrapping may occur.
+  prefs: []
+  type: TYPE_NORMAL
+- en: You do not need to list the packages in any particular order and the request
+    will be processed in exactly the same way as it was in the original recipe, and
+    again after listing the transaction summary, it will remain pending until it is
+    confirmed or declined. Again, use the *Y* key to confirm your request so that
+    the process completes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using YUM to remove packages
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this recipe, we will investigate the role of using YUM with the intention
+    of removing packages from your server. During the lifetime of your server, it
+    is possible that certain applications and services may no longer be required.
+    In such situations, it is typical that you will want to remove such packages in
+    order to optimize your working environment, and it is the purpose of this recipe
+    to show you how this is done.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'This recipe will show you how to remove one or more packages by invoking the
+    `yum remove` option. To do this, you will need to log in as the root user and
+    complete the following process:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To remove a single package, replace the `package_name` value with the appropriate
+    value and type the following:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Wait for the transaction summary and confirmation prompt to be displayed, and
+    then press either the *Y* key to confirm, or the *N* key to decline the transaction,
+    as shown next:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: If you have declined the transaction, then no further work is required and you
+    will exit YUM. However, if you have confirmed the transaction, then simply watch
+    the progress of package removal until it is confirmed and prints out a `Complete!`
+    message.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Applications that are no longer required can be removed with YUM. The process
+    is very intuitive and similar to installing a new package, and it only requires
+    you to confirm the name of the packages you want to remove.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So, what have we learned from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Having invoked the `remove` command, YUM will search your system to discover
+    the relevant package; and by reading the package headers and metadata, it will
+    also determine what dependencies this will affect. For example, if we wanted to
+    remove a package called `wget`, we would begin by issuing the `remove` command
+    like so: `yum remove wget`. YUM, in turn, would then locate the package details
+    from your system and obtain a transaction summary that may include any necessary
+    dependencies that are no longer required. The transaction printed out will remain
+    pending until you instruct YUM to remove the package(s) concerned. When confirmed,
+    YUM will complete the transaction, which in return will result in the removal
+    of the package or packages. You should take extra care if the summary makes reference
+    to any dependencies as these may be required by other RPMs. If you are concerned
+    that certain dependencies should remain on the system, it is often a good idea
+    to end the current transaction and simply de-activate or disable the software
+    concerned. As with the `install` command, you can also remove multiple packages
+    at a time, leaving a single space between the package names:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Keeping YUM clean and tidy
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this recipe, we will investigate the role of YUM with regard to ensuring
+    that the working cache remains current. As a part of its typical mode of operation,
+    YUM will create a cache that consists of metadata and packages. These files are
+    very useful, but over time, they will accumulate in size to such an extent that
+    you may find that YUM is acting erratically or not as intended. The frequency
+    of this happening can vary from system to system, but it generally implies that
+    the YUM cache system requires your immediate attention. Such a situation can be
+    quite frustrating, but it is the purpose of this recipe to provide a quick solution
+    that will serve to assist you in cleaning the cache and restoring YUM to its original
+    working state.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to facilitate the download of additional
+    packages.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Before we begin, it is important to realize that, while we are troubleshooting
+    a current problem, this same recipe can be run as often as required in order to
+    keep YUM in an optimal working state:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We will begin this recipe by asking YUM to clean any cached package information.
+    To do this, log in as root and type the following:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Allow time for your system to respond and when finished, type the following
+    command to remove any cached XML-based metadata:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Again, wait for YUM to respond and when ready, type the following command to
+    remove any cached database files:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Following this, you will want to clean all the files to confirm the preceding
+    instructions and to ensure that unnecessary disk space is not used. To do this,
+    type the following line:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, you will want to rebuild the YUM cache by typing what is shown next:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: YUM is a very powerful tool that is known for its ability to resolve package
+    dependencies and automate the process of package management, but as with all things,
+    there are times when even the best utilities can get confused and may report errors
+    or behave erratically. Fixing this issue is relatively simple and the approach
+    outlined in this recipe will also serve to keep your package manager in a healthy
+    running state for the life of your operating system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So, what have we learned from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'During its typical operation, YUM will create a cache of metadata and packages
+    that can be found at `/var/cache/yum`. These files are essential, but as they
+    grow in size, this cache will ultimately serve to slow down the overall use of
+    this utility and may even cause some issues. To address this situation, we started
+    by using the following command to clean the current package-based cache using
+    YUM''s `clean packages` parameter options. We then followed this by cleaning the
+    metadata cache using the command `clean metadata`, which will remove any excess
+    XML-based files. YUM uses a SQLite database as a part of its normal operation,
+    so the next step was to remove any remaining database files using the `clean dbcache`
+    parameters. The next step was to clean all files associated with enabled repositories
+    in order to reclaim any unused disk space: `yum clean all`. Finally, we restored
+    YUM to its normal working state by rebuilding the cache using the `makecache`
+    option.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: On a typical server, YUM is a great tool that will solve the most complex problems
+    related to package dependencies and package management. However, in instances
+    where you have knowingly mixed incompatible repositories or have used incomplete
+    sources, there is a risk that YUM will not be able to help.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Remember, in this situation, you should consider the following advice to be
+    a temporary remedy only. A tendency to ignore any warnings provided by YUM will
+    only lead to bigger problems later on.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If such instances occur, and if the error is RPM-based, as a temporary fix,
+    you can skip broken packages by using the following command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: This command will allow YUM to continue working by bypassing any packages with
+    errors, but as stated earlier this should be regarded as a temporary fix only.
+    You should always be aware that a system with broken dependencies is not considered
+    to be a healthy system. This situation is to be avoided at all costs, and under
+    these circumstances fixing such errors should become your first priority.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Knowing your priorities
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this recipe, we will investigate the task of preparing YUM to manage additional
+    repositories by installing a plugin known as **YUM priorities**. YUM has the ability
+    to search, remove, install, retrieve, and update packages from various remote
+    locations. Such features make YUM a powerful tool, but if you ever decide to add
+    an additional third-party repository, there is a chance that conflicts will render
+    the system unstable. Stability is one of the many advantages of using the CentOS
+    operating system, and it is the purpose of this recipe to show you how this confidence
+    can be maintained while simultaneously allowing for the addition of new repositories.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to facilitate the download of additional
+    packages.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'This recipe will show you how to prepare YUM in order to manage the process
+    of using one or more third-party repositories by installing and configuring YUM
+    priorities:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To begin this recipe, log in as root and type the following:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Confirm the installation, and when complete type what is shown here:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: You should ensure that this file indicates that the plugin is enabled. It should
+    show the instruction `enabled = 1`. It is not expected that you will need to change
+    anything in this file, but if you have made any changes, simply save and close
+    the file before proceeding.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'We now need to establish a priority value for each repository. This is a numeric
+    value in ascending order, where the highest priority is given the lowest number.
+    To do this, open the following file as shown next:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Add the following line at the end of the `[base]` section:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, add the following line at the end of the `[updates]` section:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'And finally, add the following line at the end of the `[extras]` section:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'When complete, save and close the file before running a package update:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: YUM priorities is a simple plugin that enables YUM to decide what repositories
+    will assume the highest priority when installing and updating new packages. Using
+    this plugin will reduce the chance of package confusion by ensuring that any particular
+    package will always be installed or updated from the same repository. In this
+    way, you can add an unlimited number of repositories and enable YUM to stay in
+    control of package management.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So, what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Enhancing YUM with this plugin was simply a matter of installing the `yum-plugin-priorities`
+    package and ensuring that it was enabled in its configuration file. We then discovered
+    that the priority is set in ascending order, where the lowest values are given
+    precedence over all others. This, of course, serves to simplify the overall process,
+    and for this reason, we ensured that the default repositories were given a value
+    of `1` (`priority=1`). This will ensure that the default repositories maintain
+    the highest priority, so when you do decide to add additional repositories you
+    could assign them a priority value of 2, 3, 4… and 10, or more. On the other hand,
+    it should be noted that we only set this value across three main sections: `[base]`,
+    `[updates]`, and `[extras]`. In simple terms, this was only because the other
+    sections are shown to be disabled. For example, you may have noticed that the
+    `[centosplus]` section in `/etc/yum.repos.d/CentOS-Base.repo` include the following
+    line: `enabled=0`, whereas the `[updates]` and `[extras]` sections show this value
+    as `enabled=1`. Of course, if you intend to activate this repository, you will
+    need to set a priority value for it, but for the purpose of this recipe such an
+    action was not required. Finally, we ran a simple YUM package update in order
+    to activate our revised settings.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: So, as we can see, YUM priorities is an extremely flexible package that enables
+    you to determine what repositories take priority when you want to expand your
+    installation options. However, you should always be aware that YUM priorities
+    may not be appropriate for your system, as you are giving it the power to decide
+    what packages are to be ignored, what packages are installed, what packages are
+    updated, and in what order and from which repository you will get them. For most
+    users who tend not to stay away from the typical server functions, this may not
+    be an immediate concern; you may even safely ignore this warning. But if stability
+    and security are an overriding concern, and you do intend to use additional packages
+    from external repositories, then you should give careful consideration to the
+    use of this plugin or at least consider and research the integrity of the third-party
+    repositories used.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using a third-party repository
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this recipe, we will investigate the desire to take full advantage of the
+    packages that are available to CentOS by installing both the EPEL and Remi repositories.
+    CentOS is an enterprise-based operating system that prides itself on stability,
+    and during the lifetime of your server, it is possible that not every piece of
+    software you need can be found in the default repositories. It is also possible
+    that you may require updated packages of current software, and for these reasons
+    many server administrators choose to install both the EPEL and Remi repositories.
+    These are not the only repositories available, but because they represent one
+    of the most popular combinations, it is the purpose of this recipe to show you
+    how both the EPEL and Remi repositories can be added to your system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to facilitate the download of additional
+    packages.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Before we start, it is assumed that you have followed the previous recipe that
+    showed you how to install and activate YUM priorities.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To begin, log in as root and install the EPEL release repository using YUM:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, from your home directory, type the following commands to download the
+    `remi release` `rpm` package:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Note
+  prefs:
+  - PREF_IND
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Please note that, while you are reading this, this URL may have changed; if
+    so, please do some Internet research to find out if there is a new URL available.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: 'The preceding file should now be located in your home folder. To proceed, type
+    the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'After the installation is done, open the Remi repository file with your favorite
+    text editor:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Change `enabled=0` to `enabled=1` and add the line `priority=10` to the end
+    of the `[remi]` section.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Now, open the EPEL repository file with your favorite text editor:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Again, change `enabled=0` to `enabled=1` if not set automatically and add the
+    line `priority=10` in the `[epel]` section.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'To finish, update YUM as shown here:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: If updates are available, choose *Y* to proceed. Having completed the update
+    process, you will now be able to download and install packages from both the Remi
+    and EPEL repositories as an addition to those that are used by default.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In order to use and enjoy the benefits of a third-party repository, you are
+    required to install and enable it first using the YUM and RPM package manager.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So, what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: Having started the recipe, the task of installing both the Remi and EPEL repositories
+    is a remarkably smooth process. While the installation of the EPEL repository
+    using YUM is very safe to changes, the preceding URL for Remi is maintained at
+    the discretion of the repository owners, so you should always ensure that they
+    are the most current. However, having obtained the necessary repository setup
+    file, it was then a matter of applying an RPM-based command in order to install
+    all necessary repository files on your system. Having done this, we were then
+    required to open the relevant configuration files of each of the installed repositories
+    and enable them (by changing `enabled=0` to `enabled=1`) and setting a priority
+    value (`priority=10`). While the former value will merely switch the repository
+    on, the latter one will be used by YUM to correctly identify which repositories
+    were the most appropriate when we called the `update` command. As it was discussed
+    in the previous recipe regarding YUM priorities, the simple rule of thumb is based
+    on remembering the phrase "the lower the number, the higher the priority." This,
+    in itself (depending on your reasons), may not be a bad thing to do, but for the
+    purpose of this recipe, it is shown that the default CentOS repositories should
+    take priority over all others. Of course, you may disagree with this, and yes,
+    there is nothing stopping you from applying the same priority rule to a third-party
+    supplier, but I do caution you before diving in, and this is particularly the
+    case if this is for a mission-critical production server. Remember, if all the
+    priority values are the same, then YUM will attempt to download the latest version
+    by default.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The reason for setting both Remi and EPEL to a higher value than the existing
+    CentOS-based repositories is based on the need to consider security updates. Unless
+    you have determined otherwise, it is always advised that the base files should
+    come from CentOS first. This includes, but it is not limited to, Kernel updates,
+    SELinux, and related packages. Third-party repositories should be used for additional
+    packages that cannot be obtained from the original sources, or for access to particular
+    updates that may not be available to the base release of CentOS. This may include
+    packages such as Apache, MariaDB, or PHP. As a final footnote, you will have noticed
+    that both Remi and EPEL repositories shared the same priority value. This is by
+    design as these repositories are often viewed as partners. However, if you decide
+    to begin mixing repositories, or use this recipe as a gateway to installing other
+    repositories not mentioned here, then you should always do your research and evaluate
+    every third-party on a case-by-case basis. The Remi and EPEL repositories are
+    very popular, so if you do intend to add more third-party resources, read around
+    the subject, choose your repositories carefully, and stay loyal.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There are many other interesting repositories available for CentOS 7, such as
+    ELRepo, which focuses on hardware-related packages such as filesystem drivers,
+    graphics drivers, network drivers, sound drivers, and webcam or video drivers.
+    Go to [http://elrepo.org](http://elrepo.org) to learn how to install and access
+    it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Creating a YUM repository
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: If you maintain multiple CentOS servers in your local network and want to save
+    Internet bandwidth or speed up the downloading of the same remote repository packages
+    over and over again, or are within a very restrictive network environment where
+    access to any remote CentOS repository is blocked for your clients, you might
+    want to consider running your own YUM repository. Having your own repository is
+    also an excellent solution if you want to rollout a few custom or unofficial RPM
+    packages (for example in-house configuration files or programs) to your local
+    crowd or if you just want to create an official CentOS 7 repository mirror site.
+    Here in this recipe we will show you how to set up your own first YUM CentOS 7
+    repository and how to serve it to your local network.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet to facilitate the download of additional packages.
+    For this recipe to work, you will also need to place the CentOS 7 Everything DVD
+    iso file image in your server's root home directory, if you haven't downloaded
+    it yet, refer to a detailed description in the first recipe in [Chapter 1](part0015_split_000.html#E9OE1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 1. Installing CentOS"), *Installing CentOS* (but download the latest
+    `CentOS-7-x86_64-Everything-XXXX.iso` file instead of the minimal iso file). Also,
+    we need a running Apache web server to share our YUM repository to our local network;
+    please read the first recipe in [Chapter 12](part0098_split_000.html#2TEN41-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 12. Providing Web Services"), *Providing Web Services* in order to learn
+    how to set it up.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To create our own YUM repository, we need the `createrepo` program, which is
+    not installed on CentOS 7 by default. Let''s begin our journey by installing it.
+    In this example, we will use the IP address, `192.168.1.7`, for our YUM repository
+    server:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Log in as root on your server and install the following package:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, for every repository you want to share, create a subfolder beneath the
+    Apache web root folder under `/var/www/html/repository/`, which will be publicly
+    available when Apache is running; for example, to share the complete CentOS 7
+    `Everything` repository packages, you could use:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, put all your RPM package files of choice into the repository folders created
+    here. In our example, we will put all RPM packages from the `Everything` iso image
+    file into our new local repository location after we have mounted the content
+    of the iso file to the filesystem:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Afterwards, we need to update the SELinux security contexts for all the new
+    files copied into the Apache web root directory:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, for every repository we want to set up, run the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Congratulations, you now have successfully created your first YUM repository,
+    which can be accessed from any computer in the same network through the running
+    Apache web server. In order to test it, log in as root to any other CentOS 7-based
+    system that can ping our repository server and add our new repository to its YUM
+    repository configuration directory:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Add the following content to this empty file (change the `baseurl` appropriately
+    to fit your own needs):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Save and close the file, then test if your new repository is available (it
+    should appear on the list) on your client:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, to test our new YUM repository, we can try the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In this recipe, we have shown you how easy it is to install and set up a local
+    YUM repository. However, we have only shown you how to create a mirror site of
+    all the CentOS 7 Everything iso RPM packages, but you can repeat this process
+    for creating YUM repositories of every kind of package that you want to share
+    with your network.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So, what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: Setting up your own YUM repository was simply a matter of installing the `createrepo`
+    package and copying all the RPM packages that you want to share into a subfolder
+    of your choice beneath your Apache's document root directory (In our example,
+    we had to mount the CentOS 7 Everything iso file to the filesystem, in order to
+    access its included RPM package files that we want to share). As the Apache's
+    document root directory is under the control of SELinux, afterwards we needed
+    to set the security context for all the new RPM files in this directory to the
+    `httpd_sys_content_t` type label; otherwise, no access through the web server
+    would be possible. Finally, we needed to run the `createrepo` command on our new
+    repository folder, which will create our new repository's metadata that is needed
+    for any YUM client that wants to connect to the repository later to make queries
+    to it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Afterwards, to test our new repository, we created a new repository definition
+    file on another CentOS 7 system that wants to use this new service and that must
+    be in the same network as our YUM repository server. In this custom `.repo` configuration
+    file, we put the correct URL path to the repository, enabled `gpg` checks, and
+    took the standard CentOS 7 `gpgkey` so that our YUM client can proof the validity
+    of the RPM packages official repository packages. Finally, we used the `yum` command
+    with the `--disablerepo="*"` and `--enablerepo="myCentosMirror"` parameters, which
+    will make sure to only use our new custom repository as a source. You can use
+    these two parameters in combination with any other `yum` command such as `install`,
+    `search`, `info`, `list`, and so on. This was just for testing; if you want to
+    combine your new repository with the existing ones, please use YUM priorities
+    for it (as shown in another recipe in this chapter).
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Now, before we announce our new centralized YUM repository to our network,
+    we should first make an update of all the RPM packages that have changed since
+    the release of the CentOS Everything iso. In order to do this, visit [http://www.centos.org](http://www.centos.org)
+    and choose a `rsync://` mirror link that is geographically near your current location.
+    For example, if you are located in Germany one option could be [rsync://ftp.hosteurope.de/centos/](http://rsync://ftp.hosteurope.de/centos/)
+    (for more detailed instructions on navigating the CentOS website, read the first
+    recipe in [Chapter 1](part0015_split_000.html#E9OE1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 1. Installing CentOS"), *Installing CentOS*). Also, before we can use
+    the `rsync` protocol, we need to install the `rsync` package (`yum install rsync`),
+    if not done already. Now, open the following empty script file `vi ~/update-myCentosMirror-repo.sh`
+    file and put in the following content (replacing the `rsync://` location accordingly,
+    if needed):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Now, make the file executable using `chmod +x ~/update-myCentosMirror-repo.sh`,
+    and run it with `~/update-myCentosMirror-repo.sh`. This should update your repository
+    to the latest version. Finally, to automate this process, let''s create a cron
+    job that will update our repository packages with the other mirror site every
+    night at 2:30 am (open `crontab -e`):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs: []
+  type: TYPE_PRE
+- en: Working with the RPM package manager
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: All software on a CentOS 7 system is distributed through RPM packages. Most
+    of the time the YUM package manager is the first choice of any system administrator,
+    performing software installation and maintenance, and is highly recommended whenever
+    possible as it provides system integrity checks and has excellent package dependency
+    resolution. In this recipe, we will show you an alternative way to manage your
+    packages. We will be exploring the RPM package manager, which is a powerful tool
+    used to build, install, query, verify, update, and erase individual RPM software
+    packages. Though it is not as *intelligent* as YUM, as it cannot resolve package
+    dependencies or work with repositories, it can be still relevant today since it
+    provides very useful querying options that are not available in YUM, and it can
+    be used to install single software packages manually.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to facilitate the download of additional
+    RPM packages.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'We start this recipe by downloading a `rpm` package from the Internet, which
+    we will use to show you an example of how the `rpm` command works:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We will begin by logging in as root into the root''s home directory and downloading
+    the pipe view program from the EPEL repository, which cannot be found in the official
+    CentOS repository:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Note
+  prefs:
+  - PREF_IND
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Please note that while you are reading this, the package URL may have changed.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: 'After the download has been completed, we will install this package using the
+    following `rpm` command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'If the installation has finished, let''s check if the installation of the package
+    was successful by querying the RPM database:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'You can also test the `pv` program directly (press *Ctrl*+*C* keys to quit):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'We can now use the `rpm` command''s rich querying options to show useful information
+    of the installed package:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, let''s remove the package if you don''t like or need it anymore:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Here, in this recipe, we introduced you to the RPM package manager, which is
+    the original program to manage RPM packages. The RPM package is a packaging standard
+    for the distribution of software, and contains useful metadata in the file to
+    verify the authorship (for example, using signature verification with PGP) and
+    integrity of the software included. The installation of packages containing binary
+    programs instead of manually compiling and building them from scratch is much
+    easier and more consistent, but RPM packages can also contain any type of file,
+    such as source code or just documentation files. As said in the introduction,
+    the `rpm` command has six different modes of operation: building, installing,
+    uninstalling, updating, querying, and verifying rpm packages. Here, in this recipe,
+    we showed you how to use the most important five operations (we don''t show building
+    RPM''s).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: So, what have we learned from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: We started by logging in as root and downloading the `pv` (pipe viewer) rpm
+    package example from the non-official EPEL CentOS repository (EPEL contains high-quality
+    add-on packages, thoroughly checked and officially conformed; see the *Using a
+    third-party repository* recipe to learn more about the EPEL repository) manually
+    using `curl`, because it is not available in the official repository but can be
+    a very useful tool.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Although there are many RPM repositories and download sources on the Internet,
+    for security and compatibility reasons, on productive systems you should consider
+    installing only official CentOS 7 RPM packages from valid and reputable repositories
+    and sources. In general, the packages contained are best tested and reviewed by
+    many experts and users.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The downloaded package file''s name can be read the following way, which follows
+    the following non-mandatory naming convention for RHEL/CentOS packages:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs: []
+  type: TYPE_PRE
+- en: Next, we installed the downloaded `pv` package using the RPM package manager,
+    which can be executed using the `rpm` command on the command line. We used it
+    with the `-Uvh` command parameters together with the full name of the downloaded
+    package rpm file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: If using the rpm command for installing or upgrading rpm software packages,
+    you should always use `-Uvh` with one exception; which are kernel packages. `-U`
+    will remove old packages while updating, and this is not what you want if you
+    install a new kernel. Use `-i` (for installing) here instead, as this will keep
+    the old kernel files so that you can go back to an earlier version if you run
+    into some problems.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-U` is the parameter for installing or upgrading a package. If the package
+    is not installed on the system, it will get installed; otherwise `rpm` tries to
+    upgrade it if it the RPM package version is newer than the one installed. The
+    `-v` parameter prints a more verbose output, while `-h` displays a nice progress
+    bar. Installing the `pv` package when you have not enabled the EPEL repository
+    on your system will get the following warning message:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE49]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'RPM will automatically check the validity of the package''s signature before
+    installing to make sure that the package''s content has not been modified since
+    it has been signed. Also, it checks that an RPM package is trustworthy, as it
+    should be signed by an official third-party authority vendor using an encrypted
+    key. You can ignore this message, as packages from the EPEL repository are from
+    a secure source. To permanently trust EPEL sources, you can install its `gpg`
+    public key on your system using the following command and getting rid of all future
+    signature warning messages:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs: []
+  type: TYPE_PRE
+- en: Having successfully installed the package, we now have a nice command line tool
+    called `pv` to show the progress of data going through a Unix pipe, which can
+    be useful if you are transferring huge amounts of data through pipelines where
+    you normally never know the current state of progress. Afterwards, we queried
+    the RPM database that stores information about all installed packages on a CentOS
+    7 system, using the `rpm` command with the `-q` flag. Working on the RPM database,
+    we must use the true package name (`pv`) instead of the filename (`pv-1.4.6-1.x86_64.rpm`)
+    that we used when we installed the packages in the first place. The same is true
+    when removing an installed package; please specify the package name and not the
+    version number or full filename.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To get detailed information about the installed package, `pv`, we used `-qi`
+    (`i` for information), with the `-ql` parameter; we showed the full filename and
+    path of all files in the package. `-qd` showed all the files in the package containing
+    documentation. To read about more querying options, type `man rpm` and look under
+    the `PACKAGE QUERY OPTIONS` section.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In summary, we can say that there are situations in a system administrator's
+    life where one needs to install a piece of software that is not distributed through
+    an official repository (for example, non-open-source, cutting-edge program or
+    beta versions, software that have a license disallowing the ability to put it
+    into a repository such as Java, or software from independent developers), and
+    where one will have to download individual RPM packages and install them manually.
+    Under the hood, YUM also depends and uses the RPM package manager in the background,
+    so you are also able to use the YUM program to install rpm files (`yum install
+    <filename.rpm>`). However, when it comes to querying your downloaded rpm files
+    or installed packages on your system, there are situations where it's better to
+    use the older `rpm` command without having to install additional YUM-based software
+    such as `yum-utils`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The biggest weakness of RPM is that it does not support repositories and is
+    missing a dependency management system. If you work with RPM alone to install
+    all your software on a CentOS system, you will easily run into package dependency
+    problems where you cannot install a specific package because it relies on some
+    other packages. Often, when you try to install the dependent packages, you need
+    other packages that they depend on and so on. This can be very tedious work and
+    should always be avoided by using YUM instead.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The `rpm` command can not only be used to query the rpm database for information
+    about installed packages, you can also use it to query rpm files that you downloaded.
+    For example, use the `-qlp` parameter to show all files in a local `rpm` package
+    file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE51]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To get detailed information about the package from the `rpm` file, use the
+    `-qip` parameter, as shown here:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE52]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If you want to install an RPM package that you have downloaded locally and
+    that has dependencies, you can use the `yum localinstall` command. This will install
+    the local package once supplied with its filename, and will try to resolve all
+    the dependencies from remote sources, for example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE53]'
+  prefs: []
+  type: TYPE_PRE

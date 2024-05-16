@@ -1,0 +1,1394 @@
+- en: Chapter 9. Working with Domains
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'In this chapter, we will cover:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing and configuring a caching-only nameserver
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Setting up an authoritative-only nameserver
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Creating an integrated nameserver solution
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Populating the domain
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Building a secondary (slave) DNS server
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Introduction
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This chapter is a collection of recipes that attempt to demystify a technology
+    that remains the key component in making everything work in the networking world.
+    From e-mail to web pages and remote logins to online chats, this chapter provides
+    the necessary details on how quickly you can use CentOS to deliver a domain name
+    service that will power your working environment.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing and configuring a caching-only nameserver
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Every network communication between computers can only be made through the use
+    of unique IP addresses to identify the exact endpoints of the communication. For
+    the human brain, numbers are always harder to remember and work with than assigning
+    names to *things*. Therefore, IT pioneers started in the early 70s to invent systems
+    for translating names to physical network addresses using files and later simple
+    databases. In modern computer networks and on the Internet, the relationship between
+    the name of a computer and an IP address is defined in the **Domain Name System**
+    (**DNS**) database. It is a worldwide distributed system and provides domain name
+    to IP address resolution and also the reverse, that is IP address to domain name
+    resolution. DNS is a big subject, and it is the purpose of this recipe to provide
+    the perfect starting point by showing you how to install and setup your own caching-only
+    and forwarding nameserver. Here we will use *Unbound*, which is a highly secure
+    and fast recursive and caching DNS server solution, and therefore our preferred
+    choice. But you need to remember that Unbound cannot be used as a fully authoritative
+    DNS server (which means that it provides its own domain name resolution records)
+    we will use the popular BIND server for this in a later recipe. A caching-only
+    DNS server will serve to forward all the name resolution queries to a remote DNS
+    server. Such a system has the intention of speeding up general access to the Internet
+    by caching the results of any domain resolution request made. When a caching DNS
+    server tracks down the answer to a client's query, it returns the answer to the
+    client. However, it also stores the answer in its cache for a specific period
+    of time. The cache can then be used as a source for subsequent requests in order
+    to speed up the total round-trip time.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a static IP address, and a console-based
+    text editor of your choice. An Internet connection will be required to download
+    additional packages. In this example, our DNS server runs in a private network
+    with the network address `192.168.1.0/24`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In this recipe, we will first configure a *caching-only* and then a *forwarding
+    only* DNS server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Configuring a caching-only Unbound DNS server
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'In this section, we will consider the role of Unbound as a caching-only nameserver,
+    handling recursive DNS requests to the other remote DNS servers and caching the
+    query for a certain time period to improve the response time when the server is
+    asked for the same name resolution again:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To begin, log in as root and install the required packages by typing:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now make a copy of the `unbound` configuration file so we can revert our changes
+    later, and then open it in your favorite text editor:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Scroll down to find the following line: `# interface: 0.0.0.0` Remove the `#`
+    sign to uncomment it (activate it), so it reads as follows:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, scroll down to find the line `# access-control: 127.0.0.0/8 allow`. Uncomment
+    the line to activate it and change the network address to fit your needs:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Save and close the file, and then create an RSA keypair with certificates for
+    secure DNSSEC support before you check the correctness of the changed configuration
+    file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, open the DNS service in your firewalld configuration on your server because
+    we want to be able to use our new DNS service from other clients in the network
+    for querying as well:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now ensure the service will be available at boot and start it afterwards:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'To test if we can reach our Unbound DNS server and make queries, execute the
+    following command from the same server running our Unbound DNS service locally,
+    which should give back the IP address of [www.packtpub.com](http://www.packtpub.com):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'For a more detailed view of the request you can also run locally on the DNS
+    server:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'From any other client in the network (needs `bind-utils` installed), you can
+    query any public domain name using our new DNS server as well. For example, if
+    our DNS server has the IP `192.168.1.7`:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, let us use our new nameserver on the server itself. To do this, open
+    the following file with your favorite text editor after you have made a backup
+    copy:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Remove all the current nameserver references and replace them with the following:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Note
+  prefs:
+  - PREF_IND
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: If you have set some DNS server information in your network-scripts interface
+    (for example, when configuring a static IP address, see [Chapter 2](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 2. Configuring the System"), *Configuring the System*), you will want
+    to review the `/etc/sysconfig/network-scripts/ifcfg-XXX` file and modify the current
+    DNS reference to read as `DNS1=127.0.0.1` as well.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: Configuring a forwarding only DNS server
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Now after we have successfully configured our first caching BIND DNS server,
+    here we will show you how to transform it into a forwarding DNS server which will
+    reduce the total bandwidth for resolving hostnames in comparison to the caching-only
+    solution:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Open BIND''s main configuration file again:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Add the following lines to the end of the file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, check the correctness of your new configuration file and restart the
+    service:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Finally, test your new forwarding DNS server using the tests from the preceding
+    caching DNS server section.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In this recipe, we have installed a caching-only Unbound DNS server with the
+    basic aim of improving the responsiveness of our overall network by caching the
+    answers to any name-based queries. Using such a process will shorten the waiting
+    time on any subsequent visit to the same location. It is a feature that is particularly
+    useful in saving bandwidth if you happen to be managing a large, busy, or slow
+    network. It does not have its own domain name resolution feature but uses its
+    default root domain's DNS servers in order to perform this task (to learn more
+    about the root domain, see later). Also, as we have seen, you can easily transform
+    your caching nameserver into a pure forwarding system as well. While a caching
+    DNS server makes recursive requests to *several* associated DNS servers and constructs
+    the complete name resolution result from those multiple requests, a forwarding
+    DNS *delegates* the complete recursive DNS search to another resolving DNS server
+    which executes the complete search instead. This saves even more bandwidth for
+    our DNS server because only *single* network requests to communicate with the
+    remote resolving server are made instead of *multiple* when using the caching-only
+    DNS service.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: We started this recipe by installing the necessary packages. This included the
+    main DNS server program called Unbound and a reference to `bind-utils`, a small
+    package that enables you to run many different DNS related network tasks, such
+    as `dig`, `nslookup`, and `host`. The next step was to begin making the necessary
+    configuration changes by editing Unbound's main configuration after we made a
+    simple backup of the original file. Since after installation the default DNS server
+    is completely restricted to doing everything *locally* only, our main purpose
+    was to adjust the server to make connections from the outside possible. We began
+    this process by allowing the DNS server to listen to all the available network
+    interfaces using the `interface` directive and afterwards defined who on the network
+    was allowed to make requests to our DNS server by setting `allow-query` to our
+    local network. This means we allowed anyone in our subnetwork to make DNS resolution
+    requests to our server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'At this point we created the RSA keypair with the `unbound-control-setup` tool,
+    which is needed for the `unbound-checkconf` command to work. The generated keys
+    and certificate are important if we want to use **Unbound''s DNS Security Extensions**
+    (**DNSSEC**) features which help protect DNS data by providing authentication
+    of origin using digital signatures (configuring DNSSEC is outside the scope of
+    this chapter. To learn more, consult the Unbound configuration manual: `man unbound.conf`).
+    Afterwards, we used the `unbound-checkconf` command, which was necessary to confirm
+    that Unbound''s configuration file was syntactically correct. If the output of
+    the command is empty, there are no errors in the file. We then proceeded by adding
+    the predefined `dns` firewalld service to our default firewall, thus allowing
+    the other computer systems in our local network to access the DNS server using
+    port `53`. Finally, we activated Unbound at boot time and started the service.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Of course, to complete this recipe we then tested if our new DNS server worked
+    as expected in resolving domain names to IP addresses. We ran a simple `nslookup`
+    query locally on the server and also from the other computers in the same network
+    to see if our new DNS service was reachable from the outside. When using `nslookup`
+    without any additional parameters, the program will use the default DNS server
+    resolver known to the system (on CentOS 7 this is defined in `/etc/resolv.conf`)
+    to resolve our host names, so we added another parameter addressing our alternative
+    DNS server we want to query instead (`127.0.0.1`). For successful testing, the
+    output must contain the resolved IP address of the [www.packtpub.com](http://www.packtpub.com)
+    server. On the DNS server you could also use the `unbound-host -d` command to
+    get a more technical view of the DNS query within the Unbound service.
+  prefs: []
+  type: TYPE_NORMAL
+- en: After we successfully finished these tests, we updated the current nameserver
+    resolver information on our DNS server with our new DNS service running on localhost.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Now we want to see how BIND will perform for caching DNS information. To do
+    this, on your DNS server simply select a target website you have not visited before
+    and use the `dig` command. For example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Having run this test, you may see a query time that results in something like
+    the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Now repeat this exercise by retesting the same URL. Depending on your networking
+    environment, this may produce the following result:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: Now do it again for another website. On every repeat of the preceding command,
+    you should not only see a reduced query time but also experience a faster response
+    time in delivering the output. This same result will be evident in the browser
+    refresh rate, and as a result we can say that this simple exercise has not only
+    introduced you to Unbound but it will ultimately serve to improve the speed of
+    your local network when surfing the World Wide Web.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Setting up an authoritative-only DNS server
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this recipe, we will learn how to create an *authoritative-only* DNS server,
+    which can give answers to queries about domains under their control themselves
+    instead of redirecting the query to other DNS servers (such as our caching-only
+    DNS server from the previous recipe). We will create a DNS server to resolve all
+    our own hostnames and services in our own private local network.
+  prefs: []
+  type: TYPE_NORMAL
+- en: As said before, while Unbound should be your first choice when needing a caching-only
+    DNS server as it is the most secure DNS server solution available, it has only
+    limited authoritative capabilities which often is not enough for professional
+    DNS server usage. Here, instead of name lookup of our local servers, we will use
+    the popular authoritative BIND DNS server package and configure a new DNS zone
+    to provide highly customizable name resolution. Technically speaking, we will
+    be writing both a *forward* and *reverse zone* file for our domain. Zone files
+    are text files that contain the actual domain name to IP address mappings or the
+    other way around, that is, IP address mappings to domain name mappings. While
+    most queries to any DNS server will be the translation of names to IP addresses,
+    the reverse part is also important to set up if you need the correct domain name
+    for any given IP address. We will configure BIND to be authoritative-only, which
+    means that the server will only answer queries it is authoritative for (has the
+    matching records in its zones), so if the DNS server cannot resolve a requested
+    domain, it will stop the request and not contact other DNS servers using recursive
+    requests to fetch and construct the correct answer.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a static IP address, and a console-based
+    text editor of your choice. An Internet connection will be required to download
+    additional packages. In this example, our DNS server runs in the private network
+    with the network address `192.168.1.0/24`. Our DNS server should manage a local
+    private domain we decide to be `centos7.home` (in the form `domain.toplevel-domain`).
+    The IP address of the new DNS server will be `192.168.1.7` and should get the
+    hostname `ns1`, leading to the Fully Qualified Domain Name (FQDN) `ns1.centos7.home`.
+    (Refer to the *Setting your hostname and resolving the network* recipe in [Chapter
+    2](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c "Chapter 2. Configuring
+    the System"), *Configuring the System* to learn more about FQDNs). Our configured
+    zone will have an administrative e-mail address with the name `admin@centos7.home`,
+    and for simplicity, all the other computers in this network will get hostnames
+    such as `client1`, `client2`, `client3`, and so on. We will also have some mail,
+    web, and FTP servers in our own network, each running on separate dedicated servers.
+    We will be using the port `8053` for our BIND service as we already have Unbound
+    running on the same server using the default DNS port `53`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'For security reasons, we will allow BIND to resolve internal LAN names only
+    (authoritative-only) and only allow localhost to make DNS queries; no other clients
+    in our network can connect to it:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To begin with, log in as root on your Unbound DNS server and install the required
+    BIND package and enable the DNS server on boot:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'The actual name of the DNS server in the BIND package is called `named`, so
+    let''s open its main configuration file to make some adjustments after creating
+    a backup copy of it first:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'First find the line `listen-on port 53 { 127.0.0.1; }`; and then change the
+    port number to the custom `port 8053`, so it reads as follows:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, find the line `listen-on-v6 port 53 { ::1; }` and change it to:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, since we are configuring an authoritative-only server, we will disable
+    contacting other remote DNS servers, find the line that reads `recursion yes;`
+    and change it to:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Save and close the file, and then validate the syntax of our config changes
+    (no output means no errors!):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now tell SELinux about the changed named DNS port (this needs package `policycoreutils-python`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now type the following command in order to create your forward zone file. Name
+    the file after the domain whose resource records it will contain:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'In our example, for our `centos7.home domain`, this will be:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now simply add the following lines (be careful not to forget typing the tailing
+    dots in the domain names). We will start with the **Start of Authority** (**SOA**)
+    block:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Afterwards, add the rest of the file''s content:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'When you have finished, simply save and close the file before proceeding to
+    create the reverse zone file for our private subnetwork used by our domain (the
+    `C-Class` are the first three numbers (octets) which are separated by dots: `XXX.XXX.XXX`.
+    For example, for the `192.168.1.0/24` subnet the `C-Class` is `192.168.1`:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'In our example, a reverse zone file resolving our `centos7.home''s` `192.168.1`
+    C-Class subnet will be:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'First put in the exact same SOA as in step 10, and then append the following
+    content to the end of the file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Save and close the file, and then add our new zone pair to the named configuration.
+    To do this, open `named.conf` again:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now locate the line including `"/etc/named.rfc1912.zones"`;. Immediately following
+    this line, create a space for your work and add the appropriate zone statement
+    to enable your *reverse* zone, as follows (substitute `XXX.XXX.XXX` with the reversed
+    C-Class of your reverse zone file name, in our example `1.168.192`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Having done this, you can now proceed to add a zone statement for your forward
+    zone right afterwards, as follows (replacing `<domain>.<top-level domain>.db`
+    with your forward zone file name, in our example `centos7.home`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'When you have finished, simply save and close the file, and then restart the
+    `bind` service using:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: All DNS servers are configured to perform caching functions, but where a caching-only
+    server is restricted in its ability to answer queries from remote DNS servers
+    only, an authoritative nameserver is a DNS server that maintains the master zone
+    for a particular record.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what have we learned from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: The purpose of this recipe was to setup an authoritative-only BIND DNS server
+    and provide a new zone for it. A DNS zone defines all the available resources
+    (hostnames and services) under a single domain. Any DNS zone should always consist
+    of both a forward and reverse zone file. To understand zone configurations, we
+    need to discuss DNS hierarchy first. For example, take a DNS domain from the example
+    in this recipe `client1.centos7.home`. Every computer in our private network has
+    a hostname (for example, `client1` or `www`) and is a member of a domain. A domain
+    consists of the **Second-level Domain** (**SLD**) (for example, `centos7`) and
+    a **Top-level Domain** name (**TLD**) (for example, `home`, `org`, `com`, and
+    so on). On top of that TLD is the root domain (written `.` dot) which often is
+    neglected when working with other programs or configurations. However, when working
+    or defining FQDN in zone configurations, it is very important to never forget
+    to add this dot `.` after the TLD. For example, a DNS domain for our `client1`
+    computer would be `client1.centos7.home`., whereas an FQDN for the `/etc/hosts`
+    file is often written in the format `client1.centos7.home` (technically this is
+    incorrect but most of the time sufficient). The root domain is very important
+    because it contains the root DNS servers which will be queried first if an authoritative
+    DNS server cannot find an existing entry for a requested domain in its own records
+    (zones) or cache. But we have DNS servers in all the other domain hierarchies
+    as well and this is how a DNS server makes its recursive requests. A root DNS
+    server, as any other DNS server, resolves all its subdomains (defined in its zone
+    files) which are the TLDs. These TLDs themselves can resolve all the SLDs (also
+    defined in their zone files). The second-level domains resolve all their hostnames
+    (which are special subdomains as they refer to individual computer or services
+    on your network). So any DNS request traverses through the different DNS server
+    hierarchies from the root DNS over the TLD DNS to the SLD DNS server. The root
+    and the TLD DNS servers cannot fully resolve full domain DNS queries such as `www.centos7.home`
+    and instead will resolve the correct address of the next DNS hierarchy. This system
+    ensures that the root DNS will always find the correct TLD DNS server address
+    and the TLD DNS server will always send the request to the right SLD DNS which
+    has the correct zone file and is finally able to answer the requested DNS query.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: As we have learned, a zone file is a simple text file that consists of directives
+    and resource records and can look quite complicated as it contains a lot of two-letter
+    abbreviations. Remember, you need to set up a zone file pair (forward and reverse)
+    on a base domain level (for example, `centos7.home`) for all the hostnames and
+    services running under it (for example, `www`, `host1`, `api`, and so on). After
+    installing the `named` DNS server (which is part of the **Berkeley Internet Name
+    Domain** (**BIND**) package), we made a copy of the original main configuration
+    file and changed the default listening port from 53 to 8053 (as unbound is already
+    listening on port 53) but kept it listening to localhost only, and disabled IPv6
+    to keep compatibility with the other major DNS servers (as IPv6 support is still
+    limited on the Internet). Also, here we disabled recursion because our BIND DNS
+    server had to be authoritative-only, which means that it is not allowed to forward
+    DNS requests to other remote DNS servers when it could not resolve the query from
+    its own zone records.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Then we began creating and customizing our own forward DNS zone file with the
+    filename convention `/var/named/<domain>.<top-level domain>.db`. This file is
+    opened with the `$TTL` control statement, which stands for **Time to Live** and
+    which provides other nameservers with a time value that determines how long they
+    can cache the records from this zone. This directive, as many others, is defined
+    using seconds as the default time unit, but you can also use other units using
+    BIND specific short forms to indicate minutes (`m`), hours (`h`), days (`d`),
+    and weeks (`w`), as we did in our example (`3h`). Following this, we then provided
+    a **Start of Authority** (**SOA**) record. This record contains specific information
+    about the zone as a whole. This begins with the zone name (`@`), a specification
+    of the zone class (`IN`), the FQDN of this nameserver in the format `hostname.domain.TLD.`,
+    and an e-mail address of the zone administrator. This latter value is typically
+    in the form `hostmaster.hostname.domain.TLD.` and it is formed by replacing the
+    typical `@` symbol with a dot (`.`). Having done this, it was then a matter of
+    opening the brackets to assign the zone''s serial number, refresh value, retry
+    value, expire value, and negative caching `time-to-live` value. These directives
+    can be summarized as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `serial-number` value is a numeric value, typically taking the form of the
+    date in reverse (`YYYYMMDD`) with an additional value (`VV`), which is incremented
+    every time the zone file is modified or updated, in order to indicate that it
+    is time for the named service to reload the zone. The value `VV` typically starts
+    at `00`, and the next time you modify this file, simply increment it to `01`,
+    `02`, `03`, and so on.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The `time-to-refresh` value determines how frequently the secondary or slave
+    nameservers will ask the primary nameserver if any changes have been made to the
+    zone.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The `time-to-retry` value determines how frequently the secondary or slave nameservers
+    should check the primary server after the serial number has failed. If a failure
+    has occurred during the time frame specified by the `time-to-expire` value elapses,
+    the secondary nameservers will stop responding as an authority for requests.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The `minimum-TTL` value determines how long the other nameservers can cache
+    negative responses.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Having completed this section and having closed the corresponding bracket, we
+    then proceeded to add the authoritative nameserver information (`NS`) with the
+    `IN NS <FQDN of the nameserver>` definition. Typically speaking, you will have
+    at least two, if not three, nameservers (put each nameserver's FQDN in a new `IN
+    NS` line). However, it is possible to set only one nameserver, which is particularly
+    useful if you are running the server in an office or a home environment and would
+    like to enjoy the benefit of local name resolution, such as `.home`, `.lan`, or
+    `.dev`. The next stage then required us to include a reference for the **Mail
+    eXchanger** (**MX**) records in order for us to specify a mail server for the
+    zone. The format is `IN MX <priority> <FQDN of your mailserver>`. The priority
+    becomes important if you define more than one mail server (each in its separate
+    `IN MX` line)—the lower the number, the higher the priority. In this respect,
+    a secondary mail server should have a higher value.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: In the `SOA`, `NS` and `MX` lines we already referenced hostnames which aren't
+    defined as an IP mapping yet (`A` record). We could do this because the zone file
+    is not processed sequentially. But do not forget to create corresponding `A` lines
+    for each hostname later.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Depending on your needs, you may also intend to use your name server as your
+    mail server (then you would write instead `MX 10 ns1.centos7.home.`), although
+    you may have another server dedicated to that role as shown in the example.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Following this, it was then a matter of creating the appropriate `A` records
+    (`A` for address) and assigning the appropriate IP address to the values shown.
+    This is the heart of any domain name resolution requests to the server. An `A`
+    record is used for linking an FQDN to an IP address, but much of the preceding
+    settings will be based on your exact needs. Here you can define all the local
+    host names you want to map in your network. As we have already used and referenced
+    some domain names before in the zone file such as the nameserver or mailserver
+    we would begin with these. Afterwards, we defined all the hostnames to IP address
+    mappings for all public available and afterwards our internal clients. Remember
+    that when using the `A` records you can have multiple mappings of the same IP
+    address to different hostnames. For example, if you do not have dedicated servers
+    for every service in your network but rather one server running all your `DNS`,
+    `mail`, `web`, and `ftp` services, you can write the following lines instead:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can also use a canonical name (`CNAME`) record for this task, which is used
+    to assign an alias to an existing `A` record. Arguably, the `CNAME` value make
+    your DNS data easier to manage by pointing back to an `A` record. So if you ever
+    consider the need to change the IP address of the `A` record, all your `CNAME`
+    records pointed to that record automatically. However, and as this recipe has
+    tried to show, the alternative solution is to have multiple `A` records, which
+    implies the need for multiple updates in order to change the IP address.
+  prefs: []
+  type: TYPE_NORMAL
+- en: At this stage of the recipe, we then turned our attention towards the reverse
+    DNS zone. As with the forward zone file, the reverse zone files also have a special
+    naming convention `/var/named/db.<C-Class of our search IP in reverse order>`.
+    Naming your reverse zone file like `db.1.168.192` can look strange first but makes
+    sense when you look at how reverse lookup works. It starts from the highest node
+    (in our example `192`, which corresponds to the root domain in the forward zone
+    file) and traverses its way down from it. As you see, the content we put in this
+    file has some similarities between the directives and the resources used in the
+    forward zone file. However, it is important to remember that reverse DNS is wholly
+    separate and distinct from forward DNS.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The reverse DNS zone is designed to assist in the conversion of an IP address
+    to a domain name. This can be done by using the **Pointer Resource Record** (**PTR**)
+    which assigns unique IP addresses to one or more host names. For this reason,
+    you must ensure that a unique PTR record exists for every `A` record. Every reverse
+    zone file collects IP to hostname translations for a complete Class C address
+    range (the first three dotted numbers, for example, `192.168.1`). The last octets
+    of such an IP range are all the hostnames which can be defined within such a file.
+    Remember, the IP address value for the first column in a PTR record should only
+    show this last octet. For example, the line `9 IN PTR www.centos7.home.` in the
+    reverse zone file `db.1.168.192` will be able to resolve any reverse IP address
+    requests of `192.168.1.9` to the domain value `www.centos7.home`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Having created our forward and reverse zone files in this recipe, we then completed
+    the configuration of the named service by adding our new zones to our BIND server
+    in order to start our own domain name service resolving local domain names of
+    our network. In these new appended forward and reverse zone definition blocks,
+    we defined that we are the master zone holder and also specified `update-policy
+    local;` because this is needed if we want to use the `nsupdate` command to update
+    our zones dynamically from the localhost (see later). You may add unlimited zone
+    pairs, but remember that each forward or reverse zone definition must be given
+    a single zone entry in curly brackets.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In summary, we can say that forward and reverse zone files are defined on a
+    single base domain name basis, one base domain gets one forward zone file. For
+    reverse zone files, it's a bit different because we are working with IP addresses.
+    We create one zone file based on the Class C address range of the network address
+    of our domain and here the last octet is called the hostname, for which we define
+    our mappings in such a specific file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: BIND is a big subject and there is a lot more to learn as this recipe has only
+    served to introduce you to the subject. In most cases, you may even find that
+    your initial learning period will become known as a process of trial and error,
+    but it will improve. Remember, practice makes perfect and if you do create additional
+    forward zones, always reference them in the reverse zone file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Having created and added your zones to your BIND server, you are now able to
+    test your configuration. To do this, you can use the `host`, `dig` or `nslookup`
+    command to resolve internal hostnames from localhost only. For example, for testing
+    forward DNS resolution we can use the `dig` command by specifying that our DNS
+    server is running on localhost with port `8053: dig -p 8053 @127.0.0.1 client2.centos7.home`.
+    This should finish DNS lookup successfully and return the following line (output
+    is truncated):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'For reverse lookup, you will use an IP address instead (in this instance, the
+    IP address used should correspond to a domain for which you have configured reverse
+    DNS): `nslookup -port=8053 192.168.1.12 127.0.0.1`. As we have configured BIND
+    as an authoritative-only DNS server, any DNS request which is outside the local
+    records of our zone should not be able to get fully resolved. To test this use
+    `dig -p 8053 @127.0.0.1 www.google.com` which should return the status `REFUSED`
+    and `WARNING: recursion requested but not available` message.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For security reasons, we restricted our BIND server to localhost only and did
+    not allow it to connect to other DNS servers. Therefore you cannot use it as your
+    only DNS solution for your private network. Instead, in the next recipe, we will
+    learn how to combine Unbound with BIND to create an integrated and very secure
+    all-in-one DNS server solution. But if you don''t want to do this and use BIND
+    as your single and full authoritative DNS server solution (which is not recommended
+    on CentOS 7 anymore), you can do this by disabling or uninstalling Unbound, restoring
+    the original `named.conf.BAK` configuration file, and enabling the following directives
+    in the BIND configuration file: `allow-query {localhost;192.168.1.0/24;}`; (which
+    enables the complete `192.168.1.0/24` network to make DNS requests), `listen-on
+    port 53 {any;}`; (listen for requests on any network), `listen-on-v6 port 8053
+    { none; }`; (for disabling IPv6). If you want BIND to be forwarding everything,
+    which it is not authoritative for, instead of using recursion to find out the
+    answer, add the following directives as well (in this example we use the official
+    Google DNS servers for any forwarding requests, but you can change this to fit
+    your needs): `forwarders { 8.8.8.8;};forward only;`. Then restart the `bind` service.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Creating an integrated nameserver solution
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'So far in this chapter, we used Unbound as a caching-only DNS server solution
+    because it is very secure and fast, and BIND as our authoritative-only DNS server
+    because its zone management is highly configurable and customizable. BIND has
+    been around for a long time and is the most used DNS software ever. However, a
+    number of critical bugs have been found (and luckily fixed) in the past. Here
+    in this recipe, we will combine Unbound with BIND to get the best of both worlds:
+    Only the very secure Unbound service will be directly exposed to your private
+    network and can take and serve DNS queries from your clients. The BIND service
+    stays bound to localhost only as it was configured in a former recipe and is only
+    allowed to resolve internal hostnames and does not have direct access to the Internet
+    or your clients. If a client connects to your Unbound service and requests to
+    resolve an internal hostname from your private network, Unbound will query the
+    BIND server locally for the DNS resolution and cache the response. On the other
+    hand, if a client requests to resolve an external domain name, Unbound itself
+    will recursively query or forward other remote DNS servers and cache the response.
+    The integration of both DNS server systems makes it the perfect all-round DNS
+    server solution.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system and a console-based text editor of your choice. It is expected
+    that a caching-only Unbound server (port 53) and an authoritative-only BIND server
+    (port 8053) have been installed and are already running using recipes found in
+    this chapter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'In this recipe, we will show you how to configure Unbound so it will be able
+    to query our locally running authoritative-only BIND service whenever a client
+    requests an internal hostname. Any other request should go out as a recursive
+    DNS request to a remote root server to construct an answer:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Log in as root on our server running the Unbound and BIND service and open
+    Unbound''s main configuration file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'First put the following line somewhere in the `server:` clause:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, we will have to allow Unbound to connect to localhost which is disabled
+    by default, search for the line that reads: `# do-not-query-localhost: yes`, then
+    activate and set it to no:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, since our BIND server is not configured using DNSSEC, we need to tell
+    Unbound to use it anyway (Unbound by default refuses to connect to DNS servers
+    not using DNSSEC). Search for the line that starts with `# domain-insecure: "example.com"`,
+    then activate it and change it so it reads as follows:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, we need to tell Unbound to forward all the requests for our internal
+    domain `centos7.home.` to the locally running BIND server (on port `8053`). Append
+    the following at the file''s end:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Also, we need to tell Unbound to do the same for any reverse lookup to our
+    internal domain using BIND:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Save and close the file, and then restart the Unbound service:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Congratulations! You now have a full authoritative and very secure DNS server
+    solution using an integrated approach combining all the good parts from Unbound
+    and BIND. In this recipe, we have shown you how to configure the Unbound service
+    using stub-zones to connect to an internally running BIND service for both forward
+    and reverse requests. A `stub-zone` is a special Unbound feature to configure
+    authoritative data to be used that cannot be accessed using the public Internet
+    servers. Its `name` field defines the zone name for which Unbound will forward
+    any incoming DNS requests and the `stub-addr` field configures the location (IP
+    address and a port) of the DNS server to access; in our example, this is the locally
+    running BIND server on port `8053`. For Unbound to be able to connect to the localhost,
+    we first had to allow this using the `do-not-query-localhost: no` directive, had
+    to mark our forward and reverse domain as being `insecure`, and also had to define
+    a new `local-zone`, which is necessary that Unbound knows that clients can send
+    queries to a `stub-zone` authoritative server.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In order to test our new Unbound/BIND DNS cluster, make one public and one internal
+    hostname DNS request to the Unbound service from another computer in the same
+    network (you can also run similar tests locally on the DNS server itself). If
+    our Unbound/BIND DNS cluster has the IP `192.168.1.7`, you should be able to get
+    correct answers for both `dig @192.168.1.7 www.packtpub.com` and `dig @192.168.1.7
+    client1.centos7.home` from any other computer in your network.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If you have to troubleshoot service problems or need to monitor the DNS queries
+    of your new Unbound/BIND DNS server, you can configure logging parameters. For
+    BIND, in the main configuration file `named.conf` you can set the verbosity of
+    the logging output (or log level). This parameter is called `severity` and can
+    be found within the `logging` directive. It is already set to `dynamic`; which
+    gives the highest amount of logging messages possible. You can then read your
+    current log using `tail -f /var/named/data/named.run`. For Unbound, you can set
+    the level of verbosity in its main configuration file `unbound.conf` using the
+    `verbosity` directive which is set to the lowest level of `1` but can be increased
+    to `5`. To learn more about the different levels, use `man unbound.conf`. Use
+    `journald` to read the Unbound logging information using the command `journalctl
+    -f -u unbound.service` (press *Ctrl*+*c* key to exit the command).
+  prefs: []
+  type: TYPE_NORMAL
+- en: We can not only log the system and service information but can also enable query
+    logs. For Unbound just use a `verbosity` of `3` or above to record query information.
+    For BIND, in order to activate the query log (query output will go to the log
+    file `named.run`), use the command `rndc querylog on` (to turn it off, use `rndc
+    querylog off`). Remember to turn off any excessive logging information, such as
+    the query log, when configuring your DNS server on a productive system as it can
+    decrease your service's performance. You can also install other third-party tools
+    such as `dnstop` (from the `EPEL` repository) to monitor your DNS activity.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Populating the domain
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this recipe, we will show you how you can quickly add new local domain record
+    entries to your authoritative BIND server which are currently unknown to your
+    nameserver.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system and a console-based text editor of your choice. It is expected
+    that Unbound and BIND have both been installed and are already running, and that
+    you have read and applied the zone recipes in this chapter and have prepared the
+    required forward and reverse zone files for resolving hostnames of your private
+    network.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'If you want to add new domain names to the IP address mappings to your DNS
+    server, for example for new or unknown hosts in your local network, you have two
+    alternatives. Since we have already created zone files for our local network,
+    we can simply add new `A` (and/or `CNAME`) and corresponding `PTR` entries for
+    every new subdomain within our base domain name into our forward and reverse zone
+    file configuration using our text editor of choice. Alternatively, we can use
+    the `nsupdate` command-line tool to add those records interactively without the
+    need to restart the DNS server. In this section, we will show you how to prepare
+    and work with the `nsupdate` tool. In our example, we will add a new subdomain
+    `client4.centos7.home` for a computer with the IP address `192.168.1.14` to our
+    DNS server''s zone:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Log in as root on the server running your BIND service. Now first we need to
+    activate `named` to be allowed to write into its zone files by SELinux:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, we need to fix some permission problems with the named configuration
+    directory, otherwise `nsupdate` cannot update our zone files later:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Since our BIND server is running on port `8053`, type the following command
+    to start the interactive `nsupdate` session locally:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'At the prompt (`>`), first connect to the local DNS server by typing the following
+    (press *Return* to finish commands):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'To add a new forward domain to IP mapping to your DNS server, type the following:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE49]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now add the reverse relationship using the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: If both the update commands' outputs contained the message `NOERROR`, press
+    *Ctrl*+*c* key to exit the interactive `nsupdate` session.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: 'Finally, check if both the domain and IP resolution for the new zone entry
+    work (this should also work remotely through the Unbound server):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE51]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works…
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In this fairly easy recipe, we showed you how easily you can add new domain
+    name resolution records with the `nsupdate` tool dynamically at runtime without
+    needing to restart your BIND DNS server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this recipe, we introduced you to the `nsupdate` command-line tool which
+    is a utility for making changes to a running BIND DNS database without the need
+    to edit the zone files or restart the server. If you have already configured the
+    zone files in your DNS server, then this is the preferred way to make changes
+    to the DNS server. It has several options, for example, you can connect to the
+    remote DNS servers but for simplicity and for security reasons we will only use
+    and allow the most simple form and only connect `nsupdate` to our BIND server
+    locally (to connect to a BIND server remotely using `nsupdate`, you need to do
+    more configuration, such as generate secure key-pairs, open the firewall, and
+    so on).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'After allowing `named` to write into its own zone files, which otherwise is
+    prohibited by SELinux, and fixing some permission problems on the default named
+    configuration directory, we started the `nsupdate` program with `-l` for local
+    connection, and `-p 8053` to connect to our BIND DNS server on port `8053`. `-d`
+    gives us debug output which can be useful for resolving any problems. We then
+    got prompted by an interactive shell where we could run BIND specific `update`
+    commands. First we set `local` `127.0.0.1` which connects to our local server,
+    than we used the commands `update add` to add a new forward `A` record to our
+    running DNS server. The syntax is similar to defining records in the zone files.
+    Here we used the line `update add <domain-name> <TTL> <type> <IP address>` to
+    add a new `A` record with a TTL of three days (115200 seconds) for the domain
+    `client4.centos7.home` to resolve to the IP address `192.168.1.14`. The next line
+    was used to config some reverse resolution rules for our new domain and which
+    adds the domain name as a `PTR` entry into our reverse zone. Here it is important
+    to note that you need to define the domain part of the reverse `update add` rule
+    the following way: `<host name for the rule>.<reverse C-class>.in-addr.arpa`.
+    To finally execute our commands and make them permanent in our DNS server''s database,
+    without the need to restart the server, we used the `send` command for both the
+    reverse and forward commands separately since they target different zones. Finally,
+    we tested if the new entries into the DNS server''s zone files were working by
+    querying the BIND server.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Building a secondary (slave) DNS server
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: To guarantee high-availability in your network, it can be useful to operate
+    more than one DNS server in your environment to catch up with any server failures.
+    This is particularly true if you run a public DNS server where continuous access
+    to the service is crucial and where it is not uncommon to have five and more DNS
+    servers at once. Since configuring and managing multiple DNS servers can be time
+    consuming, the BIND DNS server uses the feature of transferring zone files between
+    the nodes so that every DNS server has the same domain resolving and configuration
+    information. In order to do this, we need to define one primary and one or more
+    secondary or slave DNS servers. Then we only have to adjust our zone file once
+    on the primary server which will transfer the current version to all our secondary
+    servers, keeping everything consistent and up-to-date. For a client it will then
+    make no difference which DNS server they are connecting to.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require at least two CentOS 7 servers in the
+    same network which can see and ping each other. An Internet connection will be
+    required to download and install the BIND server software on all the computers
+    we want to include in our DNS server *farm*. In this example, we have two servers,
+    `192.168.1.7` which is already installed and configured as a BIND server, and
+    `192.168.1.15` which will be our second BIND server within the subnet `192.168.1.0/24`.
+    You should also have read and applied the zone file recipe from this chapter and
+    created a forward and reverse zone file because this is what we want to transfer
+    between DNS servers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We begin this recipe by installing BIND on every CentOS 7 computer we want to
+    include in our BIND DNS server cluster. To do this, follow the recipe *Setting
+    up an authoritative-only DNS server* for all the remaining systems. Before we
+    can start, we need to define which server will be our primary DNS server. For
+    simplicity in our example, we will choose the server with the IP address `192.168.1.7`.
+    Now let's make all our DNS server nodes aware of their role.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Changes to the primary DNS server
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Let''s log in as root on the primary server and open its main configuration:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE52]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now we define which secondary DNS server(s) will be allowed to receive the
+    zone files at all, write the following command somewhere between the options curly
+    brackets in a new line (we only have one secondary DNS server with the IP address
+    `192.168.1.15`, change accordingly):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE53]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Also, we must allow the other nameservers to connect to our primary nameserver.
+    In order to do this, you need to change your `listen-on` directive to include
+    the DNS server''s primary network interface (in our example `192.168.1.7` , so
+    change appropriately):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE54]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Save and close the file. Now open the new port `8053` in your server''s firewall
+    (or create a firewalld service for it, see [Chapter 6](part0061_split_000.html#1Q5IA1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 6. Providing Security"), *Providing Security*):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE55]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Save and close the file. Next, update the zone files we created earlier to
+    include the IP addresses of all the new nameservers we have available in the system.
+    Change both the forward and reverse zone files, `/var/named/centos7.home.db` and
+    `/var/named/db.1.168.192`, to include our new secondary DNS server. In the forward
+    zone file, add the following lines (you can also use the `nsupdate` program to
+    do this) into the appropriate sections:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE56]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'In the reverse zone file, add instead into the appropriate sections:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE57]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, restart BIND and recheck the configuration file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE58]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: Changes to the secondary DNS server(s)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'For simplicity and to demonstrate, just install `named` on any server you want
+    to use as a BIND slave (we only show the important configuration here):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Log in to the new server as root, install BIND, and open its main configuration:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE59]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now locate the line `include /etc/named.rfc1912.zones`;. Immediately following
+    this line, create a space for your work and add the following zones (replace the
+    zone and file names appropriately):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE60]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Save and close the file. Then fix some incorrect BIND folder permissions and
+    enable `named` to write into its zone file directory before restarting BIND:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE61]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now initiate a new zone transfer using:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE62]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'After waiting a while, to test if our secondary DNS server is working as expected,
+    check if the master zone files have been transferred:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE63]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, we can now test if we can query our local domain on the secondary
+    DNS server too:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE64]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In this recipe, we showed you how to set up secondary BIND servers in your network
+    which can help in increasing the stability and availability of your DNS server
+    system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So what did we learn from this experience?
+  prefs: []
+  type: TYPE_NORMAL
+- en: We started our journey by deciding which of our servers should be the primary
+    and which should be the slave DNS servers. Then we opened the BIND main configuration
+    file on the primary server and introduced two lines of code to configure our server
+    to be the head of our DNS cluster. The `allow-transfer` directive defines to which
+    clients we want to transfer our updated zone files while the `notify yes` directive
+    enables automatic transfer when any changes to the zone files happen. If you have
+    got several secondary BIND DNS servers, you can add more than one IP address into
+    the `allow-transfer` directive, separated by semicolons. Then we opened our zone
+    files we created in a former recipe in this chapter and introduced a new line
+    `IN NS <IP address>` which defines the IP address of our secondary DNS servers
+    we need to be aware on every DNS node in our system. If we have got multiple servers,
+    then we introduce multiple `IN NS` lines. Finally, we introduced a small comment
+    to easily check the successful zone file transfer on our secondary servers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Afterwards, we configured our slave DNS server(s). Here we introduced the same
+    zone file definitions as on the primary server's BIND configuration, with the
+    exceptions that we used type `slave` instead of master to denote we are a secondary
+    DNS server and will get a copy of the zone files from the master node by defining
+    the primary DNS server's IP address using the `masters` directive (please do not
+    forget that our master BIND is listening on the non-default port `8053` in our
+    example).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Since we had not created or copied the zone files ourselves on the slave DNS
+    server, it was then easy to check if the zone file transfer had been successful
+    after restarting the BIND service using the `ls` command. Finally, we verified
+    the transferred zone file content by running test queries using `dig` or `nslookup`
+    to see if we could resolve the same local hostnames on our secondary DNS server.
+    Remember if you later make changes to your master's zone files you have to increase
+    their `serial` number in order that those changes get transferred to all your
+    slaves.
+  prefs: []
+  type: TYPE_NORMAL

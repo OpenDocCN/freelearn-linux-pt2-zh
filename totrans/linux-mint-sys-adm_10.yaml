@@ -1,0 +1,441 @@
+- en: Chapter 10. Monitoring Your System
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '*Once a computer is configured and different services are running, it''s time
+    to make sure everything is correct and things continue as usual. This chapter
+    is going to introduce ways to monitor a system that is taking care of services
+    and running processes, and how computer resources, such as memory, CPU, and network,
+    are used.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In this chapter, we''re going to cover the following topics:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: What are processes and services
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Starting and stopping services
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Activating services
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Listing the running processes
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Displaying CPU, memory, and network usage
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Processes and services
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'Novice Linux users always ask about two widely used concepts in GNU/Linux distributions:
+    processes and services. These are very important for system administrators because
+    they describe the applications that are running on our operating system. Obviously,
+    we need to take care about that when we talk about how to supervise a computer
+    system. The number of processes and services impact the performance of a server
+    directly. System administrators should control which applications are running
+    and how they are affecting the operating system and other resources and devices.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Basically, a **process** is a computer program or application in execution,
+    including its current activity, that affects the resources such as CPU, open files,
+    and memory. The operating system needs a set of information about each process
+    in execution. This kind of information is known as **process descriptors** and
+    includes state, parent processes, list of open files, memory address, and a unique
+    identification number called PID.
+  prefs: []
+  type: TYPE_NORMAL
+- en: On the other hand, we found services related to processes. A **service** is
+    a computer program that runs without direct intervention of an operating system
+    user. It's very common to use the term "background" to refer to this kind of execution.
+    Keep in mind that an application running in the background doesn't send any output
+    to a terminal, though it is a common practice to use a file for this purpose.
+    In UNIX and Linux-based operating systems, it's very usual to talk about **daemons**
+    to refer to services. We can consider both concepts equivalent. The Linux kernel
+    starts some daemons at boot time, so the system administrator can decide about
+    that. A simple convention is to use the suffix "d" to identify which programs
+    are running as daemons. For example, `sshd` is the name of the daemon running
+    an SSH server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Usually, operating systems include tools to manage processes and services. Linux
+    Mint is not an exception, and we'll find out later which tools can be used to
+    manage running applications through services and processes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In addition to processes and services, system administrators need to control
+    and manage resources such as CPU, memory, network, and filesystems. All of them
+    are part of system monitoring, because they affect the performance. In this chapter,
+    we'll learn the basics about how to monitor our system, while taking care about
+    mentioned resources including processes and services.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Starting and stopping services
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: System administrators need to know how to start and stop a specific service.
+    As part of their daily job, system administrators check the running services and
+    start new ones. Sometimes a service should be stopped; for example, when a service
+    is no longer needed, we can stop it. Also, a restarting can be required. All of
+    these tasks can be carried out through an application called `initctl`. Let's
+    see how to use it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – stopping and starting an SSH daemon
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: We're going to learn how to stop and start our SSH service. Remember that we
+    learned how to install an SSH previously in [Chapter 9](ch09.html "Chapter 9. Security"),
+    *Security*. After installing this application, our SSH service will be running
+    by default, so we'll begin learning how to stop it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Launch the MATE Terminal as usual.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Type the following command in the shell:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Our SSH daemon is stopped and you''ll receive an output message such as the
+    following one:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, we''re going to launch our SSH daemon again. Just type the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Once the SSH service starts running, you can see a message such as the following
+    one:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Also, you can find out the current status of the SSH service by executing the
+    following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Linux Mint includes a tool called `initctl` that offers us control over the
+    `init` daemon. This daemon is a special one, which gets started during the boot
+    process of the Linux Kernel, and it's the parent of the rest of the services and
+    processes. Usually, `init` has a PID of `1` and Linux Mint implements a specific
+    event-based daemon called `Upstart`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `initctl` application accepts many commands as arguments; two of them are
+    `start` and `stop` as you've learned before. As a third argument, we can pass
+    the name of the service that will be affected by the operation, so the arguments
+    `stop ssh` indicates the operation and service name respectively.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In our example, we checked the current status of our SSH service using the `list`
+    operation. This command returns a simple message informing us whether the service
+    is up or down. Also, it's possible to use the `restart` operation, which stops
+    and starts a specific server in that order.
+  prefs: []
+  type: TYPE_NORMAL
+- en: It's important to know that we need to run `initctl` as the root user, otherwise
+    we cannot start, stop, or restart services. The reason for this is that only the
+    root user has access to these kind of operations. It doesn't make sense if any
+    user can do that, because services are important for the security and the integrity
+    of the system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Have a go hero – checking current status of all services
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Sometimes system administrators need to know about the current status of all
+    running and stopped services in the operating system. In order to do that, we
+    can use the `initctl` tool passing an argument called `list`. The command is as
+    follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We''ll get a response, as shown in the following screenshot:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![Have a go hero – checking current status of all services](img/9601_10_01.jpg)'
+  prefs: []
+  type: TYPE_IMG
+- en: Activating services
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Previously we've learned how to start and stop services through the command
+    line. However, Linux Mint also includes a simple GUI application that allows us,
+    with a simple button click, to select the services we want to activate or deactivate
+    when the system starts. Let's see how to activate services through the **Services
+    Settings** application.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – activating Samba
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In order to share files and directories with Windows systems, we can use the
+    **Samba** protocol. Let's imagine that we have installed in our Linux Mint a set
+    of tools and a daemon to do that. We're going to learn how to activate a Samba
+    service.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Click on the **Menu** button and click again on the **All Applications** button.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Click on the **Services** menu option of the **Administration** group.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: A new window belonging to the **Service Settings** application is displayed.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Look for the **samba** option and click on it:![Time for action – activating
+    Samba](img/9601_10_02.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: After selecting the **samba** option, you must type your password. Then click
+    on the **Close** button. Next time you boot your system, the Samba service will
+    be started automatically.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Usually, it's very useful to configure many services to start automatically
+    at boot time. By applying this configuration, the system administrator can save
+    time and they are sure that services will start automatically.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Despite configuring your services through the command line, Linux Mint provides
+    a simple and intuitive tool to do that. As you have learned, this tool is **Services
+    Settings,** and you can access it easily from the main menu.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Listing the running processes
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: One of the most important things that the system administrator should supervise
+    is the list of current processes running on the operating system of each machine
+    under their control. Remember that each running process is using some resource,
+    such as the CPU, memory, and files. This means that it's important to control
+    processes because they affect the performance and security of the system directly.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Linux Mint offers us a specific tool for monitoring processes, CPU, memory,
+    network, and the filesystem of our machine. We're going to learn how to use this
+    tool for monitoring our system, and we'll learn about how to list the running
+    processes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – list the processes running on our machine
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Earlier we talked about a tool for monitoring our system. Well, its name is
+    **System Monitor** and is installed in Linux Mint by default. Let's learn how
+    to access this tool and how to list the running processes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Click on the **Menu** button and click again on the **System Monitor** button:![Time
+    for action – list the processes running on our machine](img/9601_10_03.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Then a new window is displayed. Click on the **Processes** tab.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Now, you can see the processes that are running and additional information about
+    them, such as CPU and memory usage:![Time for action – list the processes running
+    on our machine](img/9601_10_04.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Thanks to the **System Monitor** tool, you can see which processes are running,
+    and you can find out their current status and the CPU and the memory usage of
+    each one. In addition to this kind of information, **System Monitor** displays
+    the load average of the computer based on the CPU usage. As you can observe, **System
+    Monitor** displays information about the load average for the last one, five,
+    and fifteen minutes. These values help the system administrator to control the
+    current status of a machine, and threshold values can be applied to decide when
+    some actions should be taken. Remember that our goal is to help our machine to
+    run processes without collapsing the system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**System Monitor** offers us menu options to display different views about
+    running processes. Specifically, we can display all processes (default view),
+    active processes, and my processes (root user by default). Also, it''s possible
+    to change the order of displaying information, so you can display, for example,
+    all processes ordered according to their memory consumption.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **Edit** menu gives us access to different actions that can be applied to
+    a running process. You can stop, kill, and change the priority of each process.
+    In order to take these actions, first you need to select a specific process from
+    the list. Then you can execute each action by accessing the options belonging
+    to the mentioned **Edit** menu.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Another interesting feature provided by **System Monitor** is the possibility
+    of finding out which files are opened by each process. You only need to select
+    a process and then click on the **Open** **Files** menu option of the **Edit**
+    menu. Keep in mind that this information can change automatically when the window
+    is open, as each process can open and close files during its execution.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Displaying CPU, memory, and network usage
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Besides processes and services, it's very important to take care of resources
+    of our machine as applications need to use these resources. CPU, memory, and network
+    are the most important resources used by our computer, so system administrator
+    always should keep an eye on them. To make life easier, Linux Mint provides information
+    about how these resources are used in real time through the **System Monitor**
+    application. We'll learn how to display the current use of these resources.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – Displaying resources information in real time
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Let's find out how to get basic information about main computer resources that
+    are used in real time.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Click on the **Menu** button and click again on the **System Monitor** button.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Click on the **Resources** tab and you have access to all information regarding
+    CPU, memory, and network usage as shown:![Time for action – Displaying resources
+    information in real time](img/9601_10_05.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: When you click on the **Resources** tab of **System Monitor**, a set of charts
+    is displayed. The first one offers you information about the percentage of CPU
+    usage by time. Also, the current percentage of CPU is displayed below the chart.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Regarding memory, we find information related to the main and swap memory usage.
+    Percentage values related to the total memory are displayed. The purple line on
+    the chart represents main memory, and the green line is used for the swap memory.
+    Both lines are displayed inside the chart so you can compare both easily.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Network information is separated between received and sent packages; different
+    colors are used to denote them. You can see total packages in bytes that have
+    been sent and received by your computer. Also, you can obtain how many of them
+    were sent or received each second.
+  prefs: []
+  type: TYPE_NORMAL
+- en: As you've realized, all information about resources is displayed based on history.
+    This means that each graph is based on time, and it's alive in a sense that the
+    information is displayed in real time.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Have a go hero – getting information about filesystems usage
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In addition to memory, processes, CPU, and network usage, you can get information
+    about your filesystem's usage. In order to take this action, you only need to
+    click on the **File Systems** tab and **System Monitor** displays for each filesystem,
+    information about mounted directories, total space, available space, and percentage
+    of used space.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Summary
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'In this chapter, we''ve learned the basics about system monitoring, being an
+    important area for system administrators. We introduced processes and services,
+    and then we learned how to manage services and how to monitor the most valuable
+    resources in a computer: memory, CPU, hard disks, and network.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Specifically, we covered:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Basic concepts such as processes and services
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to deal with services
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Finding out the running processes and being able to stop them
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Discovering charts indicating how the usage of CPU, memory, and networking are
+    affecting our computer
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: It's important to keep in mind that this chapter is just a basic introduction
+    to system monitoring. This is a big area, and a good understanding and good practice
+    requires experience, and it depends on the complexity of the system that we want
+    to supervise.
+  prefs: []
+  type: TYPE_NORMAL
+- en: At this point we know how to configure and supervise our computer; in the next
+    chapter, we're going to talk about how to solve common problems that can happen
+    when a Linux Mint server or workstation is running.
+  prefs: []
+  type: TYPE_NORMAL

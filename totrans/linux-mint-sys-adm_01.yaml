@@ -1,0 +1,237 @@
+- en: Chapter 1. Introduction to Linux Mint
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '*Welcome to Linux Mint! It''s time to discover one of the most amazing operating
+    system in the World. Linux Mint is not just an operating system. It''s a complete
+    open source project supported by hundreds of volunteers. Let''s start to know
+    more about it!*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In this chapter, we''re going to learn the following topics:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Discover Linux Mint distribution
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Learn about Linux mint open source project
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Find out why Linux Mint is different
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Learn about Linux Mint editions
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Overview
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: What is Linux Mint? A short answer to this question is "a computer operating
+    system based on Linux kernel and GNU tools and libraries". In order to understand
+    what Linux Mint is, first we need to know different concepts such as Linux, kernel,
+    and GNU. Formally, Linux is not an operating system. It's just a software component
+    working as a bridge between applications and the data processing done by the hardware.
+    Because of this fact, the **kernel** is the core component of an operating system.
+    Usually, the term *Linux* is used to refer to a whole operating system based on
+    the kernel. However, an operating system needs more components to be completed.
+    At this point, we find a family of operating system based on Linux kernel, plus
+    a set of tools provided by the GNU open source project.
+  prefs: []
+  type: TYPE_NORMAL
+- en: What are GNU tools? Well, first of all we should learn about the GNU project.
+    Basically, this is an open source project started by Richard Stallman with the
+    goal of building a set of software components and tools to avoid the use of any
+    software that is not free. Despite GNU tools are compatible with UNIX operating
+    system, both are different. In fact, GNU is a recursive acronym that means GNU's
+    Not Unix. Due to the quality and popularity of GNU tools many Unix and Unix-like
+    systems, such as GNU/Linux distros, have adopted these tools as components of
+    the whole operating system. Belonging to the GNU project, we can find very popular
+    tools such as `bash`, `Emacs`, `gzip`, `automake`, `gcc`, and `make`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Despite the fact that "Linux" is an accepted term to refer to this family of
+    operating systems, some people and organizations, such as Free Software Foundation,
+    prefer the name GNU/Linux. Keeping this concept in mind, we're going to use GNU/Linux
+    in this book while talking about the whole operating system, and just Linux while
+    referring to the kernel.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Now that we've learned about Linux, kernel, and GNU, we can define Linux Mint
+    as a Linux distribution that includes a Linux kernel plus GNU tools and other
+    useful software. Hold on. We've just mentioned a new concept—**distribution**
+    . For sure, you have heard about Ubuntu, Fedora, or Debian. These three are examples
+    of Linux distributions, or **distros**. A Linux distribution can be defined as
+    a whole operating system providing a kernel, a system of base tools, and a complete
+    set of applications ready to use for users.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A bit of history
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Clement Lefebvre is a French developer who decided to build a new Linux distro
+    in 2006\. His first goal was to experiment and find out if it was possible to
+    apply some design and usability improvements using an existing Linux distro as
+    a base. Before making this decision, Clement spent some time writing articles
+    about other Linux distributions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Thinking about what things could be improved, Clement started to experiment
+    building his own distro. Ubuntu was chosen as the starting point, and after some
+    work, the first Linux Mint version was released in 2006 using **Ada** as the code
+    name. This version was never released as stable. However, a few months later,
+    a new release was ready. Barbara was the chosen name for 2.0 version of Linux
+    Mint, which caught the attention and interest of many developers and users. The
+    feedback provided by them was a motivation to continue working on the new operating
+    system. Linux Mint was starting to become one of the most popular operating systems
+    in the world.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Open source project
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Linux Mint is not just a Linux distribution, it's an open source project supported
+    by hundreds of volunteers and contributors. This means that people work together
+    sharing ideas, writing tutorials, discussing in forums, and developing software.
+    The final result is not only the Linux distro, but a lot of documentation is generated
+    as well. Collective intelligence allows us to build one of the most used operating
+    systems in the world. We cannot forget that Linux Mint operating system is open
+    source, and it's released under the popular **General Public License GPL** (**GNU**)
+    software license.
+  prefs: []
+  type: TYPE_NORMAL
+- en: All people contributing to Mint project make up the **community** . In the open
+    source world, a community is a set of users and developers supporting a specific
+    project. The community of Linux Mint grew up very fast becoming an important and
+    essential part of the project.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The community uses a specific website that can be found at [http://community.linuxmint.com](http://community.linuxmint.com).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Contributing to the project
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Everyone can contribute to Mint project in different ways that's the magic of
+    open source projects, where the job of each person matters. Usually, people wonder
+    how to contribute to open source projects. Sometimes it's hard to find this kind
+    of information, especially for non-technical people. The Linux Mint website provides
+    enough information about how to contribute to the project. Basically, you can
+    find three different areas of contribution—project contributors, promotion, and
+    financial help. The first area is for those who want to develop software, write
+    documentation, make artwork, or report bugs. However, non-technical people can
+    contribute to this area as well, for instance, they can make translations to get
+    more and more languages supported. The promotion of the project and distro can
+    be for those who are interested in helping others, writing articles, or organizing
+    local presentation for spreading the philosophy and the knowledge of the project.
+    Finally, financial help is important because Linux Mint project needs to pay some
+    costs such as hosting or swag stuff.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For those interested in more details about how to contribute to the Linux Mint
+    project, please visit [http://www.linuxmint.com/getinvolved.php](http://www.linuxmint.com/getinvolved.php).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Why Linux Mint is different
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Basically, we find three features that make Mint different. The most important
+    is the user experience. Mint has been designed to provide a very friendly desktop
+    with an elegant and sophisticated look and feel. The main menu gives access to
+    applications organized by groups, being very intuitive to launch programs only
+    with a click. Regarding improving the user experience, Mint developers offer specific
+    tools integrated with the operating system. Some of them include `mintInstall`,
+    `mintUpdate`, `mintBackup`, and `mintUpload`. We'll talk about these software
+    tools later in different chapters of this book. The impatient user can take a
+    look at the GitHub account used by Mint developers at [https://github.com/linuxmint](https://github.com/linuxmint).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The community behind Linux Mint project is another aspect that makes Mint different
+    than other distros. The organizations and the way they work make Mint different.
+    The feedback provided by users is one of the most valuable resources to improve
+    Mint and to build a better operating system. Other distros have a commercial motivation
+    or developers taking decisions without caring about users' requirements, advices,
+    or ideas.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Finally, Mint includes a lot of software ready to be used out of the box. Multimedia
+    codecs, Java runtime, and Flash Player are installed by default. These feature
+    are very important for novice users that need time to get familiarized with the
+    operating system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Editions
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: As other operating systems, Linux Mint has different editions or flavors. Basically,
+    we can find two main editions—one based on Debian, which is called **Linux Mint
+    Debian Edition** (**LMDE**), and another one based in Ubuntu. In addition to Ubuntu
+    and Debian software repositories, Linux Mint uses its specific ones.
+  prefs: []
+  type: TYPE_NORMAL
+- en: LMDE is a rolling release. This means the distro constantly receives updates
+    without generating releases. So it doesn't need to be upgraded. However, releases
+    for the regular Mint edition (the one based on Ubuntu) are only generated by following
+    a specific period of time, this period being longer than the one used for rolling
+    release. Despite LMDE being faster and more responsive than Linux Mint, non-advanced
+    users should think again before using it because continuous updates can bring
+    some errors that they might find difficult to solve. On the other hand, Linux
+    Mint is easy to maintain and was designed to offer an unbeatable user experience.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The Linux Mint project distributes each edition through different ISO images,
+    each being ready to be burned in a DVD. For LMDE, we can find four images depending
+    on the desktop environment included and the architecture of the processor (32b
+    and 64b).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Regarding the regular edition of Linux Mint, we have more options for choosing
+    so we need to consider that. Specifically, we can find ten different ISO images.
+    Well, we only have five that are really different, because each one has its own
+    equivalent in 32b and 64b. Four different desktop environments are included—MATE,
+    Cinnamon, KDE, and Xfce.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Summary
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This chapter was a hands-on introduction to Linux Mint project and distro. We
+    have learned basic concepts about Linux Mint operating system and project, including
+    how to contribute to the project and discovering which editions are available.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Now that you know the main data and information about Linux Mint distro and
+    project, you are ready for installing the distro in your own computer.
+  prefs: []
+  type: TYPE_NORMAL
+- en: References
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'Linux Mint website: [http://linuxmint.com/](http://linux)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'The GNU project: [http://www.gnu.org/](http://www)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'The GPL license: [http://www.gnu.org/licenses/gpl.html](http://ww)The Linux
+    kernel website: [http://www.kernel.org/](http://www.kernel.org/)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Linux Mint download web page: [http://www.linuxmint.com/download.php](http://www.linuxmint.com/download.php)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

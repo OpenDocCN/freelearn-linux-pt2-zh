@@ -1,0 +1,1 @@
+["```\n    $ sudo initctl stop ssh\n\n    ```", "```\n    ssh stop/waiting\n\n    ```", "```\n    $ sudo initctl start ssh\n\n    ```", "```\n    ssh start/running, process 2436\n\n    ```", "```\n    $ sudo initctl status ssh\n\n    ```", "```\n$ sudo initctl list\n\n```"]

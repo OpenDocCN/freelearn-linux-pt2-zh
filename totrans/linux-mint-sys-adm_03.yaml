@@ -1,0 +1,962 @@
+- en: Chapter 3. Basic Shell
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '*In the previous chapter, we learned how to install Linux Mint. Once our operating
+    system is installed in a computer, we''re ready to work with it. First, you need
+    to learn about what a shell is, this being one of the most important concepts
+    of the Unix and GNU/Linux operating systems. Then, you''ll learn about some interesting
+    and basic usage of the shell, including some useful commands for executing applications,
+    listing files, and finding files inside the file system. Also, you''ll discover
+    some fundamental concepts about shell programming.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The following topics will be discussed in the chapter:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Shell fundamental concepts
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Finding the current directory
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to run commands and applications
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Finding the absolute path for shell commands
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to list, examine, and find files
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Learning about redirection and pipelines
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to set environment variables
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Finding previously executed commands
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Creating a simple shell script
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to get help?
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let's start by learning what a shell is.
+  prefs: []
+  type: TYPE_NORMAL
+- en: What's a shell?
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: A shell is one of the most important components of a Unix and GNU/Linux operating
+    system. Basically, a shell is software that provides an interface for users, allowing
+    communication with the kernel of an operating system. Using the shell, users can
+    enter commands and execute programs. From a technical point of view, a shell is
+    just a program that can execute other programs on behalf of the user. Usually,
+    a shell is known as a command-line interface, also called **CLI** .
+  prefs: []
+  type: TYPE_NORMAL
+- en: The first Unix operating systems separated the shell from the rest of the components
+    of the operating system. This meant that the shell was a program that could be
+    launched directly by a user. However, other components, such as memory manager,
+    scheduler, and the input/output system worked directly through the kernel without
+    user interaction.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The sixth edition of Unix included a shell as the standard command interpreter.
+    Its name was **sh** and it was developed by Ken Thompson, who worked in Bell Labs.
+    Some time later, in 1979, when the seventh edition of Unix was released, the previous
+    shell (sh) was replaced by a new shell called **Bourne shell** , which was developed
+    by Stephen Bourne. A couple of years later, Bill Joy wrote a new shell and named
+    it **C shell** , this is also known as **csh**. Joy worked in the University of
+    California and his shell became part of a specific Unix operating system called
+    **Berkeley System Distribution** (**BSD**).
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the mid-1980s, the **Korn shell** (**ksh**) was developed by David Korn,
+    who was then working in the popular AT&T Bell Laboratories. Despite ksh being
+    compatible with the Bourne shell, it includes some additional features that are
+    very useful for programmers and for those who want to apply advanced customizations.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Most of the GNU/Linux distributions include a different shell written as part
+    of the GNU project, its name is **Bourne-Again shell** and it's popularly known
+    as a **bash shell** . The GNU project developers built bash with the purpose of
+    getting a shell compatible with the Bourne shell, which would be useful for users
+    and programmers alike.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Therefore, bash provides a superset of the Bourne functionality. Due to the
+    current popularity of bash, we're going to learn more about it. Also, Linux Mint
+    is not an exception and it includes bash as its default shell.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Bash shell includes commands that you can enter directly. These commands help
+    you to execute useful and common operations, such as changing the current directory,
+    displaying content of a file, or listing the content of a specific directory.
+    Some of these commands are built into the bash shell itself; others are separate
+    programs included by the GNU/Linux distributions. Both kinds of commands are considered
+    bash commands, and you'll learn some of them in this chapter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When you open a shell, you can see some symbols, some text, and a cursor blinking,
+    all of them are known as the prompt, and it's indicating that the shell is ready
+    and you can start entering your commands. The type of information that prompt
+    displays depends on how the prompt was configured. Basically, you'll find data
+    about your username, machine name, and current directory. Usually, the dollar
+    symbol (`$`) acts as a separator between that data and the cursor, which is blinking
+    at the place where you can type.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Where are you?
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: We're going to start working with the shell and learn how to find out where
+    the current directory is and how to change from one directory to another. Also,
+    we'll discover which is the application that provides a command-line interface
+    for Linux Mint.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – learning pwd and cd commands
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'The command-line interface used by Linux Mint is provided by an application
+    called **MATE Terminal** . We''ll search it, launch it, and then we''re going
+    to learn and execute `pwd` and `cd` commands by following these steps:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Click on the **Menu** option located at the bottom of your desktop.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: After clicking, a new window menu is displayed with a lot of options. On the
+    right-hand side pane, you'll see an area called **Favorites**; there, click on
+    the **Terminal** icon for launching MATE Terminal, as shown in the following screenshot:![Time
+    for action – learning pwd and cd commands](img/9601_03_01.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Now that you have a shell running through MATE Terminal, you're ready to type
+    and launch commands. Our first command will be `pwd`, which returns the path of
+    the current directory. Enter `pwd` directly on the MATE Terminal window.![Time
+    for action – learning pwd and cd commands](img/9601_03_02.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: When you launch MATE Terminal, your current directory will be your home directory;
+    so the output of the **pwd** command will be that directory, which is evident
+    from the following screenshot:![Time for action – learning pwd and cd commands](img/9601_03_03.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'We''re going to change the current directory, and set `/tmp` as the new current
+    directory by using this command: `arturo@han-solo ~ $ cd /tmp`.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: After executing the command, we'll discover that the prompt has changed to indicate
+    to us that our current directory is now `/tmp`, as can be seen by looking at `arturo@han-solo
+    /tmp $`.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Because we're working with the MATE edition of Linux Mint, our default command-line
+    interface is provided by MATE Terminal. However, other editions also include similar
+    programs. For example, Cinnamon provides GNOME Terminal as its default CLI application.
+  prefs: []
+  type: TYPE_NORMAL
+- en: MATE Terminal gives us access to the shell, and we can launch commands and programs
+    through it. In fact, MATE Terminal provides a text-based command-line interface
+    using a window with a graphical user interface. We've learned our first command
+    for displaying what is our current directory. This action is important, because
+    the output of some other commands depend on that directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `cd` command is useful for changing the current directory and setting some
+    other directory as the new current directory inside the filesystem. The first
+    argument that is passed for the `cd` command is the path of the directory that
+    you want to set as the new current directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: It's important to know that the `~` symbol indentifies your home directory,
+    so you can use it as a shortcut instead of typing the full path.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Keep in mind that your prompt will look different because your username and
+    machine name will be different from mine. In our examples, the username is `arturo,`
+    and the machine name is `han-solo`. Yes, you guessed it, I'm a Star Wars fan!
+  prefs: []
+  type: TYPE_NORMAL
+- en: Have a go hero – using a shortcut for accessing your home directory
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Try to execute the `cd` command without arguments and you''ll discover how
+    the current directory changes to your home directory. The following is a shortcut
+    to change to that directory quickly:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: MATE Terminal can be configured and customized in different ways. For example,
+    you can change the font type and size and set a specific color scheme. You can
+    take a look at the **Profile preferences** menu from the **Edit** option.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Running commands
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: As you have learned, the shell allows us to communicate directly with the operating
+    system of your computer. This action helps us launch commands and applications.
+    Previously, you discovered how to launch commands such as `cd` and `pwd`. In order
+    to do that, you just entered each command and then pressed *Enter*. However, some
+    commands are used to invoke programs using a full path. Now you'll learn how to
+    do that.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – launching a program from the command line
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'Assume that a program called `testme exists`, which can be found inside the
+    `/tmp` directory. We can invoke this program by following these steps:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Open a shell using the MATE Terminal application.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Type `/tmp/testme` and hit *Enter*.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The output of the program will be displayed on the shell. If the invoked program
+    has a graphical user interface, a new window will be opened.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: When you enter a command, it is executed directly, because there exists an environment
+    variable to find all the files that can be executed. The name of that variable
+    is `$PATH`, and its value indicates where the shell should look for executable
+    files. Commands and applications are executables files, but not all of them are
+    located in the directories associated to `$PATH`. That's the reason for using
+    the complete path for invoking any file. Following this rule, we invoked the `testme`
+    file through its pathname.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How does the operating system know which files are executable? It's easy, executable
+    files use a specific flag that indicates this property to the operating system;
+    the shell knows this fact and can execute them easily.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If your current directory is where an executable file is located, you can invoke
+    it using a dot plus a slash (`./`), followed by the name of the file. Thanks to
+    this technique, you don''t need to use the full path or modify the `$PATH` variable.
+    For example, our example `testme` command can be invoked by using the following
+    commands:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Some commands and programs allow us to pass additional parameters; each one
+    must be preceded by a blank space. We'll learn about these kinds of commands (at
+    least some commands) later.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Have a go hero – executing programs without using the full path
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: You can try and modify `$PATH` for adding the `/tmp` directory, and then you
+    can directly call the `testme` command without using its full path. For more information
+    about how to set environment variables, see the *Setting environment variables*
+    section later in this chapter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Search commands
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Sometimes it is important to search for the full path of a command or an executable
+    file, which can be located through the `$PATH` variable. The most useful command
+    for taking that action is `which`, so we'll explain how to use it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – using the which command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'Before proceeding, make sure you have launched MATE Terminal. Then perform
+    these steps:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Enter the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'The `which` command will display the following output:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `which` shell command is included in most of the GNU/Linux distributions,
+    even in Linux Mint. Thanks to that command, we can get the full path of a command
+    or an executable file, which can be located through the `$PATH` variable. On the
+    other hand, the `find` command is a program for finding files; you'll learn more
+    about it in this chapter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Listing, examining, and finding files
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: A file is a persistent resource for storing information. Images, sounds, programs,
+    and commands use files that can be managed by users. Due to that fact, it's important
+    to learn how to list, examine, and find files through our shell.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – using the ls, locate, find, and cat commands
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: We're going to use a few commands such as `find`, `locate`, `cat`, and `ls`.
+    The last one is used for displaying the content of a directory, whereas the `find`
+    and `locate` commands are used for finding files in our filesystem. The `cat`
+    command is used for getting the content of a file as output. Don't forget to make
+    sure that your shell is running.
+  prefs: []
+  type: TYPE_NORMAL
+- en: First, we'll execute `ls` directly from our home directory; we only need to
+    enter `ls` in our command-line interface.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'The output for the previous command will be something like this:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, we''ll continue looking for all those files with a `.conf` extension (`*.conf`)
+    inside the `/etc/ufw` directory by using the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'As an output of the `find` command, you''ll find all files with a `.conf` extension
+    inside your home directory:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'The `locate` command is used when we know the name of the file that we''re
+    trying to find. Imagine you want to look for the `.bash_history` file but you
+    don''t remember the directory where the file resides; in this case, you can use
+    the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'The result of the command last executed will be the following line:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, we''ll use the `cat` command for displaying the content of a text
+    file. Let''s list those content of the filesystem that contains information related
+    to your network interfaces, by using the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'As a result, you''ll get the contents of the `/etc/network/interfaces` file
+    displayed as:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `find` and `locate` commands are very useful when you need to find a file
+    or a group of files. Different parameters can be used for each command, and we
+    have learned the basic use of each of them. It's important to know that the `find`
+    command starts searching from the current directory. However, `locate` searches
+    using a specific database without bothering about the current directory. This
+    means `locate` can find files that aren't inside the current directory. Both commands
+    use a search algorithm that is based on patterns. Remember, we used the `*.conf`
+    pattern as a parameter for the `find` command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `ls` command is one of the most used in Linux systems, because it offers
+    basic information about the content of a directory. Quite often, you need that
+    information before taking actions through the shell. This command supports a lot
+    of different parameters that allow you to get different kinds of information about
+    the content of a directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: As part of printing the contents of a text file, the `cat` command can concatenate
+    the content of different files, thereby displaying all the information directly
+    on the shell. Each file can be passed as an argument to the `cat` command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Have a go hero – getting more information when listing files
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'If you want to get more information about each file inside a directory, you
+    can try to launch the `ls` command with `-l` as an argument, as shown here:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Also, it could be interesting to execute the `find` command by passing a different
+    extension than JPEG as a parameter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Two more commands can help you to display the content of a text file—`more`
+    and `less`. Both commands allow you to read the content on your screen without
+    the risk of some modification by accident. You only need to pass the name of the
+    text file as an argument to each of these commands.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Pipelines and redirection
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In Unix and GNU/Linux operating systems, it is very common to take the output
+    of one command and use it as an input for another command. Because of this concept,
+    it's possible to create a combination of commands using only a single line in
+    the shell. We're going to use a simple example for illustrating the use of pipelines.
+    Specifically, we'll look for a string inside a text file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Redirection is another powerful and common technique that allows us to append
+    the output of a command to any other file available in our machine's filesystem.
+    To make things easier, we'll just create a text file with the current date.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – using pipelines and redirection by applying different commands
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'Let''s start finding out how pipelines work:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Enter the following command on your shell:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'You''ll get the following output:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, we''re going to use redirection for creating a new file that contains
+    some content:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Check the new file to make sure the content is valid, by using the following
+    command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Although we used simple examples for understanding pipelines and redirection,
+    it's possible to create complicated commands through these techniques. It depends
+    on the ability and experience of the user.
+  prefs: []
+  type: TYPE_NORMAL
+- en: As you must have realized, we used the `|` character for indicating that we're
+    going to use a pipeline. It's possible to use that character multiple times with
+    different commands.
+  prefs: []
+  type: TYPE_NORMAL
+- en: As far as redirection is concerned, the `>` character is used to store the output
+    of a command in a file. On the other hand, `date` is a simple application for
+    getting the current date. Finally, the `cat` command helps you to print the content
+    of the new file called `current_date.txt`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Have a go hero – appending content to a file using redirection
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Instead of creating a new file, it''s possible to append content to an existing
+    file; you only need to use the `>>` character. For example, we can add more content
+    to an existing file by using the following command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: Setting environment variables
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: An environment variable defines some aspects that can affect the behavior of
+    programs and commands running in an operating system. Each environment variable
+    has a value that can be changed dynamically through the shell. Usually, an operating
+    system creates and sets some environment variables, but users can change these
+    and add new variables. Default applications such as web browser, text editor,
+    and music player can be defined using environment variables. The shell uses this
+    kind of variables to get information about a user's environment and sets this
+    data to the commands and programs. We'll learn how to get and set a value to a
+    specific environment variable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – setting the PATH environment variable
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'Perform the following steps to set up the `PATH` environment variable:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Launch MATE Terminal, and get ready to enter some commands.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Enter the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Get the value of the `PATH` variable by using this command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'You''ll get something like this:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The value of an environment variable is set directly into the shell; we only
+    need to use the `=` character along with a desired value for the variable. In
+    our example, we used the `PATH` variable and added a new value, the `/tmp` directory.
+    Obviously, we could have used only a simpler value, but in the case of `PATH`
+    we want to keep its original value as well.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `echo` command accepts as argument any kind of literal and outputs that
+    literal to the standard output. If you want to get the value of an environment
+    variable, you should prefix it by the `$` symbol. Therefore, the `echo $PATH`
+    command will output the value for the `PATH` environment variable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Have a go hero – learning the export command
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: You can get the values of different environment variables, such as `HOME`, `TERM`,
+    and `EDITOR`. Also, you can change its value dynamically.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If you want the value of an environment variable to be available for the shell
+    that is created from an original one, you should use the `export` command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: Displaying command history
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Usually, people working with a shell execute a lot of commands, so it can be
+    very useful to get a history of executed commands. Thanks to the `history` command,
+    we can find out which commands were executed previously.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – using the history command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'I am very sure that you''ve been executing some shell commands, so we''re ready
+    to use the `history` command directly:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Enter `history` in the shell.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Based on the command that you entered in the past, you''ll get a list similar
+    to the following:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Each command you type on the shell is stored in a file called `.bash_history`
+    , which is read by the `history` command for showing you the information about
+    previously executed commands. The operating system stores one `.bash_history`
+    file for each user, and this file resides in the home directory of the user.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Have a go hero – checking the history of executed commands
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'If you''re looking for a command that you executed previously, you can combine
+    the `history` and `grep` commands along with pipelines for getting this information.
+    Imagine you want to know which `cd` commands were executed previously; in this
+    case you can type the following command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: Also, left and right cursors provides you navigation over last executed commands.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Creating your first shell script
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: So far, we have launched commands by directly typing into the shell and pressing
+    *Enter*, but it's also possible to use a text file for writing a set of commands
+    and launch this file through the shell. This technique allows us to create scripts
+    or small applications for launching commands or executing different shell operations.
+    In fact, the Bash shell offers us a particular domain-specific programming language
+    for this purpose. Although the learning curve for this specific programming language
+    is not trivial, we're going to learn how to create a simple Bash script for executing
+    some commands using control structures.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In our example, we'll create a script for checking if a text file exists. If
+    the answer is in the affirmative, we'll launch a message informing you about it.
+    Otherwise, we'll create a new text file with a single line. Finally, whatever
+    happens, we'll list the created text file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – creating and executing a shell script
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'We need to use a text editor; of course, you can use your favorite one. Linux
+    Mint offers us several text editors such as Vim, Emacs, and Pluma. The latter
+    has a graphical user interface and is installed by default, so we''ll use it for
+    our work. Here''s how to get started:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Click on the **Menu** button, and then click on the **Text Editor** menu option,
+    as shown in the following screenshot:![Time for action – creating and executing
+    a shell script](img/9601_03_04.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'A new window will be displayed, and you''ll be ready to use Pluma. Enter the
+    following lines, and save the file as `myscript.sh` when you''re ready:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Give execution permissions to your new shell script:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Launch your script:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'The output of the last command should be something like this:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Also, you can check the content of the created file by using the `cat` command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: All shell scripts are plain text files, so you can use any text editor for writing
+    this kind of program. The first line of a shell script should start by indicating
+    which kind of shell will be used for executing the script. The default shell in
+    Linux Mint is Bash, so we'll use it for our shell scripts. This is the reason
+    for using the `/bin/bash` executable file in the first line of our shell script.
+    As you have may realized, two special symbols have been used in that line.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The first one indicates that the line is a comment, and the second one is used
+    for knowing what kind of shell should execute the shell script. The `if` statement
+    is conditional and it checks if a certain condition is met. In our case, it checks
+    if `myfile.txt` exists. If the answer is negative, the `else` statement will be
+    executed, where we'll create a new file using the `echo` command and redirect
+    the output to it. Finally, the last line of the shell script will be executed
+    without it bothering about the conditional statement. In order to test this fact,
+    you can launch the command twice; you will find that the output is different,
+    because the second time the file will exist, because it was created before.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the third step, we used a command called `chmod` , which is very useful for
+    changing permissions for a file. We'll learn more about this command in the next
+    chapter, but in our shell script we only add an execution permission for it. Once
+    we have this kind of permission for our shell script, we can invoke it directly
+    through the command line.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Have a go hero – learning advanced shell programming
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Although our example is very simple, you can learn more about shell programming
+    through the following resources:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Bash Programming – Introduction How-To*, from [http://bit.ly/x24V3](http://bit.ly/x24V3)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*Advanced Bash-Scripting Guide*, from [http://tldp.org/LDP/abs/html/](http://tldp.org/LDP/abs/html/)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*Debian Bash Programming Guide*, from [http://bit.ly/Qs12TQ](http://bit.ly/Qs12TQ)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to get help
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Getting help about shell commands and some executables files is easy thanks
+    to two commands, `man` and `info`. Both of them are included in Linux Mint; let's
+    discover how to use them.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – using the man and the info commands
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'Follow these steps to better understand how the `man` and the `info` commands
+    can be used:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Again, make sure your shell is running.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Execute the following command to get information about the `ls` command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: The following screenshots show you the output of the previously executed command:![Time
+    for action – using the man and the info commands](img/9601_03_05.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Now, it''s time to test the `info` command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: After executing the `info` command, you'll get the following information:![Time
+    for action – using the man and the info commands](img/9601_03_06.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `man` command offers you a lot of information about how the executable or
+    bash commands work. As a parameter, the `man` command receives the name of the
+    bash command or executable file for displaying information. This command reads
+    a file or a set of files written in a specific format so developers can include
+    documentation for programs using that format.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Also, the `info` command displays some useful information about commands. However,
+    the documentation format used by `info` is different from the one used by `man`.
+    As you must have noticed, even though we used the same argument for both the commands,
+    their outputs were different. Some users prefer `man` and others `info`, but basically
+    both offer similar information.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Summary
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'We learned a lot in this chapter about the shell and basic commands, including
+    how to create a simple shell script. Specifically, we dealt with the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Basic usage of the shell through the MATE Terminal application
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Looking for the current directory where your shell is pointing
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Running executable commands and files
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Getting the full path of commands and executable files referred by the `PATH`
+    environment variable
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to use the `ls` command for listing files
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to use the `find` and `locate` commands for finding files
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to display content for a text file through the `cat` command
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Using pipeline and redirection techniques
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Setting the `PATH` environment variable
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to use the `history` command for finding which commands were executed previously
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Shell programming fundamentals
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to get help about shell and its commands
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Once you know the basic shell concepts and commands, you're ready to learn about
+    one of the most important tasks for system administrators—how to provision user
+    accounts.
+  prefs: []
+  type: TYPE_NORMAL

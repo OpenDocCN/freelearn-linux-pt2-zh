@@ -1,0 +1,1 @@
+["```\n<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<service>\n  <description>enable FTPS ports</description>\n  <port protocol=\"tcp\" port=\"40000-40100\"/>\n  <port protocol=\"tcp\" port=\"21\"/>\n  <module name=\"nf_conntrack_ftp\"/>\n</service>\n```", "```\nsudo diskutil unmountDisk /dev/disk3\nsudo dd if=./CentOS-7-x86_64-Minimal-XXXX.iso of=/dev/disk3 bs=1M\n\n```"]

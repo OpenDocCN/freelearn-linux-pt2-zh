@@ -1,0 +1,429 @@
+- en: Preface
+  id: totrans-0
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'This is the second edition of the highly rated *CentOS Linux Server Cookbook*.
+    With the advent of CentOS 7 in mid 2014, there has been a long list of significant
+    changes and new features to this famous operating system. To name a few, there
+    is a new installer, suite of system management services, firewall daemon, enhanced
+    Linux container support, and a new standard filesystem. With all these new advances
+    in the operating system, a major part of the recipes from the *CentOS 6 Linux
+    Server Cookbook* became obsolete or even non-functional, making an update of the
+    book''s original content essential. But this book is not just a refresher of the
+    topics covered in the first edition: two brand new chapters have been included
+    as well to keep up to date with the latest open source technologies as well as
+    providing better security: operating system-level virtualization and SELinux.
+    Finally, to make the book a more comprehensive server-administration book, another
+    chapter about server monitoring has been included as well.'
+  id: totrans-1
+  prefs: []
+  type: TYPE_NORMAL
+- en: Building a server can present a challenge. It is often difficult at the best
+    of times and frustrating at the worst of times. They can represent the biggest
+    of problems or give you a great sense of pride and achievement. Where the word
+    "server" can describe many things, it is the intention of this book to lift the
+    lid and expose the inner workings of this enterprise-class computing system with
+    the intention of enabling you to build your professional server solution of choice.
+    CentOS is a community-based enterprise class operating system. It is available
+    free of charge, and as a fully compatible derivative of Red Hat Enterprise Linux
+    (RHEL), it represents the first choice operating system for organizations, companies,
+    professionals, and home users all over the world who intend to run a server. It's
+    widely respected as a very powerful and flexible Linux distribution and regardless
+    of whether you intend to run a web server, file server, FTP server, domain server,
+    or a multi-role solution, it is the purpose of this book to deliver a series of
+    turnkey solutions that will show you how quickly you can build a fully capable
+    and comprehensive server system using the CentOS operating system. So with this
+    in mind, you could say that this book represents more than just another introduction
+    to yet another server-based operating system. This is a cookbook about an enterprise-class
+    operating system that provides a step-by-step approach to making it work. So,
+    regardless of whether you are a new or an experienced user, there is something
+    inside these pages for everyone, as this book will become your practical guide
+    to getting things done and a starting point to all things CentOS.
+  id: totrans-2
+  prefs: []
+  type: TYPE_NORMAL
+- en: What this book covers
+  id: totrans-3
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '[Chapter 1](part0015_split_000.html#E9OE1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 1. Installing CentOS"), *Installing CentOS*, is a series of recipes that
+    introduces you to the task of installing your server, updating, and enhancing
+    the minimal install with additional tools. It is designed to get you started and
+    to provide a reference that shows you a number of ways to achieve the desired
+    installation.'
+  id: totrans-4
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 2](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 2. Configuring the System"), *Configuring the System*, is designed to
+    follow on from a successful installation to offer a helping hand and provide you
+    with a number of recipes that will enable you to achieve the desired starting
+    server configuration. Beginning with showing you how to work with text files,
+    then changing language and time and date settings, you will not only learn how
+    configure your network settings but also how to resolve a fully qualified domain
+    name and work with kernel modules.'
+  id: totrans-5
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 3](part0034_split_000.html#10DJ41-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 3. Managing the System"), *Managing the System*, provides the building
+    blocks that will enable you to champion your server and take control of your environment.
+    It is here where you will kick start your role as a server administrator by disseminating
+    a wealth of information that will walk you through a variety of steps that are
+    required to develop a fully considered and professional server solution.'
+  id: totrans-6
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 4](part0045_split_000.html#1AT9A1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 4. Managing Packages with YUM"), *Managing Packages with YUM*, serves
+    to introduce you to working with software packages on CentOS 7\. From upgrading
+    the system to finding, installing, removing, and enhancing your system with additional
+    repositories, it is the purpose of this chapter to explain the open source command-line
+    package management utility known as the Yellowdog Updater Modified (YUM) as well
+    as the RPM package manager.'
+  id: totrans-7
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 5](part0055_split_000.html#1KEEU1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 5. Administering the Filesystem"), *Administering the Filesystem*, focuses
+    on working with your server''s file system. From creating mocking disk devices
+    to test-drive concepts expert level formatting and partitioning commands, you
+    will learn how to work with the Logical Volume Manager, maintain your file system
+    and work with disk quotas.'
+  id: totrans-8
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 6](part0061_split_000.html#1Q5IA1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 6. Providing Security"), *Providing Security*, discusses the need to
+    implement a series of solutions that will deliver the level of protection you
+    need to run a successful server solution. From protecting your ssh and FTP services,
+    to understanding the new firewalld manager and creating certificates, you will
+    see how easy it is to build a server that not only considers the need to reduce
+    risk from external attack but one that will provide additional protection for
+    your users.'
+  id: totrans-9
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 7](part0068_split_000.html#20R681-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 7. Building a Network"), *Building a Network*, explains the steps required
+    to implement various forms of resource sharing within your network''s computers.
+    From IP addresses and printing devices to various forms of file sharing protocols,
+    this chapter plays an essential role of any server whether you are intending to
+    support a home network or a full corporate environment.'
+  id: totrans-10
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 8](part0075_split_000.html#27GQ61-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 8. Working with FTP"), *Working with FTP*, concentrates on the role of
+    VSFTP with a series of recipes that will provide the guidance you need to install,
+    configure and manage the File Transfer Protocol (FTP) you want to provide on a
+    CentOS 7 server.'
+  id: totrans-11
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 9](part0080_split_000.html#2C9D01-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 9. Working with Domains"), *Working with Domains*, considers the steps
+    required to implement domain names, domain resolution, and DNS queries on a CentOS
+    7 server. The domain name system is an essential role of any server and whether
+    you are intending to support a home network or a full corporate environment, it
+    is the purpose of this chapter to provide a series of solutions that will deliver
+    the beginning of a future-proof solution.'
+  id: totrans-12
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 10](part0086_split_000.html#2I0GC1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 10. Working with Databases"), *Working with Databases*, provides a series
+    of recipes that deliver instant access to MySQL and PostgreSQL with the intention
+    of explaining the necessary steps required to deploy them on a CentOS 7 server.'
+  id: totrans-13
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 11](part0093_split_000.html#2OM4A1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 11. Providing Mail Services"), *Providing Mail Services*, introduces
+    you to the process of enabling a domain-wide Mail Transport Agent to your CentOS
+    7 server. From building a local POP3/SMTP server to configuring Fetchmail, the
+    purpose of this chapter is to provide the groundwork for all your future e-mail-based
+    needs.'
+  id: totrans-14
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 12](part0098_split_000.html#2TEN41-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 12. Providing Web Services"), *Providing Web Services*, investigates
+    the role of the well-known Apache server technology to full effect, and whether
+    you are intending to run a development server or a live production server, this
+    chapter provides you with the necessary steps to deliver the features you need
+    to become the master of your web based publishing solution.'
+  id: totrans-15
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 13](part0106_split_000.html#352RK1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 13. Operating System-Level Virtualization"), *Operating System-Level
+    Virtualization*, introduces you to the word of Linux containers using the state-of-the-art
+    open source platform Docker, and guides you through building, running, and sharing
+    your first Docker image.'
+  id: totrans-16
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 14](part0111_split_000.html#39REE1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 14. Working with SELinux"), *Working with SELinux*, helps to understand
+    and demystify Security Enhanced Linux, which is one of the most little-known topics
+    of CentOS 7.'
+  id: totrans-17
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 15](part0116_split_000.html#3EK181-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 15. Monitoring IT Infrastructure"), *Monitoring IT Infrastructure*, introduces
+    and shows how to set up Nagios Core, the de-facto industry standard for monitoring
+    your complete IT infrastructure.'
+  id: totrans-18
+  prefs: []
+  type: TYPE_NORMAL
+- en: What you need for this book
+  id: totrans-19
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The requirements of this book are relatively simple and begin with the need
+    to download the CentOS operating system. The software is free, but you will need
+    a computer that is capable of fulfilling the role of a server, some free installation
+    media (blank CD-R/DVD-R or USB device), an Internet connection, some spare time,
+    and a desire to have fun.
+  id: totrans-20
+  prefs: []
+  type: TYPE_NORMAL
+- en: In saying that, many readers will be aware that you do not need a spare computer
+    to take advantage of this book as the option of installing CentOS on virtualization
+    software is always available. This approach is quite common and where the recipes
+    contained within these pages remain applicable, you should be aware that the use
+    of virtualization software is not considered by this book. For this reason, any
+    requests for support regarding the use of this software should be directed towards
+    the appropriate supplier.
+  id: totrans-21
+  prefs: []
+  type: TYPE_NORMAL
+- en: Who this book is for
+  id: totrans-22
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This is a practical guide for building a server solution, and rather than being
+    about CentOS itself, this is a book that will show you how to get CentOS up and
+    running. It is a book that has been written with the novice-to-intermediate Linux
+    user in mind who is intending to use CentOS as the basis of their next server.
+    However, if you are new to operating systems as a whole, then don't worry; this
+    book will also serve to provide you with the step-by-step approach you need to
+    build a complete server solution with plenty of tricks of the trade thrown in
+    for good measure.
+  id: totrans-23
+  prefs: []
+  type: TYPE_NORMAL
+- en: Sections
+  id: totrans-24
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this book, you will find several headings that appear frequently (Getting
+    ready, How to do it, How it works and There's more).
+  id: totrans-25
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To give clear instructions on how to complete a recipe, we use these sections
+    as follows:'
+  id: totrans-26
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  id: totrans-27
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This section tells you what to expect in the recipe, and describes how to set
+    up any software or any preliminary settings required for the recipe.
+  id: totrans-28
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it…
+  id: totrans-29
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This section contains the steps required to follow the recipe.
+  id: totrans-30
+  prefs: []
+  type: TYPE_NORMAL
+- en: How it works…
+  id: totrans-31
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This section usually consists of a detailed explanation of what happened in
+    the previous section.
+  id: totrans-32
+  prefs: []
+  type: TYPE_NORMAL
+- en: There's more…
+  id: totrans-33
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This section consists of additional information about the recipe in order to
+    make the reader more knowledgeable about the recipe.
+  id: totrans-34
+  prefs: []
+  type: TYPE_NORMAL
+- en: Conventions
+  id: totrans-35
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this book, you will find a number of text styles that distinguish between
+    different kinds of information. Here are some examples of these styles and an
+    explanation of their meaning.
+  id: totrans-36
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Code words in text, database table names, folder names, filenames, file extensions,
+    pathnames, dummy URLs, user input, and Twitter handles are shown as follows: "For
+    the purpose of this recipe, it is assumed that all the downloads will be stored
+    on Windows in your personal `C:\Users\<username>\Downloads` folder, or if using
+    an OS X system, in the `/Users/<username>/Downloads` folder."'
+  id: totrans-37
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'A block of code is set as follows:'
+  id: totrans-38
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  id: totrans-39
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE0]'
+- en: 'Any command-line input or output is written as follows:'
+  id: totrans-40
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  id: totrans-41
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE1]'
+- en: '**New terms** and **important words** are shown in bold. Words that you see
+    on the screen, for example, in menus or dialog boxes, appear in the text like
+    this: "Clicking the **Next** button moves you to the next screen."'
+  id: totrans-42
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note
+  id: totrans-43
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Warnings or important notes appear in a box like this.
+  id: totrans-44
+  prefs: []
+  type: TYPE_NORMAL
+- en: Tip
+  id: totrans-45
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Tips and tricks appear like this.
+  id: totrans-46
+  prefs: []
+  type: TYPE_NORMAL
+- en: Reader feedback
+  id: totrans-47
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Feedback from our readers is always welcome. Let us know what you think about
+    this book—what you liked or disliked. Reader feedback is important for us as it
+    helps us develop titles that you will really get the most out of.
+  id: totrans-48
+  prefs: []
+  type: TYPE_NORMAL
+- en: To send us general feedback, simply e-mail `<[feedback@packtpub.com](mailto:feedback@packtpub.com)>`,
+    and mention the book's title in the subject of your message.
+  id: totrans-49
+  prefs: []
+  type: TYPE_NORMAL
+- en: If there is a topic that you have expertise in and you are interested in either
+    writing or contributing to a book, see our author guide at [www.packtpub.com/authors](http://www.packtpub.com/authors).
+  id: totrans-50
+  prefs: []
+  type: TYPE_NORMAL
+- en: Customer support
+  id: totrans-51
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Now that you are the proud owner of a Packt book, we have a number of things
+    to help you to get the most from your purchase.
+  id: totrans-52
+  prefs: []
+  type: TYPE_NORMAL
+- en: Errata
+  id: totrans-53
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Although we have taken every care to ensure the accuracy of our content, mistakes
+    do happen. If you find a mistake in one of our books—maybe a mistake in the text
+    or the code—we would be grateful if you could report this to us. By doing so,
+    you can save other readers from frustration and help us improve subsequent versions
+    of this book. If you find any errata, please report them by visiting [http://www.packtpub.com/submit-errata](http://www.packtpub.com/submit-errata),
+    selecting your book, clicking on the **Errata Submission Form** link, and entering
+    the details of your errata. Once your errata are verified, your submission will
+    be accepted and the errata will be uploaded to our website or added to any list
+    of existing errata under the Errata section of that title.
+  id: totrans-54
+  prefs: []
+  type: TYPE_NORMAL
+- en: To view the previously submitted errata, go to [https://www.packtpub.com/books/content/support](https://www.packtpub.com/books/content/support)
+    and enter the name of the book in the search field. The required information will
+    appear under the **Errata** section.
+  id: totrans-55
+  prefs: []
+  type: TYPE_NORMAL
+- en: Piracy
+  id: totrans-56
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Piracy of copyrighted material on the Internet is an ongoing problem across
+    all media. At Packt, we take the protection of our copyright and licenses very
+    seriously. If you come across any illegal copies of our works in any form on the
+    Internet, please provide us with the location address or website name immediately
+    so that we can pursue a remedy.
+  id: totrans-57
+  prefs: []
+  type: TYPE_NORMAL
+- en: Please contact us at `<[copyright@packtpub.com](mailto:copyright@packtpub.com)>`
+    with a link to the suspected pirated material.
+  id: totrans-58
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 请通过 `<[copyright@packtpub.com](mailto:copyright@packtpub.com)>` 联系我们，并提供涉嫌盗版材料的链接。
+- en: We appreciate your help in protecting our authors and our ability to bring you
+    valuable content.
+  id: totrans-59
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 我们感谢您在保护我们的作者和为我们带来有价值内容的能力方面提供的帮助。
+- en: Questions
+  id: totrans-60
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+  zh: 问题
+- en: If you have a problem with any aspect of this book, you can contact us at `<[questions@packtpub.com](mailto:questions@packtpub.com)>`,
+    and we will do our best to address the problem.
+  id: totrans-61
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 如果您在本书的任何方面遇到问题，可以通过 `<[questions@packtpub.com](mailto:questions@packtpub.com)>`
+    联系我们，我们将尽力解决问题。

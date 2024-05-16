@@ -1,0 +1,355 @@
+- en: Chapter 5. Installing, Removing, and Upgrading Software
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '*In this chapter, you''re going to learn one of the most important and basic
+    tasks done by system administrators. These tasks are related to software, specifically
+    how to install, remove, and keep your operating system up-to-date.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In this chapter we will learn:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing software
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Removing installed software
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Applying upgrades
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Installing software
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Sooner or later, system administrators need to install software in one or more
+    machines. In fact, this is one of the most common tasks for the users of this
+    kind of operating system. Linux Mint includes thousands of software applications
+    that can be installed easily. Remember that when you install the operating system,
+    a lot of software is installed by default. Also, it's possible to install additional
+    software provided by Linux Mint. In order to facilitate the process of installing
+    software in Linux Mint, this operating system includes a tool named **Software
+    Manager** .
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – installing AbiWord word processor
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'We''re going to install a text processor named **AbiWord** ([http://www.abisource.com](http://www.abisource.com))
+    using the Software Manager application. Let us see how this is done:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Click on the **Menu** button and then click on the **All Applications** button
+    located on the right-hand side of the **Favorites** pane:![Time for action – installing
+    AbiWord word processor](img/9601_05_01.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Look for the **Administration** menu option, and click on the **Software Manager**
+    menu option; then a new window will be displayed:![Time for action – installing
+    AbiWord word processor](img/9601_05_02.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Enter **abiword** in the textbox located on the right-hand side of the **Software
+    Manager** main window, then hit *Enter* when you're ready.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Now, you can see a list with a lot of software that is related to your search.
+    Actually, the first result of the list is the text processor that we want to install,
+    which is shown in this screenshot:![Time for action – installing AbiWord word
+    processor](img/9601_05_03.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Double-clicking on an item will display information about the selected item:![Time
+    for action – installing AbiWord word processor](img/9601_05_04.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Right now, you're ready to click on the **Install** button. By doing that, the
+    installation process for AbiWord will be launched. You can see a progress bar
+    indicating how the installation is progressing.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: In order to check whether AbiWord is installed in your system, you can open
+    a shell and type `AbiWord`, and then press *Enter*. AbiWord will be executed,
+    and you can start to use it.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Usually, GNU/Linux distributions include a lot of software that is ready to
+    be installed in a specific format called a **package** . Software is organized
+    in different packages and some applications need more than one package; this fact
+    is called package dependency. Linux Mint uses packages in the **Debian** (**DEB**)
+    format, same as the Ubuntu Linux and Debian operating systems.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Packages are usually retrieved and installed from a storage location in a computer.
+    This location is called a repository, and it contains many software packages ready
+    to be downloaded and installed in your machine.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Software Manager is an application developed by Linux Mint developers specifically
+    for Linux Mint. This tool allows you to list, install, and remove software. Technically,
+    Software Manager is a frontend for some commands, such as `apt-get` and `apt-cache`.
+    Using a GUI, Software Manager provides an easy and intuitive way to list, install,
+    and remove software, avoiding the use of the command-line interface.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For learning how to install software, we've installed AbiWord, a simple but
+    useful word processor. As you must have discovered, it's pretty easy to install
+    software through packages provided by Linux Mint. You only need to look for a
+    software and click on the **Install** button. Obviously, you can install a lot
+    of different software on your machine following the same process.
+  prefs: []
+  type: TYPE_NORMAL
+- en: It's important to know that not only software distributed in packages can be
+    installed in Linux Mint, but you can install software distributed in other formats,
+    such as tarball and ZIP files as well. However, Mint includes a lot of software
+    distributed in DEB packages, so this method of installation is advisable. Actually,
+    it's good practice to use Software Manager to install software on your Linux Mint
+    operating system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Have a go hero – discovering software provided by Linux Mint
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: When you launch Software Manager, a window showing you different icons will
+    be displayed. Each icon represents a different category of software included in
+    Linux Mint. For example, you can see the **Internet**, **Sound and Video**, **Graphics**,
+    and **Office** categories, among others. By clicking on each one, you'll have
+    access to packages belonging to the selected category. You can try and click on
+    a category, take a look at the list of packages for that category, and try to
+    install one of the packages. This process allows you to discover interesting software
+    that can be installed on your machine.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Removing software
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Previously, we learned how to install software on your Linux Mint machine. Also,
+    it's interesting and useful to know how to do the opposite step. You can remove
+    installed software on your machine by following a simple process using the Software
+    Manager tool. Remember, you can remove software installed by default during the
+    installation process of the operating system or remove software that you have
+    installed through the Software Manager application.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – removing the AbiWord program
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'Let''s remove AbiWord from our system by following these steps:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Click on the **Menu** button. On the left-hand side of the pane following the
+    **System** label, you will find an option called **Software Manager**; click on
+    it.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Now, **Software Manager** will be launched. Type `abiword` in the search box,
+    and press *Enter*.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: You will see a list displaying coincidences of your searching; click on the
+    first one, and **Software Manager** will show you some information about **AbiWord**.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: In order to remove **AbiWord** from your system, you only need to click on the
+    **Remove** button and the removing process will start automatically.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: As we have commented before, Software Manager allows us to remove software from
+    our system. We only need to look for the right package, select it, and then click
+    on the **Remove** button. It's an easy and clean process, which helps the system
+    administrators to a great extent. Also, it's very intuitive for newbie users who
+    don't want to use the command-line interface.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Before clicking on the **Remove** button, you can see a label informing you
+    that the AbiWord software was installed on your system. When the software is not
+    installed, this label is different and a **Not Installed** message is displayed
+    instead. This is a simple and effective way to know if a specific software is
+    installed or not on your Linux Mint machine.
+  prefs: []
+  type: TYPE_NORMAL
+- en: By now, you must have realized that we launched Software Manager through a different
+    menu option than what was explained previously in the *Installing software* section.
+    Both of them are valid methods for launching this useful tool.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Upgrading software
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Between the release cycles, Linux Mint developers upgrade some software that
+    is included in the operating system. This means that the system administrators
+    should check what software has been upgraded and they should decide which of this
+    software should be installed on the machine. Occasionally, upgraded software only
+    applies minor changes, such as simple improvements or unimportant bug fixes. However,
+    at times upgraded software also includes important security bug fixes. If we don't
+    apply them, our machine can be at a serious risk. That's the reason we frequently
+    check which software has been upgraded for our Linux Mint version.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – upgrading software through the Update Manager tool
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'We''re going to discover which software is ready to be upgraded and we''ll
+    then proceed to install it. Here is how that is done:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Click on the **Menu** button on the bottom panel, and then click on the **All
+    Applications** button located at the right-hand side of the **Favorites** pane.
+    Now you can see a menu option called **Administration**; click on it to display
+    a new menu, where you can see the **Update Manager** menu option, as shown in
+    the following screenshot:![Time for action – upgrading software through the Update
+    Manager tool](img/9601_05_06.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: After clicking on the **Update Manager** menu option, an application with the
+    same name will be launched, as can been seen here:![Time for action – upgrading
+    software through the Update Manager tool](img/9601_05_07.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Update Manager** displays a list with only a single package that can be upgraded.
+    Click on the **Install Updates** button.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The upgrading process for the **mintupdate** package will be launched; when
+    this process is finished, you will see a complete list of available software that
+    can be upgraded.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Right now, you're ready to select the packages that you want to upgrade. It's
+    good practice to select all of them; you should install the packages listed as
+    level **1** at least. Click on the **Install Updates** button when you're ready.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: When the upgrading process is finished, you'll see an empty list in **Update
+    Manager**.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Update Manager is an effective application provided by Linux Mint to install
+    new versions of installed software and to install security upgrades on your machine.
+    When you launch that application the first time, you will see only a single item
+    in a list for applying upgrades. This item indicates that you need to install
+    an upgrade for **mintupdate**, which is the codename of Update Manager. Obviously,
+    before applying other upgrades, we need to upgrade the tool itself. Once this
+    process is finished, **Update Manager** will be launched again to check which
+    software can be upgraded.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The list of software ready to be upgraded displays different items providing
+    information about the package name, installed version, and new version available.
+    Also, a number for each item is displayed. This number ranges from 1 to 5, and
+    it indicates a level based on the importance of the upgrade. Level 1 indicates
+    that Linux Mint developers certify that a package and packages marked with this
+    level should be upgraded as soon as possible. Usually, security updates use this
+    level. The next level is for those packages whose upgrade is recommended by Linux
+    Mint developers. Level 3 indicates that it is safe to apply an upgrade, but Linux
+    Mint developers didn't test it. Packages marked with level 4 are unsafe, and if
+    you upgrade it, the stability of the system can be affected. Finally, level 5
+    is for dangerous packages (in the unstable stage of development or with broken
+    dependencies), and Linux Mint developers know that they can damage the operating
+    system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In general terms, it's a good idea to launch Software Manager frequently and
+    upgrade only those packages marked as level 1 and level 2\. For levels 3, 4, and
+    5, system administrators and advanced users should decide about applying upgrades
+    or not themselves. Also, you can mark all the packages listed or only a few of
+    them. Usually, this is a task of the system administrator; it is he or she who
+    takes these kinds of decisions. By default, only packages from level 1 to 3 are
+    displayed in the list for upgrading. You can change this preference by going to
+    **Edit** | **Preferences**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Have a go hero – finding out how to change preferences in Update Manager
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Some preferences of Update Manager can be changed. For example, you can change
+    which level of upgrade is displayed by default. Also, you can select the frequency
+    for refreshing information after clicking on the **Refresh** button. On the other
+    hand, you can decide which packages will be ignored by Update Manager.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Another important option offered by Update Manager is the option of choosing
+    which kind of packages can be installed and from what server. By default, main,
+    upstream, and imported packages are selected. Also, it's possible to add additional
+    repositories instead of the official ones provided by Mint. For the server, the
+    main server of Linux Mint is selected, but you can choose one of the many available
+    mirrors.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Summary
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: After reading this chapter, you have learned how to deal with software on your
+    computer. Basically, we have discovered how to perform some important operations,
+    such as installing, removing, and upgrading software. Linux Mint offers us two
+    great applications to carry out the mentioned actions related to software, namely
+    Update Manager and Software Manager.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Specifically, we covered:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: How Linux Mint distributes software using packages
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Using Software Manager to add and remove software on Linux Mint
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to upgrade software through the Update Manager tool
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Although Software Manager is the main tool for installing and removing software
+    in Linux Mint, another tool called **Synaptic Package Manager** is included in
+    this operating system. This tool offers a low-level control of packages, so you
+    can use it when you're looking for a specific package instead of a specific application.
+    Remember that a single application can be distributed in more than one package.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the next chapter, we're going to learn how to deal with hardware in Linux
+    Mint.
+  prefs: []
+  type: TYPE_NORMAL

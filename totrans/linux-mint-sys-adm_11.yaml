@@ -1,0 +1,511 @@
+- en: Chapter 11. Troubleshooting
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '*Sooner or later system administrators will face problems that affect computers.
+    Sometimes these problems will be related to hardware, and other times to software.
+    It''s very important to know which tools we can use to identify problems and try
+    to solve them. In this chapter, we''ll learn basic commands and tools that can
+    help us determine what is happening with the network, hardware, kernel, processes,
+    and filesystems.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In this chapter we shall learn the following topics:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Hardware
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Checking log files
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Kernel
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Networking
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Processes and filesystems
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Hardware
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Many times users detect small problems related to hardware and system administrators
+    can solve them quickly. However, it can happen that the detected problem will
+    be difficult to solve or hard to detect. Also, many devices or resources can trigger
+    more than one problem.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Memory and CPU are very important hardware components for our computer. We need
+    to take care of them because a high load can block the operating system therefore,
+    our computer will be out of order. Also, PCI and USB devices can stop working
+    properly, so we should check them when we detect hardware problems.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – checking memory, CPU, USB, and PCI devices
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In Linux Mint, we can find tools and commands that can help us to find out what
+    is happening with our hardware. Let's discover some commands to check the memory,
+    CPU, and USB, PCI devices.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Our first goal will be to get information about all USB devices installed on
+    our computer. Open MATE Terminal as usual, and type the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, it''s the turn for PCI devices, so we''re going to execute the next command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: The output of the previous command will show you something similar to the following
+    screenshot:![Time for action – checking memory, CPU, USB, and PCI devices](img/9601_11_01.jpg)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'A complete and detailed list of all our hardware can be obtained by executing
+    the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'In order to get information about memory, we''ll execute the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'As the output, we''ll get some lines like the following:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Regarding our CPU, we can launch the following command to get information about
+    processors installed on our machine:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In order to get a complete list with a lot of information about our PCI and
+    USB devices, we can execute the `lspci` and `lusb` commands respectively. These
+    commands help us to know if devices are recognized by our computer or not. Keep
+    in mind that some devices cannot be detected by the operating system, in that
+    case we need to solve the problem.
+  prefs: []
+  type: TYPE_NORMAL
+- en: On the other hand, `/proc/cpu` is a file that contains information about the
+    CPU installed on a computer. The `cat` command has been used for displaying content
+    of the mentioned file. Regarding the `/proc/cpu` file, we find the `/proc/meminfo`
+    file, which contains data about memory used in our computer. Some information
+    offered by the mentioned file includes total memory size and how much memory is
+    available.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `lshw` command means "list hardware" and it shows us an exhaustive list
+    of all hardware installed on a computer. Don't forget to execute the `lshw` command
+    as the root user.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Checking log files
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Linux Mint uses a set of files for logging different activities happening in
+    the operating system. This kind of information includes data about how resources,
+    such as files or network are used. All of these files reside inside the `/var/log/`
+    directory. Only the root user can change these files, but other users can read
+    it. One of most important log files is `/var/log/syslog`, which is a generic log
+    where different applications write data about its activity. In addition to this
+    generic log file, we can find a lot of them such as `Xorg.0.log`, `dmesg`, `kern.log`,
+    and `dpkg.log`. Usually, specific applications such as MySQL and Apache, use its
+    own log files inside the `/var/log/` directory. It's a good practice to check
+    the mentioned log directory to find out what's happening in our computer.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – listing the last five lines of the syslog file
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: We're going to check the last five lines of our `syslog` file using the `tail`
+    command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Open the MATE Terminal as usual.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Execute following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: As the output, you'll get some lines informing you about the last actions saved
+    in `syslog` file.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We used a command called `tail` to read the last lines of our `syslog` file.
+    This command reads a file in reverse order and can receive a number as an argument.
+    This number is used to display a specific number of lines of the file. Obviously,
+    you can read the `syslog` file using your favorite editor, but it's easier to
+    use `tail` as the output of this command is sent directly to your terminal.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Kernel
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The Linux kernel is the most important component of our Linux Mint operating
+    system so we need to take care of it, and we should check if it's working properly.
+    Linux kernel uses **modules** , which are components that implement and extend
+    the functionality of the kernel, and that can be loaded or unloaded into the kernel
+    upon demand without rebooting.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The use of modules has a lot of advantages; one of them is that we can save
+    memory by loading only the required modules. Another clear advantage is the option
+    of loading modules on the fly without rebooting your computer. It saves a lot
+    of time, and we don't need to stop the service. Due to the importance of modules,
+    system administrators should check the kernel and module status. We can do that,
+    thanks to commands that we'll learn to use later.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – using lsmod, modprobe, and dmesg commands
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: System administrators can use some commands to get information about the kernel,
+    some of them are `lsmod`, `modprobe`, and `dmesg`. Let's discover how to use these
+    commands.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Launch the MATE Terminal application.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Execute the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: The output of the previous command will display information about your loaded
+    kernel modules.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'We''re going to execute the following command to get a list of all modules
+    that can be loaded in the kernel:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Then it''s time to execute the `dmesg` command, which will launch a lot of
+    messages, so we''ll use it less to control output. Type the next command in your
+    terminal:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In order to know the status of each module loaded by the Linux kernel, we can
+    execute the `lsmod` command. From the technical point of view, this command only
+    formats the content of the `/proc/modules` file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: System administrators need to know how to load and unload modules in the Linux
+    kernel. The `modprobe` command allows us to perform these actions. It receives
+    as parameter the name of the module that will be loaded or unloaded. Passing the
+    `-l` argument, we can find out which modules are available to load.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Finally, the `dmesg` command is very useful to get information related to kernel
+    operations. For example, if we plug a USB device to our computer, the kernel will
+    create a log message that can be read using the `dmesg` command. Thanks to the
+    `more` command, you can read lines easier. Sure, you've realized that we used
+    a pipe to send the output of `dmesg` to the input of `more`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Networking
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Nowadays, network is one of the most valuable resource used by computers. It's
+    hard to imagine a company without the Internet or local network connection. Sometimes
+    system administrators need to deal with problems related to networks, so it's
+    very interesting to know which tools can be used to detect and solve common problems.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For sure, you've heard about `ping`, a command to send information to computers
+    and devices such as printers with the goal of getting a response and also making
+    sure they're working properly. This command is very useful to check network connections,
+    if `ping` doesn't get a response, the connection cannot be established, and something
+    with a device or computer is failing the network communication. Related to `ping`,
+    we find `route`, a command that shows the IP routing table of our computer. Also,
+    `route` allows us to change that table. It's not possible to establish a connection
+    outside our route table, so it's important to check it out when connections are
+    failing.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Another useful command to get information about our network interfaces is `ifconfig`.
+    For example, using `ifconfig` we can find out which IP is using each network interface
+    of our server. Also, `ifconfig` allows us to configure network interfaces through
+    the command line.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Linux Mint also includes `netstat`, a command that offers information about
+    network connections, routing tables, interface statistics, masquerade connections,
+    and multicast memberships. We'll learn more about the `netstat` command later.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – checking who is listening on what port
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: We're going to discover how to use the `netstat` command to find out what applications
+    are listening on what ports.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Open MATE Terminal as usual.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Type and execute the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Despite executing `netstat` only to find out what programs are listening on
+    what ports, this command can be used to get more information about our network
+    connections and usage. If you execute `netstat` without any argument, you'll get
+    information about all open sockets on your computer. Basically, `netstat` can
+    be used for checking and monitoring all network activity on your computer. You
+    can get more information about the `netstat` command through the `man` and `info`
+    commands.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Processes and filesystems
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Processes and filesystems cause many computer problems. Remember that processes
+    are created by programs that reside in filesystems, so both of them are closely
+    related. If something goes wrong with a computer, it's a good idea to take a look
+    at which processes are running and how is the status of filesystems associated
+    to these processes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `fuser` command is very useful, because it offers a list that shows what
+    files are used for what process. Basically, we only need to execute this command
+    by passing the name of a specific process as argument.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Linux Mint and other GNU/Linux distributions include `strace` , a tool that
+    can be employed to discover what system calls and libraries are used by a specific
+    process. You can type `strace` followed by a command or application that you want
+    to trace.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Usually, system administrators work with `top` , a command offering complete
+    information about running processes, including data about CPU and memory consumption.
+    Another useful tool to deal with processes is `ps`. We'll learn how to find a
+    specific process using that command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When system administrators need to take a quick look at the filesystem attached
+    to a specific computer, they work with the `df` command, which provides information
+    about the filesystem disk space usage. By passing the `-h` argument, we'll get
+    a list with size, available and used space, percentage of usage, and the location
+    where each filesystem is mounted. Many problems happen when filesystems are without
+    space or aren't mounted, so it's a good idea to use `df` to detect these kinds
+    of issues.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – finding a specific process
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: You're going to learn how to use the `ps` command to find information about
+    a specific process running on your computer. In our case, we'll look for the SSH
+    server daemon process.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Launch the MATE Terminal.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Type the following command in your shell:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'As a result of the last executed command, we''ll get the following response:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: As you've observed, we used the `ps` and `fgrep` commands together through a
+    pipe connector. The `frep` command looks for a specific pattern, in our case `sshd`
+    works as that pattern. The `ef` parameters indicate that we're looking at all
+    running processes, using the output formatted according to the default values
+    of the `ps` command. Using pipes we can redirect the output of the `ps` command
+    to `fgrep`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For sure you might be wondering why we got two lines if we only have just a
+    single `sshd` process running. The answer is easy to explain: `sshd` string is
+    another name for the piped command `fgrep`, so its output is also shown.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Each output line of `ps` offers us information about the process owner, path
+    to the running process, PID (process ID), terminal associated, and time when it
+    started. Keep in mind, that we got a question mark for the `sshd` process because
+    it's a daemon not associated with any terminal.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If you need to kill a process or get more information about it, you can use
+    the System Monitor tool included in Linux Mint. More information about this tool
+    can be found in [Chapter 10](ch10.html "Chapter 10. Monitoring Your System"),
+    *Monitoring*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Summary
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this chapter, you've learned which tools and commands can help system administrators
+    to detect and solve common problems related to hardware, network, kernel, filesystems,
+    and processes. Despite each problem being unique, tools described in this chapter
+    are very useful to check if different resources and devices are working properly.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Specifically, we covered:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Checking hardware components such as memory, CPU, USB, and PCI devices
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Checking log files
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Learning about how to list loaded modules in the kernel
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Useful tools to check network connection and finding out what processes are
+    listening on what ports
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Dealing with running processes
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'If you need to look for help to specific problems, the following resources
+    can be very useful:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Wiki with complete information for system administrators available at [http://sysadmin.wikia.com/wiki/Main_Page](http://sysadmin.wikia.com/wiki/Main_Page).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'The Linux Documentation project offers a good collection of how to documents
+    and guides available at:'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[http://tldp.org/docs.html#howto](http://tldp.org/docs.html#howto)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[http://tldp.org/guides.html](http://tldp.org/guides.html)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The official Linux Mint documentation available at [http://www.linuxmint.com/documentation.php](http://www.linuxmint.com/documentation.php)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The official Linux kernel documentation available at [http://kernel.org/doc/](http://kernel.org/doc/)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: At this point, you've learned basic things about system administration in Linux
+    Mint. Throughout this book we explained how to deal with user accounts, how to
+    install and configure software, basic things about networking and security, how
+    to create and restore backups, and the last chapter was dedicated to system monitoring.
+    Finally, we complete our way learning about tools and commands that can help us
+    to face common and daily issues.
+  prefs: []
+  type: TYPE_NORMAL

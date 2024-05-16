@@ -1,0 +1,264 @@
+- en: Preface
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In the last 5 years, the number of users for Linux-based operating systems has
+    significantly increased. Many computer users want to know more about Linux, and
+    a lot of them are migrating from other systems such as Windows and Mac OS X. Currently,
+    Linux Mint is one of the most used Linux-based operating system, and many users
+    need to improve their abilities to perform advanced tasks with this operating
+    system. These include connecting to other computers through FTP, creating shell
+    scripts, and organizing users into groups.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Linux Mint System Administrator''s Beginner''s Guide* offers a set of practical
+    recipes to become a Linux system administrator. With this book, you''ll learn
+    the basic concepts and operations that a Linux system administrator needs to know
+    and perform. We''ll start from the basic operations such as installing Linux Mint,
+    and continue progressively learning more advanced topics such as security and
+    monitoring.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Despite the fact that we're going to work with Linux Mint, most of the concepts
+    and actions described by this book can be applied to other Linux distributions
+    such as Ubuntu, Debian, and Fedora.
+  prefs: []
+  type: TYPE_NORMAL
+- en: What this book covers
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '[Chapter 1](ch01.html "Chapter 1. Introduction to Linux Mint"), *Introduction
+    to Linux Mint,* is the "getting started" chapter of this book. It explains what
+    Linux Mint is, what kind of editions exist, and why Linux Mint is different than
+    other Linux distributions.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 2](ch02.html "Chapter 2. Installing Linux Mint"), *Installing Linux
+    Mint,* teaches how to install Linux Mint on your computer. It offers a simple
+    and easy-to-follow step-by-step guide for installing and booting this operating
+    system.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 3](ch03.html "Chapter 3. Basic Shell"), *Basic Shell,* introduces
+    you to Linux shell. You''ll learn how to deal with basic operations and actions
+    such as finding out the current directory, setting the environment variables,
+    and creating simple shell scripts.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 4](ch04.html "Chapter 4. Account Provisioning"), *Account Provisioning,*
+    covers all you need to operate with user accounts, including how to create users
+    and groups, and how to change the users'' privileges.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 5](ch05.html "Chapter 5. Installing, Removing, and Upgrading Software"),
+    *Installing, Removing, and Upgrading Software,* teaches you how to carry out the
+    basic actions to get the software working on your computer.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 6](ch06.html "Chapter 6. Configuring hardware"), *Configuring Hardware,*
+    provides coverage of the process for detecting and configuring hardware devices,
+    such as a keyboard, a mouse, a monitor, and a sound card.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 7](ch07.html "Chapter 7. Networking"), *Networking,* focuses on wired
+    and wireless networks. You''ll learn to configure your network and connect to
+    other servers using the FTP protocol.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 8](ch08.html "Chapter 8. Storage and Backup"), *Storage and Backup,*
+    covers different filesystem types. It teaches you to find out how much space your
+    disk is using, and how to create and restore backups of your important data.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 9](ch09.html "Chapter 9. Security"), *Security,* explores fundamental
+    concepts you should know to run a secure Linux Mint computer. This chapter includes
+    steps for installing and configuring a firewall, using a security module for the
+    kernel and explains how to build a simple and effective security checklist.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 10](ch10.html "Chapter 10. Monitoring Your System"), *Monitoring Your
+    System,* covers the main aspects of operating system monitoring. You''ll learn
+    about taking care of services and processes running on your computer, and how
+    memory, CPU, and network are used.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapter 11](ch11.html "Chapter 11. Troubleshooting"), *Troubleshooting,* helps
+    you to identify problems checking your hardware, networking, kernel, processes,
+    and filesystems.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: What you need for this book
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Obviously, you need an Intel-based computer. Most computers, including laptops
+    and desktop of different brands, you find in the market belong to this category.
+    In order to install Linux Mint, you'll need a USB pen drive with at least 1 GB
+    of capacity. Also, it's recommended to get a broadband Internet connection for
+    downloading, installing, and upgrading the software.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Who this book is for
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This book is for those computer users who are interested in learning about Linux
+    system administration. You should be familiar with Linux-based operating systems
+    and the basic concepts such as directories, files, commands, and processes. Users
+    who have experimented with Linux as well as *power users* can improve their knowledge
+    for becoming system administrators.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Conventions
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this book, you will find several headings appearing frequently.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To give clear instructions of how to complete a procedure or task, we use:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time for action – heading
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Action 1
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Action 2
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Action 3
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Instructions often need some extra explanation so that they make sense, so
+    they are followed with:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*What just happened?*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This heading explains the working of tasks or instructions that you have just
+    completed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You will also find some other learning aids in the book, including:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Have a go hero – heading
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: These practical challenges and give you ideas for experimenting with what you
+    have learned.
+  prefs: []
+  type: TYPE_NORMAL
+- en: You will also find a number of styles of text that distinguish between different
+    kinds of information. Here are some examples of these styles, and an explanation
+    of their meaning.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Code words in text are shown as follows: "Save the ISO image, `linuxmint-13-mate-dvd-32b.iso`
+    into your hard drive."'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Any command-line input or output is written as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**New** **terms** and **important** **words** are shown in bold. Words that
+    you see on the screen, in menus or dialog boxes for example, appear in the text
+    like this: "Click on the **Diskimage** option and select the downloaded ISO image
+    using the button with the label".'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Warnings or important notes appear in a box like this.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Tip
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Tips and tricks appear like this.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Reader feedback
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Feedback from our readers is always welcome. Let us know what you think about
+    this book—what you liked or may have disliked. Reader feedback is important for
+    us to develop titles that you really get the most out of.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To send us general feedback, simply send an e-mail to `<[feedback@packtpub.com](mailto:feedback@packtpub.com)>`,
+    and mention the book title through the subject of your message.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If there is a topic that you have expertise in and you are interested in either
+    writing or contributing to a book, see our author guide on [www.packtpub.com/authors](http://www.packtpub.com/authors).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Customer support
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Now that you are the proud owner of a Packt book, we have a number of things
+    to help you to get the most from your purchase.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Errata
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Although we have taken every care to ensure the accuracy of our content, mistakes
+    do happen. If you find a mistake in one of our books—maybe a mistake in the text
+    or the code—we would be grateful if you would report this to us. By doing so,
+    you can save other readers from frustration and help us improve subsequent versions
+    of this book. If you find any errata, please report them by visiting [http://www.packtpub.com/support](http://www.packtpub.com/support),
+    selecting your book, clicking on the **errata** **submission** **form** link,
+    and entering the details of your errata. Once your errata are verified, your submission
+    will be accepted and the errata will be uploaded to our website, or added to any
+    list of existing errata, under the Errata section of that title.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Piracy
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Piracy of copyright material on the Internet is an ongoing problem across all
+    media. At Packt, we take the protection of our copyright and licenses very seriously.
+    If you come across any illegal copies of our works, in any form, on the Internet,
+    please provide us with the location address or website name immediately so that
+    we can pursue a remedy.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Please contact us at `<[copyright@packtpub.com](mailto:copyright@packtpub.com)>`
+    with a link to the suspected pirated material.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We appreciate your help in protecting our authors, and our ability to bring
+    you valuable content.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Questions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: You can contact us at `<[questions@packtpub.com](mailto:questions@packtpub.com)>`
+    if you are having a problem with any aspect of the book, and we will do our best
+    to address it.
+  prefs: []
+  type: TYPE_NORMAL

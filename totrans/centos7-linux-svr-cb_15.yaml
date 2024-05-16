@@ -1,0 +1,524 @@
+- en: Chapter 15. Monitoring IT Infrastructure
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'In this chapter, we will cover the following topics:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing and configuring Nagios Core
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Setting up NRPE on remote client hosts
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Monitoring important remote system metrics
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Introduction
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'This chapter is a collection of recipes that provide the necessary steps to
+    set up the de-facto industry standard, open source network monitoring framework:
+    Nagios Core.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing and configuring Nagios Core
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this recipe, we will learn how to install Nagios Core version 4, an open-source
+    network monitoring system that checks whether hosts and services are working and
+    notifies users when problems occur or services become unavailable. Nagios provides
+    solutions to monitor your complete IT infrastructure and is designed with an architecture
+    that is highly extendable and customizable and goes far beyond simple bash scripts
+    to monitor your services. (Refer to the *Monitoring important server infrastructure*
+    recipe in [Chapter 3](part0034_split_000.html#10DJ41-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 3. Managing the System"), *Managing the System*.)
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a working installation of the CentOS
+    7 operating system with root privileges, a console-based text editor of your choice,
+    and a connection to the Internet in order to facilitate the download of additional
+    packages. Nagios Core 4 is not available in the official sources but from the
+    EPEL repository; make sure to have installed it before (refer to the *Using a
+    third-party repository* recipe in [Chapter 4](part0045_split_000.html#1AT9A1-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 4. Managing Packages with YUM"), *Managing Packages with YUM*). For the
+    Nagios web frontend, you need a running Apache2 web server as well as PHP (refer
+    to the recipes from [Chapter 12](part0098_split_000.html#2TEN41-4cf34a6d07944734bb93fb0cd15cce8c
+    "Chapter 12. Providing Web Services"), *Providing Web Services*) installed on
+    your Nagios server. In our example, the Nagios server has the IP address 192.168.1.7,
+    and it will be able to monitor all IT infrastructure in the complete 192.168.1.0/24
+    subnet.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Nagios Core 4 is not available by default, so let''s begin by installing all
+    the required packages:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To do so, log in as root and type the following command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'First, create a new user account called `nagiosadmin`, which is needed for
+    authentication to the web frontend (enter a secure password when prompted), then
+    reload the Apache configuration:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, add an e-mail address for the `nagiosadmin` web user to the Nagios configuration,
+    open the following file, and search and replace the string, `nagios@localhost`,
+    with an appropriate e-mail address you want to use here (it can be a domain-wide
+    or external e-mail address):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, we need to adjust the main configuration file to activate `/etc/nagios/servers`
+    as our server''s definition configuration directory, where we will put all our
+    server config files later, but first, make a backup:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'We will have to create the server''s config directory that we just defined
+    in the last step:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Afterwards, to check the correctness of the `nagios.cfg` syntax, run the following:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, enable the Nagios daemon on boot and start the service:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here in this recipe, we have shown you how to install the Nagios Core v4 server
+    (Core is the open-source version of the Nagios project) on CentOS 7\. Besides
+    the main Nagios package, we also required the NRPE package and all the Nagios
+    plugins on our Nagios server. After installing, we created a user account, which
+    is able to log in to the web frontend, and we set the e-mail address for this
+    user in the main Nagios configuration file. Next, we activated the `/etc/nagios/servers`
+    directory using `sed`, where all our server definition files will be put in a
+    later recipe in this chapter. Then, we created the directory and changed permissions
+    to the Nagios user. To test the Nagios server installation, open a web browser
+    on a computer in the same subnet 192.168.1.0/24 as your Nagios server, open the
+    following URL (in our example, the Nagios server has the IP 192.168.1.7, so change
+    accordingly), and then log in with your newly created `nagiosadmin` user account
+    to `http://192.168.1.7/nagios`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Setting up NRPE on remote client hosts
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The **Nagios Remote Plugin Executor** (**NRPE**) is a system daemon that uses
+    a special client-server protocol and should be installed on all client hosts that
+    you want to monitor via your Nagios server remotely. It allows the central Nagios
+    server to trigger any Nagios checks on these client hosts securely and with low
+    overhead. Here, we will show you how to set up and configure any CentOS 7 client
+    to use NRPE; if you've got more than one computer in your network that you want
+    to monitor, you need to apply this recipe for every instance.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To complete this recipe, you will require a computer other than your Nagios
+    server with an installation of the CentOS 7 operating system and root privileges,
+    which you want to monitor, and which needs a console-based text editor of your
+    choice installed on it, along with a connection to the Internet in order to facilitate
+    the download of additional packages. This computer needs to have access to our
+    Nagios server over the network. In our example, the Nagios server has the IP address
+    `192.168.1.7`, and our client system will have the IP address `192.168.1.8`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Log in as root on your CentOS 7 client system and install all Nagios plugins
+    as well as NRPE on it:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Afterwards, open the main NRPE config file (after making a backup first):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Find the line that starts with `allowed_hosts`, and add the IP address of your
+    Nagios server separated by a comma so that we can communicate with it (in our
+    example ,`192.168.1.7`, so change it accordingly); it should read as follows:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Save and close the file, then enable NRPE at boot and start it:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Then enable the NRPE port in firewalld. To do this, create a new firewalld
+    service file for NRPE:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, test the NRPE connection. To do this, log in as root on your Nagios
+    server (for example, at `192.168.1.7`) and execute the following command to check
+    NRPE on our client (`192.168.1.8`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: If the output prints out an `OK - load average` message with some numbers, you
+    have successfully configured NRPE on the client!
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here in this recipe, we have shown you how to install NRPE on your CentOS 7
+    clients that you want to monitor with your Nagios servers. If you want to monitor
+    other Linux systems running other distributions such as Debian or BSD, you should
+    be able to find appropriate packages using their own package managers or compile
+    NRPE from source. Besides the NRPE package, we also installed all the Nagios plugins
+    on this machine since NRPE is only the daemon for running monitoring commands
+    on client computers, but it does not include them. After installation, NRPE is
+    listening only on localhost (`127.0.0.1`) connections by default, so we then had
+    to change this to also listen to connections from our Nagios server, which runs
+    with the IP `192.168.1.7`, using the `allowed_hosts` directive in the main NRPE
+    configuration file. The NRPE port `5666` is needed for incoming connections from
+    the Nagios server, so we also had to open it in the firewall. Since no firewalld
+    rule is available for it by default, we created our own new service file and added
+    it to the current firewalld configuration. Afterwards, we could test our NRPE
+    installation from our Nagios server by running a `check_nrpe` command using the
+    client's IP address and a random check command (`check_load` returns the system's
+    load).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Monitoring important remote system metrics
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The Nagios plugin `check_multi` is a convenient tool to execute multiple checks
+    within a single check command that generates an overall returned state and output
+    from it. Here in this recipe, we will show you how to set it up and use it to
+    quickly monitor a list of important system metrics on your clients.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting ready
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: It is assumed that you've gone through this chapter recipe by recipe, therefore
+    by now, you should have a Nagios server running and another client computer that
+    you want to monitor, which can already be accessed via its NRPE service externally
+    by our Nagios server. This client computer that you want to monitor needs an installation
+    of the CentOS 7 operating system with root privileges and a console-based text
+    editor of your choice installed on it, as well as a connection to the Internet
+    in order to facilitate the download of additional packages. The client computer
+    will have the IP address `192.168.1.8`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to do it...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The `check_multi` Nagios plugin is available from Github, so we will begin
+    this recipe to install the `git` program by downloading it:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Log in as root on your client computer and install Git if not done already:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, download and install the `check_multi` plugin by compiling it from the
+    source:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, we install another very useful plugin called `check_mem`, which is not
+    available in the CentOS 7 Nagios plugin `rpms`:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, let''s create a `check_multi` command file that will contain all your
+    desired client checks that you want to combine in a single run; open the following
+    file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Put in the following content:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, test out the command file that we just created in the last step using
+    the following commandline:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'If everything is correct, it should print out the results of your five plugin
+    checks and an overall result, for example, `OK - 5 plugins checked`. Next, we
+    will install this new command in the NRPE service on our client so that the Nagios
+    server is able to execute it remotely by calling its name. Open the NRPE configuration
+    file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Add the following line to the end of the file right below the last `# command`
+    line to expose a new command called `check_multicmd` to our Nagios server:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, let''s reload NRPE:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, let''s check whether we can execute our new `check_multicmd` command that
+    we defined in the last step from our Nagios server. Log in as root and type the
+    following command (change the IP address of your client, `192.168.1.8`, appropriately):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'If the output is the same as running it locally on the client itself (take
+    a look at the former step), we can successfully execute remote NRPE commands on
+    our client through our server, so let''s define the command on our Nagios server
+    system for real so that we can start using it within the Nagios system. Open the
+    following file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Put in the following content at the end of the file to define a new command
+    called `check_nrpe_multi`, which we can use in any service definition:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Next, we will define a new server definition for the client that we want to
+    monitor on our Nagios server (give the config file an appropriate name, for example,
+    its domain name or IP address):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Put in the following content, which will define a new host with its service,
+    using our new Nagios command that we just created:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Finally, we need to configure all persons who should get notification e-mails
+    for our new service in case of errors. Open the following file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Put in the following content at the end of the file:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: 'Now, restart the Nagios service:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs:
+  - PREF_IND
+  type: TYPE_PRE
+- en: How it works...
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'We started this recipe by installing the `check_multi` and `check_mem` plugins
+    from their author''s Github repositories; they are plain command-line tools. Nagios
+    performs checks by running such external commands, and it uses the return code
+    along with output from the command as information on whether the check was successful
+    or not. Nagios has a very flexible architecture that can be easily extended using
+    plugins, add-ons, and extensions. A central place to search for all kinds of extensions
+    is at [https://exchange.nagios.org/](https://exchange.nagios.org/). Next, we added
+    a new command file for `check_multi`, where we put five different system `check_`
+    commands in. These checks act as a starting point for customizing your monitoring
+    needs and will check system load, memory consumption, system users, free space,
+    and processes. All available `check_` commands can be found at `/usr/lib64/nagios/plugins/check_*`.
+    As you can see in our command file, the parameters of those `check_` commands
+    can be very different, and explaining them all is out of the scope of this recipe.
+    Most of them are used to set threshold values to reach a certain state, for example,
+    the `CRITICAL` state. To get more information about a specific command, use the
+    `--help` parameter with the command. For example, to find out what all the parameters
+    in the `check_load -w 5,4,3 -c 10,8,6` command are doing, use `run /usr/lib64/nagios/plugins/check_load
+    --help`. You can easily add any number of new check commands to our command file
+    from existing plugins, or you can download and install any new commands, if you
+    like. There are also a number of command file examples shipped with the `check_multi`
+    plugin, which are very useful for learning, so please have a look at the directory:
+    `/usr/local/nagios/etc/check_multi/*.cmd`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Afterwards, we checked the correctness of our new command file that we just
+    created by dry-running it as an `-f` parameter from the `check_multi` command
+    locally on the client. In its output, you will find all the single outputs as
+    if you would have run these five commands individually. If one single check fails,
+    the complete `check_multi` will do. Next, we defined a new NRPE command in the
+    NRPE config file called `check_multicmd` that can then be executed from the Nagios
+    server, which we tested in the next step from our Nagios server. For a test to
+    be successful, we expect the same results as we got when calling the command from
+    the client itself. Afterwards, we defined this command in our `commands.cfg` on
+    the Nagios server so that we can reuse it as much as we like in any service definition
+    by referencing the command''s name, `check_nrpe_multi`. Next, we created a new
+    server file named as the IP address (you can name it anything you like as long
+    it has the `.cfg` extension in the directory) of the client we want to monitor:
+    `192.168.1.8.cfg`. It contains exactly one host definition and one or multiple
+    service definitions, which are linked by the value of `host_name` of the host
+    with the `host_name` value in your service definitions.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the host definition, we defined a `contact_groups` contact that links to
+    the `contacts.cfg` file's contact group and contact entry. These will be used
+    to send notification e-mails if the checked service has any errors. The most important
+    value in the service definition is the `check_command check_nrpe_multi` line,
+    which executes the command that we created before as our one and only check. Also,
+    the `normal_check_interval` is important as it defines how often the service will
+    be checked under normal conditions. Here, it gets checked every 15 minutes. You
+    can add as many service definitions to a host as you like.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Now, go to your Nagios web frontend to inspect your new host and service. Here,
+    go to the **Hosts** tab, where you will see the new host, **host1**, that you
+    defined in this recipe, and it should give you information about its status. If
+    you click on the **Services** tab, you will see the **check_nrpe_multi** service.
+    It should show the **Status** as **Pending**, **OK,** or **CRITICAL**, depending
+    on the success of the single checks. If you click on its **check_nrpe_multi**
+    link, you will see details about the checks.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here in this chapter, we could only show you the very basics of Nagios, and
+    there is always more to learn, so please read the official Nagios Core documentation
+    at [https://www.nagios.org](https://www.nagios.org), or check out the book *Learning
+    Nagios 4*, *Packt Publishing*, by Wojciech Kocjan.
+  prefs: []
+  type: TYPE_NORMAL
