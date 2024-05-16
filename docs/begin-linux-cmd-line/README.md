@@ -28,7 +28,7 @@
 
 ### 其他
 
-*   在我们的 [apachecn/apachecn-linux-zh-pt2](https://github.com/apachecn/apachecn-linux-zh-pt2) github 上提 issue.
+*   在我们的 [apachecn/freelearn-linux-pt2-zh](https://github.com/apachecn/freelearn-linux-pt2-zh) github 上提 issue.
 *   发邮件到 Email: `apachecn@163.com`.
 *   在我们的 [组织学习交流群](http://www.apachecn.org/organization/348.html) 中联系群主/管理员即可.
 
@@ -37,24 +37,24 @@
 ### Docker
 
 ```
-docker pull apachecn0/apachecn-linux-zh-pt2
-docker run -tid -p <port>:80 apachecn0/apachecn-linux-zh-pt2
+docker pull apachecn0/freelearn-linux-pt2-zh
+docker run -tid -p <port>:80 apachecn0/freelearn-linux-pt2-zh
 # 访问 http://localhost:{port} 查看文档
 ```
 
 ### PYPI
 
 ```
-pip install apachecn-linux-zh-pt2
-apachecn-linux-zh-pt2 <port>
+pip install freelearn-linux-pt2-zh
+freelearn-linux-pt2-zh <port>
 # 访问 http://localhost:{port} 查看文档
 ```
 
 ### NPM
 
 ```
-npm install -g apachecn-linux-zh-pt2
-apachecn-linux-zh-pt2 <port>
+npm install -g freelearn-linux-pt2-zh
+freelearn-linux-pt2-zh <port>
 # 访问 http://localhost:{port} 查看文档
 ```
 
