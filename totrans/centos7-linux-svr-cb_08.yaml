@@ -1,40 +1,58 @@
 - en: Chapter 8. Working with FTP
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第8章。使用FTP
 - en: 'In this chapter, we will cover the following topics:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将介绍以下主题：
 - en: Installing and configuring the FTP service
+  id: totrans-2
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安装和配置FTP服务
 - en: Working with virtual FTP users
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用虚拟FTP用户
 - en: Customizing the FTP service
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 定制FTP服务
 - en: Troubleshooting users and file transfers
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 解决用户和文件传输问题
 - en: Introduction
+  id: totrans-6
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 引言
 - en: This chapter is a collection of recipes that provides the steps to unmask one
     of the most fundamental services in the Linux world and also provides the necessary
     starting point required to install, configure, and deliver the file transfer protocol
     without hesitation.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章是一系列操作的集合，提供了揭示Linux世界中最基本服务之一的步骤，并提供了安装、配置和无犹豫地提供文件传输协议所需的起点。
 - en: Installing and configuring the FTP service
+  id: totrans-8
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 安装和配置FTP服务
 - en: While there are several modern and very secure network file sharing technologies,
     the good old **File Transfer Protocol** (**FTP**) remains one of the most widely
     used and popular protocols to share and transfer files between computers. There
@@ -44,190 +62,274 @@
     and enables you to upload and distribute large files across a local network and
     the Internet. Here, we will show how to install the vsftpd daemon and provide
     some basic settings with the main goal being to increase the security of the daemon.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管存在几种现代且非常安全的网络文件共享技术，但古老的**文件传输协议**（**FTP**）仍然是计算机之间共享和传输文件的最广泛使用的协议之一。在Linux世界中，有多种不同的FTP服务器可用。在本操作中，您将学习如何安装和配置**非常安全的FTP守护程序**（**vsftpd**），这是一个著名的FTP服务器解决方案，支持广泛的功能，并允许您在本地网络和互联网上上传和分发大文件。在这里，我们将展示如何安装vsftpd守护程序，并提供一些基本设置，主要目标是提高守护程序的安全性。
 - en: Note
+  id: totrans-10
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: After working on this recipe, you are advised to use SSL/TLS encryption to further
     strengthen your FTP server (refer [Chapter 6](part0061_split_000.html#1Q5IA1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 6. Providing Security"), *Providing Security*).
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 完成此操作后，建议使用SSL/TLS加密以进一步增强您的FTP服务器（请参阅[第6章](part0061_split_000.html#1Q5IA1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第6章。提供安全性"），*提供安全性*）。
 - en: Getting ready
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to facilitate the downloading of additional
     packages. It is expected that your server will be using a static IP address and
     that it maintains one or more system user accounts.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此操作，您需要一个具有root权限的CentOS 7操作系统的工作安装，您选择的基于控制台的文本编辑器以及互联网连接，以便下载额外的软件包。预计您的服务器将使用静态IP地址，并且它将维护一个或多个系统用户帐户。
 - en: How to do it...
+  id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'vsftpd is not installed by default. For this reason, we must begin this recipe
     by installing the relevant packages and associated dependencies:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: vsftpd默认未安装。因此，我们必须从安装相关软件包及其依赖项开始此操作：
 - en: 'To do this, log in as root and type the following command:'
+  id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为此，请以root用户身份登录并键入以下命令：
 - en: '[PRE0]'
+  id: totrans-17
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'After we have created a backup copy of it, open the main configuration file
     in your favorite text editor as follows:'
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在我们创建了备份副本之后，打开您最喜欢的文本编辑器中的主配置文件，如下所示：
 - en: '[PRE1]'
+  id: totrans-19
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'To disable anonymous users, scroll down and find the following line: `anonymous_enable=YES,`
     and then change this as follows:'
+  id: totrans-20
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要禁用匿名用户，请向下滚动并找到以下行：`anonymous_enable=YES,`，然后将其更改为如下所示：
 - en: '[PRE2]'
+  id: totrans-21
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Uncomment (remove `#` at beginning of the line) the following lines to enable
     the `chroot` environment for more security:'
+  id: totrans-22
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 取消注释（删除行首的`#`）以下行以启用`chroot`环境以增加安全性：
 - en: '[PRE3]'
+  id: totrans-23
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Next, scroll down to the bottom of the file and add the following line:'
+  id: totrans-24
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，向下滚动到文件底部并添加以下行：
 - en: '[PRE4]'
+  id: totrans-25
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Finally, add the following line to enable local users to write to their home
     directories:'
+  id: totrans-26
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，添加以下行以允许本地用户写入其主目录：
 - en: '[PRE5]'
+  id: totrans-27
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Save and close the file. Then create the following empty file:'
+  id: totrans-28
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件。然后创建以下空文件：
 - en: '[PRE6]'
+  id: totrans-29
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Next, configure the firewall to allow incoming FTP connections to the server
     on port 21:'
+  id: totrans-30
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，配置防火墙以允许服务器在端口21上接收FTP连接：
 - en: '[PRE7]'
+  id: totrans-31
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Now, we allow SELinux to use the FTP home directory feature:'
+  id: totrans-32
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们允许SELinux使用FTP主目录功能：
 - en: '[PRE8]'
+  id: totrans-33
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Enable `vsftpd` at boot:'
+  id: totrans-34
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在启动时启用`vsftpd`：
 - en: '[PRE9]'
+  id: totrans-35
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'To complete this recipe, type the following command to start the FTP service:'
+  id: totrans-36
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要完成此操作，请键入以下命令以启动FTP服务：
 - en: '[PRE10]'
+  id: totrans-37
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'Now, we can test the connection from any client computer in the same network
     that our FTP server is in. This computer needs a FTP client installed (if its
     a CentOS computer, install one using `yum install ftp`). Log in to this computer
     with any account and by typing in the following command that replaces `<IPADDRESS>`
     with the IP address of the server running your `vsftpd` service:'
+  id: totrans-38
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们可以从同一网络中任何客户端计算机测试连接。这台计算机需要安装FTP客户端（如果是CentOS计算机，可以使用`yum install ftp`安装一个）。使用任何账户登录到这台计算机，并通过输入以下命令来替换`<IPADDRESS>`为运行`vsftpd`服务的服务器的IP地址：
 - en: '[PRE11]'
+  id: totrans-39
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'On successful connection to the server, the FTP client program will ask you
     for a username and password. Here, enter a known system user (other than root)
     from the FTP server. If the login was successful, you will get a `230 login successful`
     message and a `ftp>` prompt. Now to end our test, type the following FTP command
     to show all the files in your current `ftp` directory and check whether you have
     write-access on the remote server:'
+  id: totrans-40
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 成功连接到服务器后，FTP客户端程序会要求您输入用户名和密码。在这里，输入FTP服务器上的已知系统用户（非root用户）。如果登录成功，您将收到一条`230
+    登录成功`的消息和一个`ftp>`提示符。现在，为了结束我们的测试，输入以下FTP命令来显示当前`ftp`目录中的所有文件，并检查您是否对远程服务器具有写入权限：
 - en: '[PRE12]'
+  id: totrans-41
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'Type the following command to end your FTP session:'
+  id: totrans-42
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 输入以下命令来结束您的FTP会话：
 - en: '[PRE13]'
+  id: totrans-43
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: How it works...
+  id: totrans-44
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 工作原理...
 - en: vsftpd is widely recognized as a fast, lightweight, and reliable FTP server.
     The purpose of this recipe was to show you how to build a basic FTP service that
     is optimized to provide excellent performance for any number of valid system users.
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: vsftpd被广泛认为是一个快速、轻量级且可靠的FTP服务器。本教程的目的是向您展示如何构建一个针对任何数量的有效系统用户提供卓越性能的基本FTP服务。
 - en: So what did we learn from this experience?
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: We began the recipe by installing the necessary YUM package called `vsftpd`.
     We then opened the main configuration file located at `/etc/vsftpd/vsftpd.conf`,
     after we made a backup copy of it. Next, we disabled anonymous FTP access and
     thereby secured our FTP service against unknown users. We then restricted users
     to their home directory by enabling a `chroot` jail.
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先通过安装名为`vsftpd`的必要YUM包开始了这个配置过程。然后，我们打开了位于`/etc/vsftpd/vsftpd.conf`的主配置文件，并在修改前对其进行了备份。接下来，我们禁用了匿名FTP访问，从而保护我们的FTP服务不受未知用户的影响。然后，我们通过启用`chroot`监狱限制用户只能访问其主目录。
 - en: Note
+  id: totrans-48
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: The `chroot` jail represents an essential security feature; once this is done,
     all the users will be restricted to access the files in their own home directory
     only.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '`chroot`监狱代表了一个重要的安全特性；一旦设置，所有用户将只能访问他们自己主目录中的文件。'
 - en: We then required `vsftpd` to use local time for our server. Afterwards, we fixed
     the write permissions for our chrooted FTP users by enabling the `allow_writeable_chroot`
     option. Having saved our work, we created a new empty `/etc/vsftpd/chroot_list`
@@ -235,8 +337,10 @@
     have to create this file; otherwise, `vsftpd` will not let us log in to the system.
     However, you should remember that you must leave it empty all the time because
     chroot jails are an important protection mechanism for your FTP server.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，我们要求`vsftpd`使用本地时间来设置我们的服务器。之后，我们通过启用`allow_writeable_chroot`选项来修复被chroot的FTP用户的写权限。保存我们的工作后，我们创建了一个新的空`/etc/vsftpd/chroot_list`文件，该文件将包含所有可以离开其chroot监狱的用户名。我们必须创建这个文件；否则，`vsftpd`将不允许我们登录系统。但是，您应该记住，您必须始终保持该文件为空，因为chroot监狱是保护您的FTP服务器的重要机制。
 - en: Next, we added the standard FTP protocol's port 21 to our firewall configuration
     to allow incoming connections. Then, we reloaded the firewall to apply these changes.
     After this, we activated our FTP home directories by setting the appropriate SELinux
@@ -248,50 +352,71 @@
     regular FTP-based desktop software. Users can log in using a valid system username
     and password by connecting to the server's name, domain, or IP address (depending
     on the server's configuration).
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们将标准FTP协议的端口21添加到防火墙配置中，以允许传入连接。然后，我们重新加载防火墙以应用这些更改。之后，我们通过将适当的SELinux布尔变量`ftp_home_dir`设置为`true`来激活我们的FTP主目录。这将使目录对SELinux有效。请阅读[第14章](part0111_split_000.html#39REE1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第14章. 使用SELinux")，*使用SELinux*，以了解更多关于SELinux的信息。接下来，我们在`systemd`中启用`vsftpd`开机启动并启动服务。此时，`vsftpd`将开始运行，并且可以使用任何常规的FTP桌面软件进行测试。用户可以使用有效的系统用户名和密码通过连接到服务器的名称、域或IP地址（取决于服务器的配置）进行登录。
 - en: The purpose of this recipe was to show you that `vsftpd` is not a difficult
     package to install and configure. There is always more to do but, by following
     this simple introduction, we have quickly enabled our server to run a standard
     FTP service.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 本食谱的目的是向你展示`vsftpd`并不是一个难以安装和配置的软件包。总有很多事情要做，但是通过这个简单的介绍，我们已经迅速启用了我们的服务器来运行标准的FTP服务。
 - en: There's more...
+  id: totrans-53
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: Having installed and configured a basic FTP service, you may wonder how to direct
     users to a specific folder within their home directory. To do this, open the main
     configuration file in an editor of your choice using `/etc/vsftpd/vsftpd.conf`.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 安装并配置了基本的FTP服务后，你可能会想知道如何将用户引导到其主目录中的特定文件夹。为此，打开你选择的编辑器中的主配置文件`/etc/vsftpd/vsftpd.conf`。
 - en: 'Scroll down to the bottom of the file and add the following line by replacing
     the `<users_local_folder_name>` value with something more applicable to your own
     needs:'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 滚动到文件底部，并通过将`<users_local_folder_name>`值替换为更适合你需求的值来添加以下行：
 - en: '[PRE14]'
+  id: totrans-56
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'For example, if this FTP server is mainly for accessing and uploading content
     for an user''s private web pages hosted on the same server, you may configure
     Apache to use the user''s home directories in a folder called /`home/<username>/public_html`.
     For this reason, you may add the following reference at the bottom of your `vsftpd`
     configuration file:'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，如果这个FTP服务器主要是为了访问和上传用户私人网页的内容，而这些网页托管在同一服务器上，你可能需要配置Apache使用用户的主目录中的一个名为/`home/<username>/public_html`的文件夹。为此，你可以在`vsftpd`配置文件的底部添加以下参考：
 - en: '[PRE15]'
+  id: totrans-58
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: When finished, save and close the configuration file before restarting the `vsftpd`
     service. When testing this new feature make sure that the `local_root` location
     exists in the home directory of the user you want to login (for example, `~/public_html`).
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 完成后，保存并关闭配置文件，然后重新启动`vsftpd`服务。在测试此新功能时，请确保`local_root`位置存在于你想要登录的用户的家目录中（例如，`~/public_html`）。
 - en: Working with virtual FTP users
+  id: totrans-60
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用虚拟FTP用户
 - en: In this recipe, you will learn how to implement virtual users in order to break
     away from the restriction of using local system user accounts. During the lifetime
     of your server, there may be occasions when you wish to enable FTP authentication
@@ -301,162 +426,228 @@
     type of configuration implies a certain degree of flexibility afforded by the
     use of virtual users. Since you are not using a local system account, it can be
     argued that this approach gives improved security.
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，你将学习如何实现虚拟用户，以摆脱使用本地系统用户账户的限制。在你的服务器生命周期中，可能会有时候你希望为没有本地系统账户的用户启用FTP认证。你可能还希望考虑实施一个解决方案，允许特定个人维护多个账户，以便访问服务器上的不同位置。这种配置意味着使用虚拟用户提供了一定程度的灵活性。由于你不是使用本地系统账户，可以说这种方法提供了改进的安全性。
 - en: Getting ready
+  id: totrans-62
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges and a console-based text editor of your
     choice. It is expected that your server will be using a static IP address and
     that `vsftpd` is already installed with a chroot jail and is currently running.
     This recipe needs the `policycoreutils-python` package installed.
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此步骤，你需要一个具有root权限的CentOS 7操作系统的有效安装，以及你选择的基于控制台的文本编辑器。预计你的服务器将使用静态IP地址，并且`vsftpd`已经安装了chroot监狱并且正在运行。此步骤需要安装`policycoreutils-python`包。
 - en: How to do it...
+  id: totrans-64
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何做到这一点...
 - en: 'The first step is to login as root on our `vsftpd` server and create a plain
     text file called `virtual-users.txt` that maintains a list of usernames and passwords
     of the virtual users. To do this, type the following command:'
+  id: totrans-65
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 第一步是作为root登录到我们的`vsftpd`服务器，并创建一个名为`virtual-users.txt`的纯文本文件，该文件维护虚拟用户的用户名和密码列表。为此，请输入以下命令：
 - en: '[PRE16]'
+  id: totrans-66
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'Now add your usernames and corresponding passwords in the following way:'
+  id: totrans-67
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在以以下方式添加你的用户名和相应的密码：
 - en: '[PRE17]'
+  id: totrans-68
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: Note
+  id: totrans-69
   prefs:
   - PREF_IND
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Repeat this process as required for every user you need but, for obvious reasons,
     maintain a good password policy and do not use the same virtual-username more
     than once.
+  id: totrans-70
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 根据需要为每个用户重复此过程，但出于明显的原因，请保持良好的密码策略，并且不要重复使用同一个虚拟用户名。
 - en: 'When you have finished, simply save and close the file in the usual way. Then,
     proceed to build the database file by typing the following command:'
+  id: totrans-71
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成操作后，只需按照常规方式保存并关闭文件。然后，通过输入以下命令来构建数据库文件：
 - en: '[PRE18]'
+  id: totrans-72
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 'Having done this, we will now create the PAM file that will use this database
     to validate the virtual users. To do this, type the following command:'
+  id: totrans-73
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成此操作后，我们现在将创建将使用此数据库验证虚拟用户的PAM文件。为此，请输入以下命令：
 - en: '[PRE19]'
+  id: totrans-74
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 'Now add the following lines:'
+  id: totrans-75
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在添加以下行：
 - en: '[PRE20]'
+  id: totrans-76
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'When you have finished, save and close the file in the usual way. Open the
     main `vsftpd` configuration file in your favorite text editor as follows:'
+  id: totrans-77
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成后，按照常规方式保存并关闭文件。按照以下方式在你的首选文本编辑器中打开主`vsftpd`配置文件：
 - en: '[PRE21]'
+  id: totrans-78
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 'Now, in the opened file, search for the line `pam_service_name=vsftpd` and
     disable it by adding a `#` sign at the beginning of the line so that it reads
     as follows:'
+  id: totrans-79
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，在打开的文件中，找到`pam_service_name=vsftpd`行，并通过在行首添加`#`符号来禁用它，使其读作如下：
 - en: '[PRE22]'
+  id: totrans-80
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: 'Scroll down to the bottom of the file and add the following lines by customizing
     the value for `local_root` to suit your own specific needs—this will be the base
     directory in which all your virtual users will *live* in (for example, we will
     use `/srv/virtualusers/$USER` as shown here):'
+  id: totrans-81
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 向下滚动到文件底部，并通过自定义`local_root`的值以满足你自己的特定需求来添加以下行——这将是所有虚拟用户将*居住*的基本目录（例如，我们将使用`/srv/virtualusers/$USER`，如下所示）：
 - en: '[PRE23]'
+  id: totrans-82
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 'Now create a subfolder for each virtual user you defined in a previous step
     in your `/tmp/virtual-users.txt` file within the directory that you stated with
     the `local_root` directive. Remember to delegate the ownership of this folder
     to the FTP user. To keep up with our `/srv/virtualusers` example, we will use
     the following commands to do this in an automatic way (again, customize the `/srv/virtualusers`
     directory if needed):'
+  id: totrans-83
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在在你之前定义的`/tmp/virtual-users.txt`文件中为每个虚拟用户创建一个子文件夹，并在你使用`local_root`指令指定的目录中。记得将此文件夹的所有权委派给FTP用户。为了保持我们的`/srv/virtualusers`示例，我们将使用以下命令以自动方式执行此操作（再次，如果需要，请自定义`/srv/virtualusers`目录）：
 - en: '[PRE24]'
+  id: totrans-84
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'Now we need to inform SELinux to allow read/write access to our custom `local_root`
     directory outside of the typical `/home` directory:'
+  id: totrans-85
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在我们需要通知SELinux允许对我们的自定义`local_root`目录进行读/写访问，该目录位于典型的`/home`目录之外：
 - en: '[PRE25]'
+  id: totrans-86
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: 'Next, restart the FTP service as follows:'
+  id: totrans-87
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，按照以下方式重新启动FTP服务：
 - en: '[PRE26]'
+  id: totrans-88
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: 'For security reasons, remove the plain text file now and protect the generated
     database file with this:'
+  id: totrans-89
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 出于安全原因，现在删除纯文本文件，并使用以下命令保护生成的数据库文件：
 - en: '[PRE27]'
+  id: totrans-90
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: How it works...
+  id: totrans-91
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: Having followed the previous recipe, you will be now able to invite an unlimited
     number of virtual users to access your FTP service. The configuration of this
     feature was very simple; your overall security has been improved and all access
     is restricted to a defined `local_root` directory of your choice. Please note
     that this usage of virtual users will disable your system users' login to the
     FTP server from the first recipe.
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 遵循前面的步骤后，你现在将能够邀请无限数量的虚拟用户访问你的FTP服务。此功能的配置非常简单；你的整体安全性得到了提升，并且所有访问都限制在你选择的定义的`local_root`目录中。请注意，使用虚拟用户将禁用系统用户从第一个步骤登录到FTP服务器。
 - en: So what did we learn from this experience?
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: We began this recipe by creating a new temporary text file that will contain
     all our usernames with the corresponding passwords in plain text. We then added
     all the required usernames and passwords one after another sequentially separated
@@ -471,15 +662,21 @@
     we opened, modified, and added new configuration directives to the main `vsftpd`
     configuration file at `/etc/vsftpd/vsftpd.conf` in order to make `vsftpd` aware
     of our virtual users' authentication via PAM.
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先创建了一个新的临时文本文件，该文件将包含我们所有用户名及其对应的明文密码。然后，我们逐个添加所有必需的用户名和密码，每行一个。完成对每个虚拟用户的这一步骤后，我们保存并关闭了文件，然后运行了CentOS
+    7默认安装的`db_load`命令。该命令用于从我们的文本文件生成一个BerkeleyDB数据库，稍后将用于FTP用户认证。完成这一步骤后，我们的下一个任务是在`/etc/pam.d/vsftpd-virtual`创建一个Pluggable
+    Authentication Modules（PAM）文件。该文件读取前面的数据库文件，使用典型的PAM配置文件语法（更多信息，请参阅`man pam.d`）为我们的`vsftpd`服务提供认证。然后，我们打开、修改并添加新的配置指令到主`vsftpd`配置文件`/etc/vsftpd/vsftpd.conf`，以便让`vsftpd`通过PAM意识到我们的虚拟用户认证。
 - en: The most important setting was the `local_root` directive that defines the base
     location where all your user directories will be placed for your virtual users.
     Don't forget to put the `$USER` string at the end of your path. You were then
     prompted to create the relevant virtual hosting folder for every virtual user
     you have defined in the text file before.
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 最重要的设置是`local_root`指令，它定义了所有虚拟用户目录的基本位置。别忘了在路径末尾加上`$USER`字符串。然后，您被提示为文本文件中定义的每个虚拟用户创建相关的虚拟主机文件夹。
 - en: Since virtual users are not real system users, we had to assign the FTP system
     user to take full ownership of the files for our new FTP users. We used a bash
     `for` loop to automate the process for all our users defined in the temporary
@@ -487,8 +684,10 @@
     virtual users access to the system and also the right context on our `/srv/virtualusers`
     directory. Applying all these changes was simply a matter of restarting the `vsftpd`
     service using the `systemctl` command.
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于虚拟用户不是真正的系统用户，我们必须将FTP系统用户分配给我们的新FTP用户，以完全拥有这些文件。我们使用bash `for`循环来自动化对临时`/tmp/virtual-users.txt`文件中定义的所有用户的处理过程。接下来，我们设置了正确的SELinux布尔值，以允许虚拟用户访问系统，并为我们的`/srv/virtualusers`目录设置了正确的上下文。应用所有这些更改只需使用`systemctl`命令重新启动`vsftpd`服务。
 - en: Afterwards, we removed the temporary user text file because it contains our
     passwords in plain text. We protected the access to the BerkleyDB database file
     by removing all access other than root. If you update, add, or remove FTP users
@@ -499,112 +698,161 @@
     If you need to add new users at a later point, you have to create new virtual
     user folders for them as well (Please rerun the commands from step 9). Run the
     `restorecon -R -v /srv/virtualusers` command afterwards.
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 之后，我们删除了包含我们明文密码的临时用户文本文件。我们通过删除除root之外的所有访问权限来保护BerkeleyDB数据库文件。如果您定期更新、添加或删除FTP用户，最好不要删除这个临时明文`/tmp/virtual-users.txt`文件，而是将其放在安全的地方，例如`/root`目录。然后，您应该使用`chmod
+    600`来保护它。然后，每当您对这个文件进行更改时，都可以重新运行`db_load`命令以保持用户信息的最新状态。如果您需要在以后添加新用户，您还必须为他们创建新的虚拟用户文件夹（请重新运行第9步的命令）。之后运行`restorecon
+    -R -v /srv/virtualusers`命令。
 - en: You can now test your new virtual user accounts by logging in to the FTP server
     using your newly created accounts from this recipe.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，您可以通过使用本菜谱中创建的新账户登录FTP服务器来测试您的新虚拟用户账户。
 - en: Customizing the FTP service
+  id: totrans-99
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 自定义FTP服务
 - en: In this recipe, you will learn how to customize your `vsftpd` installation.
     `vsftpd` has a lot of configuration parameters, and here we will show how to create
     a custom welcome banner, change the server's default-time out, limit user connections,
     and ban users from the service.
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，您将学习如何自定义您的`vsftpd`安装。`vsftpd`有许多配置参数，这里我们将展示如何创建一个自定义欢迎横幅，更改服务器的默认超时时间，限制用户连接，以及禁止用户访问服务。
 - en: Getting ready
+  id: totrans-101
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges and a console-based text editor of your
     choice. It is expected that your server will be using a static IP address and
     that `vsftpd` is already installed with a chroot jail and is currently running.
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本教程，您需要一个具有root权限的CentOS 7操作系统的工作安装和一个您选择的基于控制台的文本编辑器。预计您的服务器将使用静态IP地址，并且`vsftpd`已经安装了chroot监狱并且正在运行。
 - en: How to do it...
+  id: totrans-103
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何做到这一点...
 - en: 'To begin with, log in as root and open the main `vsftpd` configuration file:'
+  id: totrans-104
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录并打开主要的`vsftpd`配置文件：
 - en: '[PRE28]'
+  id: totrans-105
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: 'First provide an alternative welcome message, uncomment the following line,
     and alter the message as required. For example, you could use this:'
+  id: totrans-106
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先提供一个替代的欢迎信息，取消注释以下行，并根据需要修改信息。例如，您可以使用这个：
 - en: '[PRE29]'
+  id: totrans-107
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: 'To change the default FTP time-outs, uncomment these lines and substitute the
     numeric values as required:'
+  id: totrans-108
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要更改默认FTP超时时间，取消注释这些行并根据需要替换数值：
 - en: '[PRE30]'
+  id: totrans-109
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: 'Now, we will limit the connections: the data transfer rate in bytes per second,
     the number of clients, and the maximum parallel connections per IP address. Add
     the following lines to the end of the file:'
+  id: totrans-110
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们将限制连接：数据传输速率每秒字节数，客户端数量，以及每个IP地址的最大并行连接数。在文件末尾添加以下行：
 - en: '[PRE31]'
+  id: totrans-111
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: 'Next, save and close the file. To ban a specific user, you can use the following
     commands while replacing the username with an appropriate system user value that
     fits your needs:'
+  id: totrans-112
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，保存并关闭文件。要禁止特定用户，您可以使用以下命令，同时将用户名替换为适合您需求的适当系统用户值：
 - en: '[PRE32]'
+  id: totrans-113
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: 'Now to apply the changes, restart the FTP service:'
+  id: totrans-114
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在要应用更改，请重启FTP服务：
 - en: '[PRE33]'
+  id: totrans-115
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: How it works...
+  id: totrans-116
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: In this recipe, we have shown some of the most important `vsftpd` settings.
     Covering all the configuration parameters here is outside the scope of this recipe.
     To learn more about it, read through the entire main `vsftpd` configuration file
     at `/etc/vsftpd/vsftpd.conf,` as it contains a lot of useful comments; alternatively,
     you can read the `man vsftpd.conf` manual.
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们已经展示了一些最重要的`vsftpd`设置。涵盖所有配置参数超出了本教程的范围。要了解更多信息，请阅读整个主要的`vsftpd`配置文件`/etc/vsftpd/vsftpd.conf`，因为它包含了许多有用的注释；或者，您可以阅读`man
+    vsftpd.conf`手册。
 - en: So what did we learn from this experience?
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: We began by opening the main `vsftpd` configuration file and then activated
     and customized the welcome banner using the `ftpd_banner` directive. On the next
     successful login, your users should see your new message. Next, when dealing with
     a large number of users, you may want to consider changing the values for a default
     timeout and limit the connections in order to improve the efficiency of your FTP
     service.
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先打开主要的`vsftpd`配置文件，然后使用`ftpd_banner`指令激活并自定义欢迎横幅。在下次成功登录时，您的用户应该看到您的新消息。接下来，当处理大量用户时，您可能想要考虑更改默认超时值并限制连接，以提高您的FTP服务的效率。
 - en: First, we changed our server's timeout numbers. An `idle_session_timeout` of
     `600` seconds will logout the user if he is inactive (not executing FTP commands)
     for 10 minutes, while a `data_connection_timeout` of `120` seconds will kill the
@@ -614,104 +862,147 @@
     per second. A `max_clients` value of `50` will tell the FTP server to only allow
     50 parallel users to the system, while a `max_per_ip` of `2` allows only two connections
     per IP address.
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，我们更改了服务器的超时数值。`idle_session_timeout`为`600`秒将使在10分钟内不活跃（未执行FTP命令）的用户注销，而`data_connection_timeout`为`120`秒将在客户端数据传输停滞（未进展）20分钟后终止连接。然后我们更改了连接限制。`local_max_rate`为`1000000`字节每秒将限制单个用户的数据传输速率大约为每秒一兆字节。`max_clients`值为`50`将告诉FTP服务器只允许50个并行用户访问系统，而`max_per_ip`为`2`只允许每个IP地址两个连接。
 - en: Then we saved and closed the file. Finally, we showed how to ban users from
     using our FTP service. If you wanted to ban a specific user from using the FTP
     service as a whole, the user's name should be added to the `/etc/vsftpd/user_list`
     file. If you ever need to re-enable the user at any time, simply reverse the previous
     process by removing the user concerned from `/etc/vsftpd/user_list`.
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后我们保存并关闭了文件。最后，我们展示了如何禁止用户使用我们的FTP服务。如果您想禁止特定用户使用FTP服务，则应将该用户的名称添加到`/etc/vsftpd/user_list`文件中。如果您需要随时重新启用该用户，只需通过从`/etc/vsftpd/user_list`中删除相关用户来反转之前的操作。
 - en: Troubleshooting users and file transfers
+  id: totrans-122
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 解决用户和文件传输问题
 - en: Analyzing log files is the most important technique for troubleshooting all
     kinds of problems or improving services on Linux. In this recipe, you will learn
     how to configure and enable vsftpd's extensive logging features in order to help
     system administrators when problems arise, or simply to monitor usage with this
     service.
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 分析日志文件是解决Linux上各种问题或改进服务最重要的技术。在本教程中，您将学习如何配置和启用vsftpd的广泛日志记录功能，以帮助系统管理员在出现问题时或仅监视此服务的使用情况。
 - en: Getting ready
+  id: totrans-124
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges and a console-based text editor of your
     choice. It is expected that your server will be using a static IP address and
     that `vsftpd` is already installed with a chroot jail and is currently running.
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本教程，您需要具备具有root权限的CentOS 7操作系统的有效安装，以及您选择的基于控制台的文本编辑器。预计您的服务器将使用静态IP地址，并且`vsftpd`已经安装了chroot监狱并正在运行。
 - en: How to do it...
+  id: totrans-126
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何做到这一点...
 - en: 'To do this, log in as root and type the following command to open the main
     configuration file in your favorite text editor:'
+  id: totrans-127
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要执行此操作，请以root身份登录，并键入以下命令以使用您喜欢的文本编辑器打开主配置文件：
 - en: '[PRE34]'
+  id: totrans-128
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: 'Now, add the following lines to the end of the configuration file to enable
     verbose logging features:'
+  id: totrans-129
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，将以下行添加到配置文件的末尾，以启用详细的日志记录功能：
 - en: '[PRE35]'
+  id: totrans-130
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: 'Finally, restart the `vsftpd` daemon to apply the changes:'
+  id: totrans-131
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，重新启动`vsftpd`守护程序以应用更改：
 - en: '[PRE36]'
+  id: totrans-132
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: How it works...
+  id: totrans-133
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: 'In this recipe, we have shown how to enable two separate logging mechanism:
     first, the `xferlog` log file that will log detailed information about user uploads
     and downloads, then the `vsftpd` log file that contains every FTP protocol transaction
     between the client and the server outputting the most detailed logging information
     possible for `vsftpd`.'
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们展示了如何启用两个独立的日志记录机制：首先，`xferlog`日志文件将记录有关用户上传和下载的详细信息，然后是`vsftpd`日志文件，其中包含客户端和服务器之间的每个FTP协议事务，输出`vsftpd`可能的最详细的日志信息。
 - en: So what did we learn from this experience?
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: In this recipe, we opened the main `vsftpd` configuration file and added two
     directives to the end of the file. First, `dual_log_enable` will make sure both
     the `xferlog` and `vsftpd` log files will be used for logging. Afterwards, we
     increased the verbosity of the `vsftpd` log file by enabling `log_ftp_protocol`.
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们打开了主要的`vsftpd`配置文件，并在文件末尾添加了两条指令。首先，`dual_log_enable`确保`xferlog`和`vsftpd`日志文件都将用于记录日志。之后，我们通过启用`log_ftp_protocol`来增加`vsftpd`日志文件的详细程度。
 - en: 'After restarting the service, the two log files, `/var/log/xferlog` and `/var/log/vsftdp.log,`
     will be created and filled with useful FTP activity information. Now, before we
     open the files, let''s create some FTP user activity. Log in with any FTP user
     on the server using the `ftp` command-line tool and issue the following FTP command
     at the `ftp>` prompt to upload a random file from the client to the server:'
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: 重新启动服务后，`/var/log/xferlog`和`/var/log/vsftdp.log`这两个日志文件将被创建并填充有用的FTP活动信息。现在，在我们打开文件之前，让我们创建一些FTP用户活动。使用`ftp`命令行工具在服务器上以任何FTP用户身份登录，并在`ftp>`提示符下发出以下FTP命令，将客户端上的随机文件上传到服务器：
 - en: '[PRE37]'
+  id: totrans-138
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: Now, back on the server, inspect the `/var/log/xferlog` file to see detailed
     information about the uploaded file and open `/var/log/vsftpd.log` for all other
     user activities (such as login time or other FTP commands that users issued).
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，回到服务器上，检查`/var/log/xferlog`文件以查看有关上传文件的详细信息，并打开`/var/log/vsftpd.log`以查看其他用户活动（例如登录时间或其他用户发出的FTP命令）。
 - en: Please note that both the log files only keep track of user and FTP activity
     and are not meant to debug problems with the `vsftpd` service such as configuration
     file errors. Use the `systemctl status vsftpd -l` or `journalctl -xn`, to debug
     general problems with the service.
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: 请注意，日志文件仅记录用户和FTP活动，并不用于调试`vsftpd`服务的问题，例如配置文件错误。要调试服务的一般问题，请使用`systemctl status
+    vsftpd -l`或`journalctl -xn`。

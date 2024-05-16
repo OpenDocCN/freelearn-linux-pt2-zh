@@ -1,45 +1,65 @@
 - en: Chapter 9. Working with Domains
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第9章。使用域
 - en: 'In this chapter, we will cover:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将涵盖：
 - en: Installing and configuring a caching-only nameserver
+  id: totrans-2
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安装和配置仅缓存名称服务器
 - en: Setting up an authoritative-only nameserver
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 设置仅授权的名称服务器
 - en: Creating an integrated nameserver solution
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 创建集成名称服务器解决方案
 - en: Populating the domain
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 填充域
 - en: Building a secondary (slave) DNS server
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 构建一个辅助（从属）DNS服务器
 - en: Introduction
+  id: totrans-7
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 引言
 - en: This chapter is a collection of recipes that attempt to demystify a technology
     that remains the key component in making everything work in the networking world.
     From e-mail to web pages and remote logins to online chats, this chapter provides
     the necessary details on how quickly you can use CentOS to deliver a domain name
     service that will power your working environment.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章是一系列尝试揭开网络世界中使一切正常工作的关键组件技术的神秘面纱的章节。从电子邮件到网页，从远程登录到在线聊天，本章提供了使用CentOS快速提供域名服务所需的详细信息，该服务将为您的办公环境提供动力。
 - en: Installing and configuring a caching-only nameserver
+  id: totrans-9
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 安装和配置仅缓存名称服务器
 - en: Every network communication between computers can only be made through the use
     of unique IP addresses to identify the exact endpoints of the communication. For
     the human brain, numbers are always harder to remember and work with than assigning
@@ -63,204 +83,291 @@
     client. However, it also stores the answer in its cache for a specific period
     of time. The cache can then be used as a source for subsequent requests in order
     to speed up the total round-trip time.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 计算机之间的每项网络通信只能通过使用唯一IP地址来识别通信的确切端点。对于人脑来说，数字总是比给*事物*命名更难记住和工作。因此，IT先驱从70年代初开始发明将名称转换为物理网络地址的系统，使用文件和后来的简单数据库。在现代计算机网络和互联网上，计算机名称与IP地址之间的关系在**域名系统**（**DNS**）数据库中定义。它是一个全球分布式系统，提供域名到IP地址的解析，以及反向解析，即IP地址到域名的解析。DNS是一个庞大的主题，本章的目的是通过向您展示如何安装和设置自己的仅缓存和转发名称服务器，为您提供完美的起点。我们将使用*Unbound*，这是一个高度安全且快速的递归和缓存DNS服务器解决方案，因此是我们的首选。但您需要记住，Unbound不能用作完全授权的DNS服务器（这意味着它提供自己的域名解析记录），我们将在后面的章节中使用流行的BIND服务器。仅缓存DNS服务器将用于将所有名称解析查询转发到远程DNS服务器。这样的系统旨在通过缓存任何域名解析请求的结果来加快对互联网的总体访问。当缓存DNS服务器找到客户端查询的答案时，它将答案返回给客户端。但是，它还将答案存储在其缓存中一段时间。然后，缓存可以用作后续请求的来源，以加快总往返时间。
 - en: Getting ready
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a static IP address, and a console-based
     text editor of your choice. An Internet connection will be required to download
     additional packages. In this example, our DNS server runs in a private network
     with the network address `192.168.1.0/24`.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此操作，您需要一个具有root权限、静态IP地址和您选择的基于控制台的文本编辑器的CentOS 7操作系统的工作安装。下载额外软件包时需要互联网连接。在本例中，我们的DNS服务器在具有网络地址`192.168.1.0/24`的私有网络中运行。
 - en: How to do it...
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: In this recipe, we will first configure a *caching-only* and then a *forwarding
     only* DNS server.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们将首先配置一个*仅缓存*的DNS服务器，然后是一个*仅转发*的DNS服务器。
 - en: Configuring a caching-only Unbound DNS server
+  id: totrans-15
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 配置仅缓存Unbound DNS服务器
 - en: 'In this section, we will consider the role of Unbound as a caching-only nameserver,
     handling recursive DNS requests to the other remote DNS servers and caching the
     query for a certain time period to improve the response time when the server is
     asked for the same name resolution again:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们将考虑Unbound作为仅缓存名称服务器的角色，处理对其他远程DNS服务器的递归DNS请求，并在一定时间内缓存查询以提高响应时间，当服务器再次被请求相同名称解析时：
 - en: 'To begin, log in as root and install the required packages by typing:'
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录并键入以下内容安装所需软件包：
 - en: '[PRE0]'
+  id: totrans-18
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Now make a copy of the `unbound` configuration file so we can revert our changes
     later, and then open it in your favorite text editor:'
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在制作`unbound`配置文件的副本，以便我们以后可以恢复更改，然后使用您喜欢的文本编辑器打开它：
 - en: '[PRE1]'
+  id: totrans-20
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Scroll down to find the following line: `# interface: 0.0.0.0` Remove the `#`
     sign to uncomment it (activate it), so it reads as follows:'
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '向下滚动找到以下行：`# interface: 0.0.0.0`。删除`#`符号以取消注释它（激活它），使其读作如下：'
 - en: '[PRE2]'
+  id: totrans-22
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Next, scroll down to find the line `# access-control: 127.0.0.0/8 allow`. Uncomment
     the line to activate it and change the network address to fit your needs:'
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '接下来，向下滚动找到以下行：`# access-control: 127.0.0.0/8 allow`。取消注释该行以激活它，并根据需要更改网络地址：'
 - en: '[PRE3]'
+  id: totrans-24
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Save and close the file, and then create an RSA keypair with certificates for
     secure DNSSEC support before you check the correctness of the changed configuration
     file:'
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件，然后创建用于安全DNSSEC支持的RSA密钥对证书，之后再检查更改后的配置文件的正确性：
 - en: '[PRE4]'
+  id: totrans-26
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Next, open the DNS service in your firewalld configuration on your server because
     we want to be able to use our new DNS service from other clients in the network
     for querying as well:'
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，在服务器上的firewalld配置中打开DNS服务，因为我们希望能够在网络中的其他客户端上使用我们的新DNS服务进行查询：
 - en: '[PRE5]'
+  id: totrans-28
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Now ensure the service will be available at boot and start it afterwards:'
+  id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在确保服务将在启动时可用，并在之后启动它：
 - en: '[PRE6]'
+  id: totrans-30
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'To test if we can reach our Unbound DNS server and make queries, execute the
     following command from the same server running our Unbound DNS service locally,
     which should give back the IP address of [www.packtpub.com](http://www.packtpub.com):'
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要测试我们是否可以到达我们的Unbound DNS服务器并进行查询，请从同一台服务器上执行以下命令，该服务器正在本地运行我们的Unbound DNS服务，这应该会返回[www.packtpub.com](http://www.packtpub.com)的IP地址：
 - en: '[PRE7]'
+  id: totrans-32
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'For a more detailed view of the request you can also run locally on the DNS
     server:'
+  id: totrans-33
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于请求的更详细视图，您还可以在DNS服务器上本地运行：
 - en: '[PRE8]'
+  id: totrans-34
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'From any other client in the network (needs `bind-utils` installed), you can
     query any public domain name using our new DNS server as well. For example, if
     our DNS server has the IP `192.168.1.7`:'
+  id: totrans-35
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从网络中的任何其他客户端（需要安装`bind-utils`），您也可以使用我们的新DNS服务器查询任何公共域名。例如，如果我们的DNS服务器的IP是`192.168.1.7`：
 - en: '[PRE9]'
+  id: totrans-36
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'Finally, let us use our new nameserver on the server itself. To do this, open
     the following file with your favorite text editor after you have made a backup
     copy:'
+  id: totrans-37
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，让我们在服务器本身上使用我们的新名称服务器。为此，在制作备份副本后，使用您喜欢的文本编辑器打开以下文件：
 - en: '[PRE10]'
+  id: totrans-38
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'Remove all the current nameserver references and replace them with the following:'
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 删除所有当前的名称服务器引用，并用以下内容替换它们：
 - en: '[PRE11]'
+  id: totrans-40
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Note
+  id: totrans-41
   prefs:
   - PREF_IND
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: If you have set some DNS server information in your network-scripts interface
     (for example, when configuring a static IP address, see [Chapter 2](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 2. Configuring the System"), *Configuring the System*), you will want
     to review the `/etc/sysconfig/network-scripts/ifcfg-XXX` file and modify the current
     DNS reference to read as `DNS1=127.0.0.1` as well.
+  id: totrans-42
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 如果您在网络脚本接口中设置了某些DNS服务器信息（例如，在配置静态IP地址时，请参阅[第2章](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第2章。配置系统"），*配置系统*），您将需要查看`/etc/sysconfig/network-scripts/ifcfg-XXX`文件并修改当前DNS引用，使其读作`DNS1=127.0.0.1`。
 - en: Configuring a forwarding only DNS server
+  id: totrans-43
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 配置仅转发DNS服务器
 - en: 'Now after we have successfully configured our first caching BIND DNS server,
     here we will show you how to transform it into a forwarding DNS server which will
     reduce the total bandwidth for resolving hostnames in comparison to the caching-only
     solution:'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们已经成功配置了我们的第一个缓存BIND DNS服务器，接下来我们将向您展示如何将其转换为转发DNS服务器，这将减少与仅缓存解决方案相比解析主机名的总带宽：
 - en: 'Open BIND''s main configuration file again:'
+  id: totrans-45
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 再次打开BIND的主配置文件：
 - en: '[PRE12]'
+  id: totrans-46
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'Add the following lines to the end of the file:'
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在文件末尾添加以下行：
 - en: '[PRE13]'
+  id: totrans-48
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'Next, check the correctness of your new configuration file and restart the
     service:'
+  id: totrans-49
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，检查您的新配置文件的正确性并重新启动服务：
 - en: '[PRE14]'
+  id: totrans-50
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: Finally, test your new forwarding DNS server using the tests from the preceding
     caching DNS server section.
+  id: totrans-51
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，使用前述缓存DNS服务器部分中的测试来测试您的新转发DNS服务器。
 - en: How it works...
+  id: totrans-52
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: In this recipe, we have installed a caching-only Unbound DNS server with the
     basic aim of improving the responsiveness of our overall network by caching the
     answers to any name-based queries. Using such a process will shorten the waiting
@@ -277,11 +384,15 @@
     our DNS server because only *single* network requests to communicate with the
     remote resolving server are made instead of *multiple* when using the caching-only
     DNS service.
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个配方中，我们安装了一个仅缓存的Unbound DNS服务器，其基本目的是通过缓存对任何基于名称的查询的答案来提高我们整体网络的响应性。使用这样的过程将缩短对同一位置的任何后续访问的等待时间。如果您恰好管理一个大型、繁忙或慢速网络，这是一个特别有用的功能，可以节省带宽。它没有自己的域名解析功能，而是使用其默认根域的DNS服务器来执行此任务（要了解更多关于根域的信息，请参阅后面）。此外，正如我们所见，您可以轻松地将您的缓存名称服务器转换为纯转发系统。虽然缓存DNS服务器向*多个*关联的DNS服务器发出递归请求，并从这些多个请求中构建完整名称解析结果，但转发DNS*委托*完整的递归DNS搜索到另一个解析DNS服务器，该服务器执行完整的搜索。这为我们的DNS服务器节省了更多的带宽，因为只进行了*单个*网络请求与远程解析服务器通信，而不是使用仅缓存DNS服务时进行*多个*。
 - en: So what did we learn from this experience?
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: We started this recipe by installing the necessary packages. This included the
     main DNS server program called Unbound and a reference to `bind-utils`, a small
     package that enables you to run many different DNS related network tasks, such
@@ -295,8 +406,10 @@
     was allowed to make requests to our DNS server by setting `allow-query` to our
     local network. This means we allowed anyone in our subnetwork to make DNS resolution
     requests to our server.
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从这个配方开始，安装了必要的软件包。这包括主要的DNS服务器程序Unbound和一个参考到`bind-utils`，一个小型软件包，使您能够运行许多不同的与DNS相关的网络任务，如`dig`，`nslookup`和`host`。接下来，我们开始进行必要的配置更改，编辑Unbound的主要配置文件，并在我们进行简单备份后。由于默认DNS服务器在安装后完全限制在*本地*进行所有操作，我们的主要目的是调整服务器以使外部连接成为可能。我们通过允许DNS服务器监听所有可用网络接口使用`interface`指令开始这个过程，然后定义网络上的谁被允许向我们的DNS服务器提出请求，通过将`allow-query`设置为我们的本地网络。这意味着我们允许我们子网中的任何人向我们的服务器提出DNS解析请求。
 - en: 'At this point we created the RSA keypair with the `unbound-control-setup` tool,
     which is needed for the `unbound-checkconf` command to work. The generated keys
     and certificate are important if we want to use **Unbound''s DNS Security Extensions**
@@ -309,8 +422,12 @@
     the predefined `dns` firewalld service to our default firewall, thus allowing
     the other computer systems in our local network to access the DNS server using
     port `53`. Finally, we activated Unbound at boot time and started the service.'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 此时，我们使用`unbound-control-setup`工具创建了RSA密钥对，这对于`unbound-checkconf`命令的工作是必需的。生成的密钥和证书对于我们想要使用**Unbound的DNS安全扩展**（**DNSSEC**）功能非常重要，这些功能通过提供使用数字签名的来源认证来帮助保护DNS数据（配置DNSSEC超出了本章的范围。要了解更多信息，请查阅Unbound配置手册：`man
+    unbound.conf`）。之后，我们使用了`unbound-checkconf`命令，这是为了确认Unbound的配置文件在语法上是正确的。如果命令的输出为空，则文件中没有错误。然后，我们继续将预定义的`dns`
+    firewalld服务添加到我们的默认防火墙中，从而允许我们本地网络中的其他计算机系统通过端口`53`访问DNS服务器。最后，我们在启动时激活了Unbound并启动了服务。
 - en: Of course, to complete this recipe we then tested if our new DNS server worked
     as expected in resolving domain names to IP addresses. We ran a simple `nslookup`
     query locally on the server and also from the other computers in the same network
@@ -322,57 +439,83 @@
     output must contain the resolved IP address of the [www.packtpub.com](http://www.packtpub.com)
     server. On the DNS server you could also use the `unbound-host -d` command to
     get a more technical view of the DNS query within the Unbound service.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，为了完成这个配置，我们随后测试了我们的新DNS服务器是否如预期那样将域名解析为IP地址。我们在服务器上本地运行了一个简单的`nslookup`查询，并从同一网络中的其他计算机上查看我们的新DNS服务是否可以从外部访问。当使用`nslookup`而不带任何附加参数时，该程序将使用系统已知的默认DNS服务器解析器（在CentOS
+    7中，这定义在`/etc/resolv.conf`中）来解析我们的主机名，因此我们添加了另一个参数，指向我们想要查询的替代DNS服务器（`127.0.0.1`）。为了成功测试，输出必须包含[www.packtpub.com](http://www.packtpub.com)服务器的解析IP地址。在DNS服务器上，您还可以使用`unbound-host
+    -d`命令来获得Unbound服务内部DNS查询的更技术性的视图。
 - en: After we successfully finished these tests, we updated the current nameserver
     resolver information on our DNS server with our new DNS service running on localhost.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们成功完成这些测试后，我们更新了DNS服务器上的当前名称服务器解析器信息，使用我们运行在本地主机上的新DNS服务。
 - en: There's more...
+  id: totrans-59
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'Now we want to see how BIND will perform for caching DNS information. To do
     this, on your DNS server simply select a target website you have not visited before
     and use the `dig` command. For example:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们想要看看BIND将如何执行缓存DNS信息。为此，在您的DNS服务器上，只需选择一个您之前未访问过的目标网站，并使用`dig`命令。例如：
 - en: '[PRE15]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'Having run this test, you may see a query time that results in something like
     the following:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 运行此测试后，您可能会看到一个查询时间，结果如下：
 - en: '[PRE16]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'Now repeat this exercise by retesting the same URL. Depending on your networking
     environment, this may produce the following result:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在重复这个练习，重新测试同一个URL。根据您的网络环境，这可能会产生以下结果：
 - en: '[PRE17]'
+  id: totrans-65
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: Now do it again for another website. On every repeat of the preceding command,
     you should not only see a reduced query time but also experience a faster response
     time in delivering the output. This same result will be evident in the browser
     refresh rate, and as a result we can say that this simple exercise has not only
     introduced you to Unbound but it will ultimately serve to improve the speed of
     your local network when surfing the World Wide Web.
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在为另一个网站再次执行此操作。在每次重复前面的命令时，您不仅应该看到查询时间的减少，还应该体验到输出交付的更快响应时间。同样的结果将在浏览器刷新率中体现，因此我们可以这样说，这个简单的练习不仅向您介绍了Unbound，而且最终将有助于提高您在浏览万维网时本地网络的速度。
 - en: Setting up an authoritative-only DNS server
+  id: totrans-67
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 设置一个仅授权的DNS服务器
 - en: In this recipe, we will learn how to create an *authoritative-only* DNS server,
     which can give answers to queries about domains under their control themselves
     instead of redirecting the query to other DNS servers (such as our caching-only
     DNS server from the previous recipe). We will create a DNS server to resolve all
     our own hostnames and services in our own private local network.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们将学习如何创建一个*权威专用* DNS服务器，它可以自己回答关于其控制下的域的查询，而不是将查询重定向到其他DNS服务器（例如我们之前的缓存专用DNS服务器）。我们将创建一个DNS服务器，以解析我们自己的私有本地网络中的所有我们自己的主机名和服务。
 - en: As said before, while Unbound should be your first choice when needing a caching-only
     DNS server as it is the most secure DNS server solution available, it has only
     limited authoritative capabilities which often is not enough for professional
@@ -389,12 +532,17 @@
     matching records in its zones), so if the DNS server cannot resolve a requested
     domain, it will stop the request and not contact other DNS servers using recursive
     requests to fetch and construct the correct answer.
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 如前所述，虽然Unbound应该是您在需要缓存专用DNS服务器时的首选，因为它是目前最安全的DNS服务器解决方案，但它只有有限的权威功能，这通常对于专业DNS服务器使用来说是不够的。在这里，我们将使用流行的权威BIND
+    DNS服务器包，而不是查询我们的本地服务器名称，并配置一个新的DNS区域以提供高度可定制的名称解析。从技术上讲，我们将为我们自己的域编写一个*正向*和*反向区域*文件。区域文件是包含实际域名到IP地址映射或相反的文本文件，即IP地址映射到域名映射。虽然对任何DNS服务器的大多数查询都是将名称翻译为IP地址，但反向部分也很重要，如果您需要为任何给定IP地址提供正确的域名，则需要设置。我们将配置BIND为权威专用，这意味着服务器只会回答它具有权威性的查询（在其区域中有匹配的记录），因此如果DNS服务器无法解析请求的域，它将停止请求，并且不会使用递归请求联系其他DNS服务器以获取并构建正确的答案。
 - en: Getting ready
+  id: totrans-70
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a static IP address, and a console-based
     text editor of your choice. An Internet connection will be required to download
@@ -412,196 +560,284 @@
     web, and FTP servers in our own network, each running on separate dedicated servers.
     We will be using the port `8053` for our BIND service as we already have Unbound
     running on the same server using the default DNS port `53`.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此操作，您需要一个具有root权限的CentOS 7操作系统的工作安装，一个静态IP地址，以及您选择的基于控制台的文本编辑器。下载额外软件包时需要互联网连接。在本例中，我们的DNS服务器在私有网络中运行，网络地址为`192.168.1.0/24`。我们的DNS服务器应该管理我们决定作为`centos7.home`（形式为`domain.toplevel-domain`）的本地私有域。新DNS服务器的IP地址将是`192.168.1.7`，并且应该获得主机名`ns1`，从而得到完全限定域名（FQDN）`ns1.centos7.home`。（有关FQDN的更多信息，请参阅[第2章](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第2章。系统配置"），“系统配置”中的“设置主机名和解析网络”配方）。我们配置的区域将有一个名为`admin@centos7.home`的管理电子邮件地址，为了简单起见，该网络中的所有其他计算机将获得诸如`client1`、`client2`、`client3`等主机名。我们还将拥有一些邮件、Web和FTP服务器，它们在我们的网络中各自运行在单独的专用服务器上。我们将使用端口`8053`作为我们的BIND服务，因为我们已经在同一服务器上使用默认DNS端口`53`运行Unbound。
 - en: How to do it...
+  id: totrans-72
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'For security reasons, we will allow BIND to resolve internal LAN names only
     (authoritative-only) and only allow localhost to make DNS queries; no other clients
     in our network can connect to it:'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 出于安全考虑，我们将仅允许BIND解析内部局域网名称（仅权威），并且仅允许本地主机进行DNS查询；我们网络中的其他客户端无法连接到它：
 - en: 'To begin with, log in as root on your Unbound DNS server and install the required
     BIND package and enable the DNS server on boot:'
+  id: totrans-74
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以root身份登录到您的Unbound DNS服务器，安装所需的BIND软件包，并在启动时启用DNS服务器：
 - en: '[PRE18]'
+  id: totrans-75
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 'The actual name of the DNS server in the BIND package is called `named`, so
     let''s open its main configuration file to make some adjustments after creating
     a backup copy of it first:'
+  id: totrans-76
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: BIND软件包中DNS服务器的实际名称称为`named`，因此在创建其主配置文件的备份副本后，让我们打开它进行一些调整：
 - en: '[PRE19]'
+  id: totrans-77
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 'First find the line `listen-on port 53 { 127.0.0.1; }`; and then change the
     port number to the custom `port 8053`, so it reads as follows:'
+  id: totrans-78
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先找到行`listen-on port 53 { 127.0.0.1; }`；然后将端口号更改为自定义的`port 8053`，使其读作如下：
 - en: '[PRE20]'
+  id: totrans-79
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'Next, find the line `listen-on-v6 port 53 { ::1; }` and change it to:'
+  id: totrans-80
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，找到行`listen-on-v6 port 53 { ::1; }`并将其更改为：
 - en: '[PRE21]'
+  id: totrans-81
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 'Next, since we are configuring an authoritative-only server, we will disable
     contacting other remote DNS servers, find the line that reads `recursion yes;`
     and change it to:'
+  id: totrans-82
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，由于我们正在配置一个仅权威服务器，我们将禁用与其他远程DNS服务器的联系，找到读作`recursion yes;`的行并将其更改为：
 - en: '[PRE22]'
+  id: totrans-83
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: 'Save and close the file, and then validate the syntax of our config changes
     (no output means no errors!):'
+  id: totrans-84
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件，然后验证我们的配置更改的语法（没有输出意味着没有错误！）：
 - en: '[PRE23]'
+  id: totrans-85
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 'Now tell SELinux about the changed named DNS port (this needs package `policycoreutils-python`):'
+  id: totrans-86
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在告诉SELinux有关已更改的named DNS端口（需要软件包`policycoreutils-python`）：
 - en: '[PRE24]'
+  id: totrans-87
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'Now type the following command in order to create your forward zone file. Name
     the file after the domain whose resource records it will contain:'
+  id: totrans-88
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在输入以下命令以创建您的正向区域文件。根据包含其资源记录的域命名文件：
 - en: '[PRE25]'
+  id: totrans-89
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: 'In our example, for our `centos7.home domain`, this will be:'
+  id: totrans-90
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在我们的示例中，对于我们的`centos7.home`域，这将是：
 - en: '[PRE26]'
+  id: totrans-91
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: 'Now simply add the following lines (be careful not to forget typing the tailing
     dots in the domain names). We will start with the **Start of Authority** (**SOA**)
     block:'
+  id: totrans-92
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在只需添加以下行（注意不要忘记在域名末尾输入点）。我们将从**授权开始**（**SOA**）块开始：
 - en: '[PRE27]'
+  id: totrans-93
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'Afterwards, add the rest of the file''s content:'
+  id: totrans-94
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 之后，添加文件的其余内容：
 - en: '[PRE28]'
+  id: totrans-95
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: 'When you have finished, simply save and close the file before proceeding to
     create the reverse zone file for our private subnetwork used by our domain (the
     `C-Class` are the first three numbers (octets) which are separated by dots: `XXX.XXX.XXX`.
     For example, for the `192.168.1.0/24` subnet the `C-Class` is `192.168.1`:'
+  id: totrans-96
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当你完成操作后，请先保存并关闭文件，然后再为我们的私有子网络创建反向区域文件，该子网络用于我们的域名（`C-Class` 是指前三个数字（八位组），它们之间用点分隔：`XXX.XXX.XXX`。例如，对于
+    `192.168.1.0/24` 子网，`C-Class` 是 `192.168.1`：
 - en: '[PRE29]'
+  id: totrans-97
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: 'In our example, a reverse zone file resolving our `centos7.home''s` `192.168.1`
     C-Class subnet will be:'
+  id: totrans-98
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在我们的示例中，一个解析我们 `centos7.home` 的 `192.168.1` C-Class 子网的反向区域文件将是：
 - en: '[PRE30]'
+  id: totrans-99
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: 'First put in the exact same SOA as in step 10, and then append the following
     content to the end of the file:'
+  id: totrans-100
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，像第10步一样输入完全相同的SOA，然后将以下内容添加到文件的末尾：
 - en: '[PRE31]'
+  id: totrans-101
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: 'Save and close the file, and then add our new zone pair to the named configuration.
     To do this, open `named.conf` again:'
+  id: totrans-102
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件，然后将我们的新区域对添加到命名配置中。为此，再次打开 `named.conf`：
 - en: '[PRE32]'
+  id: totrans-103
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: 'Now locate the line including `"/etc/named.rfc1912.zones"`;. Immediately following
     this line, create a space for your work and add the appropriate zone statement
     to enable your *reverse* zone, as follows (substitute `XXX.XXX.XXX` with the reversed
     C-Class of your reverse zone file name, in our example `1.168.192`):'
+  id: totrans-104
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在找到包含 `"/etc/named.rfc1912.zones"` 的行。紧接在这行之后，为你的工作留出空间，并添加适当的区域声明以启用你的*反向*区域，如下所示（将
+    `XXX.XXX.XXX` 替换为你的反向区域文件名的反向 C-Class，在我们的示例中是 `1.168.192`）：
 - en: '[PRE33]'
+  id: totrans-105
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: 'Having done this, you can now proceed to add a zone statement for your forward
     zone right afterwards, as follows (replacing `<domain>.<top-level domain>.db`
     with your forward zone file name, in our example `centos7.home`):'
+  id: totrans-106
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成这一步后，你现在可以继续为你的正向区域添加一个区域声明，如下所示（将 `<domain>.<top-level domain>.db` 替换为你的正向区域文件名，在我们的示例中是
+    `centos7.home`）：
 - en: '[PRE34]'
+  id: totrans-107
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: 'When you have finished, simply save and close the file, and then restart the
     `bind` service using:'
+  id: totrans-108
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成操作后，请保存并关闭文件，然后使用以下命令重启 `bind` 服务：
 - en: '[PRE35]'
+  id: totrans-109
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: How it works...
+  id: totrans-110
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: All DNS servers are configured to perform caching functions, but where a caching-only
     server is restricted in its ability to answer queries from remote DNS servers
     only, an authoritative nameserver is a DNS server that maintains the master zone
     for a particular record.
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有DNS服务器都配置为执行缓存功能，但是缓存专用服务器仅限于从远程DNS服务器回答查询的能力，而权威名称服务器是维护特定记录的主区域的DNS服务器。
 - en: So what have we learned from this experience?
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: The purpose of this recipe was to setup an authoritative-only BIND DNS server
     and provide a new zone for it. A DNS zone defines all the available resources
     (hostnames and services) under a single domain. Any DNS zone should always consist
@@ -633,11 +869,17 @@
     ensures that the root DNS will always find the correct TLD DNS server address
     and the TLD DNS server will always send the request to the right SLD DNS which
     has the correct zone file and is finally able to answer the requested DNS query.
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 本教程的目的是设置一个仅权威的BIND DNS服务器，并为它提供一个新的区域。DNS区域定义了单个域下的所有可用资源（主机名和服务）。任何DNS区域都应始终包含正向和反向区域文件。为了理解区域配置，我们首先需要讨论DNS层次结构。例如，取本教程中的一个DNS域名`client1.centos7.home`。我们私有网络中的每台计算机都有一个主机名（例如，`client1`或`www`），并且属于一个域。域由**二级域名**（**SLD**）（例如，`centos7`）和**顶级域名**（**TLD**）（例如，`home`、`org`、`com`等）组成。在TLD之上是根域（用`.`点表示），这在与其他程序或配置一起工作时经常被忽略。然而，在处理或定义FQDN的区域配置时，非常重要的一点是永远不要忘记在TLD后面添加这个点`.`。例如，我们`client1`计算机的DNS域名是`client1.centos7.home`，而`/etc/hosts`文件中的FQDN通常写成`client1.centos7.home`（从技术上讲这是不正确的，但大多数情况下是足够的）。根域非常重要，因为它包含了根DNS服务器，如果权威DNS服务器在其自己的记录（区域）或缓存中找不到请求域的现有条目，它将首先被查询。但是，我们在所有其他域层次结构中也有DNS服务器，这就是DNS服务器进行递归请求的方式。根DNS服务器，像任何其他DNS服务器一样，解析其区域文件中定义的所有子域，即TLD。这些TLD本身可以解析所有SLD（也在它们的区域文件中定义）。二级域解析其所有主机名（作为特殊子域，它们指的是网络上的单个计算机或服务）。因此，任何DNS请求都会通过不同的DNS服务器层次结构，从根DNS到TLD
+    DNS，再到SLD DNS服务器。根和TLD DNS服务器不能完全解析完整的域名DNS查询，如`www.centos7.home`，而是将解析下一个DNS层次结构的正确地址。这个系统确保根DNS总是能找到正确的TLD
+    DNS服务器地址，TLD DNS服务器总是将请求发送到正确的SLD DNS，后者拥有正确的区域文件，并最终能够回答请求的DNS查询。
 - en: So what did we learn from this experience?
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: As we have learned, a zone file is a simple text file that consists of directives
     and resource records and can look quite complicated as it contains a lot of two-letter
     abbreviations. Remember, you need to set up a zone file pair (forward and reverse)
@@ -652,8 +894,12 @@
     server had to be authoritative-only, which means that it is not allowed to forward
     DNS requests to other remote DNS servers when it could not resolve the query from
     its own zone records.
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们所学，区域文件是一个简单的文本文件，由指令和资源记录组成，由于包含大量两字母缩写，它可能看起来相当复杂。请记住，您需要在基础域级别（例如，`centos7.home`）为所有在该域下运行的主机名和服务（例如，`www`、`host1`、`api`等）设置一对区域文件（正向和反向）。安装`named`
+    DNS服务器（它是**伯克利互联网名称域**（**BIND**）软件包的一部分）后，我们复制了原始主配置文件，并将默认监听端口从53更改为8053（因为unbound已经在端口53上监听），但仍仅监听localhost，并禁用了IPv6以保持与其他主要DNS服务器的兼容性（因为IPv6支持在互联网上仍然有限）。此外，我们在这里禁用了递归，因为我们的BIND
+    DNS服务器必须是权威的，这意味着当它无法从自己的区域记录中解析查询时，不允许将DNS请求转发到其他远程DNS服务器。
 - en: 'Then we began creating and customizing our own forward DNS zone file with the
     filename convention `/var/named/<domain>.<top-level domain>.db`. This file is
     opened with the `$TTL` control statement, which stands for **Time to Live** and
@@ -671,35 +917,45 @@
     opening the brackets to assign the zone''s serial number, refresh value, retry
     value, expire value, and negative caching `time-to-live` value. These directives
     can be summarized as follows:'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后我们开始创建并自定义我们自己的正向DNS区域文件，文件名约定为`/var/named/<domain>.<top-level domain>.db`。该文件以`$TTL`控制语句打开，该语句代表**生存时间**，并向其他名称服务器提供一个时间值，该值决定了它们可以从该区域缓存记录的时间长度。与其他许多指令一样，此指令默认以秒为单位定义，但您也可以使用BIND特定的简写形式来表示分钟（`m`）、小时（`h`）、天（`d`）和周（`w`），正如我们在示例中所示（`3h`）。接下来，我们提供了一个**授权开始**（**SOA**）记录。该记录包含有关整个区域的具体信息。这从区域名称（`@`）开始，指定区域类（`IN`），该名称服务器的FQDN格式为`hostname.domain.TLD.`，以及区域管理员的电子邮件地址。后一个值通常采用`hostmaster.hostname.domain.TLD.`的形式，并通过将典型的`@`符号替换为点（`.`）来形成。完成此操作后，接下来就是打开括号以分配区域的序列号、刷新值、重试值、过期值和负缓存`生存时间`值。这些指令可以总结如下：
 - en: The `serial-number` value is a numeric value, typically taking the form of the
     date in reverse (`YYYYMMDD`) with an additional value (`VV`), which is incremented
     every time the zone file is modified or updated, in order to indicate that it
     is time for the named service to reload the zone. The value `VV` typically starts
     at `00`, and the next time you modify this file, simply increment it to `01`,
     `02`, `03`, and so on.
+  id: totrans-117
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 序列号（`serial-number`）值是一个数值，通常采用反向日期（`YYYYMMDD`）的形式，并附加一个值（`VV`），该值在每次修改或更新区域文件时递增，以指示该名称服务需要重新加载区域。值`VV`通常从`00`开始，下次修改此文件时，只需将其递增为`01`、`02`、`03`等。
 - en: The `time-to-refresh` value determines how frequently the secondary or slave
     nameservers will ask the primary nameserver if any changes have been made to the
     zone.
+  id: totrans-118
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`刷新时间`值决定了辅助或从属名称服务器将多频繁地询问主名称服务器区域是否发生了任何更改。'
 - en: The `time-to-retry` value determines how frequently the secondary or slave nameservers
     should check the primary server after the serial number has failed. If a failure
     has occurred during the time frame specified by the `time-to-expire` value elapses,
     the secondary nameservers will stop responding as an authority for requests.
+  id: totrans-119
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`重试时间`值决定了辅助或从属名称服务器在序列号失败后应多久检查一次主服务器。如果在`到期时间`值指定的时间范围内发生故障，辅助名称服务器将停止响应作为请求的权威。'
 - en: The `minimum-TTL` value determines how long the other nameservers can cache
     negative responses.
+  id: totrans-120
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`最小TTL`值决定了其他名称服务器可以缓存否定响应的时间长度。'
 - en: Having completed this section and having closed the corresponding bracket, we
     then proceeded to add the authoritative nameserver information (`NS`) with the
     `IN NS <FQDN of the nameserver>` definition. Typically speaking, you will have
@@ -713,23 +969,33 @@
     becomes important if you define more than one mail server (each in its separate
     `IN MX` line)—the lower the number, the higher the priority. In this respect,
     a secondary mail server should have a higher value.
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 完成这一部分并关闭相应的括号后，我们接着添加了权威名称服务器信息（`NS`），使用`IN NS <名称服务器的FQDN>`定义。通常情况下，您至少会有两个，如果不是三个名称服务器（将每个名称服务器的FQDN放在新的`IN
+    NS`行中）。然而，如果您的服务器运行在办公室或家庭环境中，并且您希望享受本地名称解析的好处，例如`.home`、`.lan`或`.dev`，那么设置一个名称服务器就特别有用。接下来，我们需要为区域指定邮件服务器，因此需要包含**邮件交换器**（**MX**）记录的引用。格式为`IN
+    MX <优先级> <您的邮件服务器的FQDN>`。如果您定义了多个邮件服务器（每个在其单独的`IN MX`行中），优先级就变得重要了——数字越低，优先级越高。在这方面，辅助邮件服务器应该有一个更高的值。
 - en: Note
+  id: totrans-122
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: In the `SOA`, `NS` and `MX` lines we already referenced hostnames which aren't
     defined as an IP mapping yet (`A` record). We could do this because the zone file
     is not processed sequentially. But do not forget to create corresponding `A` lines
     for each hostname later.
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 在`SOA`、`NS`和`MX`行中，我们已经引用了尚未定义为IP映射的主机名（`A`记录）。我们可以这样做，因为区域文件不是按顺序处理的。但不要忘记稍后为每个主机名创建相应的`A`行。
 - en: Depending on your needs, you may also intend to use your name server as your
     mail server (then you would write instead `MX 10 ns1.centos7.home.`), although
     you may have another server dedicated to that role as shown in the example.
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据您的需求，您可能还想将您的名称服务器用作邮件服务器（那么您会写成`MX 10 ns1.centos7.home.`），尽管在示例中您可能有一个专门用于该角色的服务器。
 - en: 'Following this, it was then a matter of creating the appropriate `A` records
     (`A` for address) and assigning the appropriate IP address to the values shown.
     This is the heart of any domain name resolution requests to the server. An `A`
@@ -743,11 +1009,15 @@
     address to different hostnames. For example, if you do not have dedicated servers
     for every service in your network but rather one server running all your `DNS`,
     `mail`, `web`, and `ftp` services, you can write the following lines instead:'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，需要创建适当的`A`记录（`A`代表地址）并将适当的IP地址分配给显示的值。这是任何域名解析请求到服务器的心脏。`A`记录用于将FQDN链接到IP地址，但大部分前面的设置将基于您的确切需求。在这里，您可以定义所有要在网络中映射的本地主机名。由于我们已经在区域文件中使用并引用了一些域名，例如名称服务器或邮件服务器，我们将从这些开始。之后，我们为所有公开可用和内部客户端定义了主机名到IP地址的映射。请记住，使用`A`记录时，您可以有多个相同的IP地址到不同主机名的映射。例如，如果您在网络中没有为每个服务配备专用服务器，而是有一台运行所有`DNS`、`邮件`、`Web`和`FTP`服务的服务器，您可以编写以下行：
 - en: '[PRE36]'
+  id: totrans-126
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: You can also use a canonical name (`CNAME`) record for this task, which is used
     to assign an alias to an existing `A` record. Arguably, the `CNAME` value make
     your DNS data easier to manage by pointing back to an `A` record. So if you ever
@@ -755,8 +1025,10 @@
     records pointed to that record automatically. However, and as this recipe has
     tried to show, the alternative solution is to have multiple `A` records, which
     implies the need for multiple updates in order to change the IP address.
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: 您还可以使用规范名称（`CNAME`）记录来完成此任务，它用于为现有的`A`记录分配别名。可以说，`CNAME`值通过指向`A`记录，使您的DNS数据更易于管理。因此，如果您考虑需要更改`A`记录的IP地址，所有指向该记录的`CNAME`记录都会自动更新。然而，正如本教程所尝试展示的，替代解决方案是拥有多个`A`记录，这意味着需要进行多次更新才能更改IP地址。
 - en: At this stage of the recipe, we then turned our attention towards the reverse
     DNS zone. As with the forward zone file, the reverse zone files also have a special
     naming convention `/var/named/db.<C-Class of our search IP in reverse order>`.
@@ -767,8 +1039,11 @@
     file has some similarities between the directives and the resources used in the
     forward zone file. However, it is important to remember that reverse DNS is wholly
     separate and distinct from forward DNS.
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程的这一阶段，我们将注意力转向了反向DNS区域。与正向区域文件一样，反向区域文件也有一个特殊的命名约定`/var/named/db.<C-Class
+    of our search IP in reverse order>`。将反向区域文件命名为`db.1.168.192`可能一开始看起来很奇怪，但当你看到反向查找的工作原理时，它就有意义了。它从最高节点（在我们的例子中是`192`，对应于正向区域文件中的根域）开始，并从那里向下遍历。正如你所看到的，我们在这个文件中放置的内容在指令和在正向区域文件中使用的资源之间有一些相似之处。然而，重要的是要记住，反向DNS与正向DNS是完全独立和不同的。
 - en: The reverse DNS zone is designed to assist in the conversion of an IP address
     to a domain name. This can be done by using the **Pointer Resource Record** (**PTR**)
     which assigns unique IP addresses to one or more host names. For this reason,
@@ -780,8 +1055,11 @@
     show this last octet. For example, the line `9 IN PTR www.centos7.home.` in the
     reverse zone file `db.1.168.192` will be able to resolve any reverse IP address
     requests of `192.168.1.9` to the domain value `www.centos7.home`.
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: 反向DNS区域旨在帮助将IP地址转换为域名。这可以通过使用**指针资源记录**（**PTR**）来实现，该记录将唯一的IP地址分配给一个或多个主机名。因此，您必须确保每个`A`记录都有一个唯一的PTR记录。每个反向区域文件收集完整的C类地址范围（例如，前三个点分数字`192.168.1`）的IP到主机名转换。此类IP范围的最后一个八位字节是可以在该文件中定义的所有主机名。请记住，PTR记录中第一列的IP地址值应该只显示这个最后一个八位字节。例如，在反向区域文件`db.1.168.192`中的行`9
+    IN PTR www.centos7.home.`将能够将任何反向IP地址请求`192.168.1.9`解析为域值`www.centos7.home`。
 - en: Having created our forward and reverse zone files in this recipe, we then completed
     the configuration of the named service by adding our new zones to our BIND server
     in order to start our own domain name service resolving local domain names of
@@ -791,27 +1069,36 @@
     our zones dynamically from the localhost (see later). You may add unlimited zone
     pairs, but remember that each forward or reverse zone definition must be given
     a single zone entry in curly brackets.
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们创建了正向和反向区域文件，然后通过将新区域添加到BIND服务器来完成named服务的配置，以便开始解析我们网络的本地域名。在这些新添加的正向和反向区域定义块中，我们定义了自己是主区域持有者，并指定了`update-policy
+    local;`，因为如果我们想从本地主机使用`nsupdate`命令动态更新我们的区域，这是必需的（稍后会看到）。您可以添加无限数量的区域对，但请记住，每个正向或反向区域定义必须在大括号中给出单个区域条目。
 - en: In summary, we can say that forward and reverse zone files are defined on a
     single base domain name basis, one base domain gets one forward zone file. For
     reverse zone files, it's a bit different because we are working with IP addresses.
     We create one zone file based on the Class C address range of the network address
     of our domain and here the last octet is called the hostname, for which we define
     our mappings in such a specific file.
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 总之，我们可以说正向和反向区域文件是基于单个基础域名定义的，一个基础域名对应一个正向区域文件。对于反向区域文件，情况略有不同，因为我们处理的是IP地址。我们根据域的网络地址的C类地址范围创建一个区域文件，这里的最后一个八位组称为主机名，我们在此特定文件中定义映射。
 - en: BIND is a big subject and there is a lot more to learn as this recipe has only
     served to introduce you to the subject. In most cases, you may even find that
     your initial learning period will become known as a process of trial and error,
     but it will improve. Remember, practice makes perfect and if you do create additional
     forward zones, always reference them in the reverse zone file.
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: BIND是一个庞大的主题，还有很多需要学习，本食谱仅作为介绍。在大多数情况下，你甚至可能会发现你的初始学习阶段将成为一个试错过程，但这将得到改善。记住，熟能生巧，如果你创建了额外的正向区域，请始终在反向区域文件中引用它们。
 - en: There's more...
+  id: totrans-133
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'Having created and added your zones to your BIND server, you are now able to
     test your configuration. To do this, you can use the `host`, `dig` or `nslookup`
     command to resolve internal hostnames from localhost only. For example, for testing
@@ -819,11 +1106,16 @@
     server is running on localhost with port `8053: dig -p 8053 @127.0.0.1 client2.centos7.home`.
     This should finish DNS lookup successfully and return the following line (output
     is truncated):'
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 在为BIND服务器创建并添加了区域后，你现在可以测试配置了。为此，你可以使用`host`、`dig`或`nslookup`命令仅从localhost解析内部主机名。例如，为了测试正向DNS解析，我们可以使用`dig`命令，指定我们的DNS服务器在localhost上运行，端口为`8053`：`dig
+    -p 8053 @127.0.0.1 client2.centos7.home`。这应该能成功完成DNS查找并返回以下行（输出已截断）：
 - en: '[PRE37]'
+  id: totrans-135
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: 'For reverse lookup, you will use an IP address instead (in this instance, the
     IP address used should correspond to a domain for which you have configured reverse
     DNS): `nslookup -port=8053 192.168.1.12 127.0.0.1`. As we have configured BIND
@@ -831,8 +1123,13 @@
     records of our zone should not be able to get fully resolved. To test this use
     `dig -p 8053 @127.0.0.1 www.google.com` which should return the status `REFUSED`
     and `WARNING: recursion requested but not available` message.'
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: '对于反向查找，你将使用IP地址（在本例中，使用的IP地址应对应于你已配置反向DNS的域）：`nslookup -port=8053 192.168.1.12
+    127.0.0.1`。由于我们已经将BIND配置为仅权威DNS服务器，因此任何超出我们区域本地记录的DNS请求都无法完全解析。为了测试这一点，使用`dig
+    -p 8053 @127.0.0.1 www.google.com`，它应该返回状态`REFUSED`和`WARNING: recursion requested
+    but not available`消息。'
 - en: 'For security reasons, we restricted our BIND server to localhost only and did
     not allow it to connect to other DNS servers. Therefore you cannot use it as your
     only DNS solution for your private network. Instead, in the next recipe, we will
@@ -849,12 +1146,20 @@
     answer, add the following directives as well (in this example we use the official
     Google DNS servers for any forwarding requests, but you can change this to fit
     your needs): `forwarders { 8.8.8.8;};forward only;`. Then restart the `bind` service.'
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: 出于安全考虑，我们仅将BIND服务器限制为localhost，不允许它连接到其他DNS服务器。因此，你不能将其作为私有网络的唯一DNS解决方案。相反，在下一个配方中，我们将学习如何结合Unbound和BIND来创建一个集成且非常安全的全能DNS服务器解决方案。但如果你不想这样做，并且想将BIND作为你的单一且完整的权威DNS服务器解决方案（这在CentOS
+    7上不再推荐），你可以通过禁用或卸载Unbound，恢复原始的`named.conf.BAK`配置文件，并在BIND配置文件中启用以下指令来实现：`allow-query
+    {localhost;192.168.1.0/24;}`;（允许整个`192.168.1.0/24`网络进行DNS请求），`listen-on port 53
+    {any;}`;（在任何网络上监听请求），`listen-on-v6 port 8053 { none; }`;（禁用IPv6）。如果你想让BIND转发所有它不权威的内容，而不是使用递归来找出答案，也可以添加以下指令（在这个例子中，我们使用官方的Google
+    DNS服务器进行任何转发请求，但你可以根据需要进行更改）：`forwarders { 8.8.8.8;};forward only;`。然后重启`bind`服务。
 - en: Creating an integrated nameserver solution
+  id: totrans-138
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 创建一个集成的名称服务器解决方案
 - en: 'So far in this chapter, we used Unbound as a caching-only DNS server solution
     because it is very secure and fast, and BIND as our authoritative-only DNS server
     because its zone management is highly configurable and customizable. BIND has
@@ -872,98 +1177,139 @@
     will recursively query or forward other remote DNS servers and cache the response.
     The integration of both DNS server systems makes it the perfect all-round DNS
     server solution.'
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，在本章中，我们使用Unbound作为仅缓存的DNS服务器解决方案，因为它非常安全和快速，而使用BIND作为我们的仅权威DNS服务器，因为它的区域管理高度可配置和可定制。BIND已经存在很长时间，是有史以来使用最广泛的DNS软件。然而，过去发现了一些严重的漏洞（幸运的是已经修复）。在本配方中，我们将结合Unbound和BIND，以获得两全其美的效果：只有非常安全的Unbound服务将直接暴露给你的私有网络，并可以从你的客户端接收和提供DNS查询。BIND服务仅绑定到localhost，正如在前一个配方中配置的那样，只允许解析内部主机名，并且没有直接访问互联网或你的客户端的权限。如果客户端连接到你的Unbound服务并请求解析私有网络中的内部主机名，Unbound将在本地查询BIND服务器以进行DNS解析并将响应缓存。另一方面，如果客户端请求解析外部域名，Unbound本身将递归查询或转发其他远程DNS服务器并将响应缓存。这两种DNS服务器系统的集成使其成为完美的全能DNS服务器解决方案。
 - en: Getting ready
+  id: totrans-140
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system and a console-based text editor of your choice. It is expected
     that a caching-only Unbound server (port 53) and an authoritative-only BIND server
     (port 8053) have been installed and are already running using recipes found in
     this chapter.
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成这个配方，你需要一个正常运行的CentOS 7操作系统和一个你选择的基于控制台的文本编辑器。预计在本章中找到的配方指导下，一个仅缓存的Unbound服务器（端口53）和一个仅权威的BIND服务器（端口8053）已经安装并正在运行。
 - en: How to do it...
+  id: totrans-142
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 操作方法...
 - en: 'In this recipe, we will show you how to configure Unbound so it will be able
     to query our locally running authoritative-only BIND service whenever a client
     requests an internal hostname. Any other request should go out as a recursive
     DNS request to a remote root server to construct an answer:'
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将向您展示如何配置Unbound，以便当客户端请求内部主机名时，它能够查询我们本地运行的权威性仅限的BIND服务。对于其他任何请求，应将其作为递归DNS请求发送到远程根服务器以构建答案：
 - en: 'Log in as root on our server running the Unbound and BIND service and open
     Unbound''s main configuration file:'
+  id: totrans-144
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 以root用户身份登录运行Unbound和BIND服务的我们的服务器，并打开Unbound的主配置文件：
 - en: '[PRE38]'
+  id: totrans-145
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: 'First put the following line somewhere in the `server:` clause:'
+  id: totrans-146
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先在`server:`子句中的某个位置添加以下行：
 - en: '[PRE39]'
+  id: totrans-147
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: 'Next, we will have to allow Unbound to connect to localhost which is disabled
     by default, search for the line that reads: `# do-not-query-localhost: yes`, then
     activate and set it to no:'
+  id: totrans-148
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '接下来，我们需要允许Unbound连接到默认禁用的localhost，查找读取以下内容的行：`# do-not-query-localhost: yes`，然后激活并将其设置为no：'
 - en: '[PRE40]'
+  id: totrans-149
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: 'Next, since our BIND server is not configured using DNSSEC, we need to tell
     Unbound to use it anyway (Unbound by default refuses to connect to DNS servers
     not using DNSSEC). Search for the line that starts with `# domain-insecure: "example.com"`,
     then activate it and change it so it reads as follows:'
+  id: totrans-150
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '接下来，由于我们的BIND服务器未使用DNSSEC配置，因此我们需要告诉Unbound无论如何都要使用它（默认情况下，Unbound拒绝连接到未使用DNSSEC的DNS服务器）。查找以`#
+    domain-insecure: "example.com"`开头的行，然后激活它并将其更改为以下内容：'
 - en: '[PRE41]'
+  id: totrans-151
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: 'Next, we need to tell Unbound to forward all the requests for our internal
     domain `centos7.home.` to the locally running BIND server (on port `8053`). Append
     the following at the file''s end:'
+  id: totrans-152
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们需要告诉Unbound将我们内部域`centos7.home.`的所有请求转发到本地运行的BIND服务器（端口`8053`）。在文件末尾添加以下内容：
 - en: '[PRE42]'
+  id: totrans-153
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: 'Also, we need to tell Unbound to do the same for any reverse lookup to our
     internal domain using BIND:'
+  id: totrans-154
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 此外，我们还需要告诉Unbound对我们的内部域使用BIND进行任何反向查找时执行相同的操作：
 - en: '[PRE43]'
+  id: totrans-155
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: 'Save and close the file, and then restart the Unbound service:'
+  id: totrans-156
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件，然后重新启动Unbound服务：
 - en: '[PRE44]'
+  id: totrans-157
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: How it works
+  id: totrans-158
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 工作原理
 - en: 'Congratulations! You now have a full authoritative and very secure DNS server
     solution using an integrated approach combining all the good parts from Unbound
     and BIND. In this recipe, we have shown you how to configure the Unbound service
@@ -978,20 +1324,29 @@
     to mark our forward and reverse domain as being `insecure`, and also had to define
     a new `local-zone`, which is necessary that Unbound knows that clients can send
     queries to a `stub-zone` authoritative server.'
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: '恭喜！您现在拥有一个完整的权威且非常安全的DNS服务器解决方案，采用集成方法结合了Unbound和BIND的所有优点。在本教程中，我们向您展示了如何使用存根区域配置Unbound服务，以便连接到内部运行的BIND服务以处理正向和反向请求。`存根区域`是Unbound的一个特殊功能，用于配置无法通过公共互联网服务器访问的权威数据。其`名称`字段定义了Unbound将转发任何传入DNS请求的区域名称，而`存根地址`字段配置了访问DNS服务器的位置（IP地址和端口）；在我们的示例中，这是本地运行的BIND服务器，端口为`8053`。为了让Unbound能够连接到localhost，我们首先必须使用`do-not-query-localhost:
+    no`指令允许这样做，必须将我们的正向和反向域标记为`不安全`，还必须定义一个新的`本地区域`，这是必要的，以便Unbound知道客户端可以向`存根区域`权威服务器发送查询。'
 - en: There's more...
+  id: totrans-160
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: In order to test our new Unbound/BIND DNS cluster, make one public and one internal
     hostname DNS request to the Unbound service from another computer in the same
     network (you can also run similar tests locally on the DNS server itself). If
     our Unbound/BIND DNS cluster has the IP `192.168.1.7`, you should be able to get
     correct answers for both `dig @192.168.1.7 www.packtpub.com` and `dig @192.168.1.7
     client1.centos7.home` from any other computer in your network.
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了测试我们的新Unbound/BIND DNS集群，请从同一网络中的另一台计算机向Unbound服务发出一个公共和一个内部主机名的DNS请求（您也可以在DNS服务器本身上运行类似的测试）。如果我们的Unbound/BIND
+    DNS集群的IP为`192.168.1.7`，则应能够从网络中的任何其他计算机获得`dig @192.168.1.7 www.packtpub.com`和`dig
+    @192.168.1.7 client1.centos7.home`的正确答案。
 - en: If you have to troubleshoot service problems or need to monitor the DNS queries
     of your new Unbound/BIND DNS server, you can configure logging parameters. For
     BIND, in the main configuration file `named.conf` you can set the verbosity of
@@ -1004,8 +1359,12 @@
     to `5`. To learn more about the different levels, use `man unbound.conf`. Use
     `journald` to read the Unbound logging information using the command `journalctl
     -f -u unbound.service` (press *Ctrl*+*c* key to exit the command).
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您需要解决服务问题或需要监控新安装的Unbound/BIND DNS服务器的DNS查询，您可以配置日志记录参数。对于BIND，在主配置文件`named.conf`中，您可以设置日志输出的详细程度（或日志级别）。这个参数称为`severity`，可以在`logging`指令中找到。它已经设置为`dynamic`，这意味着可以输出尽可能多的日志消息。然后，您可以使用`tail
+    -f /var/named/data/named.run`来读取当前日志。对于Unbound，您可以在其主配置文件`unbound.conf`中使用`verbosity`指令设置详细程度级别，该级别默认为最低的`1`，但可以增加到`5`。要了解更多关于不同级别的信息，请使用`man
+    unbound.conf`。使用`journald`读取Unbound日志信息，使用命令`journalctl -f -u unbound.service`（按下*Ctrl*+*c*键退出命令）。
 - en: We can not only log the system and service information but can also enable query
     logs. For Unbound just use a `verbosity` of `3` or above to record query information.
     For BIND, in order to activate the query log (query output will go to the log
@@ -1014,33 +1373,46 @@
     the query log, when configuring your DNS server on a productive system as it can
     decrease your service's performance. You can also install other third-party tools
     such as `dnstop` (from the `EPEL` repository) to monitor your DNS activity.
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们不仅可以记录系统和服务的日志信息，还可以启用查询日志。对于Unbound，只需使用`verbosity`为`3`或以上来记录查询信息。对于BIND，为了激活查询日志（查询输出将发送到日志文件`named.run`），使用命令`rndc
+    querylog on`（要关闭它，使用`rndc querylog off`）。请记住，在配置生产系统上的DNS服务器时，应关闭任何过多的日志信息，例如查询日志，因为它可能会降低您的服务性能。您还可以安装其他第三方工具，如`dnstop`（来自`EPEL`存储库）来监控您的DNS活动。
 - en: Populating the domain
+  id: totrans-164
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 填充域
 - en: In this recipe, we will show you how you can quickly add new local domain record
     entries to your authoritative BIND server which are currently unknown to your
     nameserver.
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将向您展示如何快速向权威的BIND服务器添加新的本地域记录条目，这些条目目前对您的名称服务器来说是未知的。
 - en: Getting ready
+  id: totrans-166
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system and a console-based text editor of your choice. It is expected
     that Unbound and BIND have both been installed and are already running, and that
     you have read and applied the zone recipes in this chapter and have prepared the
     required forward and reverse zone files for resolving hostnames of your private
     network.
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本教程，您需要一个正常运行的CentOS 7操作系统和一个基于控制台的文本编辑器。预计Unbound和BIND都已经安装并正在运行，并且您已经阅读并应用了本章中的区域教程，并为您的私有网络的主机名解析准备了所需的正向和反向区域文件。
 - en: How to do it...
+  id: totrans-168
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: 'If you want to add new domain names to the IP address mappings to your DNS
     server, for example for new or unknown hosts in your local network, you have two
     alternatives. Since we have already created zone files for our local network,
@@ -1052,86 +1424,124 @@
     and work with the `nsupdate` tool. In our example, we will add a new subdomain
     `client4.centos7.home` for a computer with the IP address `192.168.1.14` to our
     DNS server''s zone:'
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您想向DNS服务器添加新的域名到IP地址映射，例如为本地网络中的新主机或未知主机，您有两种选择。由于我们已经为本地网络创建了区域文件，因此我们可以简单地为每个新子域在我们的基本域名中添加新的`A`（和/或`CNAME`）以及相应的`PTR`条目到我们的正向和反向区域文件配置中，使用我们选择的文本编辑器。或者，我们可以使用`nsupdate`命令行工具以交互方式添加这些记录，而无需重新启动DNS服务器。在本节中，我们将向您展示如何准备和使用`nsupdate`工具。在我们的示例中，我们将为IP地址为`192.168.1.14`的计算机添加一个新的子域`client4.centos7.home`到我们的DNS服务器的区域：
 - en: 'Log in as root on the server running your BIND service. Now first we need to
     activate `named` to be allowed to write into its zone files by SELinux:'
+  id: totrans-170
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 以root身份登录运行BIND服务的服务器。现在首先我们需要激活`named`，以便允许其通过SELinux写入区域文件：
 - en: '[PRE45]'
+  id: totrans-171
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: 'Next, we need to fix some permission problems with the named configuration
     directory, otherwise `nsupdate` cannot update our zone files later:'
+  id: totrans-172
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们需要解决一些与命名配置目录的权限问题，否则`nsupdate`无法稍后更新我们的区域文件：
 - en: '[PRE46]'
+  id: totrans-173
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: 'Since our BIND server is running on port `8053`, type the following command
     to start the interactive `nsupdate` session locally:'
+  id: totrans-174
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 由于我们的BIND服务器运行在端口`8053`上，请键入以下命令以在本地启动交互式`nsupdate`会话：
 - en: '[PRE47]'
+  id: totrans-175
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: 'At the prompt (`>`), first connect to the local DNS server by typing the following
     (press *Return* to finish commands):'
+  id: totrans-176
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在提示符(`>`)下，首先通过键入以下内容连接到本地DNS服务器（按*Return*键完成命令）：
 - en: '[PRE48]'
+  id: totrans-177
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: 'To add a new forward domain to IP mapping to your DNS server, type the following:'
+  id: totrans-178
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要向DNS服务器添加新的正向域名到IP映射，请键入以下内容：
 - en: '[PRE49]'
+  id: totrans-179
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: 'Now add the reverse relationship using the following command:'
+  id: totrans-180
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在使用以下命令添加反向关系：
 - en: '[PRE50]'
+  id: totrans-181
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE50]'
 - en: If both the update commands' outputs contained the message `NOERROR`, press
     *Ctrl*+*c* key to exit the interactive `nsupdate` session.
+  id: totrans-182
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 如果更新命令的输出包含消息`NOERROR`，请按*Ctrl*+*c*键退出交互式`nsupdate`会话。
 - en: 'Finally, check if both the domain and IP resolution for the new zone entry
     work (this should also work remotely through the Unbound server):'
+  id: totrans-183
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，检查新区域条目的域名和IP解析是否正常工作（这也应该通过Unbound服务器远程工作）：
 - en: '[PRE51]'
+  id: totrans-184
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE51]'
 - en: How it works…
+  id: totrans-185
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的…
 - en: In this fairly easy recipe, we showed you how easily you can add new domain
     name resolution records with the `nsupdate` tool dynamically at runtime without
     needing to restart your BIND DNS server.
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个相当简单的教程中，我们向您展示了如何使用`nsupdate`工具在运行时动态添加新的域名解析记录，而无需重新启动您的BIND DNS服务器。
 - en: So what did we learn from this experience?
+  id: totrans-187
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: In this recipe, we introduced you to the `nsupdate` command-line tool which
     is a utility for making changes to a running BIND DNS database without the need
     to edit the zone files or restart the server. If you have already configured the
@@ -1142,8 +1552,10 @@
     locally (to connect to a BIND server remotely using `nsupdate`, you need to do
     more configuration, such as generate secure key-pairs, open the firewall, and
     so on).
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们向您介绍了`nsupdate`命令行工具，该工具可以在不编辑区域文件或重新启动服务器的情况下对正在运行的BIND DNS数据库进行更改。如果您已经在DNS服务器上配置了区域文件，那么这是对DNS服务器进行更改的首选方式。它有几个选项，例如，您可以连接到远程DNS服务器，但由于简单性和安全原因，我们将仅使用和允许最简单的形式，并且仅将`nsupdate`连接到我们的本地BIND服务器（要使用`nsupdate`远程连接到BIND服务器，您需要进行更多配置，例如生成安全密钥对，打开防火墙等）。
 - en: 'After allowing `named` to write into its own zone files, which otherwise is
     prohibited by SELinux, and fixing some permission problems on the default named
     configuration directory, we started the `nsupdate` program with `-l` for local
@@ -1165,12 +1577,19 @@
     reverse and forward commands separately since they target different zones. Finally,
     we tested if the new entries into the DNS server''s zone files were working by
     querying the BIND server.'
+  id: totrans-189
   prefs: []
   type: TYPE_NORMAL
+  zh: 在允许`named`写入其自己的区域文件（否则会被SELinux禁止）并修复默认named配置目录的一些权限问题后，我们使用`-l`（本地连接）和`-p
+    8053`（连接到BIND DNS服务器端口`8053`）启动了`nsupdate`程序。`-d`为我们提供了调试输出，这对于解决问题非常有用。然后，我们被一个交互式shell提示，在那里我们可以运行BIND特定的`update`命令。首先，我们设置`local`
+    `127.0.0.1`，这连接到我们的本地服务器，然后我们使用`update add`命令向正在运行的DNS服务器添加一个新的正向`A`记录。语法类似于在区域文件中定义记录。在这里，我们使用以下行添加一个新的`A`记录，TTL为三天（115200秒），域名为`client4.centos7.home`，解析到IP地址`192.168.1.14`。下一行用于为我们的新域配置一些反向解析规则，并将域名作为`PTR`条目添加到我们的反向区域中。在这里，需要注意的是，您需要以下列方式定义反向`update
+    add`规则的域部分：`<规则的主机名>.<反向C类>.in-addr.arpa`。为了最终执行我们的命令并将它们永久保存在DNS服务器的数据库中，而不需要重新启动服务器，我们使用`send`命令分别对反向和正向命令，因为它们针对不同的区域。最后，我们测试了新添加到DNS服务器的区域文件中的条目是否正常工作，通过查询BIND服务器。
 - en: Building a secondary (slave) DNS server
+  id: totrans-190
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 构建辅助（从属）DNS服务器
 - en: To guarantee high-availability in your network, it can be useful to operate
     more than one DNS server in your environment to catch up with any server failures.
     This is particularly true if you run a public DNS server where continuous access
@@ -1183,12 +1602,17 @@
     on the primary server which will transfer the current version to all our secondary
     servers, keeping everything consistent and up-to-date. For a client it will then
     make no difference which DNS server they are connecting to.
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了确保网络的高可用性，在您的环境中运行多个DNS服务器以应对任何服务器故障是有益的。如果您运行的是公共DNS服务器，这一点尤其重要，因为持续访问服务至关重要，而且同时拥有五个或更多DNS服务器并不罕见。由于配置和管理多个DNS服务器可能耗时，BIND
+    DNS服务器使用节点之间传输区域文件的功能，以便每个DNS服务器都具有相同的域解析和配置信息。为了实现这一点，我们需要定义一个主DNS服务器和一个或多个辅助或从属DNS服务器。然后，我们只需要在主服务器上调整一次区域文件，它就会将当前版本传输到我们所有的辅助服务器，保持一切一致和最新。对于客户端来说，连接到哪个DNS服务器将没有区别。
 - en: Getting ready
+  id: totrans-192
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require at least two CentOS 7 servers in the
     same network which can see and ping each other. An Internet connection will be
     required to download and install the BIND server software on all the computers
@@ -1198,166 +1622,237 @@
     You should also have read and applied the zone file recipe from this chapter and
     created a forward and reverse zone file because this is what we want to transfer
     between DNS servers.
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此配方，您将至少需要两个在同一网络中可以相互看到和ping通的CentOS 7服务器。需要互联网连接以下载并在我们想要包含在我们的DNS服务器*农场*中的所有计算机上安装BIND服务器软件。在本示例中，我们有两个服务器，`192.168.1.7`，它已经安装并配置为BIND服务器，以及`192.168.1.15`，它将是子网`192.168.1.0/24`内的第二个BIND服务器。您还应该阅读并应用本章中的区域文件配方，并创建正向和反向区域文件，因为这是我们想要在DNS服务器之间传输的内容。
 - en: How to do it...
+  id: totrans-194
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: We begin this recipe by installing BIND on every CentOS 7 computer we want to
     include in our BIND DNS server cluster. To do this, follow the recipe *Setting
     up an authoritative-only DNS server* for all the remaining systems. Before we
     can start, we need to define which server will be our primary DNS server. For
     simplicity in our example, we will choose the server with the IP address `192.168.1.7`.
     Now let's make all our DNS server nodes aware of their role.
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们通过在想要包含在我们的BIND DNS服务器集群中的每个CentOS 7计算机上安装BIND来开始这个配方。为此，请遵循配方*设置权威DNS服务器*为所有剩余系统。在我们开始之前，我们需要定义哪个服务器将是我们的主DNS服务器。为了简化我们的示例，我们将选择IP地址为`192.168.1.7`的服务器。现在让我们让我们的DNS服务器节点了解它们的角色。
 - en: Changes to the primary DNS server
+  id: totrans-196
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 对主DNS服务器进行的更改
 - en: 'Let''s log in as root on the primary server and open its main configuration:'
+  id: totrans-197
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 让我们以root身份登录到主服务器并打开其主配置：
 - en: '[PRE52]'
+  id: totrans-198
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE52]'
 - en: 'Now we define which secondary DNS server(s) will be allowed to receive the
     zone files at all, write the following command somewhere between the options curly
     brackets in a new line (we only have one secondary DNS server with the IP address
     `192.168.1.15`, change accordingly):'
+  id: totrans-199
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在我们定义哪些辅助DNS服务器将被允许接收区域文件，在新的一行中，在选项花括号之间写下以下命令（我们只有一个辅助DNS服务器，其IP地址为`192.168.1.15`，请根据需要更改）：
 - en: '[PRE53]'
+  id: totrans-200
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE53]'
 - en: 'Also, we must allow the other nameservers to connect to our primary nameserver.
     In order to do this, you need to change your `listen-on` directive to include
     the DNS server''s primary network interface (in our example `192.168.1.7` , so
     change appropriately):'
+  id: totrans-201
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 此外，我们还必须允许其他名称服务器连接到我们的主名称服务器。为此，您需要将`listen-on`指令更改为包括DNS服务器的主网络接口（在我们的示例中为`192.168.1.7`，因此请相应更改）：
 - en: '[PRE54]'
+  id: totrans-202
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE54]'
 - en: 'Save and close the file. Now open the new port `8053` in your server''s firewall
     (or create a firewalld service for it, see [Chapter 6](part0061_split_000.html#1Q5IA1-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 6. Providing Security"), *Providing Security*):'
+  id: totrans-203
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件。现在在您的服务器防火墙中打开新端口`8053`（或者为其创建一个firewalld服务，参见[第6章](part0061_split_000.html#1Q5IA1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第6章。提供安全性")，*提供安全性*）：
 - en: '[PRE55]'
+  id: totrans-204
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE55]'
 - en: 'Save and close the file. Next, update the zone files we created earlier to
     include the IP addresses of all the new nameservers we have available in the system.
     Change both the forward and reverse zone files, `/var/named/centos7.home.db` and
     `/var/named/db.1.168.192`, to include our new secondary DNS server. In the forward
     zone file, add the following lines (you can also use the `nsupdate` program to
     do this) into the appropriate sections:'
+  id: totrans-205
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件。接下来，更新我们之前创建的区域文件，以包括系统中所有新名称服务器的IP地址。更改正向和反向区域文件，`/var/named/centos7.home.db`和`/var/named/db.1.168.192`，以包括我们的新辅助DNS服务器。在正向区域文件中，添加以下行（您也可以使用`nsupdate`程序来执行此操作）到适当的节中：
 - en: '[PRE56]'
+  id: totrans-206
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE56]'
 - en: 'In the reverse zone file, add instead into the appropriate sections:'
+  id: totrans-207
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在反向区域文件中，添加到适当的节中：
 - en: '[PRE57]'
+  id: totrans-208
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE57]'
 - en: 'Finally, restart BIND and recheck the configuration file:'
+  id: totrans-209
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，重启BIND并重新检查配置文件：
 - en: '[PRE58]'
+  id: totrans-210
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE58]'
 - en: Changes to the secondary DNS server(s)
+  id: totrans-211
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 对辅助DNS服务器进行的更改
 - en: 'For simplicity and to demonstrate, just install `named` on any server you want
     to use as a BIND slave (we only show the important configuration here):'
+  id: totrans-212
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了简化和演示，只需在您想要用作BIND从属服务器的任何服务器上安装`named`（我们只在这里展示重要的配置）：
 - en: 'Log in to the new server as root, install BIND, and open its main configuration:'
+  id: totrans-213
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 以root身份登录到新服务器，安装BIND，并打开其主配置：
 - en: '[PRE59]'
+  id: totrans-214
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE59]'
 - en: 'Now locate the line `include /etc/named.rfc1912.zones`;. Immediately following
     this line, create a space for your work and add the following zones (replace the
     zone and file names appropriately):'
+  id: totrans-215
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在找到行`include /etc/named.rfc1912.zones`。紧跟在这行之后，为你的工作创建空间，并添加以下区域（适当地替换区域和文件名）：
 - en: '[PRE60]'
+  id: totrans-216
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE60]'
 - en: 'Save and close the file. Then fix some incorrect BIND folder permissions and
     enable `named` to write into its zone file directory before restarting BIND:'
+  id: totrans-217
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件。然后修复一些不正确的BIND文件夹权限，并启用`named`写入其区域文件目录，然后重新启动BIND：
 - en: '[PRE61]'
+  id: totrans-218
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE61]'
 - en: 'Now initiate a new zone transfer using:'
+  id: totrans-219
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在使用以下命令启动新的区域传输：
 - en: '[PRE62]'
+  id: totrans-220
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE62]'
 - en: 'After waiting a while, to test if our secondary DNS server is working as expected,
     check if the master zone files have been transferred:'
+  id: totrans-221
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 等待一段时间后，为了测试辅助DNS服务器是否按预期工作，检查主区域文件是否已被传输：
 - en: '[PRE63]'
+  id: totrans-222
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE63]'
 - en: 'Finally, we can now test if we can query our local domain on the secondary
     DNS server too:'
+  id: totrans-223
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，我们现在可以测试我们是否也可以在辅助DNS服务器上查询我们的本地域：
 - en: '[PRE64]'
+  id: totrans-224
   prefs:
   - PREF_IND
   type: TYPE_PRE
+  zh: '[PRE64]'
 - en: How it works...
+  id: totrans-225
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: In this recipe, we showed you how to set up secondary BIND servers in your network
     which can help in increasing the stability and availability of your DNS server
     system.
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本配方中，我们向您展示了如何在您的网络中设置辅助BIND服务器，这有助于提高您的DNS服务器系统的稳定性和可用性。
 - en: So what did we learn from this experience?
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么我们从这次经历中学到了什么？
 - en: We started our journey by deciding which of our servers should be the primary
     and which should be the slave DNS servers. Then we opened the BIND main configuration
     file on the primary server and introduced two lines of code to configure our server
@@ -1371,8 +1866,13 @@
     we need to be aware on every DNS node in our system. If we have got multiple servers,
     then we introduce multiple `IN NS` lines. Finally, we introduced a small comment
     to easily check the successful zone file transfer on our secondary servers.
+  id: totrans-228
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先决定哪些服务器应作为主DNS服务器，哪些应作为从DNS服务器。然后在主服务器上打开BIND主配置文件，并引入两行代码，将我们的服务器配置为DNS集群的头部。`allow-transfer`指令定义了我们希望向哪些客户端传输更新的区域文件，而`notify
+    yes`指令启用了当区域文件发生任何更改时的自动传输。如果你有多个辅助BIND DNS服务器，可以在`allow-transfer`指令中添加多个IP地址，用分号隔开。然后，我们打开在本章前一个配方中创建的区域文件，并引入新的一行`IN
+    NS <IP地址>`，这定义了我们需要的辅助DNS服务器的IP地址，以便在我们的系统中的每个DNS节点上都能意识到。如果我们有多个服务器，那么我们就引入多个`IN
+    NS`行。最后，我们引入了一个小注释，以便在辅助服务器上轻松检查区域文件传输是否成功。
 - en: Afterwards, we configured our slave DNS server(s). Here we introduced the same
     zone file definitions as on the primary server's BIND configuration, with the
     exceptions that we used type `slave` instead of master to denote we are a secondary
@@ -1380,8 +1880,10 @@
     the primary DNS server's IP address using the `masters` directive (please do not
     forget that our master BIND is listening on the non-default port `8053` in our
     example).
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
+  zh: 之后，我们配置了我们的从DNS服务器。在这里，我们引入了与主服务器上的BIND配置相同的区域文件定义，不同的是我们使用了类型`slave`而不是master来表示我们是辅助DNS服务器，并且将从主节点获取区域文件的副本，通过使用`masters`指令定义主DNS服务器的IP地址（请不要忘记，在我们的例子中，我们的主BIND监听在非默认端口`8053`上）。
 - en: Since we had not created or copied the zone files ourselves on the slave DNS
     server, it was then easy to check if the zone file transfer had been successful
     after restarting the BIND service using the `ls` command. Finally, we verified
@@ -1390,5 +1892,7 @@
     Remember if you later make changes to your master's zone files you have to increase
     their `serial` number in order that those changes get transferred to all your
     slaves.
+  id: totrans-230
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们没有在从DNS服务器上自己创建或复制区域文件，因此在重新启动BIND服务后，使用`ls`命令很容易检查区域文件传输是否成功。最后，我们通过运行测试查询使用`dig`或`nslookup`来验证传输的区域文件内容，看看我们是否可以在辅助DNS服务器上解析相同的本地主机名。记住，如果你后来对你的主区域文件进行了更改，你必须增加它们的`serial`号，以便这些更改被传输到你所有的从服务器。

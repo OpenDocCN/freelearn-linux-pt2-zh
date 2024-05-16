@@ -3,45 +3,54 @@
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第7章。构建网络
 - en: 'In this chapter, we will cover the following topics:'
   id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将涵盖以下主题：
 - en: Printing with CUPS
   id: totrans-2
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用CUPS打印
 - en: Running a DHCP server
   id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 运行DHCP服务器
 - en: Using WebDAV for file sharing
   id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用WebDAV进行文件共享
 - en: Installing and configuring NFS
   id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安装和配置NFS
 - en: Working with NFS
   id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用NFS
 - en: Securely sharing resources with Samba
   id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用Samba安全共享资源
 - en: Introduction
   id: totrans-8
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 引言
 - en: This chapter is a collection of recipes that covers the many facets of today's
     working environment. From printing and file sharing across different types of
     office computer systems to keeping your computers online, this chapter provides
@@ -50,11 +59,13 @@
   id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章是一系列食谱的集合，涵盖了当今工作环境的许多方面。从跨不同类型的办公计算机系统的打印和文件共享到保持您的计算机在线，本章提供了关于如何快速使用CentOS来实施必要的工具，这些工具将在您的网络环境中最大化效率的必要细节。
 - en: Printing with CUPS
   id: totrans-10
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用CUPS打印
 - en: '**Print servers** allow local printing devices to be connected to a network
     and be shared among several users and departments. There are many advantages using
     such a system, including the lack of a need to buy dedicated printer hardware
@@ -73,11 +84,15 @@
   id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '**打印服务器**允许本地打印设备连接到网络并被多个用户和部门共享。使用这样的系统有很多优点，包括不需要为每个用户、房间或部门购买专用的打印机硬件。**通用Unix打印系统**（**CUPS**）是Linux以及包括OS
+    X在内的Unix发行版上打印服务器的事实标准。它采用典型的客户端/服务器架构，网络中的客户端将打印作业发送到中央打印服务器，该服务器安排这些任务，然后将实际的打印任务委派给本地连接到我们的打印服务器的打印机，或者将打印作业远程发送到具有请求打印机的物理连接的计算机，或者发送到独立的网络打印机。如果您在CUPS系统中设置打印机，几乎所有Linux和OS
+    X打印应用程序在您网络中的任何客户端上都将自动配置为开箱即用，无需安装额外的驱动程序。在这里，在本食谱中，我们将向您展示如何开始使用CUPS打印服务器系统。'
 - en: Getting ready
   id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to download additional packages. In
@@ -87,21 +102,25 @@
   id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成这个食谱，您将需要一个具有root权限的工作CentOS 7操作系统安装，您选择的基于控制台的文本编辑器，以及连接到互联网以下载额外的软件包。在这个食谱中，我们将使用具有IP地址`192.168.1.8`的网络接口，以及相应的网络地址`192.168.1.0/24`，将CUPS打印服务器提供给我们的网络。
 - en: How to do it...
   id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 怎么做...
 - en: 'We begin this recipe by installing the CUPS printing server software, which
     is not available by default on a fresh CentOS 7 minimal system:'
   id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从这个食谱开始安装CUPS打印服务器软件，这在新鲜的CentOS 7最小系统上默认不可用：
 - en: 'To do this, log in as `root` and install the following package:'
   id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为此，以`root`身份登录并安装以下软件包：
 - en: '[PRE0]'
   id: totrans-17
   prefs:
@@ -115,6 +134,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，为CUPS服务器创建一个SSL证书，我们将需要它来进行安全的身份验证到CUPS Web应用程序（在询问时添加一个安全密码）：
 - en: '[PRE1]'
   id: totrans-19
   prefs:
@@ -127,6 +147,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，让我们打开CUPS主配置文件以自定义服务器（首先备份）：
 - en: '[PRE2]'
   id: totrans-21
   prefs:
@@ -139,6 +160,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，为了让CUPS在整个网络上可用，找到以下行：`Listen localhost:631`，然后将其更改为：
 - en: '[PRE3]'
   id: totrans-23
   prefs:
@@ -153,6 +175,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们想要配置对基于Web的CUPS前端所有常规网页的访问。搜索`<Location />`指令（不要与其他指令如`<Location /admin>`混淆），并通过添加您的网络地址来更改整个块。更改后，整个块看起来像这样：
 - en: '[PRE4]'
   id: totrans-25
   prefs:
@@ -165,6 +188,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，为`/admin`和`/admin/conf Location`指令设置访问权限，仅授予本地服务器的访问权限：
 - en: '[PRE5]'
   id: totrans-27
   prefs:
@@ -177,6 +201,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，将我们的SSL证书信息添加到配置文件的末尾：
 - en: '[PRE6]'
   id: totrans-29
   prefs:
@@ -188,6 +213,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 关闭并保存文件，然后重新启动CUPS服务器并在启动时启用它：
 - en: '[PRE7]'
   id: totrans-31
   prefs:
@@ -200,6 +226,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们必须在firewalld中打开CUPS服务器端口，以便网络中的其他计算机可以连接到它：
 - en: '[PRE8]'
   id: totrans-33
   prefs:
@@ -213,6 +240,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 您可以通过从`192.168.1.0/24`网络中的另一台计算机浏览以下位置来测试您的CUPS服务器的可访问性（在浏览器询问时允许安全异常）：
 - en: '[PRE9]'
   id: totrans-35
   prefs:
@@ -227,20 +255,24 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要访问CUPS前端内的管理区域，您需要位于运行CUPS的服务器上（在CentOS 7最小安装上，请安装窗口管理器和浏览器），然后使用系统用户`root`和适当的密码登录。
 - en: How it works...
   id: totrans-37
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: In this recipe, we showed you how easy it is to install and set up a CUPS printing
     server.
   id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本配方中，我们向您展示了安装和设置CUPS打印服务器是多么容易。
 - en: So, what did we learn from this experience?
   id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: We began our journey by installing the CUPS server package on our server because
     it is not available on the CentOS 7 system by default. Afterwards, we generated
     a SSL key-pair, which we will need later in the process (to learn more, read the
@@ -257,11 +289,14 @@
   id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的旅程始于在我们的服务器上安装CUPS服务器软件包，因为默认情况下CentOS 7系统上不可用。之后，我们生成了一个SSL密钥对，我们将在稍后的过程中需要它（了解更多信息，请阅读[第6章](part0061_split_000.html#1Q5IA1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第6章。提供安全性")中的*生成自签名证书*配方，*提供安全性*）。它用于允许通过安全的HTTPS连接加密提交您的登录凭据到CUPS管理Web前端。接下来，我们使用我们选择的文本编辑器打开了CUPS的主配置文件`/etc/cups/cupsd.conf`。如您所见，配置格式与Apache配置文件格式非常相似。我们开始通过删除本地主机名来更改`Listen`地址，从而允许您网络中的所有客户端（`192.168.1.0/24`）访问我们的CUPS服务器端口`631`，而不是仅允许本地接口连接到打印服务器。
 - en: Note
   id: totrans-41
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: By default, the CUPS server has `Browsing On` enabled, which will broadcast,
     every 30 seconds, an updated list of all printers that are being shared in the
     system to all client computers on the same subnet. If you want to broadcast to
@@ -269,6 +304,7 @@
   id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，CUPS服务器启用了`浏览功能`，它会每30秒向同一子网上的所有客户端计算机广播系统中所有共享打印机的更新列表。如果还想向其他子网广播，请使用`BrowseRelay`指令。
 - en: Next, we configured access to the CUPS web interface. This frontend can be used
     to conveniently browse all available printers on the network, or even install
     new printers or configure them if you log in with an administrator account. As
@@ -292,27 +328,35 @@
   id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们配置了对CUPS Web界面的访问。这个前端可以用来方便地浏览网络上所有可用的打印机，或者如果您使用管理员账户登录，甚至可以安装新打印机或配置它们。由于用户界面中有不同的任务，因此可以使用三个不同的指令来精细调整其访问权限。可以使用`<Location
+    />`指令设置对所有正常网页的访问，而所有管理页面可以使用`<Location /admin>`管理，更具体地更改配置可以使用`<Location /admin/conf>`标签。在这些`Location`标签中的每一个中，我们都添加了不同的`Allow`指令，从而允许从您的完整网络（例如，`192.168.1.0/24`）访问正常的CUPS网页（例如，浏览所有可用的网络打印机），而访问特殊管理页面则限制为运行CUPS服务的`localhost`服务器。请记住，如果这对您的环境来说太严格，您可以随时调整这些`Allow`设置。此外，还有各种其他类型的`Location`可用，例如用于在其他子网中激活我们的服务的类型。请使用`man
+    cupsd.conf`阅读CUPS配置手册。接下来，我们配置了SSL加密，从而为Web界面激活了安全的`https://`地址。然后，我们首次启动了CUPS服务器，并启用了它在服务器启动时自动启动。最后，我们添加了`ipp`
+    firewalld服务，从而允许CUPS客户端连接到服务器。
 - en: There's more...
   id: totrans-44
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 不仅如此...
 - en: Now that we have successfully set up and configured our CUPS server, it's time
     to add some printers to it and print a test page. Here, we will show you how to
     add *two different* types of printers to the system using the command line.
   id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 既然我们已经成功设置并配置了CUPS服务器，那么是时候向其添加一些打印机并打印测试页了。在这里，我们将向您展示如何使用命令行将*两种不同*类型的打印机添加到系统中。
 - en: Note
   id: totrans-46
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Adding or configuring printers can also be done using the graphical web-based
     CUPS interface.
   id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用基于图形的Web界面CUPS，也可以添加或配置打印机。
 - en: First, we will install a true *network* printer that is already available in
     the same network (in our case, the `192.168.1.0/24` network) as our CUPS server
     and afterwards a locally connected printer (for example, via USB to our CUPS server
@@ -320,11 +364,13 @@
   id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，我们将安装一个真正的*网络*打印机，该打印机已经在我们CUPS服务器所在的同一网络（在我们的例子中，是`192.168.1.0/24`网络）中可用，然后是一个本地连接的打印机（例如，通过USB连接到我们的CUPS服务器或同一网络中的任何其他计算机）。
 - en: Note
   id: totrans-49
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: 'Why should you want to install an already connected network printer to our
     CUPS server? CUPS can do much more than just printing: it is a centralized printer
     server, thus managing scheduling and queuing of printers and their jobs, serving
@@ -333,11 +379,13 @@
   id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 为什么您应该将已连接的网络打印机安装到我们的CUPS服务器上？CUPS不仅仅可以打印：它是一个集中式打印服务器，因此可以管理打印机及其作业的调度和队列，为不同子网中的打印机提供服务，并为任何Linux或Mac客户端提供统一的打印协议和标准，以便方便访问。
 - en: How to add a network printer to the CUPS server
   id: totrans-51
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 如何将网络打印机添加到CUPS服务器
 - en: 'To start adding a network printer to our CUPS server, we will use the command
     `lpinfo -v` to list all the available printing devices or drivers known to the
     CUPS server. Normally, the CUPS server will automatically identify all locally
@@ -348,6 +396,8 @@
   id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 要开始将网络打印机添加到我们的 CUPS服务器，我们将使用`lpinfo -v`命令列出 CUPS 服务器已知的所有可用打印设备或驱动程序。通常情况下，CUPS
+    服务器会自动识别所有本地（USB、并行、串行等）和远程可用（网络协议，如`socket`、`http`、`ipp`、`lpd`等）的打印机，而不会出现任何问题。在我们的示例中，以下网络打印机已成功识别（输出已被截断）：
 - en: '[PRE10]'
   id: totrans-53
   prefs: []
@@ -360,6 +410,8 @@
   id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们将把这个打印机安装到 CUPS 服务器上，使其处于其控制之下。首先，我们需要找到正确的打印机驱动程序。正如我们在最后输出中看到的，它是一台
+    HP Photosmart C5100 系列打印机。因此，让我们在 CUPS 服务器上所有当前安装的驱动程序列表中搜索该驱动程序：
 - en: '[PRE11]'
   id: totrans-55
   prefs: []
@@ -370,6 +422,7 @@
   id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 列表中不包含我们的型号 C5100，因此我们必须使用以下命令安装额外的 HP 驱动程序包：
 - en: '[PRE12]'
   id: totrans-57
   prefs: []
@@ -379,6 +432,7 @@
   id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，如果我们再次发出命令，我们就能找到正确的驱动程序：
 - en: '[PRE13]'
   id: totrans-59
   prefs: []
@@ -389,15 +443,18 @@
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: For other printer models and manufacturers, there are other driver packages
     available as well, for example, the `gutenprint-cups` RPM package.
   id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于其他打印机型号和制造商，也有其他可用的驱动程序包，例如，`gutenprint-cups` RPM 包。
 - en: 'The correct driver for this printer will be shown as follows:'
   id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个打印机的正确驱动程序将显示如下：
 - en: '[PRE14]'
   id: totrans-63
   prefs: []
@@ -407,6 +464,7 @@
   id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，我们准备好使用以下语法安装打印机：
 - en: '[PRE15]'
   id: totrans-65
   prefs: []
@@ -416,6 +474,7 @@
   id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们的示例中，我们使用以下命令安装了它：
 - en: '[PRE16]'
   id: totrans-67
   prefs: []
@@ -430,6 +489,8 @@
   id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，打印机应该处于我们 CUPS 服务器的控制之下，并且应该立即在整个网络中共享并被任何 Linux 或 OS X 计算机看到（在 CentOS 7
+    最小客户端上，你还需要首先安装`cups`包，并使用 firewalld 的`ipp-client`服务启用传入的`ipp`连接，然后我们 CUPS 服务器共享的网络打印机信息才会变得可用）。
 - en: 'You can later change the configuration of this printer by opening and changing
     the file at `/etc/cups/printers.conf`. To actually print a test page, you should
     now be able to access the printer using its name, `hp-photosmart`, from any client
@@ -437,6 +498,8 @@
   id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以稍后通过打开并更改位于`/etc/cups/printers.conf`的文件来更改此打印机的配置。要实际打印测试页，你现在应该能够使用其名称`hp-photosmart`从任何客户端访问打印机（在
+    CentOS 7 最小客户端上，你需要安装`cups-client`包）：
 - en: '[PRE17]'
   id: totrans-70
   prefs: []
@@ -447,6 +510,7 @@
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 如何将本地打印机共享到 CUPS 服务器
 - en: If you want to share a local printer physically connected to our CUPS server,
     just plug in the printer to the system (for example, via USB) and follow the previous
     recipe, *How to add a network printer to the CUPS server*. In the step `lpinfo
@@ -455,6 +519,8 @@
   id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想将物理连接到我们 CUPS 服务器的本地打印机共享出去，只需将打印机插入系统（例如，通过 USB），然后按照之前的步骤操作，即*如何将网络打印机添加到
+    CUPS 服务器*。在步骤`lpinfo -v`中，你应该看到它以`usb://`地址出现，因此你需要获取这个地址并遵循剩余的步骤。
 - en: If you want to connect and share a printer on your centralized CUPS server,
     which is physically connected to any other computer on your CUPS network, install
     the `cups` daemon on this other machine (follow all the steps in the main recipe)
@@ -466,6 +532,7 @@
   id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您想连接并共享位于CUPS网络中任何其他计算机上的中央CUPS服务器上的打印机，请在该其他计算机上安装`cups`守护程序（遵循主节中的所有步骤），然后按照本节中的说明安装打印机驱动程序。这将确保本地CUPS守护程序将在网络上提供打印机，就像在我们的中央CUPS服务器上一样。现在它已在网络上可用，您可以轻松地将其添加到我们的主CUPS服务器，以享受中央打印服务器带来的所有好处。
 - en: Here in this recipe, we have only scratched the surface and introduced you to
     the basics of setting up a CUPS server for your network. There is always more
     to learn, and you can build very complex CUPS server systems managing hundreds
@@ -473,11 +540,13 @@
   id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们仅触及了设置CUPS服务器的基础知识，并为您介绍了基础知识。总有更多要学习的内容，您可以构建非常复杂的CUPS服务器系统，在企业环境中管理数百台打印机，这超出了本节的范围。
 - en: Running a DHCP server
   id: totrans-75
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 运行DHCP服务器
 - en: If a connection to a network needs to be made, every computer needs a correct
     **Internet Protocol** (**IP**) configuration installed on their system to communicate.
     Assigning IP client configurations automatically from a *central point* using
@@ -494,11 +563,14 @@
   id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果需要建立网络连接，每台计算机都需要在其系统上安装正确的**互联网协议**（**IP**）配置才能进行通信。使用**动态主机控制协议**（**DHCP**）从*中央点*自动分配IP客户端配置可以使管理员的工作更轻松，并且与在网络中的每台计算机系统上手动设置静态IP信息相比，简化添加新机器到网络的过程。在小型家庭网络中，人们通常直接在互联网路由器上安装内置的DHCP服务器，但这些设备通常缺乏高级功能，并且只有一套基本的配置选项。大多数情况下，这对于大型网络或企业环境来说是不够的，在这些环境中，您更有可能找到专用的DCHP服务器，以应对更复杂的场景和更好的控制。在本节中，我们将向您展示如何在CentOS
+    7系统上安装和配置DHCP服务器。
 - en: Getting ready
   id: totrans-77
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to facilitate the download of additional
@@ -513,11 +585,15 @@
   id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本节，您需要一个具有root权限的CentOS 7操作系统的有效安装，您选择的基于控制台的文本编辑器以及互联网连接，以便下载额外的软件包。预计您的DHCP服务器将使用静态IP地址；如果您没有静态IP地址，请参阅[第2章](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第2章。系统配置")中的“构建静态网络连接”节。如果您还计划通过DHCP向客户端发送DNS信息，则应已应用[第8章](part0075_split_000.html#27GQ61-4cf34a6d07944734bb93fb0cd15cce8c
+    "第8章。FTP操作")中的“安装和配置简单名称服务器”节。
 - en: How to do it...
   id: totrans-79
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: Here in this example, we will configure a DHCP server for a static network interface
     serving a single network with all its available IP addresses to all the computers
     connected directly to it (they are all in the same subnet).
@@ -677,6 +753,7 @@
   id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们通过安装DHCP服务器软件包开始了这个配方，因为它不是随CentOS 7一起提供的。由于我们的DHCP守护进程通过网络接口与其客户端通信以分配IP信息，因此下一步我们必须选择将用于该服务的网络设备。在我们的示例中，我们选择了名为`enp5s0f1`的设备。默认情况下，DHCP服务器可以管理与关联网络接口相同的子网中的所有可用IP地址。请记住，主DHCP服务器的网络接口必须配置为静态获取其自己的IP信息，而不是通过（另一个）DHCP服务器！接下来，我们使用`cat`命令打印出我们`enp5s0f1`网络接口配置文件中所有有趣的行，这些行我们将需要用于配置DHCP服务器。之后，我们使用`ipcalc`工具计算我们DHCP服务器的网络接口的（子网）网络地址。然后，我们打开了主DHCP服务器配置，开始配置一些*全局*设置，并定义了一个新的*共享网络*。在全局设置中，我们首先将我们的DHCP服务器设置为`authoriative`，这意味着它是网络中唯一且主要的负责DHCP服务器。接下来，我们将`default-lease-time`定义为`28800`秒，即八小时，将`max-lease-time`定义为`86400`，即24小时。租约时间是DHCP服务器将IP地址“出租”给客户端的时间，之后客户端必须再次向DHCP服务器注册以请求IP租约的延期。如果它没有在那时请求现有租约的续订，IP地址将从客户端释放并放回空闲IP地址池中，准备提供给想要连接到网络的新机器。客户端可以自行定义它想要租用IP地址的时间。如果客户端没有向DHCP服务器提供时间范围，将使用默认租约时间。
 - en: All subnets that share the same physical network interface should be defined
     within a `shared-network` declaration, so we defined this area using square brackets.
     This is also called a scope. In our example, we only have one network, so we only
@@ -689,16 +766,19 @@
   id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有共享同一物理网络接口的子网都应在`shared-network`声明中定义，因此我们使用方括号定义了这个区域。这也称为作用域。在我们的示例中，我们只有一个网络，因此只需要一个共享网络作用域。在其中，我们首先定义了一个`domain-name`选项，该选项将被发送并可被客户端用作其基础域名。接下来，我们将**域名服务器**（**DNS**）添加到我们的配置中。向客户端发送DNS信息不是DHCP服务器的强制要求，但可能很有用。客户端为给定网络获得的信息越多，越好，因为需要的手动配置步骤就越少。
 - en: Note
   id: totrans-102
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: 'You can send out a lot of other useful information to the client (using DHCP)
     about the network he is connecting to: gateway, time, WINS, and so on.'
   id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以通过DHCP向客户端发送有关其连接到的网络的大量其他有用信息：网关、时间、WINS等。
 - en: 'Here in our example, we used the official Google DNS servers; if you have already
     set up your own DNS server (see [Chapter 8](part0075_split_000.html#27GQ61-4cf34a6d07944734bb93fb0cd15cce8c
     "Chapter 8. Working with FTP"), *Working with FTP*), you could also use these
@@ -714,11 +794,15 @@
   id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们的示例中，我们使用了官方的Google DNS服务器；如果您已经设置了自己的DNS服务器（请参阅[第8章](part0075_split_000.html#27GQ61-4cf34a6d07944734bb93fb0cd15cce8c
+    "第8章。使用FTP")，*使用FTP*），您也可以在这里使用这些地址。接下来，我们指定了`routers`选项，这是另一个有用的信息，也将发送给客户端。之后，我们指定了任何DHCP服务器最重要的部分：`subnet`范围。在这里，我们定义了分配给客户端的IP地址的网络范围。我们需要提供子网网络地址、其子网掩码，然后是我们要允许客户端的开始和结束IP地址范围。在我们的示例中，我们允许主机IP地址从`192.168.1.10`，`192.168.1.11`，`192.168.1.12`
+    ...到`192.168.1.160`。如果您有多个子网，可以使用多个`subnet`范围指令（称为多宿主DHCP服务器）。
 - en: Next, we started the DHCP server and enabled it on boot. Your clients should
     now be able to get IP addresses dynamically from our new system.
   id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们启动了DHCP服务器并在启动时启用它。现在，您的客户端应该能够从我们的新系统动态获取IP地址。
 - en: In summary, we have only showed you some very basic DHCP server configuration
     options to get you started, and there are many more settings available, letting
     you build very complex DHCP server solutions. To get a better overview of its
@@ -727,11 +811,14 @@
   id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 总之，我们只向您展示了一些非常基本的DHCP服务器配置选项，以帮助您入门，并且还有许多其他设置可用，允许您构建非常复杂的DHCP服务器解决方案。要更好地了解其可能性，请查看DHCP服务器文档提供的示例配置文件`less
+    /usr/share/doc/dhcp-4*/dhcpd.conf.example`。
 - en: There's more...
   id: totrans-107
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: In the main recipe, we configured our basic DHCP server to be able to send complete
     IP network information to our clients so that they should be able to join our
     network. To use this server, you need to enable DHCP addressing on your client's
@@ -746,11 +833,15 @@
   id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 在主配方中，我们配置了基本的DHCP服务器，以便能够向客户端发送完整的IP网络信息，使他们能够加入我们的网络。要使用此服务器，您需要在客户端的网络接口上启用DHCP寻址。在CentOS客户端上，请不要忘记使用`BOOTPROTO=dhcp`并删除所有静态条目，例如`IPADDR`在适当的网络脚本`ifcfg`文件中（阅读配方，*构建静态网络连接*在[第2章](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第2章。配置系统")，*配置系统*以帮助您开始使用网络脚本文件）。然后，要进行DHCP请求，请使用`systemctl restart network`重新启动网络或尝试重新启动客户端系统（使用`ONBOOT=yes`选项）。使用`ip
+    addr list`进行确认。
 - en: Using WebDAV for file sharing
   id: totrans-109
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用WebDAV进行文件共享
 - en: The **Web-based Distributed Authoring and Versioning** (**WebDAV**) open standard
     can be used for sharing files over the network. It is a popular protocol to conveniently
     access remote data as an *online hard disk*. There are a lot of online storage
@@ -762,17 +853,20 @@
   id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: '**基于Web的分布式创作和版本控制**（**WebDAV**）开放标准可用于网络上的文件共享。它是一种流行的协议，可以方便地访问远程数据，就像一个*在线硬盘*。许多在线存储和电子邮件提供商通过WebDAV账户提供在线空间。大多数图形化的Linux或Windows系统都可以在其文件管理器中开箱即用地访问WebDAV服务器。对于其他操作系统，也有免费的选择。另一个很大的优势是WebDAV运行在普通的HTTP或HTTPS端口上，因此您可以确保它几乎在任何环境中都能工作，即使是在受限的防火墙后面。'
 - en: Here, we will show you how to install and configure WebDAV as an alternative
     for the FTP protocol for your file sharing needs. We will use HTTPS as our communication
     protocol for secure connections.
   id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，我们将向您展示如何安装和配置WebDAV作为FTP协议的替代方案，以满足您的文件共享需求。我们将使用HTTPS作为我们的通信协议，以实现安全连接。
 - en: Getting ready
   id: totrans-112
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备就绪
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges and a console-based text editor of your
     choice. You will need a working Apache web server with SSL encryption enabled
@@ -783,16 +877,21 @@
   id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成本教程，您需要一个具有root权限的工作CentOS 7操作系统和一个您选择的基于控制台的文本编辑器。您需要一个在您的网络中可访问的带有SSL加密的工作Apache
+    Web服务器；请参阅[第11章](part0093_split_000.html#2OM4A1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第11章。提供邮件服务")，*提供邮件服务*，了解如何安装HTTP守护程序，特别是*使用SSL设置HTTPS*的教程。此外，熟悉Apache配置文件格式也是有利的。
 - en: How to do it…
   id: totrans-114
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作…
 - en: 'Create a location for sharing your data and for a WebDAV lock file:'
   id: totrans-115
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 创建一个用于共享数据和WebDAV锁文件的位置：
 - en: '[PRE26]'
   id: totrans-116
   prefs:
@@ -805,6 +904,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 由于WebDAV作为Apache模块在HTTPS上运行，我们必须为标准`httpd`用户设置适当的权限：
 - en: '[PRE27]'
   id: totrans-118
   prefs:
@@ -816,6 +916,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，创建并打开以下Apache WebDAV配置文件：
 - en: '[PRE28]'
   id: totrans-120
   prefs:
@@ -827,6 +928,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 输入以下内容：
 - en: '[PRE29]'
   id: totrans-122
   prefs:
@@ -839,6 +941,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件。现在，要添加一个名为`john`的新WebDAV用户（在提示时为该用户输入新密码）：
 - en: '[PRE30]'
   id: totrans-124
   prefs:
@@ -850,6 +953,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，重新启动Apache2 Web服务器：
 - en: '[PRE31]'
   id: totrans-126
   prefs:
@@ -863,6 +967,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要测试我们是否可以连接到我们的WebDAV服务器，您可以使用任何客户端网络上的图形用户界面（大多数Linux文件管理器支持WebDAV浏览），或者我们可以使用命令行挂载驱动器。
 - en: 'Log in on any client machine as `root` in the same network as our WebDAV server
     (on CentOS, you need the `davfs2` filesystem driver package to be installed from
     the EPEL repository, and the usage of file locks must be disabled as the current
@@ -872,6 +977,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在任何客户端机器上以`root`身份登录，该机器与我们的WebDAV服务器位于同一网络中（在CentOS上，您需要从EPEL仓库安装`davfs2`文件系统驱动程序包，并且必须禁用文件锁的使用，因为当前版本无法与文件锁一起工作），输入我们的DAV用户账户名为`john`的密码，并在询问时确认自签名证书：
 - en: '[PRE32]'
   id: totrans-129
   prefs:
@@ -883,6 +989,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，让我们看看是否可以写入新的网络存储类型：
 - en: '[PRE33]'
   id: totrans-131
   prefs:
@@ -895,20 +1002,24 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果您遇到连接问题，请检查WebDAV服务器上的防火墙设置，以及客户端上的`http`和`https`服务。
 - en: How it works…
   id: totrans-133
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的…
 - en: Here in this recipe, we showed you how easy it is to set up a WebDAV server
     for easy file sharing.
   id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们向您展示了如何轻松设置WebDAV服务器以实现简单的文件共享。
 - en: So, what did we learn from this experience?
   id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: 'We started our journey by creating two directories: one, where all the shared
     files of our WebDAV server will live, and one for creating a lock file database
     for the WebDAV server process. The latter is needed so that users can *block*
@@ -928,6 +1039,9 @@
   id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的旅程始于创建两个目录：一个用于存放WebDAV服务器的所有共享文件，另一个用于为WebDAV服务器进程创建锁定文件数据库。后者是必需的，以便用户可以*阻止*对文档的访问，以避免与其他人发生冲突，如果文件当前正在被他们修改。由于WebDAV作为本机Apache模块（`mod_dav`）运行，该模块在CentOS
+    7中默认启用，因此我们只需要创建一个新的Apache虚拟主机配置文件，我们可以在其中设置所有WebDAV设置。首先，我们必须将WebDAV主机链接到用于跟踪用户锁定的锁定数据库的完整路径。接下来，我们为WebDAV共享文件夹定义了一个别名，然后使用`Location`指令对其进行了配置。如果有人在`/webdav`路径URL上使用特定的HTTP方法，这将激活。在此区域内，我们指定此URL将是一个DAV启用的共享，为其启用SSL加密，并指定基于用户的密码身份验证。用户帐户的密码将存储在名为`/etc/httpd/conf/dav_passwords`的用户帐户数据库中。为了在此数据库文件中创建有效帐户，我们随后在命令行上使用了Apache2
+    `htpasswd`实用程序。最后，我们重新启动了服务以应用我们的更改。
 - en: For testing, we used the `davfs` filesystem driver, which you need to install
     on CentOS 7 using the `davfs2` package from the EPEL repository. There are many
     other options available, such as the `cadaver` WebDAV command-line client (also
@@ -936,11 +1050,14 @@
   id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了测试，我们使用了`davfs`文件系统驱动程序，您需要在CentOS 7上使用EPEL存储库中的`davfs2`包进行安装。还有许多其他选项，例如`cadaver`
+    WebDAV命令行客户端（也来自EPEL存储库）；或者，您可以直接使用GNOME、KDE或Xfce等图形用户界面中的集成WebDAV支持来访问它。
 - en: Installing and configuring NFS
   id: totrans-138
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 安装和配置NFS
 - en: The **Network File System** (**NFS**) protocol enables remote access to filesystems
     over a network connection. It is based on a client-server architecture, allowing
     a centralized server to share files with other computers. A client can attach
@@ -952,11 +1069,14 @@
   id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: '**网络文件系统**（**NFS**）协议通过网络连接实现对文件系统的远程访问。它基于客户端-服务器架构，允许中央服务器与其他计算机共享文件。客户端可以将这些导出的共享挂载到自己的文件系统中，以便方便地访问，就像它们位于本地存储上一样。虽然Samba和AFP在Windows和OS
+    X上更常见的分布式文件系统，但NFS现在已成为事实上的标准，是任何Linux服务器系统的关键组成部分。在本食谱中，我们将向您展示如何轻松设置NFS服务器以在网络上共享文件。'
 - en: Getting ready
   id: totrans-140
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to facilitate the download of additional
@@ -969,32 +1089,39 @@
   id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此操作，您需要具备CentOS 7操作系统的有效安装，具有root权限，您选择的基于控制台的文本编辑器以及连接到互联网以方便下载其他软件包。预计您的NFS服务器和所有客户端将能够相互ping通，并且通过静态IP地址相互连接（请参阅[第2章](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c
+    "第2章。配置系统")，*配置系统*中的*建立静态网络连接*配方）。在我们的示例中，NFS服务器以IP`192.168.1.10`运行，两个客户端的IP分别为`192.168.1.11`和`192.168.1.12`，网络的域名为`example.com`。
 - en: How to do it...
   id: totrans-142
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: In this particular section, we are going to learn how to install and configure
     the NFS server, and create and export a share on a client.
   id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们将学习如何安装和配置NFS服务器，并在客户端上创建和导出共享。
 - en: Installing and configuring the NFS server
   id: totrans-144
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 安装和配置NFS服务器
 - en: 'NFSv4 is not installed by default, and for this reason we will begin by downloading
     and installing the required packages:'
   id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: NFSv4默认未安装，因此我们将首先下载并安装所需的软件包：
 - en: 'To do this, log in as `root` on the server that you want to run the NFS daemon
     on and type the following command in order to install the required packages:'
   id: totrans-146
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为此，请以`root`身份登录到您要运行NFS守护程序的服务器上，并键入以下命令以安装所需的软件包：
 - en: '[PRE34]'
   id: totrans-147
   prefs:
@@ -1010,6 +1137,8 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为了使NFSv4正常工作，我们需要所有客户端和NFS服务器的*相同基*域。因此，如果我们尚未使用DNS设置域名（请参阅[第9章](part0080_split_000.html#2C9D01-4cf34a6d07944734bb93fb0cd15cce8c
+    "第9章。域操作")，*域操作*），我们将在`/etc/hosts`文件中为我们的计算机设置一个新主机名：
 - en: '[PRE35]'
   id: totrans-149
   prefs:
@@ -1023,6 +1152,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，打开`/etc/idmapd.conf`文件，并输入NFS服务器的基域名（不是完整的域名）；查找读取`#Domain = local.domain.edu`的行，并将其替换为以下内容：
 - en: '[PRE36]'
   id: totrans-151
   prefs:
@@ -1035,6 +1165,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们需要为服务器打开一些防火墙端口，以便它具有适当的NFS访问权限：
 - en: '[PRE37]'
   id: totrans-153
   prefs:
@@ -1046,6 +1177,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，让我们启动NFS服务器服务并在重启时启用它：
 - en: '[PRE38]'
   id: totrans-155
   prefs:
@@ -1057,16 +1189,19 @@
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 创建导出共享
 - en: 'Now that our NFS server is configured and up-and-running, it''s time to create
     some file shares that we can export to our clients:'
   id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: 既然我们的NFS服务器已配置并运行，现在是时候创建一些文件共享，我们可以将其导出到我们的客户端：
 - en: 'First, let''s create a folder for our shares and change its permissions:'
   id: totrans-158
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，让我们为我们的共享创建一个文件夹并更改其权限：
 - en: '[PRE39]'
   id: totrans-159
   prefs:
@@ -1079,6 +1214,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 创建一个具有特定GID的新组，并将其与导出关联，然后更改权限：
 - en: '[PRE40]'
   id: totrans-161
   prefs:
@@ -1090,6 +1226,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 打开以下文件：
 - en: '[PRE41]'
   id: totrans-163
   prefs:
@@ -1101,6 +1238,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，输入以下文本，但输入时要非常专注：
 - en: '[PRE42]'
   id: totrans-165
   prefs:
@@ -1113,6 +1251,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件，然后使用以下命令重新导出`/etc/exports`中的所有条目：
 - en: '[PRE43]'
   id: totrans-167
   prefs:
@@ -1124,6 +1263,7 @@
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: On CentOS 7, you can install version 4 of the NFS, which has some enhancements
     over former versions, such as more flexible authentication options and being fully
     backward compatible with older NFS versions. Here, we showed you how easy it is
@@ -1132,10 +1272,12 @@
   id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: 在CentOS 7上，您可以安装版本4的NFS，它比以前的版本有一些增强，例如更灵活的认证选项，并且与旧版本的NFS完全向后兼容。在这里，我们向您展示了安装和配置NFS服务器以及为我们的客户端创建一些共享导出是多么容易。
 - en: So, what did we learn from this experience?
   id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: 'We started this recipe by installing the `nfs-utils` package, since the NFS
     server functionality is not available on CentOS 7 by default. Next, we configured
     our server''s domain name using the `/etc/hosts` file, as in our example, no DNS
@@ -1155,6 +1297,8 @@
   id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先通过安装`nfs-utils`包来启动这个配置过程，因为在CentOS 7上默认情况下NFS服务器功能是不可用的。接下来，我们使用`/etc/hosts`文件配置了服务器域名，因为在我们的示例中，我们还没有配置自己的DNS服务器。如果你已经设置了DNS服务器，你应该遵循与此处类似的域名模式，因为这对NFSv4的正常工作至关重要，因为所有客户端和服务器都应该位于同一个基本域中。在我们的示例中，我们指定了它们都是`example.com`的子域：`myClient1.example.com`，`myClient2.example.com`和`myServer.example.com`。这是一种确保数据共享安全的方法，因为NFS服务器只允许来自客户端的文件访问，如果域名匹配（在我们的示例中，服务器和客户端都是`example.com`域的一部分）。接下来，我们将这个基本域放入`idmapd.conf`文件中，该文件负责将用户名和组ID映射到NFSv4
+    ID。之后，我们在firewalld实例中启用了`nfs`，`mountd`和`rpc-bind`服务，这些都是客户端和服务器之间完整支持和通信所必需的。为了完成我们的基本配置，我们启动了`rpcbind`和NFS服务器，并设置了开机自启。
 - en: After the NFS server was successfully set up, we added some export to it, to
     actually allow clients to access some shared folders from the server. Therefore,
     we created a special directory in the filesystem, which will keep all our shared
@@ -1179,6 +1323,8 @@
   id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: 在成功设置NFS服务器之后，我们为其添加了一些导出项，实际上允许客户端从服务器访问一些共享文件夹。因此，我们在文件系统中创建了一个特殊的目录，用于存放我们所有的共享文件。我们将这个共享文件夹`/srv/nfs-data`与一个新组`nfs-share`关联，并赋予其读/写/执行权限。出于实际原因，我们将在组级别上控制我们的导出Linux文件权限。名称并不重要，但其组标识符（GID）必须设置为静态值（例如，`50000`）。这个新的GID在服务器和每个客户端上都必须相同，对于每个想要拥有写权限的用户来说，因为NFS在服务器和客户端之间通过用户（UID）或GID级别在网络上传递任何访问权限。整个共享的魔法发生在`/etc/exports`文件中。它包含一个表格；在其中，你指定了所有关于你的共享文件夹及其客户端访问安全性的重要信息。这个文件中的每一行都相当于系统中的一个共享文件夹，以及一个允许访问它们的以空格分隔的主机列表，以及它们的访问选项。如你所见，有不同的方法来定义目标客户端，使用IP地址或主机名。对于主机名，你可以使用通配符如`*`和`?`来使文件更紧凑，并允许一次多个机器，但你也可以为每个单独的主机名定义导出选项。解释所有选项超出了本书的范围；如果你需要更多帮助，请阅读导出手册，可以通过`man
+    exports`找到。
 - en: For example, the line, `/srv/nfs-data *(ro) 192.168.1.11(rw) 192.168.1.12(rw)`,
     defines that we want to export the content of the folder `/srv/nfs-data` to all
     hostnames (because of the `*` symbol); read-only (`ro`) means that every client
@@ -1191,28 +1337,36 @@
   id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，行 `/srv/nfs-data *(ro) 192.168.1.11(rw) 192.168.1.12(rw)` 定义了我们希望将 `/srv/nfs-data`
+    文件夹的内容导出到所有主机名（因为使用了 `*` 符号）；只读 (`ro`) 意味着每个客户端都可以读取文件夹的内容但不能写入。对于IP地址以 `192.168.1`
+    结尾，且末尾为 `11` 和 `12` 的客户端，我们允许读写 (`rw`)。第二行定义了我们正在将 `/home` 目录导出到 `*.example.com`
+    子域中的所有客户端，并具有读写能力。每当您对 `/etc/exports` 文件进行更改时，运行 `exportfs -r` 命令以将更改应用到NFS服务器。
 - en: Finally, we can say that NFSv4 in CentOS 7 is very easy to set up and start.
     It's the perfect solution for sharing files between Linux systems, or for centralized
     home directories.
   id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，我们可以说在CentOS 7中设置和启动NFSv4非常容易。它是Linux系统之间共享文件或集中式家目录的完美解决方案。
 - en: Working with NFS
   id: totrans-175
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用NFS
 - en: Before a client computer can use file system exports shared by an NFS server,
     it has to be configured to correctly access this system. Here in this recipe,
     we will show you how to set things up and work with NFS on the client machine.
   id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: 在客户端计算机可以使用NFS服务器共享的文件系统导出之前，它必须配置为正确访问该系统。在本步骤中，我们将向您展示如何在客户端机器上设置和使用NFS。
 - en: Getting ready
   id: totrans-177
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备工作
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to facilitate the download of additional
@@ -1227,17 +1381,24 @@
   id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此操作，您需要一个具有root权限的CentOS 7操作系统的工作安装，您选择的基于控制台的文本编辑器，以及互联网连接以便下载额外的软件包。我们假设您已经遵循了
+    *安装和配置NFS* 的步骤，并已经设置了一个NFS服务器，例如在本例中。我们假设所有客户端都可以相互ping通，并且连接到了NFS服务器，并且将使用静态IP地址（请参阅
+    [第2章](part0024_split_000.html#MSDG1-4cf34a6d07944734bb93fb0cd15cce8c "第2章。系统配置")
+    *系统配置* 中的 *建立静态网络连接* 步骤）。在我们的示例中，NFS服务器运行在IP `192.168.1.10` 上，两个客户端分别在IP `192.168.1.11`
+    和 `192.168.1.12` 上。
 - en: How to do it...
   id: totrans-179
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 操作步骤...
 - en: 'On our client systems, we also need the same NFS software package, and a similar
     configuration to the one on the server, in order to establish a communication
     between them:'
   id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们的客户端系统上，我们也需要相同的NFS软件包，以及与服务器上类似的配置，以便在它们之间建立通信：
 - en: 'To begin, log in on your client as `root`, and apply the exact same steps as
     in the *Installing and configuring NFS* recipe until the end of step 3\. Skip
     step 4 because no firewalld service must be opened. Then, instead of step 5, use
@@ -1247,6 +1408,8 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，以 `root` 身份登录到您的客户端，并应用与 *安装和配置NFS* 步骤中完全相同的步骤，直到步骤3结束。跳过步骤4，因为不需要打开firewalld服务。然后，在步骤5中，使用以下命令，这些命令不会启动和启用
+    `nfs-server`，而只会启动 `rpcbind` 服务：
 - en: '[PRE44]'
   id: totrans-182
   prefs:
@@ -1259,6 +1422,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在此停止，不要应用原始步骤中的其他内容。为了测试与我们的NFS服务器的连接，请使用以下命令：
 - en: '[PRE45]'
   id: totrans-184
   prefs:
@@ -1272,6 +1436,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，为了测试挂载NFS导出是否有效，您可以手动使用新用户 `john` 进行测试。首先需要将 `john` 添加到 `nfs-share` 组中，以便我们可以在共享上进行写操作：
 - en: '[PRE46]'
   id: totrans-186
   prefs:
@@ -1285,6 +1450,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果在共享目录中创建文件成功，您可以将导入项放入`fstab`文件中，以便在系统启动时自动挂载：
 - en: '[PRE47]'
   id: totrans-188
   prefs:
@@ -1296,6 +1462,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 添加以下行：
 - en: '[PRE48]'
   id: totrans-190
   prefs:
@@ -1307,6 +1474,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，要从`fstab`重新挂载所有内容，请键入以下内容：
 - en: '[PRE49]'
   id: totrans-192
   prefs:
@@ -1318,15 +1486,18 @@
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: In this recipe, we showed you how easy it is to use some shared file system
     exports from an existing NFSv4 server.
   id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本食谱中，我们向您展示了从现有的NFSv4服务器使用一些共享文件系统导出是多么容易。
 - en: So, what did we learn from this experience?
   id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: As you have seen, to set up an NFS client, you need a very similar setup to
     the one on the NFS server itself, with the exception of starting the `rpcbind`
     service instead of `nfs-server` (which, as the name implies, is only needed for
@@ -1347,11 +1518,14 @@
   id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如您所见，要设置NFS客户端，您需要与NFS服务器本身非常相似的设置，除了启动`rpcbind`服务而不是`nfs-server`（顾名思义，仅在服务器端需要）。`rpcbind`服务是一个端口映射器，用于**远程过程调用**（**RPC**），这是NFS工作所需的通信标准。在配置中您应该记住的另一个非常重要的步骤是在`/etc/idmapd.conf`文件中设置域名。我们必须在服务器上使用*相同*的基本域名（`example.com`），以便在服务器和客户端之间进行NFSv4通信。在启动并启用`rpcbind`服务后，我们可以将NFS共享挂载到本地目录，要么直接使用`mount`命令（使用`-t`类型`nfs4`），要么通过`fstab`文件。请记住，每个想要对共享具有适当的读/写/执行权限的系统用户都需要在NFS服务器上具有*相同*的权限；在我们的示例中，我们在相同的GID级别上管理正确的权限。我们使用默认选项挂载共享；如果您需要不同的或高级的选项，请参阅`man
+    fstab`。为了应用对`fstab`文件的更改，执行`mount -a`以从该文件重新挂载所有内容。
 - en: Securely sharing resources with Samba
   id: totrans-197
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用Samba安全地共享资源
 - en: '**Samba** is a software package that enables you to share files, printers,
     and other common resources across a network. It is an invaluable tool for any
     working environment. One of the most common ways to share file resources across
@@ -1368,11 +1542,13 @@
   id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Samba**是一个软件包，它使您能够跨网络共享文件、打印机和其他常见资源。对于任何工作环境来说，它都是一个无价的工具。在异构网络（即不同的计算机系统，如Windows和Linux）上共享文件资源的最常见方式之一是安装和配置Samba作为独立文件服务器，通过*用户级安全*使用系统用户的家目录提供基本的文件共享服务。独立服务器被配置为提供本地身份验证和对其维护的所有资源的访问控制。总而言之，每个管理员都知道Samba仍然是一个非常流行的开源发行版，本食谱的目的是向您展示如何提供一种即时文件共享方法，该方法可以在整个工作环境中无缝集成任何数量的用户在任何类型的现代计算机上。'
 - en: Getting ready
   id: totrans-199
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 准备
 - en: To complete this recipe, you will require a working installation of the CentOS
     7 operating system with root privileges, a console-based text editor of your choice,
     and a connection to the Internet in order to facilitate the download of additional
@@ -1380,22 +1556,26 @@
   id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: 要完成此配方，您需要一个具有root权限的CentOS 7操作系统的工作安装，您选择的基于控制台的文本编辑器，以及连接到Internet以便下载其他软件包。预计您的服务器将使用静态IP地址。
 - en: How to do it...
   id: totrans-201
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 如何操作...
 - en: Samba is not installed by default, and for this reason we will begin by downloading
     and installing the required packages.
   id: totrans-202
   prefs: []
   type: TYPE_NORMAL
+  zh: Samba默认不安装，因此我们将从下载和安装所需软件包开始。
 - en: 'To do this, log in as `root` and type the following command in order to install
     the required packages:'
   id: totrans-203
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为此，以`root`身份登录并键入以下命令以安装所需的软件包：
 - en: '[PRE50]'
   id: totrans-204
   prefs:
@@ -1407,6 +1587,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 完成此操作后，第一步是重命名原始配置文件：
 - en: '[PRE51]'
   id: totrans-206
   prefs:
@@ -1419,6 +1600,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，在您喜欢的文本编辑器中创建一个新的配置文件，方法是键入以下内容：
 - en: '[PRE52]'
   id: totrans-208
   prefs:
@@ -1431,6 +1613,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 开始构建新的配置，方法是添加以下行，将显示的值替换为更好地代表您自己需求的值：
 - en: '[PRE53]'
   id: totrans-210
   prefs:
@@ -1443,6 +1626,7 @@
   - PREF_IND
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: '`WORKGROUP_NAME` is the name of the Windows workgroup. Use the standard Windows
     name `WORKGROUP` if you don''t have this value. `MY_SERVERS_NAME` refers to the
     name of your server. In most situations, this could be in the form of `FILESERVER`
@@ -1453,12 +1637,14 @@
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`WORKGROUP_NAME`是Windows工作组的名称。如果您没有此值，请使用标准Windows名称`WORKGROUP`。`MY_SERVERS_NAME`指的是您的服务器名称。在大多数情况下，这可能是`FILESERVER`或`SERVER1`等形式。`XXX.XXX.XXX.XXX/XX`指的是Samba服务运行的主要网络地址，例如`192.168.1.0/24`。`NETWORK_NAME`指的是您的以太网接口的名称。这可能是`enp0s8`。'
 - en: 'We will now configure Samba as a standalone server. To do this, simply continue
     to add the following lines to your main configuration file:'
   id: totrans-213
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们将配置Samba作为独立服务器。为此，只需继续将以下行添加到主配置文件中：
 - en: '[PRE54]'
   id: totrans-214
   prefs:
@@ -1471,6 +1657,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于这个配方，我们不打算将Samba配置为域主或主浏览器。为此，添加以下行：
 - en: '[PRE55]'
   id: totrans-216
   prefs:
@@ -1485,6 +1672,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，我们将添加对主目录共享的支持，允许有效用户访问其主目录。此功能将支持适当的读/写权限，并且所有文件夹都将保持对其他用户的私密性。为此，添加以下新行：
 - en: '[PRE56]'
   id: totrans-218
   prefs:
@@ -1497,6 +1685,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 保存并关闭文件。要测试我们刚刚创建的Samba配置文件的语法，请使用以下命令：
 - en: '[PRE57]'
   id: totrans-220
   prefs:
@@ -1509,6 +1698,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，将现有系统用户`john`添加到Samba用户管理系统（这是为了稍后测试；请根据您系统上的用户名适当更改）：
 - en: '[PRE58]'
   id: totrans-222
   prefs:
@@ -1521,6 +1711,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，保存文件并关闭它；回到命令行，打开防火墙中的端口：
 - en: '[PRE59]'
   id: totrans-224
   prefs:
@@ -1532,6 +1723,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 配置SELinux以使用Samba主目录：
 - en: '[PRE60]'
   id: totrans-226
   prefs:
@@ -1544,6 +1736,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 现在，确保`samba`和`nmb`服务将在启动过程中启动，并立即启动它们：
 - en: '[PRE61]'
   id: totrans-228
   prefs:
@@ -1555,16 +1748,19 @@
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 它是如何工作的...
 - en: It was the purpose of this recipe to install Samba and configure its file sharing
     services, thus providing full connectivity across all modern computer systems
     in your network.
   id: totrans-230
   prefs: []
   type: TYPE_NORMAL
+  zh: 本配方的目的是安装Samba并配置其文件共享服务，从而为您的网络中的所有现代计算机系统提供完全的连接性。
 - en: So, what did we learn from this experience?
   id: totrans-231
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们从这次经历中学到了什么？
 - en: Having installed the necessary packages, we renamed the originally installed
     configuration file to have a backup in place if anything broke later, and then
     we began setting up Samba from scratch, starting with an empty `smb.conf` configuration
@@ -1618,11 +1814,13 @@
   id: totrans-234
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，在保存您的新配置文件后，我们使用`testparm`程序测试其正确性，并使用`samba`服务在firewalld中打开与Samba相关的传入端口。下一步是确保在启动过程中使用`systemctl`使Samba及其相关进程可用。Samba为了正确工作需要两个主要进程：`smbd`和`nmbd`。从`smbd`开始，该服务的角色是为使用SMB（或CIFS）协议的Windows客户端提供文件共享、打印服务、用户认证和资源锁定。同时，`nmbd`服务的角色是监听、理解和回复NetBIOS名称服务的请求。
 - en: Note
   id: totrans-235
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: Samba often includes another service call named `winbindd`, but it has been
     largely ignored because the intention to provide a **Windows Internet Naming Service**
     (**WINS**)-based service or Active Directory authentication requires additional
@@ -1630,11 +1828,14 @@
   id: totrans-236
   prefs: []
   type: TYPE_NORMAL
+  zh: Samba通常包括另一个名为`winbindd`的服务，但由于提供基于**Windows Internet Naming Service**（**WINS**）的服务或Active
+    Directory认证需要额外的考虑，这超出了本食谱的范围，因此它被广泛忽略。
 - en: Consequently, our final task was to start both the Samba service (`smb`) and
     the associated NetBIOS service (`nmb`).
   id: totrans-237
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，我们的最终任务是启动Samba服务（`smb`）和相关的NetBIOS服务（`nmb`）。
 - en: You now know how incredibly simple Samba is to install, configure, and maintain.
     There is always more to learn, and yet this simple introduction has served to
     illustrate Samba's relative ease of use and the simplicity of its syntax. It has
@@ -1644,11 +1845,13 @@
   id: totrans-238
   prefs: []
   type: TYPE_NORMAL
+  zh: 您现在知道安装、配置和维护Samba是多么简单。总有更多要学习的内容，但这个简单的介绍已经说明了Samba的相对易用性和其语法的简单性。它提供了一个解决方案，能够支持各种不同的需求和一系列不同的计算机系统，它将满足您未来多年的文件共享需求。
 - en: There's more...
   id: totrans-239
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 还有更多...
 - en: 'You can test our Samba server configuration from any client in your network
     that can ping the server. If it is a windows-based client, open the **Windows
     Explorer** address bar and use the following syntax: `\\<ip address of the Samba
@@ -1659,6 +1862,8 @@
   id: totrans-240
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以从网络中的任何客户端测试我们的Samba服务器配置，只要该客户端可以ping通服务器。如果是基于Windows的客户端，请打开**Windows资源管理器**地址栏，并使用以下语法：`\\<Samba服务器的IP地址>\<Linux用户名>`。例如，我们使用`\\192.168.1.10\john`（成功连接后，您需要输入Samba用户名的密码）。在任何Linux客户端系统上（在CentOS
+    7上需要安装`samba-client`包），要列出NFS服务器的所有可用共享，请使用以下命令：
 - en: '[PRE62]'
   id: totrans-241
   prefs: []
@@ -1668,6 +1873,7 @@
   id: totrans-242
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们的示例中，我们将使用以下内容：
 - en: '[PRE63]'
   id: totrans-243
   prefs: []
@@ -1678,6 +1884,7 @@
   id: totrans-244
   prefs: []
   type: TYPE_NORMAL
+  zh: 要进行测试，请使用以下语法挂载共享（这需要在CentOS 7上安装`cifs-utils`包）：
 - en: '[PRE64]'
   id: totrans-245
   prefs: []
@@ -1687,6 +1894,7 @@
   id: totrans-246
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们的示例中，我们将使用以下内容：
 - en: '[PRE65]'
   id: totrans-247
   prefs: []
@@ -1697,6 +1905,7 @@
   id: totrans-248
   prefs: []
   type: TYPE_NORMAL
+  zh: 您还可以将此导入放入`/etc/fstab`文件中以进行永久挂载，使用以下语法：
 - en: '[PRE66]'
   id: totrans-249
   prefs: []
@@ -1706,10 +1915,12 @@
   id: totrans-250
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如：
 - en: 'For example, add the following line to the file:'
   id: totrans-251
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，向文件中添加以下行：
 - en: '[PRE67]'
   id: totrans-252
   prefs: []
@@ -1721,6 +1932,7 @@
   id: totrans-253
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您不想在此文件中使用明文密码，请阅读有关使用`man mount.cifs`的凭据的部分，然后创建一个凭据文件，并使用`chmod 600`在您的主目录中保护它，以确保没有其他人可以读取它。
 - en: Here in this chapter, we showed you how to configure Samba as a standalone server
     and enable home directories, and how to connect to it from a client to get you
     started. But Samba can do so much more! It can provide printing services or act
@@ -1730,3 +1942,4 @@
   id: totrans-254
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们向您展示了如何将Samba配置为独立服务器并启用家目录，以及如何从客户端连接到它以开始使用。但Samba的功能远不止于此！它可以提供打印服务或充当完整的域控制器。如果您想了解更多信息，请随时访问[https://www.packtpub.com/](https://www.packtpub.com/)以了解其他可用材料。
